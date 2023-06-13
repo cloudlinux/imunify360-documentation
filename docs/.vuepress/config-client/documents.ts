@@ -51,7 +51,7 @@ export default [
     },
     {
         title: "Config File Description",
-        description: "Despite the UI settings and CLI tools, Imunify360 can be set up by modifying the configuration file directly. This documentation section contains config file options and available parameters for it explained.",
+        description: "Despite the UI settings and CLI tools, Imunify360 can be set up by modifying the configuration file directly. This documentation section contains config file options and available parameters explained.",
         link: "/config_file_description/",
     },
     {
