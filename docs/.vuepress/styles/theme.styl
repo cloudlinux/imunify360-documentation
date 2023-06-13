@@ -1,0 +1,263 @@
+@require './config'
+@require './nav-arrow'
+@require './wrapper'
+@require './toc'
+@require './custom-block'
+
+html, body
+  padding 0
+  margin 0
+  height 100%
+
+body
+  font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  font-size 0.875rem
+  color $textColor
+
+#app
+  height 100%
+
+.page
+  padding-left $sidebarWidth
+  padding-bottom 10rem
+
+.navbar
+  background-color $mainColor
+  box-sizing border-box
+
+.sidebar
+  padding-bottom 204px;
+  font-size 0.9375rem
+  width $sidebarWidth
+  background-color: $sidebarBgColor;
+  position fixed
+  z-index 10
+  margin 0
+  top $navbarHeight
+  left 0
+  bottom 0
+  box-sizing border-box
+  border-right 1px solid $borderColor
+  overflow-y auto
+
+.content:not(.custom)
+  @extend $wrapper
+  a:hover
+    text-decoration underline
+
+  p.demo
+    padding 1rem 1.5rem
+    border 1px solid #ddd
+    border-radius 4px
+
+  img
+    max-width 100%
+
+.content.custom
+  padding 0
+  margin 0
+
+  img
+    max-width 100%
+
+a
+  font-weight 500
+  color $accentColor
+  text-decoration none
+
+
+p a code
+  font-weight 400
+  color $accentColor
+
+
+
+kbd
+  background #eee
+  border solid 0.15rem #ddd
+  border-bottom solid 0.25rem #ddd
+  border-radius 0.15rem
+  padding 0 0.15em
+
+blockquote
+  font-size 1.2rem
+  color #999
+  border-left .25rem solid #dfe2e5
+  margin-left 0
+  padding-left 1rem
+
+ul, ol
+  padding-left 1.2em
+
+strong
+  font-weight 600
+
+h1, h2, h3, h4, h5, h6
+  line-height 1.25
+  font-weight: normal
+  color: $headerColor
+
+  .content:not(.custom) > &
+    margin-bottom 0
+
+    &:first-child
+      margin-bottom 1rem
+
+      + p, + pre, + .custom-block
+        margin-top 2rem
+
+  &:hover .header-anchor
+    opacity: 1
+
+h1, h2, h3, h4, h5, h6
+  margin-top 2.4rem
+
+  &:before
+    display: block;
+    content: " ";
+    margin-top: -6rem;
+    height: 6rem;
+    visibility: hidden;
+    pointer-events: none;
+
+h1
+  font-size 2.14rem
+
+h2
+  font-size 1.28rem
+  padding-bottom .3rem
+
+h3
+  font-size 1.14rem
+
+h4
+  font-size 1.05rem
+
+a.header-anchor
+  font-size 0.85em
+  float left
+  margin-left -0.87em
+  padding-right 0.23em
+  margin-top 0.125em
+  opacity 0
+
+  &:hover
+    text-decoration none
+
+code, kbd, .line-number
+  font-family source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
+
+p, ul, ol
+  line-height 1.7
+
+hr
+  border 0
+  border-top 1px solid $borderColor
+
+table
+  border-collapse collapse
+  margin 1rem 0
+  display: block
+  overflow-x: auto
+
+tr
+  border-top 1px solid #dfe5e0
+
+  &:nth-child(2n)
+    background-color #f7faf6
+
+th, td
+  border 1px solid #dfe2e5
+  padding .6em 1em
+
+.custom-layout
+  padding-top $navbarHeight
+
+.theme-container
+  min-height 100%
+  display: flex;
+  flex-direction column
+  position relative
+
+  &.sidebar-open
+  &.no-navbar
+    .content:not(.custom) > h1, h2, h3, h4, h5, h6
+      margin-top 1.5rem
+      padding-top 0
+
+    .sidebar
+      top 0
+
+    .custom-layout
+      padding-top 0
+
+.language-text
+  border-radius 10px
+  font-size 12px
+
+:not(.language-text) > code
+  color: #56655b
+  padding: 0.25rem 0.5rem
+  margin: 0
+  font-size: .85em
+  background-color: rgba(27,31,35,.05)
+  border-radius: 6px
+
+badge[type="warning"]
+  display: inline-block
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-weight: bold;
+  background-color: #FFD42A;
+  color: black;
+  font-size: 12px;
+  margin-left: 0.5em;
+
+  &:before
+    content: attr(text);
+
+badge[type="info"]
+  display: inline-block
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-weight: bold;
+  background-color: #48AE41;
+  color: white;
+  font-size: 12px;
+  margin-left: 0.5em;
+
+  &:before
+    content: attr(text);
+
+badge[type="danger"]
+  display: inline-block
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-weight: bold;
+  background-color: #CA2029;
+  color: white;
+  font-size: 12px;
+  margin-left: 0.5em;
+
+  &:before
+    content: attr(text);
+
+@media (max-width: $mobileBreakpoint)
+  .content:not(.custom)
+    width 100%
+    margin 0
+
+    & > h1:first-child
+      margin 0
+  a.header-anchor
+    font-size 0 !important
+
+
+
+
+
+
+
+

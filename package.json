@@ -1,0 +1,29 @@
+{
+  "name": "docs-project_copy",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/vue-select": "^3.16.2",
+    "@vuepress/core": "^1.9.9",
+    "@vuepress/plugin-container": "^2.0.0-beta.8",
+    "@vuepress/theme-default": "^1.9.9",
+    "@vuepress/plugin-prismjs": "^2.0.0-beta.4",
+    "stylus": "^0.59.0",
+    "vue-select": "^4.0.0-beta.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.0",
+    "vue-tsc": "^1.2.0",
+    "vuepress": "2.0.0-beta.61"
+  }
+}
