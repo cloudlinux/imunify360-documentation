@@ -66,7 +66,7 @@ export default defineClientConfig({
             // Algolia
             algoliaOptions: {
                 apiKey: "e6b9d79daf71aa98e2e2a51d4556f9d4",
-                indexName: "cloudlinuxos",
+                indexName: "imunify360-unified",
                 appId: "0TCNL6CGX8",
             },
 
