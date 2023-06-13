@@ -83,5 +83,10 @@ export default [
         title: "ImunifyAV/AV+ Product",
         description: "ImunifyAV/AV+ documentation section.",
         link: "/imunifyav/",
+    },
+    {
+        title: "Imunify Email Product",
+        description: "Imunify Email documentation section.",
+        link: "/email/",
     }
 ]

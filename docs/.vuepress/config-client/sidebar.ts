@@ -141,5 +141,13 @@ export default {
                     "/imunifyav/faq_and_known_issues/"
                 ]
             }
+        ],
+        '/email/': [
+            {
+                collapsable: false,
+                children: [
+                    "/email/"  
+                ]
+            }
         ]
     }
