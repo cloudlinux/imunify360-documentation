@@ -1,4 +1,4 @@
-# cloudlinux-documentation
+# imunify-documentation
 
 # Install dependencies
 
