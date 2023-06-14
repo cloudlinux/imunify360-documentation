@@ -1015,7 +1015,7 @@ You can use a new notification system via [CLI](/command_line_interface/#notific
 
 You can find more about hooks [here](/features/#hooks).
 
-This command allows to manage hooks.
+This command allows managing hooks.
 
 **Usage:**
 
