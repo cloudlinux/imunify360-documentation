@@ -535,7 +535,7 @@ None        1599955297  {}          /home/cltest/public_html/yoUq0L.php         
 None        1599955297  {}          /home/cltest/public_html/test/PKiuhY.php        275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f  1631  True       1996cd86e6b14b12a1c165e79e3540d9  background  68    found   SMW-SA-05057-eicar.tst-4  cltest   
 None        1599955297  {}          /home/cltest/public_html/public_html/Zqrsvh.php  275a021bbfb6489e54d471899f7db9d1663fc695
 ```
-</div>
+
 
 8. The following command adds the specified path to the Ignore List
 
@@ -974,7 +974,7 @@ imunify-antivirus version [--optional arguments]
 
 ## How to apply changes from CLI
 
-In order to apply changes via the command-line interface (CLI), you can use the following command:
+In order to apply changes via command-line interface (CLI), you can use the following command:
 
 ```
 imunify-antivirus config update '{"SECTION": {"parameter": value}}'
@@ -987,8 +987,13 @@ imunify-antivirus config update '{"MALWARE_SCAN_INTENSITY": {"cpu": 5}}'
 imunify-antivirus config update '{"MALWARE_SCANNING": {"rapid_scan": true}}'
 ```
 
-It is also possible to apply several parameters at once. For example:
+It is also possible to apply several parameters at once.
+
+For example:
 
 ```
 imunify-antivirus config update '{"MALWARE_SCAN_INTENSITY": {"cpu": 5, "io": 7}}'
 ```
+
+
+
