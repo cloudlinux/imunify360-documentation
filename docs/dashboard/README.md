@@ -875,6 +875,20 @@ imunify360-agent proactive list
 </div>
 :::
 
+#### opcache.jit in PHP8 and the Proactive Defense module
+
+Starting from PHP 8, the interpreter supports `opcache.jit` option to enable just-in-time compilation of the code. 
+
+When the <span class="notranslate">Proactive Defense</span> extension (or any other PHP extensions that use the hooks to intercept function calls) is enabled, opcache engine disables `opcache.jit` automatically and reports it into the error log. It does not affect the stability and performance of websites running PHP 8 when both `opcache.jit` and the <span class="notranslate">Proactive Defense</span> module are enabled, but the JIT will be off.
+
+To keep `opcache.jit` forcibly enabled and keep the <span class="notranslate">Proactive Defense</span> module enabled, one needs to add the following config option:
+
+```
+jit_compatible_mode=on
+```
+
+in the `/usr/share/i360-php-opts/module.ini` file.
+
 
 ## Reputation Management
 
