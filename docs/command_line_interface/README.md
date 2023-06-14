@@ -1038,7 +1038,7 @@ imunify360-agent hook [command] --event [event_name|all] [--path </path/to/hook_
 
 | | |
 |----------|-|
-|<span class="notranslate">`--event [event_name|all]`</span>|defines a particular event that invokes<br>a registered handler as opposed to all keyword|
+|<span class="notranslate"><code>--event [event_name\|all]</code></span>|defines a particular event that invokes<br>a registered handler as opposed to all keyword|
 |<span class="notranslate">`--path </path/to/hook_script>`</span>|shall contain a valid path to a handler of the event,<br>it shall be any executable or Python Native event handlers<br>that agent will run upon a registered event|
 
 **Example:**
