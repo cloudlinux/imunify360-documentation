@@ -974,7 +974,7 @@ imunify-antivirus version [--optional arguments]
 
 ## How to apply changes from CLI
 
-In order to apply changes via command-line interface (CLI), you can use the following command:
+In order to apply changes via the command-line interface (CLI), you can use the following command:
 
 ```
 imunify-antivirus config update '{"SECTION": {"parameter": value}}'
@@ -987,13 +987,8 @@ imunify-antivirus config update '{"MALWARE_SCAN_INTENSITY": {"cpu": 5}}'
 imunify-antivirus config update '{"MALWARE_SCANNING": {"rapid_scan": true}}'
 ```
 
-It is also possible to apply several parameters at once.
-
-For example:
+It is also possible to apply several parameters at once. For example:
 
 ```
 imunify-antivirus config update '{"MALWARE_SCAN_INTENSITY": {"cpu": 5, "io": 7}}'
 ```
-
-
-
