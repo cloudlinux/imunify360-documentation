@@ -59,7 +59,9 @@ Changes of config files will be applied automatically. You don’t need to resta
 <td width="250px;"><span class="notranslate">max_log_file_size: 62914560</span></td><td># defines the maximum size of the log file in bytes (default is 60 MB)</td></tr>
 <tr>
 <td width="250px;"><span class="notranslate">backup_count: 5</span></td><td># defines how many log files to store. If 5, it will store <span class="notranslate"><em>app.log</em>, <em>app.log.1</em></span>, and up to <span class="notranslate"><em>app.log.5</em></span>.</td></tr>
-<td width="250px;"><span class="notranslate"><code>syscall_monitor: False</code></span></td><td># collect and report the source of suspicious actions using Syscall Monitor (<span class="notranslate">True</span>).<br><b>Supported operating systems</b>:<br>* CentOS 6/7<br>* CloudLinux OS 6/7.<br><b>auditd</b> needs to be installed<br><b>auditsp</b> needs to be switched off.</td></tr>
+<tr>
+<td width="250px;"><span class="notranslate">syscall_monitor: False</span></td><td># collect and report the source of suspicious actions using Syscall Monitor (<span class="notranslate">True</span>).<br><b>Supported operating systems</b>:<br>* CentOS 6/7<br>* CloudLinux OS 6/7.<br><b>auditd</b> needs to be installed<br><b>auditsp</b> needs to be switched off.</td>
+</tr>
 <tr>
 <th align="left"><span class="notranslate">MOD_SEC:</span></th>
 <th align="left"><span class="notranslate"># defines ModSecurity settings</span></th>
@@ -70,6 +72,7 @@ Changes of config files will be applied automatically. You don’t need to resta
 <td width="250px;"><span class="notranslate">cms_account_compromise_prevention: False</span></td><td># enables WordPress account brute-force protection. Default is False.</td></tr>
 <tr>
 <td width="250px;"><span class="notranslate">app_specific_ruleset: True</span></td><td># enables WAF Rules Auto-Configurator. Default is True.</td></tr>
+<tr>
 <td width="250px;"><span class="notranslate">prev_settings: </span></td><td># for internal usage, do not edit</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">MOD_SEC_BLOCK_BY_SEVERITY:</span></th></tr>
@@ -160,7 +163,7 @@ Scanner's behaviour is based on other scan optimizations, therefore it is better
 <td># send anonymized data from query string/post parameters and cookies. True is the default value.</td></tr>
 <tr>
 <th align="left"><span class="notranslate">NETWORK_INTERFACE:</span></th>
-<th aligh="left"># manages for what network interfaces Imunify360 rules will be applied</th></td>
+<th aligh="left"># manages for what network interfaces Imunify360 rules will be applied</th></tr>
 <tr>
 <td><span class="notranslate">eth_device: None</span></td>
 <td># by default, Imunify360 will auto-configure iptables to filter all traffic. 
@@ -203,7 +206,7 @@ to request CAPTCHA again</td></tr>
 <tr><td><span class="notranslate">captcha_site_key: ""</span></td>
 <td># your site key; required to show reCAPTCHA on the page</td></tr>
 <tr><td><span class="notranslate">captcha_secret_key: ""</span></td>
-<td># your secret key; required for communication between Google server and this server to get reCAPTCHA pass results</td>
+<td># your secret key; required for communication between Google server and this server to get reCAPTCHA pass results</td></tr>
 <tr><td><span class="notranslate">splash_screen: True</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) Anti-bot protection</td></tr>
 <tr>
