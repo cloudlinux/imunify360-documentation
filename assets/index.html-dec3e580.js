@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-7a32f1d2","path":"/config_file_description/","title":"Config File Description","lang":"en-US","frontmatter":{},"headers":[{"level":4,"title":"How to apply changes from CLI","slug":"how-to-apply-changes-from-cli","link":"#how-to-apply-changes-from-cli","children":[]}]}');export{e as data};
