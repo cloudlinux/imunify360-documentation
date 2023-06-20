@@ -1468,12 +1468,18 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
   | |**inotify**|**fanotify**|**File change API**|
   |CentOS 6|x| | |
   |CentOS 7|x|x| |
-  |CentOS 8|x|x| |
+  |CentOS 8 / AlmaLinux 8|x|x| |
   |CloudLinux OS 6|x| | |
   |CloudLinux OS 7|x| |x|
-  |CloudLinux OS 8|x| | |
-  |Ubuntu 16|x|x| |
-  |Ububtu 18|x|x| |
+  |CloudLinux OS 7 hybryd|x| |x (6.8+)|
+  |CloudLinux OS 8|x| |x (6.8+)|
+  |CloudLinux OS Solo|x| | |
+  |Ubuntu 16.04 / Debian 9|x|x| |
+  |Ubuntu 18.04 / Debian 10|x|x| |
+  |Ubuntu 20.04|x|x| |
+  |Ubuntu 22.04|x|x|?|
+  |Debian 11|?|?|?|
+  |Rocky Linux 8|x|x| |
 
 * <span class="notranslate">_Automatically scan any file uploaded using web_</span> – enables real-time scanning of all the files that were uploaded via http/https.
   ::: tip Note
