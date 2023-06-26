@@ -6,11 +6,19 @@ import HomeLayout from "./theme/layouts/HomeLayout.vue";
 import NotFound from "./theme/layouts/NotFound.vue";
 
 import bottomLinks from "./config-client/bottomLinks";
+import navbarLinks from "./config-client/navbarLinks";
 import documents from "./config-client/documents";
 import sidebar from "./config-client/sidebar";
 import social from "./config-client/social";
+import Chat from "./components/Chat.vue";
 
 export default defineClientConfig({
+        rootComponents: [
+        Chat,
+    ],
+    async enhance({ app }) {
+        app.config.globalProperties.$eventBus = mitt();
+    },
     layouts: {
         Layout,
         HomeLayout,
@@ -52,8 +60,7 @@ export default defineClientConfig({
                 sidebar,
                 siteTitle: "Documentation",
                 stayInTouch: "Stay in touch",
-                submitRequest: "Submit support request",
-                tryFree: "Try Free",
+                navbarLinks: navbarLinks,
             },
 
             // Products
