@@ -56,32 +56,29 @@ export default {
                 msgBubbleBgUser: '#55a978',
                 inputPlaceholder: 'Ask a new question'
             },
-            docName: "cloudlinux-documentation",
+            docName: "imunify360-documentation",
             tags: [],
             options: [{
-                name: 'CloudLinux OS Shared',
-                value:  ['level-0', 'shared']
+                name: 'Imunify360 installation',
+                value:  ['level-0', 'installation']
             },{
-                name: 'CloudLinux OS Shared Pro',
-                value: ['level-0', 'shared-pro']
+                name: 'Control Panel Integration',
+                value: ['level-0', 'control_panel_integration']
             },{
-                name: 'AccelerateWP',
-                value: ['level-1', 'accelerate-wp']
+                name: 'Features',
+                value: ['level-0', 'dashboard']
             },{
-                name: 'CLN',
-                value: ['level-0', 'cln']
-            },{
-                name: 'CloudLinux Solo',
+                name: 'Admin Interface',
                 value: ['level-0', 'solo']
             },{
-                name: 'CloudLinux OS Admin',
-                value: ['level-0', 'admin']
+                name: 'Command-Line Interface',
+                value: ['level-0', 'command_line_interface']
             },{
-                name: 'CloudLinux Subsystem For Ubuntu',
-                value: ['level-0', 'ubuntu']
+                name: 'FAQ and Known Issues',
+                value: ['level-0', 'faq_and_known_issues']
             },{
-                name: 'End-user Documents',
-                value: ['level-0', 'user-docs']
+                name: 'ImunifyAV/AV+',
+                value: ['level-0', 'imunifyav']
             }]
         }
     },
