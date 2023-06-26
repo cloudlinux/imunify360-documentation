@@ -3,14 +3,14 @@
     <div ref="menu" class="dropdown">
      <teleport v-if="isMobileWidth" to="body">
        <div v-if="openedMenu" class="dropdown-wrapper">
-         <p class="dropdown-content__paragraph" v-for="product in productsList" :key="product">
-           <a class="dropdown-content__link" href="#">{{ product }}</a>
-         </p>
+          <p class="dropdown-content__paragraph" v-for="(product, index) in productsList" :key="product">
+            <a class="dropdown-content__link" :href="productsURLs[index]">{{ product }}</a>
+          </p>
        </div>
      </teleport>
       <div v-if="openedMenu && !isMobileWidth" class="dropdown-wrapper">
-        <p class="dropdown-content__paragraph" v-for="product in productsList" :key="product">
-          <a class="dropdown-content__link" href="#">{{ product }}</a>
+        <p class="dropdown-content__paragraph" v-for="(product, index) in productsList" :key="product">
+          <a class="dropdown-content__link" :href="productsURLs[index]">{{ product }}</a>
         </p>
       </div>
       <div @click="openedMenu = !openedMenu" class="header-products-container">
@@ -33,7 +33,7 @@ defineProps({
     type: Boolean,
   },
 })
-const {productsTitle, arrowDownIcon, productsList} = inject('themeConfig');
+const {productsTitle, arrowDownIcon, productsList, productsURLs} = inject('themeConfig');
 
 const openedMenu = ref(false)
 const menu = ref(null)
