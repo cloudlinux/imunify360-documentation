@@ -1,5 +1,6 @@
 import {provide} from "vue";
 import {defineClientConfig} from "@vuepress/client";
+import mitt from 'mitt';
 
 import Layout from "./theme/layouts/Layout.vue";
 import HomeLayout from "./theme/layouts/HomeLayout.vue";
