@@ -59,6 +59,7 @@ export default defineClientConfig({
             // Products
             productsList: ['Cloudlinux', 'Imunify', 'TuxCare'],
             productsTitle: 'Products',
+            productsURLs: ['https://docs.cloudlinux.com', 'https://docs.imunify360.com', 'https://docs.tuxcare.com'],
 
             //social links for footer
             social,
