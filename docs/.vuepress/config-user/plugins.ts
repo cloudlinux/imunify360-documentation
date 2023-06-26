@@ -1,5 +1,7 @@
 import {containerPlugin} from "@vuepress/plugin-container";
 import {ContainerPluginOptions} from "@vuepress/plugin-container/lib/node/containerPlugin";
+import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
+import { path } from '@vuepress/utils'
 
 export default [
     containerPlugin({
@@ -17,5 +19,8 @@ export default [
         before: info => `<div class="danger custom-block"><p class="custom-block-title">${info}</p>`,
         after: () => '</div>',
     } as ContainerPluginOptions),
+        registerComponentsPlugin({
+        componentsDir: path.resolve(__dirname, './components'),
+   })
 
 ]
