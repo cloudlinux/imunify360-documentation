@@ -13,7 +13,7 @@ export default defineUserConfig({
     bundler: viteBundler({
         viteOptions: {
             ssr: {
-                noExternal: ['vue-select']
+                noExternal: ['vue-select', "vue-multiselect"]
             }
         },
     })
