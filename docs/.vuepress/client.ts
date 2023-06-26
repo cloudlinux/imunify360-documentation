@@ -34,8 +34,6 @@ export default defineClientConfig({
             allowGithubEdit: true,
             githubMainDir: "docs",
             githubRepository: "cloudlinux/imunify360-documentation",
-            submitRequestURL: "https://www.imunify360.com/support-portal/",
-            tryFreeLink: "https://trial4.imunify360.com/",
             MOBILE_BREAKPOINT: 767,
 
             //docs cards

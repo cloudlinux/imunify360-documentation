@@ -50,10 +50,10 @@ export default {
             botOptions: {
                 botAvatarImg: BotIcon,
                 botTitle: 'AI Bot',
-                colorScheme: '#3f83f8',
+                colorScheme: '#55a978',
                 boardContentBg: '#f4f4f4',
                 msgBubbleBgBot: '#fff',
-                msgBubbleBgUser: '#3f83f8',
+                msgBubbleBgUser: '#55a978',
                 inputPlaceholder: 'Ask a new question'
             },
             docName: "cloudlinux-documentation",
@@ -93,7 +93,7 @@ export default {
 
         console.log('Starting connection...')
         this.connection = new WebSocket('wss://doc-bot.cloudlinux.com:2096')
-        // dev -> this.connection = new WebSocket('ws://localhost:8765')
+        // this.connection = new WebSocket('ws://localhost:8765') // dev
 
         this.connection.onmessage = (response) => {
             const event = JSON.parse(response.data)
@@ -161,7 +161,7 @@ export default {
 .multiselect__option--highlight::after,
 .multiselect__option--highlight,
 .multiselect__tag {
-  background: #3f83f8;
+  background: #55a978;
 }
 
 .qkb-board-header__select_field {
