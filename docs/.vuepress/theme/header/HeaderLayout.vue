@@ -27,13 +27,13 @@
       >
         <img @click="openMobileAlgoliaDrawer" class="navbar-header__mobile-search" :src="withBase(headerDefaultSearchIcon)" alt="icon image"/>
         <HeaderProducts :isMobileWidth="isMobileWidth"/>
-        <a :href="submitRequestUrl" target="_blank" class="btn">
-          {{ submitRequestTitle }}
-        </a>
 
-        <a :href="tryFreeLink" target="_blank" class="btn btn-free">
-          {{ tryFreeTitle }}
-        </a>
+        <a v-for="item in locales.navbarLinks"
+        :href="item.url"
+        target="_blank"
+        :class="item.class"
+        @click="onClick(item.event)">{{ item.text }}</a>
+
       </div>
     </div>
     <HeaderLayoutSearch
@@ -60,17 +60,13 @@ const props = defineProps({
   }
 })
 
-const {siteLogo, locales, defaultURL, tryFreeLink, submitRequestURL,headerDefaultSearchIcon} = inject('themeConfig');
+const {siteLogo,  defaultURL, locales, headerDefaultSearchIcon} = inject('themeConfig');
 const linksWrapMaxWidth = ref(null)
 const frontmatter = usePageFrontmatter()
 const localePath = useRouteLocale()
 const headerLayoutSearch = ref(null)
 
-const tryFreeTitle = computed(() => locales.tryFreeLink || 'Try Free')
-
 const openMobileAlgoliaDrawer = () => headerLayoutSearch?.value?.openDrawer()
-
-const submitRequestTitle = computed(() => locales.submitRequest || 'Submit support request')
 
 const isGlobalLayout = computed(() => frontmatter.value.layout === 'HomeLayout')
 
@@ -80,7 +76,16 @@ const homeUrl = computed(() => {
   return defaultUrl.replace(/\/+/g, '/');
 })
 
-const submitRequestUrl = computed(() => submitRequestURL || "https://cloudlinux.zendesk.com/hc/en-us/requests/new")
+const onClick = (event) => {
+  if (event && event.type) {
+    switch (event.type) {
+        case 'event':
+          var event = new CustomEvent(event.name);
+          document.dispatchEvent(event);
+      }
+  }
+}
+
 </script>
 
 <style src="../../styles/theme.styl" lang="stylus"></style>
@@ -151,7 +156,7 @@ const submitRequestUrl = computed(() => submitRequestURL || "https://cloudlinux.
   cursor: pointer;
   font-weight 600
 
-.btn-free
+.btn-white
   background-color: white;
   color black
   font-size 0.9375rem

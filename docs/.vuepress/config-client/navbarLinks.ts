@@ -9,12 +9,12 @@ export default [
     },
     {
       text: "Submit support request",
-      url: "https://www.cloudlinux.com/support-portal/",
+      url: "https://www.imunify360.com/support-portal/",
       class: "btn"
     },
     {
       text: "Try Free",
-      url: "https://cloudlinux.com/trial",
+      url: "https://trial4.imunify360.com/",
       class: "btn btn-white"
     }
   ]
