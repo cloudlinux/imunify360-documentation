@@ -16,7 +16,7 @@ export default defineUserConfig({
         noExternal: ["vue-select", "vue-multiselect"],
       },
     },
-  }),
+  }), 
   head: [
     [
       "script",
