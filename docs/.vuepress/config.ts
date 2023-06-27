@@ -16,5 +16,15 @@ export default defineUserConfig({
                 noExternal: ['vue-select', "vue-multiselect"]
             }
         },
-    })
+    }),
+    head: [
+        [
+          "script",
+          {
+            type: "text/javascript",
+            charset: "UTF-8",
+            src: "//cdn.cookie-script.com/s/c9f81de32507a4fec1eb03ee80d0f0ed.js",
+          },
+        ],
+    ],
 });
