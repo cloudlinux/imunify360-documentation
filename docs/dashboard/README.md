@@ -1466,10 +1466,10 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
   | | | | |
   |-|:-:|:-:|:-:|
   | |**inotify**|**fanotify**|**File change API**|
-  |CentOS 6|✓|✓|x|
+  |CentOS 6|x|✓|x|
   |CentOS 7|✓|✓|x|
   |CentOS 8 / AlmaLinux 8|✓|✓|x|
-  |CloudLinux OS 6|✓|✓|x|
+  |CloudLinux OS 6|x|✓|x|
   |CloudLinux OS 7|✓|✓|✓|
   |CloudLinux OS 7 hybryd|✓|✓|✓ (6.8+)|
   |CloudLinux OS 8|✓|✓|✓|
