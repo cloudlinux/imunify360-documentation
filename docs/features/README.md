@@ -934,6 +934,30 @@ Starting from Imunify360 v.5.8, we introduce the overridable config which provid
 * Configs in that directory will override the <span class="notranslate">`imunify360.config.defaults.example`</span> and each other in lexical order. First-level "sections" (such as <span class="notranslate">`FIREWALL`</span>) are merged, while second-level "options" (such as <span class="notranslate">`FIREWALL.TCP_IN_IPv4`</span>) are replaced completely.
 * <span class="notranslate">`imunify360.config.d/10_on_first_install.config`</span> is a config that is supplied by Imunify360. Its purpose is to let us - Imunify360 developers - enable new features only on new installations without forcing existing installation to see new feature enabled on the update. This config should not be modified manually.
 
+:::tip Note
+The config file named starting from 90 and later will override values set via UI or CLI.
+:::
+
+:::danger Warning
+Ensure you are using the correct order for your config files to be allocated:
+```
+100-host_custom.config # custom config that would not override the main one due to the lexicographic naming
+101-xmlrpc.config # custom config that contains settings that also will not override the config 90-local* and so on
+90-local.config -> ../imunify360.config # contains settings configured via the UI/CLI
+95-host-TCPPORTS.config # will override 90-local*
+96-host-UDPPORTS.config # will override the above loaded
+```
+
+Below is an example of the **INCORRECT** assumption of the config loading order:
+```
+90-local.config -> ../imunify360.config
+95-host-TCPPORTS.config
+96-host-UDPPORTS.config
+100-host_custom.config
+101-xmlrpc.config
+```
+:::
+
 This way you can keep your local customizations, and still be able to rollout your main config. 
 
 The following CLI command can be used to check current server configuration:
