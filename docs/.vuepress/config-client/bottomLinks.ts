@@ -10,5 +10,9 @@ export default [
     {
         text: "Blog",
         url: "https://blog.imunify360.com/"
+    },
+    {
+        text: "Privacy Policy",
+        url: "https://www.cloudlinux.com/privacy-policy"
     }
 ]
