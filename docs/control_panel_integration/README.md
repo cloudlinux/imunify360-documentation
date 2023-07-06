@@ -73,7 +73,7 @@ stability issues (see [https://github.com/SpiderLabs/ModSecurity/issues/2381](ht
 
 ## Configure Imunify360 integrations
 
-Imunify360 Stand-alone version require the following integrations before installation:
+Imunify360 Stand-alone version requires the following integrations before installation:
 
 * Integration with web server for serving UI
 * Interaction with ModSecurity
@@ -82,7 +82,7 @@ Imunify360 Stand-alone version require the following integrations before install
 * Integration with authentication service
 * Define administrators for Imunify360
 
-All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on config file [here](/installation/#integration-config-file).
+All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file).
 
 #### Integration with web server
       
