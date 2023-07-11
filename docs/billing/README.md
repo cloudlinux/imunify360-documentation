@@ -15,7 +15,7 @@ The pricing model of Imunify360 includes 4 types of server licenses which are bi
 
 You can change server license for each server in your <span class="notranslate">CloudLinux Network</span> ([CLN](https://cln.cloudlinux.com/)) account. If you don’t have <span class="notranslate">CloudLinux Network</span> account, please fill out the simple registration form to create it on [https://cln.cloudlinux.com](https://cln.cloudlinux.com).
 
-Please find the detailed description in the [CLN Documentation](https://docs.cln.cloudlinux.com/).
+Please find the detailed description in the [CLN Help Article](https://cloudlinux.zendesk.com/hc/en-us/articles/4408071479058-What-does-user-mean-when-buying-a-license-Types-of-licenses) or check the [Official CLN Documentation](https://docs.cloudlinux.com/cln/introduction/).
 
 
 
