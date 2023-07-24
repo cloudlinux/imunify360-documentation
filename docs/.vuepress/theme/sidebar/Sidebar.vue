@@ -1,28 +1,27 @@
 <template>
   <div class="sidebar">
-    <slot name="top"/>
+    <slot name="top" />
     <ul class="sidebar-links" v-if="sidebarItems.length">
       <li v-for="(item, i) in sidebarItems" :key="i">
         <SidebarGroup
-            v-if="item.type === 'group'"
-            :item="item"
-            :first="i === 0"
-            :open="i === openGroupIndex"
-            :closeSidebarDrawer="closeSidebarDrawer"
-            :collapsable="!!(item.collapsable || item.collapsible)"
-            @toggle="toggleGroup(i)"
+          v-if="item.type === 'group'"
+          :item="item"
+          :first="i === 0"
+          :open="i === openGroupIndex"
+          :closeSidebarDrawer="closeSidebarDrawer"
+          :collapsable="!!(item.collapsable || item.collapsible)"
+          @toggle="toggleGroup(i)"
         />
         <SidebarLink
-            v-else
-            :closeSidebarDrawer="closeSidebarDrawer"
-            :item="item"
+          v-else
+          :closeSidebarDrawer="closeSidebarDrawer"
+          :item="item"
         />
       </li>
     </ul>
-    <slot name="bottom"/>
+    <slot name="bottom" />
   </div>
 </template>
-
 
 <script setup>
 import SidebarGroup from './SidebarGroup.vue'
@@ -71,11 +70,15 @@ const toggleGroup = (index) => {
 
 const isInViewport = (element) => {
   const rect = element.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+
   return (
-      rect.top >= 0 &&
-      rect.bottom <= window.innerHeight - 650
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight / 2 || document.documentElement.clientHeight / 2) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
-}
+};
 watch(() => route, refreshIndex)
 
 const checkIfScroll = () => {
@@ -124,7 +127,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => window.removeEventListener("scroll", checkIfScroll))
-
 </script>
 
 <style lang="stylus">
