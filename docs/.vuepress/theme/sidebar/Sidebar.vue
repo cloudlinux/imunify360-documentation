@@ -1,28 +1,27 @@
 <template>
   <div class="sidebar">
-    <slot name="top"/>
+    <slot name="top" />
     <ul class="sidebar-links" v-if="sidebarItems.length">
       <li v-for="(item, i) in sidebarItems" :key="i">
         <SidebarGroup
-            v-if="item.type === 'group'"
-            :item="item"
-            :first="i === 0"
-            :open="i === openGroupIndex"
-            :closeSidebarDrawer="closeSidebarDrawer"
-            :collapsable="!!(item.collapsable || item.collapsible)"
-            @toggle="toggleGroup(i)"
+          v-if="item.type === 'group'"
+          :item="item"
+          :first="i === 0"
+          :open="i === openGroupIndex"
+          :closeSidebarDrawer="closeSidebarDrawer"
+          :collapsable="!!(item.collapsable || item.collapsible)"
+          @toggle="toggleGroup(i)"
         />
         <SidebarLink
-            v-else
-            :closeSidebarDrawer="closeSidebarDrawer"
-            :item="item"
+          v-else
+          :closeSidebarDrawer="closeSidebarDrawer"
+          :item="item"
         />
       </li>
     </ul>
-    <slot name="bottom"/>
+    <slot name="bottom" />
   </div>
 </template>
-
 
 <script setup>
 import SidebarGroup from './SidebarGroup.vue'
@@ -71,11 +70,15 @@ const toggleGroup = (index) => {
 
 const isInViewport = (element) => {
   const rect = element.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+
   return (
-      rect.top >= 0 &&
-      rect.bottom <= window.innerHeight - 650
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight / 2 || document.documentElement.clientHeight / 2) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
-}
+};
 watch(() => route, refreshIndex)
 
 const checkIfScroll = () => {
@@ -118,12 +121,44 @@ const resolveOpenGroupIndex = (route, items) => {
   return -1
 }
 
-onMounted(() => {
-  refreshIndex()
-  !props.isMobileWidth ? window.addEventListener("scroll", checkIfScroll) : null
-})
 
-onUnmounted(() => window.removeEventListener("scroll", checkIfScroll))
+const handleHashChange = () => {
+  // Get the current hash from the URL
+  const currentHash = window.location.hash;
+
+  // Find the corresponding anchor link in the sidebar
+  const sidebarAnchors = document.querySelectorAll('.sidebar a');
+  sidebarAnchors.forEach((a) => {
+    if (a.getAttribute('data-anchor') === currentHash) {
+      // Remove the "active" class from all sidebar links and add it only to the current one
+      sidebarAnchors.forEach((link) => link.classList.remove('active'));
+      a.classList.add('active');
+
+      // Expand the parent collapsible sidebar item, if any
+      const parentCollapsible = a.closest('.collapsible');
+      if (parentCollapsible) {
+        parentCollapsible.classList.remove('collapsed');
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  refreshIndex();
+  !props.isMobileWidth ? window.addEventListener('scroll', checkIfScroll) : null;
+  !props.isMobileWidth ? window.addEventListener('resize', checkIfScroll) : null;
+
+  // Listen to the "hashchange" event to handle direct anchor link access
+  window.addEventListener('hashchange', handleHashChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkIfScroll);
+  window.removeEventListener('resize', checkIfScroll);
+  window.removeEventListener('hashchange', handleHashChange);
+});
+
+
 
 </script>
 
