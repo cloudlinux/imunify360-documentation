@@ -121,12 +121,45 @@ const resolveOpenGroupIndex = (route, items) => {
   return -1
 }
 
-onMounted(() => {
-  refreshIndex()
-  !props.isMobileWidth ? window.addEventListener("scroll", checkIfScroll) : null
-})
 
-onUnmounted(() => window.removeEventListener("scroll", checkIfScroll))
+const handleHashChange = () => {
+  // Get the current hash from the URL
+  const currentHash = window.location.hash;
+
+  // Find the corresponding anchor link in the sidebar
+  const sidebarAnchors = document.querySelectorAll('.sidebar a');
+  sidebarAnchors.forEach((a) => {
+    if (a.getAttribute('data-anchor') === currentHash) {
+      // Remove the "active" class from all sidebar links and add it only to the current one
+      sidebarAnchors.forEach((link) => link.classList.remove('active'));
+      a.classList.add('active');
+
+      // Expand the parent collapsible sidebar item, if any
+      const parentCollapsible = a.closest('.collapsible');
+      if (parentCollapsible) {
+        parentCollapsible.classList.remove('collapsed');
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  refreshIndex();
+  !props.isMobileWidth ? window.addEventListener('scroll', checkIfScroll) : null;
+  !props.isMobileWidth ? window.addEventListener('resize', checkIfScroll) : null;
+
+  // Listen to the "hashchange" event to handle direct anchor link access
+  window.addEventListener('hashchange', handleHashChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkIfScroll);
+  window.removeEventListener('resize', checkIfScroll);
+  window.removeEventListener('hashchange', handleHashChange);
+});
+
+
+
 </script>
 
 <style lang="stylus">
