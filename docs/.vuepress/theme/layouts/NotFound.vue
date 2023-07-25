@@ -65,7 +65,7 @@ onMounted(()=>{
         return;
       }
     }
-    if (!found) window.location.href = '/404.html';
+    if (!found) window.location.href = '/not-found.html';
 
     for (let value of values) {
       const res = await value();
