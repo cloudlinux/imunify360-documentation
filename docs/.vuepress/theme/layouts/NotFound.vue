@@ -1,6 +1,5 @@
 <template>
   <div class="theme-container">
-    Not found
   </div>
 </template>
 
@@ -55,15 +54,18 @@ onMounted(()=>{
 
   const redirectionURL = async () => {
     const values = Object?.values(pagesData);
+    let found = false;
 
     for (let redirection of redirectList) {
       if (fullPath.search(redirection.from) !== -1) {
         const path = fullPath.replace(redirection.from, redirection.to);
 
         router.push(path);
+        found = true;
         return;
       }
     }
+    if (!found) window.location.href = '/404.html';
 
     for (let value of values) {
       const res = await value();
