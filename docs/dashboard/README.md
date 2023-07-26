@@ -1280,7 +1280,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 ![](/images/webshield.png)
 
-* <span class="notranslate">_Enable WebShield_</span>. When the option is off, disable WebShield, GreyList, and CAPTCHA. A disabled state is recommended for the servers with a small amount of RAM. A disabled option along with enabled "Minimized WAF Ruleset" will switch Imunify360 to the "Low Resource Usage" mode.  
+* <span class="notranslate">_Enable WebShield_</span>. When the option is off, disable WebShield, GreyList, and CAPTCHA. A disabled state is recommended for servers with a small amount of RAM. A disabled option along with enabled "Minimized WAF Ruleset" will switch Imunify360 to the "Low Resource Usage" mode.  
 * <span class="notranslate">_Detect IPs behind CDN_</span> feature allows to recognize and block IPs with suspicious activity behind supported CDN providers.
   
   To enable/disable it, tick the <span class="notranslate">_Detect IPs behind CDN_</span> checkbox.
@@ -1302,7 +1302,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
   * KeyCDN
   * Dartspeed.com
   * QUIC.cloud CDN
-* <span class="notranslate">_Google reCAPTCHA configuration window_</span> allows admin to specify reCAPTCHA keys for the server. Follow the [step by step guide](/webshield/#configuring-recaptcha-keys) to setup a <span class="notransate">_Site key_</span> and a <span class="notranslate">_Secret key_</span>.
+* <span class="notranslate">_Google reCAPTCHA configuration window_</span> allows admin to specify reCAPTCHA keys for the server. Follow the [step by step guide](/features/#configuring-recaptcha-keys) to setup a <span class="notransate">_Site key_</span> and a <span class="notranslate">_Secret key_</span>.
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 
@@ -1310,7 +1310,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 Tick the <span class="notranslate">_Anti-bot protection_</span> checkbox to enable the JavaScript challenge – "Splash Screen."
 
-You can read more about Anti-bot protection [here](/webshield/#anti-bot-protection).
+You can read more about Anti-bot protection [here](/features/#anti-bot-protection).
 	
 ![](/images/AntiBotProtection.png)
 
@@ -1320,7 +1320,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 #### OSSEC
 
 Tick the <span class="notranslate">_Active response_</span> checkbox to block access to a specific server port being attacked. 
-The purpose of the feature is significantly reducing false positive rate while increasing its capabilities to detect and block aggressive brute force requests.
+The purpose of the feature is to significantly reduce the false-positive rate while increasing its capabilities to detect and block aggressive brute-force requests.
 	
 ![](/images/ossec_tick.png)
 
@@ -1329,7 +1329,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 :::tip Note
 For now, the feature covers the following ports:
 * FTP - 21 port, 
-* SSH - 22 port, and any one manually defined starting the version 5.7 
+* SSH - 22 port, and any other one manually defined starting from version 5.7 
 * SMTP - 25, 465, 587 ports
 :::
 
@@ -1358,7 +1358,7 @@ Click <span class="notranslate">_Save changes_</span> button at the bottom of th
 This protection type is available only in cPanel/WHM.
 :::
 
-Tick the <span class="notranslate">_Exim+Dovecot brute-force attack protection_</span> checkbox to enable advanced protection against Dovecot brute-force attacks. PAM module protects against IMAP/POP3 brute-force attack and prevents mail account from being compromised via brute-forcing.
+Tick the <span class="notranslate">_Exim+Dovecot brute-force attack protection_</span> checkbox to enable advanced protection against Dovecot brute-force attacks. PAM module protects against IMAP/POP3 brute-force attacks and prevents mail accounts from being compromised via brute-forcing.
 
 ![](/images/dovecot.png)
 
@@ -1377,10 +1377,10 @@ Click <span class="notranslate">_Save changes_</span> button at the bottom of th
 #### FTP brute-force attack protection 
 
 :::tip Note
-This protection type is available only in cPanel/WHM for proftpd and pureftpd daemons.
+This protection type is available only in cPanel/WHM for the proftpd and pureftpd daemons.
 :::
 
-Tick the <span class="notranslate">_FTP brute-force attack protection_</span> checkbox to enable protection for ftpd server against FTP brute-force attacks. It uses a time-proven algorithm that we’ve been using in the SSH PAM extension.
+Tick the <span class="notranslate">_FTP brute-force attack protection_</span> checkbox to enable protection for the ftpd server against FTP brute-force attacks. It uses a time-proven algorithm that we’ve been using in the SSH PAM extension.
 	
 ![](/images/ftpBruteForceAttackProtection.png)
 
@@ -1397,7 +1397,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 #### Error Reporting
  
-Tick <span class="notranslate">_Enable Sentry error reporting_</span> checkbox to send reports to Imunify360 error reports server.
+Tick <span class="notranslate">_Enable Sentry error reporting_</span> checkbox to send reports to the Imunify360 error reports server.
 
 ![](/images/error-reporting.png)
 
@@ -1437,17 +1437,17 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
 
 ![](/images/SettingsMalwareResourceConsumption.png)
 
-* <span class="notranslate">_CPU consumption_</span> – allows to set a level of CPU usage by Malware Scanner.
+* <span class="notranslate">_CPU consumption_</span> – allows setting a level of CPU usage by Malware Scanner.
     ::: tip Note
     Low CPU usage means low scanning speed
     :::
-* <span class="notranslate">_I/O consumption_</span> – allows to set a level of I/O usage by Malware Scanner.
+* <span class="notranslate">_I/O consumption_</span> – allows setting a level of I/O usage by Malware Scanner.
     :::tip Note
     Low I/O usage means low scanning speed
     :::
 
     :::tip Note
-    If Imunify360 is running on CloudLinux OS, LVE is used to manage scan intensity. If it is running on other operating systems, “nice” is used to control CPU and “ionice” is used when the I/O scheduler is CFQ.
+    If Imunify360 is running on CloudLinux OS, LVE is used to manage scan intensity. If it is running on other operating systems, “nice” is used to control the CPU and “ionice” is used when the I/O scheduler is CFQ.
     :::
 
 #### General
@@ -1548,15 +1548,15 @@ You can track the scanning activity at the <span class="notranslate">[Malware Sc
 
 #### Cleanup
 
-* <span class="notranslate">_Trim file instead of removal_</span> — do not remove infected file during cleanup but make the file zero-size (for malwares like web-shells);
-* <span class="notranslate">_Keep original files for … days_</span> — the original infected file is available for restore within the defined period. Default is 14 days.
+* <span class="notranslate">_Trim file instead of removal_</span> — do not remove infected file during cleanup but make the file zero-size (for malware like web-shells);
+* <span class="notranslate">_Keep original files for … days_</span> — the original infected file is available for restoration within the defined period. The default is 14 days.
 
 ![](/images/malwarescannersettings_zoom70.png)
 
 
 #### Proactive Defense
 
-* <span class="notranslate">_Enable Blamer_</span> — tick to allow Imunify360 to find a root cause of how infection got injected into the server through PHP. Blamer pinpoints exact URL, PHP script & PHP execution path that allowed a hacker to inject malware onto the server.
+* <span class="notranslate">_Enable Blamer_</span> — tick to allow Imunify360 to find a root cause of how infection got injected into the server through PHP. Blamer pinpoints the exact URL, PHP script & PHP execution path that allowed a hacker to inject malware onto the server.
 Imunify360 security team will use that information to prevent future infections from happening.
 
 ![](/images/SettingsBlamer.png)
@@ -1581,7 +1581,7 @@ Click <span class="notranslate">_Save changes_</span> at the page bottom to appl
 Enable <span class="notranslate">_Malware Database Scanner_</span> – a database antivirus: automated malware detection and clean-up of web applications.
 
 :::tip Note
-Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, only WordPress databases are supported as for now.
+Requires MariaDB/MySQL DB management system version 5.5. The recommended version is 5.6+. Note, only WordPress databases are supported as of now.
 :::
 
 
@@ -1592,7 +1592,7 @@ Click <span class="notranslate">_Save changes_</span> to apply changes.
 
 #### Overview
 
-Imunify360 provides customers with an ability to integrate with backup providers and automatically or manually restore files from their backup if they have become infected. Only administrator can choose backup provider but end user has an ability to backup and restore files within this selected backup provider.
+Imunify360 provides customers with the ability to integrate with backup providers and automatically or manually restore files from their backup if they have become infected. Only the administrator can choose a backup provider but the end-user has the ability to backup and restore files within this selected backup provider.
 
 The following integrated with Imunify360 backup providers are available:
 * <span class="notranslate">CloudLinux Backup</span>
@@ -1610,7 +1610,7 @@ JetBackup server backup application is not available right now because of rework
 
 * Imunify360 version 2.7.0 and later
 * For <span class="notranslate">Acronis Backup</span>, it is required to have Acronis account
-* For hosting panel backup, it is required to configure backup option by the administrator of the hosting panel
+* For the hosting panel backup, it is required that the backup option is configured by the administrator of the hosting panel
 
 
 #### User Interface
@@ -1624,9 +1624,9 @@ This section describes the following:
 
 #### How to enable backups
 
-To enable backups log in to a hosting panel as administrator, go to Imunify360 plugin and do the following.
+To enable backups log in to a hosting panel as administrator, go to the Imunify360 plugin and do the following.
 * Go to <span class="notranslate">_Imunify360 → Settings → Backups_</span>. If the feature is not currently used the <span class="notranslate">_Backup and restore_</span> is <span class="notranslate">_Disabled_</span>.
-* To enable it, select backup provider from the dropdown:
+* To enable it, select the backup provider from the dropdown:
   * <span class="notranslate">[CloudLinux Backup](/dashboard/#cloudlinux-backup)</span>
   * <span class="notranslate">[Acronis Backup](/dashboard/#acronis-backup)</span>
   * <span class="notranslate">[cPanel Plesk or DirectAdmin Backup](/dashboard/#cpanel-plesk-or-directadmin-backup)</span>
@@ -1645,32 +1645,32 @@ On servers with **XFS**, ReiserFS3, ReiserFS4, JFS, CloudLinux Backup has the fo
 - Volumes cannot be resized during a recovery
 :::
 
-With this backup and restore service, you can restore malicious or suspicious files from the backup if a clean version exists, schedule backups, see total and used storage space, and locate the data storage server.
+With this backup and restore service, you can restore malicious or suspicious files from the backup if a clean version exists, schedule backups, see the total and used storage space, and locate the data storage server.
 
 To activate <span class="notranslate">CloudLinux Backup</span>, follow the next simple steps:
 * Select <span class="notranslate">_CloudLinux Backup_</span> in the dropdown
 * Click <span class="notranslate">_Connect Backup_</span> button
-* You will be redirected to the <span class="notranslate">CloudLinux Network</span> page which opens in a new tab. Please log in with existing <span class="notranslate">[CloudLinux Network (CLN)](https://cln.cloudlinux.com/console/auth/login)</span> credentials otherwise create a new account.
-* On the purchase page, you can choose and purchase required size of the storage.
+* You will be redirected to the <span class="notranslate">CloudLinux Network</span> page which opens in a new tab. Please log in with the existing <span class="notranslate">[CloudLinux Network (CLN)](https://cln.cloudlinux.com/console/auth/login)</span> credentials otherwise create a new account.
+* On the purchase page, you can choose and purchase the required size of storage.
 * After successful payment, the installation will be in progress and you will see a Welcome Page with the follow-up instructions.
   ::: tip Note
    Installation can take up to 10 minutes depending on specific server size. You can use Imunify360 as usual during the installation process. Also, we will send you an email with detailed information to the specified email address.
    :::
 * You can see the purchased storage space on the <span class="notranslate">_Settings → Backups_</span> tab.
-* Imunify360 creates an initial backup of a current server. If all is OK the system returns successful message otherwise, please [contact our support team](https://cloudlinux.zendesk.com/hc/requests/new).
+* Imunify360 creates an initial backup of a current server. If all is OK the system returns a successful message otherwise, please [contact our support team](https://cloudlinux.zendesk.com/hc/requests/new).
 * You can see used and total storage space on the <span class="notranslate">_Settings → Backups_</span> tab.
 
 ![](/images/backuprestorecloudlinux.png)
 
 #### Acronis Backup
 
-Choose it if you have Acronis account. So that Imunify360 can use backups to restore malicious or suspicious files from the backup if a clean version exists.
+Choose it if you have an Acronis account. So that Imunify360 can use backups to restore malicious or suspicious files from the backup if a clean version exists.
 
 * Select <span class="notranslate">_Acronis Backup_</span> from the dropdown
 * Specify <span class="notranslate">_Acronis username_</span> and <span class="notranslate">_password_</span>
 * Click <span class="notranslate">_Connect Backup_</span> button
 
-Imunify360 checks if Acronis agent is already installed. If not, Imunify360 installs it. Then Imunify360 checks, if a backup of entire server exists, if not, Imunify360 creates a backup of a current server. If all is OK the system returns successful message.
+Imunify360 checks if the Acronis agent is already installed. If not, Imunify360 installs it. Then Imunify360 checks, if a backup of the entire server exists, if not, Imunify360 creates a backup of a current server. If all is OK the system returns a successful message.
 
 ![](/images/acronisbackup.png)
 
@@ -1728,10 +1728,10 @@ You can configure the automatic restore. Please find more details [here](/dashbo
 
 ### Disabled Rules
 
-Go to <span class="notranslate">_Settings_</span> page and choose <span class="notranslate">_Disabled rules_</span>. This page allows user to manage disabled rules which have already been added.
+Go to <span class="notranslate">_Settings_</span> page and choose <span class="notranslate">_Disabled rules_</span>. This page allows users to manage disabled rules which have already been added.
 
 ::: tip Note
-You can also add a new rule to the <span class="notranslate">Disabled Rules</span> list on [Incidents](/dashboard/#incidents) page.
+You can also add a new rule to the <span class="notranslate">Disabled Rules</span> list on the [Incidents](/dashboard/#incidents) page.
 :::
 The list of disabled rules contains:
 
@@ -1749,21 +1749,21 @@ In the pop-up specify the following:
 * <span class="notranslate">_Rule ID_</span> — ID provided by firewall plugin;
 * Select firewall plugin from the drop-down (ossec for OSSEC, modsec for ModSecurity)
 * <span class="notranslate">_Description_</span> — rule description or details from ModSecurity or OSSEC
-* <span class="notranslate">_Domains_</span> — this option is available only for modsec firewall plugin. Specify comma-separated list of domains for which this rule will be disabled. Leave empty to disable for all domains
+* <span class="notranslate">_Domains_</span> — this option is available only for modsec firewall plugin. Specify a comma-separated list of domains for which this rule will be disabled. Leave empty to disable for all domains
 
 Click <span class="notranslate">_Add Rule_</span> to add rule to the list or <span class="notranslate">_Cancel_</span> to close the pop-up.
 
 ![](/images/addrule_zoom90.png)
 
-To edit the list of domains where the rule should be disabled, click edit icon in the row of the rule and enter domains registered on the server separated by comma.
+To edit the list of domains where the rule should be disabled, click the edit icon in the row of the rule and enter domains registered on the server separated by a comma.
 
 ::: tip Note
-It is possible to specify domains only for ModSecurity rules. For OSSEC rules it is always applies to all domains.
+It is possible to specify domains only for ModSecurity rules. For OSSEC rules it always applies to all domains.
 :::
 
 ![](/images/disabledruleseditbutton_zoom70.png)
 
-To remove the rule from disabled list click <span class="notranslate">_Enable_</span> and confirm action in the pop-up.
+To remove the rule from the disabled list click <span class="notranslate">_Enable_</span> and confirm the action in the pop-up.
 
 ![](/images/disabledrulesenablepopup_zoom60.png)
 
@@ -1772,7 +1772,7 @@ To remove the rule from disabled list click <span class="notranslate">_Enable_</
 **Overview**
 
 <span class="notranslate">Features Management</span> allows hosters to enable/disable Imunify360 features for each customer. On <span class="notranslate">Features Management</span> it is possible to manage <span class="notranslate">Proactive Defense</span> and <span class="notranslate">Malware Cleanup</span> for each customer account.
-If a feature is enabled for the user in hoster’s account, the user will be able to see and use it in his account.
+If a feature is enabled for the user in the hoster’s account, the user will be able to see and use it in his account.
 
 ::: tip Note
 Default settings in <span class="notranslate">Features Management</span> are inherited by newly created user accounts only.
@@ -1876,7 +1876,7 @@ Choose an option for each feature.
 The last option is available in the WHM/cPanel Package Manager only and is not available via Imunify360 UI or CLI.
 :::  
 :::warning Note
-When the **Malware Scanner is not available** for end-user, it doesn't exclude user folders from scanning, so his files will be scanned and the results will be listed in an admin UI as usual.
+When the **Malware Scanner is not available** for the end-user, it doesn't exclude user folders from scanning, so his files will be scanned and the results will be listed in an admin UI as usual.
 :::
 
 <span class="notranslate">**Proactive Defense**</span>
@@ -1905,7 +1905,7 @@ Country-based white or blacklisting includes GeoLite2 data created by MaxMind, a
 
 **cPanel**
 
-It is possible to enable Service Status checker for Imunify360. Perform the following steps:
+It is possible to enable the Service Status checker for Imunify360. Perform the following steps:
 
 * Go to <span class="notranslate">_Service Configuration_</span> and choose <span class="notranslate">_Service Manager_</span>.
 * In <span class="notranslate">_Additional Services_</span> section tick <span class="notranslate">`imunify360`</span> checkbox.
@@ -1913,6 +1913,6 @@ It is possible to enable Service Status checker for Imunify360. Perform the foll
 
 ![](/images/ServiceManagercPanel1.png)
 
-If succeeded, the status of Imunify360 service will be displayed at Service Status section of Server Status.
+If succeeded, the status of the Imunify360 service will be displayed at the Service Status section of Server Status.
 
 ![](/images/service_status.jpg)
