@@ -188,4 +188,6 @@ onUnmounted(() => {
     top 3.875rem !important
     background #FFFFFF !important
     z-index 999
+    overflow-x hidden
+    white-space normal
 </style>
