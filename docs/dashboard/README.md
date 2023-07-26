@@ -1316,6 +1316,14 @@ You can read more about Anti-bot protection [here](/features/#anti-bot-protectio
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 
+#### cPanel account protection
+
+Tick the checkbox next to the <span class="notranslate">_cPanel account protection_</span> option to enable the JavaScript challenge for users trying to access the cPanel interface.
+
+More about the feature [here](/features/#cpanel-account-protection).
+
+![](/images/cPanelAccountProtectionFeatureWebshield.png)
+
 
 #### OSSEC
 
