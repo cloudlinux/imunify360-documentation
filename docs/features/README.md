@@ -852,6 +852,29 @@ Or via CLI. To do so, run the following command:
 ```
 </div>
 
+#### cPanel account protection
+
+Starting from v7.1, Imunify360 includes the extended the well-established [Anti-bot protection](/features/#anti-bot-protection) functionality to cPanel to ensure that users are protected from bot attacks. All users trying to log in to cPanel will face up with the “Splash Screen” JavaScript challenge. 
+
+Most bots are unable to solve the challenge, and their requests will not reach the cPanel login page. All users using regular browsers may pass the challenge automatically. After passing the Splash Screen, a user receives a cookie for 24 hours and does not need to pass it again for the whole session. 
+
+As bots and other automation are not supposed to pass the challenge, all legitimate automation should be [whitelisted by IPs](/command_line_interface/#whitelist).
+
+The feature is switched off by default. To switch the feature on, use the following CLI command:
+```
+# imunify360-agent config update '{"WEBSHIELD":{"panel_protection":true}}'
+```
+To switch it off:
+```
+# imunify360-agent config update '{"WEBSHIELD":{"panel_protection":false}}'
+```
+
+:::warning Note
+1. The Webshield module with the [Splash Screen](/features/#splashscreen-for-chinese-customers) functionality should also be switched on for enabling the feature.
+2. You can find WebShield and Captcha-related logs in the **/var/log/imunify360-webshield** directory.
+3. The feature works with the standard cPanel ports (2082, 2083). _Contact Support if you have a non-standard cPanel ports configuration or need the feature for other ports._
+:::
+
 <!-- ## How to write custom code on WebShield
 
 Starting from Imunify360 v.5.7, users can change WebShield configuration by creating custom configuration files, which will be included in general config once WebShield will start.
