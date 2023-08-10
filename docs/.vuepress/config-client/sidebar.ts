@@ -132,7 +132,7 @@ export default {
                 collapsable: false,
                 children: [
                     "/imunifyav/",
-                    "/imunifyav/imunifyav_for_plesk",
+                    "/imunifyav/imunifyav_for_plesk/",
                     "/imunifyav/imunifyav_for_ispmanager/",
                     "/imunifyav/imunifyav_for_webuzo/",
                     "/imunifyav/stand_alone_mode/",
