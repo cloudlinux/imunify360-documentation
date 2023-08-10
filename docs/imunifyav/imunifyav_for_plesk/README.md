@@ -2,20 +2,20 @@
 
 ImunifyAV for Plesk is an intelligent antivirus and security monitoring tool designed to work with Plesk CMS. It performs one-click automatic malware cleanup, domain reputation monitoring as well as blacklist status check and is available as a Free and a Premium (ImunifyAV+) version.
 
-* [Quick introduction for server admins](/imunifyav_for_plesk/#quick-introduction-for-server-admins)
-    * [Premium (ImunifyAV+) version and automatic malware cleanup](/imunifyav_for_plesk/#premium-imunifyav-version-and-automatic-malware-cleanup)
-    * [Video](/imunifyav_for_plesk/#video)
-* [Quick introduction for users](/imunifyav_for_plesk/#quick-introduction-for-users)
-* [Explanations](/imunifyav_for_plesk/#explanations)
-    * [Explaining the Domain tab](/imunifyav_for_plesk/#explaining-the-domain-tab)
-    * [Explaining the Settings tab](/imunifyav_for_plesk/#explaining-the-settings-tab)
-    * [How to activate a license key (for paid versions)](/imunifyav_for_plesk/#how-to-activate-a-license-key-for-paid-versions)
-    * [How the Antivirus removes malware](/imunifyav_for_plesk/#how-the-antivirus-removes-malware)
-* [FAQ](/imunifyav_for_plesk/#faq)
-* [Troubleshooting](/imunifyav_for_plesk/#troubleshooting)
-* [Removing ImunifyAV for Plesk](/imunifyav_for_plesk/#removing-imunifyav-for-plesk)
-* [Extension diagnostics](/imunifyav_for_plesk/#extension-diagnostics)
-    * [How to collect Plesk debug log](/imunifyav_for_plesk/#how-to-collect-plesk-debug-log)
+* [Quick introduction for server admins](/imunifyav/imunifyav_for_plesk/#quick-introduction-for-server-admins)
+    * [Premium (ImunifyAV+) version and automatic malware cleanup](/imunifyav/imunifyav_for_plesk/#premium-imunifyav-version-and-automatic-malware-cleanup)
+    * [Video](/imunifyav/imunifyav_for_plesk/#video)
+* [Quick introduction for users](/imunifyav/imunifyav_for_plesk/#quick-introduction-for-users)
+* [Explanations](/imunifyav/imunifyav_for_plesk/#explanations)
+    * [Explaining the Domain tab](/imunifyav/imunifyav_for_plesk/#explaining-the-domain-tab)
+    * [Explaining the Settings tab](/imunifyav/imunifyav_for_plesk/#explaining-the-settings-tab)
+    * [How to activate a license key (for paid versions)](/imunifyav/imunifyav_for_plesk/#how-to-activate-a-license-key-for-paid-versions)
+    * [How the Antivirus removes malware](/imunifyav/imunifyav_for_plesk/#how-the-antivirus-removes-malware)
+* [FAQ](/imunifyav/imunifyav_for_plesk/#faq)
+* [Troubleshooting](/imunifyav/imunifyav_for_plesk/#troubleshooting)
+* [Removing ImunifyAV for Plesk](/imunifyav/imunifyav_for_plesk/#removing-imunifyav-for-plesk)
+* [Extension diagnostics](/imunifyav/imunifyav_for_plesk/#extension-diagnostics)
+    * [How to collect Plesk debug log](/imunifyav/imunifyav_for_plesk/#how-to-collect-plesk-debug-log)
 
 ## Quick introduction for server admins
 
