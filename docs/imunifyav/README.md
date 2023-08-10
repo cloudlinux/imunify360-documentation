@@ -54,7 +54,7 @@ ImunifyAV provides malware scanning features for cPanel and DirectAdmin control 
 * Ubuntu 16.04 (LTS only), 18.04, 20.04 (LTS), and 22 (Plesk, DirectAdmin, and standalone)
 * Debian 9 (supported up to Imunify v6.11 (including)), 10, and 11
 * Rocky Linux 8 (cPanel, Plesk, and standalone)
-* Almaliunx 8
+* AlmaLinux 8
 
 **Virtualization**
 
