@@ -352,6 +352,64 @@ You will see a notification if a country has been added successfully.
 
 ![](/images/sucess_country_zoom82.png)
 
+#### How to add a comment to IP
+
+In the proper IP row click ![](/images/plus_icon.png) in the <span class="notranslate">_Comment_</span> column, type a comment and click ![](/images/tick_icon.png).
+
+To remove a comment, click ![](/images/pen_icon.png) and remove the text. Then click  ![](/images/tick_icon.png).
+
+#### How to move IP from the Black List to the White List
+
+To move IP from the <span class="notranslate">Black List</span> to the <span class="notranslate">White List</span>, choose proper IPs in the list (use checkboxes), click <span class="notranslate">_Group Actions_</span> at the top of the table and choose <span class="notranslate">_Move to White List_</span> in the drop-down. Then confirm the action.
+
+![](/images/move_ip_black.png)
+
+To move an exact IP, just click the _Cog_ icon in a proper IP row and choose <span class="notranslate">_Move to White List_</span> in the drop-down. Then confirm the action.
+
+ ![](/images/move_black.png)
+You will see a notification if an IP is moved to the <span class="notranslate">White List</span> successfully.
+
+![](/images/success.jpg)
+
+#### How to remove IP from the Black List
+
+To remove IP from the <span class="notranslate">Black List</span>, choose proper IPs in the table (use checkboxes) and click <span class="notranslate">_Delete permanently_</span>. Then confirm the action.
+
+![](/images/delete_permanently.png)
+To remove an exact IP, just click _Bin_ icon in the proper IP row. Then confirm the action.
+
+You will see a notification if an IP is successfully removed.
+
+![](/images/success_01_zoom75.png)
+
+See also: [How to use external files with the list of Black/White IPs](/features/#external-black-whitelist-management)
+
+### Global Black/White list IP management
+
+Administrator can manage IPs globally, this means that you can blacklist or whitelist an IP not only on one server but on a group of servers. 
+
+Prior to manage IPs globally, you should create a group and add servers into it. This can be done via [CLN UI](https://cln.cloudlinux.com/). You can find the complete documentation on how to create and manage servers’ groups [here](https://docs.cln.cloudlinux.com/dashboard/#server-groups).
+
+When you have created a group in CLN and added IPs into this group, go to _Imunify360 > Firewall > White list_ or _Black list_.
+You will see the _Scope_ column and controls (on clicking the _Add_ button) to manage IP locally (on a current server) or globally (on a group of servers).
+
+![](/images/global_IP_management.png)
+
+#### How to change Scope to Group/Local
+
+To change the scope to <span class="notranslate">_Group/Local_</span>, first [create your groups](https://docs.cln.cloudlinux.com/dashboard/#how-to-add-a-server-to-a-group) in the CLN.
+
+![](/images/CLNGroups.png)
+
+After that, go to <span class="notranslate">_Firewall > White/Black list_</span> and select an IP.
+
+
+* In the <span class="notranslate">_Actions_</span> column click ![](/images/gear.png).
+* Choose <span class="notranslate">_Change scope to Group/Local_</span>.
+* In the opened popup click <span class="notranslate">_Yes, change scope to Group/Local_</span> or click <span class="notranslate">_Cancel_</span> to close the popup.
+
+![](/images/change_scope.png)
+
 ### Ports
 
 This feature allows to block specific ports for TCP/UDP connection. It is also possible to add specific IPs or subnet as a whitelisted so that the rule for the port will not work.
