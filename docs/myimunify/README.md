@@ -48,7 +48,7 @@ The features whose **behavior is changed when MyImunify is enabled**.
 
 #### Configuring the billing system (WHMCS) side
 
-Install the CloudLinux Advantages plugin if you don’t have it yet. Once installed check presence in `WHMCS` -> `Addons` menu.
+Install the CloudLinux Advantages plugin if you don’t have it yet. Once installed check presence in **WHMCS -> Addons** menu.
 
 ![](/images/myimunify_whmcs_addons_menu.png)
 
