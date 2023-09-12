@@ -33,6 +33,7 @@ The features whose **behavior is changed when MyImunify is enabled**.
     * At the same time, a hosting administrator still be able to clean up files if needed. 
 
 * Account owner's UI when Protection is Disabled (Malicious Tab): 
+
 ![](/images/owner_UI_protection_disabled.png)
 
 * Proactive Defense - Proactive Defense protects websites running PHP, against zero-day attacks by blocking potentially malicious executions automatically and with zero latency. 
@@ -40,6 +41,7 @@ The features whose **behavior is changed when MyImunify is enabled**.
     * Once MyImunify is enabled, Proactive Defense will automatically enabled into Kill Mode unless it is disabled on the server. 
 
 * Account’s owner’s UI when Protection is Disabled (Proactive Defence tab):
+
 ![](/images/owner_UI_protection_disabled_pd.png)
 
 ### How to enable MyImunify
@@ -47,6 +49,7 @@ The features whose **behavior is changed when MyImunify is enabled**.
 #### Configuring the billing system (WHMCS) side
 
 Install the CloudLinux Advantages plugin if you don’t have it yet. Once installed check presence in `WHMCS` -> `Addons` menu.
+
 ![](/images/myimunify_whmcs_addons_menu.png)
 
 :::tip
@@ -56,12 +59,15 @@ Don’t forget to add your server under WHMCS management: "**System -> Settings 
 #### Adding a new Configurable option to a hosting plan
 
 1. Go to "**WHMCS System Settings -> Configurable Options**, select the **MyImunify** Group, and edit it.
+
 ![](/images/configurable_options_myimunify_group.png)
 
 2. **my_imunify_hosting** needs to be assigned to the hosting plans. Select "**linceses - my_imunify_hosting**" and your hosting configuration together in the Assiged Product list (`Shift+click`).
+
 ![](/images/managegroup_myimunifyhosting.png)
 
 3. Edit the price for the configurable option "**MyImunify – Account Protection**. For more info, visit [https://docs.whmcs.com/Configurable_Options](https://docs.whmcs.com/Configurable_Options).
+
 ![](/images/configurable_options_edit_price.png)
 
 #### Enabling MyImunify for existing users by default
@@ -74,20 +80,24 @@ In case a hosting company wants to enable MyImunify on a server that already has
 Here is how to configure an existing hosting plan by WHMCS administrator to enable MyImunify Protection Enabled at no additional cost. 
 
 1. Go to Settings -> Configurable Options Groups -> Create New Group:
+
 ![](/images/configurable_options_create_new_group.png)
 
 2. Create a new group with a distinct name and assign it to your existing product/plan:
+
 ![](/images/configurable_options_create_new_group_details.png)
 
 3. Add a new configurable option to the group and press “Add New Configurable Option”:
+
 ![](/images/configurable_options_add_new.png)
 
 4. Fill in the option name field. It is important for the option to start with `my_imunify_account_protection|` (don’t forget `|` at the end). 
 
-5. Then add the option “awp_on|On”. Use “awp_on|” as a prefix, the rest is the text that a user will see.
+5. Then add the option `awp_on|On`. Use `awp_on|` as a prefix, the rest is the text that a user will see.
 
     * To avoid inflicting additional costs, the price line needs to be filled with 0.00. The Order value must be set to “1”. 
-    * It is also possible to add an “awp_off|” option here to allow the users to disable protection. In this case, the Order field must have a value “2”. 
+    * It is also possible to add an `awp_off|` option here to allow the users to disable protection. In this case, the Order field must have a value “2”. 
+
 ![](/images/configurable_options_awp_on_off.png)
 
 **Confirming the changes**
@@ -110,6 +120,7 @@ Now you have to configure your new hosting plan for the users who will need to p
 
 1. Configuration of MyImunify on the Imunify360 side is pretty easy. Navigate to the “**Imunify360 -> Settings -> General -> MyImunify**” section. 
 2. Click “**Resell MyImunify package to site owners**” and specify the billing system (WHMCS) hostname. If your system is running on the port other than standard HTTPS port (443), specify it as well e.g. `whmcs.example.com:8443`. Don’t forget to hit the `Save Changes` button.
+
 ![](/images/imunify360_settings_myimunify.png)
 
 
@@ -118,9 +129,11 @@ Now you have to configure your new hosting plan for the users who will need to p
 By default, every purchase of a configurable option creates an order that needs to be accepted. 
 
 1. Select “**Orders -> List Orders**”:
+
 ![](/images/whmcs_list_orders.png)
 
 2. Select pending orders and accept them.
+
 ![](/images/whmcs_accepting_orders.png)
 
 
@@ -139,9 +152,11 @@ By integrating MyImunify, you equip your website with a cutting-edge protective 
 #### Where MyImunify is located?
 
 1. Log into your hosting account control panel (cPanel) and find Imunify360 in the Security section (or use a search tool for "Imunify360"). 
+
 ![](/images/cpanel_search_imunify360.png)
 
 2. Open Imunify360.
+
 ![](/images/myimuinfy_ui_end_user.png)
 
 On the screenshot, you can see an example of an account with malware detected. 
