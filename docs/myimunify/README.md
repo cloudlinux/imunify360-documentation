@@ -53,20 +53,20 @@ Install the CloudLinux Advantages plugin if you don’t have it yet. Once instal
 ![](/images/myimunify_whmcs_addons_menu.png)
 
 :::tip
-Don’t forget to add your server under WHMCS management: "**System -> Settings -> Servers -> Add New Server**". Refer to [https://docs.whmcs.com/Servers#Add_a_Server](https://docs.whmcs.com/Servers#Add_a_Server).
+Don’t forget to add your server under WHMCS management: **System -> Settings -> Servers -> Add New Server**. Refer to [https://docs.whmcs.com/Servers#Add_a_Server](https://docs.whmcs.com/Servers#Add_a_Server).
 :::
 
 #### Adding a new Configurable option to a hosting plan
 
-1. Go to "**WHMCS System Settings -> Configurable Options**, select the **MyImunify** Group, and edit it.
+1. Go to **WHMCS System Settings -> Configurable Options**, select the **MyImunify** Group, and edit it.
 
 ![](/images/configurable_options_myimunify_group.png)
 
-2. **my_imunify_hosting** needs to be assigned to the hosting plans. Select "**linceses - my_imunify_hosting**" and your hosting configuration together in the Assiged Product list (`Shift+click`).
+2. **my_imunify_hosting** needs to be assigned to the hosting plans. Select **linceses - my_imunify_hosting** and your hosting configuration together in the Assiged Product list (`Shift+click`).
 
 ![](/images/managegroup_myimunifyhosting.png)
 
-3. Edit the price for the configurable option "**MyImunify – Account Protection**. For more info, visit [https://docs.whmcs.com/Configurable_Options](https://docs.whmcs.com/Configurable_Options).
+3. Edit the price for the configurable option **MyImunify – Account Protection**. For more info, visit [https://docs.whmcs.com/Configurable_Options](https://docs.whmcs.com/Configurable_Options).
 
 ![](/images/configurable_options_edit_price.png)
 
@@ -118,7 +118,7 @@ Now you have to configure your new hosting plan for the users who will need to p
 
 #### Configuring the Imunify360 side
 
-1. Configuration of MyImunify on the Imunify360 side is pretty easy. Navigate to the “**Imunify360 -> Settings -> General -> MyImunify**” section. 
+1. Configuration of MyImunify on the Imunify360 side is pretty easy. Navigate to the **Imunify360 -> Settings -> General -> MyImunify** section. 
 2. Click “**Resell MyImunify package to site owners**” and specify the billing system (WHMCS) hostname. If your system is running on the port other than standard HTTPS port (443), specify it as well e.g. `whmcs.example.com:8443`. Don’t forget to hit the `Save Changes` button.
 
 ![](/images/imunify360_settings_myimunify.png)
@@ -128,7 +128,7 @@ Now you have to configure your new hosting plan for the users who will need to p
 
 By default, every purchase of a configurable option creates an order that needs to be accepted. 
 
-1. Select “**Orders -> List Orders**”:
+1. Select **Orders -> List Orders**:
 
 ![](/images/whmcs_list_orders.png)
 
