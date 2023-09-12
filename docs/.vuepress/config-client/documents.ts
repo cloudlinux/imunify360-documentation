@@ -88,5 +88,10 @@ export default [
         title: "Imunify Email Product",
         description: "Imunify Email documentation section.",
         link: "/email/",
+    },
+    {
+        title: "MyImunify Documentation",
+        description: "MyImunify is a meticulously crafted solution aimed at turning security from a mere cost center into a powerful revenue generator.",
+        link: "/myimunify/",
     }
 ]

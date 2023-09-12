@@ -149,5 +149,13 @@ export default {
                     "/email/"  
                 ]
             }
+        ],
+        '/myimunify/': [
+            {
+                collapsable: false,
+                children: [
+                    "/myimunify/"
+                ]
+            }
         ]
     }
