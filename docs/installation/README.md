@@ -42,7 +42,7 @@
 **Supported Web-servers**
 * <span class="notranslate">Apache</span>
 * <span class="notranslate">LiteSpeed</span>
-* <span class="notranslate">Nginx</span> ([only in <span class="notranslate">Standalone mode</span>](/stand_alone/))
+* <span class="notranslate">Nginx</span> ([only in <span class="notranslate">Standalone mode</span>](/control_panel_integration/#introduction))
 
 
 ## Installation Instructions
