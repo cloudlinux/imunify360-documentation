@@ -229,28 +229,28 @@ Imunify Email quarantine CLI application
 **Usage**:
 
 ```
-ie-cli [command]
+ie-cli [command] [arguments]
 ```
+
+Use `--help` key to get list of the available commands and to get help for the particular command, e.g. `ie-cli whitelist sender --help` .
 
 **Available Commands**:
 
 | | |
 |-|-|
-|`accounts`|For working with accounts|
-|`completion`|Generate the auto-completion script for the specified shell|
-|`emails`|For working with emails|
-|`help`|Help about any command|
-|`settings`|Settings command|
-|`whitelist-authusers`|Manage whitelist authusers|
-|`whitelist-recipients`|Manage whitelist recipients|
-|`whitelist-senders`|Manage whitelist senders|
+|`accounts`|interaction with accounts in the quarantine|
+|`am`|interaction with the Activity Monitor, same API as in ActivityMonitor UI|
+|`emails`|interaction with emails in the quarantine|
+|`filter-settings`|toggle the filter settings, without any parameters - returns the current settings|
+|`version`|print the ImunifyEmail CLI version|
+|`whitelist`|interaction with the whitelist of authenticated users, senders and recipients|
+
 
 **Flags**:
 
 | | |
 |-|-|
 |`-h`, `--help`|Help for ie-cli|
-|`-t`, `--toggle`|Help message for toggle|
 
 
 ### Operations with emails in the quarantine
@@ -319,51 +319,52 @@ ie-cli emails list -a root –-json
 
 ```json
 {
-   "items": [ 
- 		{
- 			"email_id": "ef69f707-d547-4b29-b8f0-f5331821c930",
- 			"size_bytes": 8190,
- 			"account_name": "mws",
- 			"recipients": [
- 				"me@somehost.com"
- 			],
- 			"subject": "Ge t G:eneric V1agra f:or as 1ow as $2.50 per 50 mg",
- 			"script_header": {
- 				"raw": "",
- 				"domain": "",
- 				"path": ""
- 			}
- 		},
- 		{
- 			"email_id": "faf96a73-5be4-481a-9c6c-7ab8fb2e3cf0",
- 			"size_bytes": 8534,
- 			"account_name": "mws",
- 			"recipients": [
- 				"frank@yahooo.com"
- 			],
- 			"subject": "FWD: Want Pills V|AgR@ % Xan_a_x ^ Valiu|m|  lNmAL",
- 			"script_header": {
- 				"raw": "",
- 				"domain": "",
- 				"path": ""
- 			}
- 		},
- 		{
- 			"email_id": "fbc2efd0-1808-4e54-99ce-3082708b28ee",
- 			"size_bytes": 8971,
- 			"account_name": "oregdent",
- 			"recipients": [
- 				"steve@hillcabinet.com"
- 			],
- 			"subject": "FWD:Xanax.x Valium.m Xanax.x Vicodin.n h ogzmwggi",
- 			"script_header": {
- 				"raw": "",
- 				"domain": "",
- 				"path": ""
- 			}
- 		}
- 	],
- 	"max_count": 3
+  "items": [
+    {
+      "email_id": "ef69f707-d547-4b29-b8f0-f5331821c930",
+      "size_bytes": 8190,
+      "account_name": "mws",
+      "recipients": [
+        "me@somehost.com"
+      ],
+      "subject": "Ge t G:eneric V1agra f:or as 1ow as $2.50 per 50 mg",
+      "script_header": {
+        "raw": "",
+        "domain": "",
+        "path": ""
+      }
+    },
+    {
+      "email_id": "faf96a73-5be4-481a-9c6c-7ab8fb2e3cf0",
+      "size_bytes": 8534,
+      "account_name": "mws",
+      "recipients": [
+        "frank@yahooo.com"
+      ],
+      "subject": "FWD: Want Pills V|AgR@ % Xan_a_x ^ Valiu|m|  lNmAL",
+      "script_header": {
+        "raw": "",
+        "domain": "",
+        "path": ""
+      }
+    },
+    {
+      "email_id": "fbc2efd0-1808-4e54-99ce-3082708b28ee",
+      "size_bytes": 8971,
+      "account_name": "oregdent",
+      "recipients": [
+        "steve@hillcabinet.com"
+      ],
+      "subject": "FWD:Xanax.x Valium.m Xanax.x Vicodin.n h ogzmwggi",
+      "script_header": {
+        "raw": "",
+        "domain": "",
+        "path": ""
+      }
+    }
+  ],
+  "max_count": 3
+}
 ```
 
 ### Show Email message
@@ -377,13 +378,13 @@ Don’t forget to specify a user account. For root user use `-a root`.
 **Command**
 
 ```
-ie-cli emails show <EMAIL_ID> [-a <ACCOUNT_NAME>] [--json]
+ie-cli emails show --id <EMAIL_ID> [-a <ACCOUNT_NAME>] [--json]
 ```
 
 **Example**
 
 ```
-ie-cli emails show f3367f1b-4216-4f4f-9617-f8be9f5a6e76 -a root
+ie-cli emails show --id f3367f1b-4216-4f4f-9617-f8be9f5a6e76 -a root
 ```
 
 **Output**
@@ -415,7 +416,7 @@ X-Failed-Recipients:          []
 Body: PCFET0NUWVBFIGh0bWwgcHVibGljICItLy9XM0MvL0RURCBIVE1MIDQuMDEgVHJhbnNpdGlvbmFsLy9FTiIgPQoiaHR0cDovL3d3dy53My5vcmcvVFIvaHRtbDQvbG9vc2UuZHRkIj4KPEhUTUw+CjxIRUFEPgo8VElUTEU+QWxsIFlvdXIgTWVkcyBIZXJlPC9USVRMRT4KPE1FVEEgaHR0cC1lcXVpdj0zRCJDb250ZW50LXR5cGUiIGNvbnRlbnQ9M0QidGV4dC9odG1sOyA9CmNoYXJzZXQ9M0RJU08tODg1OS0xIj4KPFNUWUxFIHR5cGU9M0QidGV4dC9jc3MiPgo8IS0tIC5zdHlsZTUge2ZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6ID0KMTRweDsgfT0yMAo8IS0tIC5zdHlsZTgge2ZvbnQtZmFtaWx5OiBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDhweDsgPQp9PTIwCi0tPjwvU1RZTEU
 ```
 
-### Release or Delete a message from the quarantine
+### Release or Remove a message from the quarantine
 
 Messages can be released from the quarantine and sent to recipients if they are false positives. They can also be deleted if needed to free up space. 
 
@@ -428,13 +429,13 @@ The quarantine will automatically delete the oldest messages when the user's qua
 **Command**
 
 ```
-ie-cli emails edit -i '{"ids": ["<EMAIL_ID, EMAIL_ID>"], "operation": "release"}' [-a 'account_name']
+ie-cli emails release --ids EMAIL_ID_1,EMAIL_ID_2 -a root
 ```
 
 **Example**
 
 ```
-ie-cli emails edit -a root -i '{ "ids": ["fb7c3537-8e5e-43d8-bc66-bd954c22d587"], "operation":"delete" }'
+ie-cli emails release --ids fb7c3537-8e5e-43d8-bc66-bd954c22d587 -a root
 ```
 
 **Output**
@@ -443,12 +444,12 @@ ie-cli emails edit -a root -i '{ "ids": ["fb7c3537-8e5e-43d8-bc66-bd954c22d587"]
 OK
 ```
 
-#### Delete
+#### Remove
 
 **Command**
 
 ```
-ie-cli emails edit -i '{"ids": ["<EMAIL_ID, EMAIL_ID>"], "operation": "delete"}' -a 'account_name' 
+ie-cli emails remove --ids fb7c3537-8e5e-43d8-bc66-bd954c22d587 -a root 
 ```
 
 **Output**
@@ -513,18 +514,18 @@ Max Count 2
 
 #### Edit account size limit
 
-Sometimes it is necessary to give more (or less) space for some user accounts. It is possible to do using the following command.
+Sometimes it is necessary to give more (or less) space in the quarantine for some user accounts. It is possible to do using the following command.
 
 **Command**
 
 ```
-ie-cli settings edit -a '<ACCOUNT_NAME>' -i '{"state": "active", "limit_bytes": 1234}'
+ie-cli accounts edit -a ACCOUNT_NAME [--state=active|block] [--limit=1024]
 ```
 
 **Example**
 
 ```
-ie-cli settings edit -a 'mydomain' -i '{"state": "active", "limit_bytes": 8096}'
+ie-cli accounts edit -a mydomain --state=active --limit=8096
 ```
 
 **Output (JSON)**
@@ -552,13 +553,13 @@ If needed all quarantine for an account can be cleaned with one command.
 **Command**
 
 ```
-ie-cli settings rm <ACCOUNT_NAME>
+ie-cli accounts remove -a <ACCOUNT_NAME>
 ```
 
 **Example**
 
 ```
-ie-cli settings rm root
+ie-cli accounts remove -a root
 ```
 
 **Output**
@@ -575,18 +576,58 @@ Imunify Email supports whitelisting configuration. It is possible to whitelist d
 When sender is whitelisted Imunify Email bypasses it’s emails without filtering. It may affect hosting reputation if a whitelisted sender will send spam.
 :::
 
+#### Available commands
+
+In general, all whitelisting operations could be described by the next pattern:
+
+```
+ie-cli whitelist WHO OPERATION [value1 value2 ... valueN]
+```
+
+Where `WHO` is one of:
+- authuser (only email address)
+- sender (email address or domain name)
+
+`OPERATION` is one of:
+- add
+- list
+- remove
+
+`value1 valu2 ... valueN` - email addresses and domains (actual for the `add` and `remove` commands)
+
+**Command**
+
+```
+ie-cli whitelist --help
+List/Add/Delete authenticated users, senders and recipients to/from whitelist.
+Where :
+    - authenticated user could be only an email address
+    - sender and recipient could be one of domain or email address
+
+Usage:
+  ie-cli whitelist [command]
+
+Available Commands:
+  authuser    operation with the whitelist of the authenticated users (email addresses)
+  sender      operation with the whitelist of senders (email addresses and domains)
+
+Flags:
+  -h, --help   help for whitelist
+
+Use "ie-cli whitelist [command] --help" for more information about a command.
+```
+
 #### See all whitelist senders
 
 **Command**
 
 ```
-ie-cli wl-recipients list [--json]
+ie-cli whitelist authuser list  [--json]
 ```
 
 **Output**
 
 ```
-[root@77-79-198-14 ie-cli]# ie-cli wl-authusers list
 EMAILS
 1@example5.com
 pp@ppp.com
@@ -614,58 +655,70 @@ No available data
 
 #### Whitelist a sender
 
-To whitelist a domain or an email address use the following command.
+To whitelist a domain or/and an email address use the following command.
 
 **Command**
 
 ```
-ie-cli wl-senders add -i  (--input) '[  { "type": "domain", "value": "domain.com" } ]'
+ie-cli whitelist sender add domain.com some_email@domain.com
 ```
 
-**Example: whitelisting sender email address**
-
+**Output**
 ```
-ie-cli wl-senders add -i '[  { "type": "email", "value": "me@domain1.com" } ]'
-```
-
-**Example: whitelisting sender email address**
-
-```
-ie-cli wl-senders add -i '[  { "type": "domain", "value": "crm.myshop.com" } ]'
-```
-
-**Output** 
-
-```
+Adding sender(s) to the whitelist:
+1. domain    domain.com
+2. email     some_email@domain.com
 OK
 ```
 
-#### Remove whitelist for a sender
+#### Remove sender from the whitelist
 
 If needed, the sender can be removed from the whitelist. See the following commands.
 
 **Command**
 
 ```
-ie-cli wl-senders delete -i (--input) '[ { "type": "domain", "value": "domain.com" } ]'
+ie-cli whitelist sender remove domain.com
 ```
 
-**Example: whitelisting sender email address**
+**Output**
 
 ```
-ie-cli wl-senders delete -i '[ { "type": "email", "value": "me@domain1.com" } ]'
-```
-
-**Example: whitelisting sender email address**
-
-```
-ie-cli wl-senders delete -i '[ { "type": "domain", "value": "crm.myshop.com" } ]'
-```
-
-**Output** 
-
-```
+Removing sender(s) from the whitelist:
+1. domain    domain.com
 OK
+```
+
+### Activity Monitor
+
+To get understanding of Activity Monitor see the next section. `ie-cli` provides and API to get the same information as UI does from the Activity Monitor. 
+`ie-cli` allows to
+1. get the Activity Monitor statistics
+2. set/remove/update sender limits for the particular account/domain/email/script
+3. get/update server limits that applied by default
+
+**Command**
+
+```
+ie-cli am --help
+
+This subcommand interacts with the Activity Monitor to return statistics, get/set settings for
+the sender objects.
+Activity Monitor operates by the sender objects. Sender object is an object on behalf of which
+client sends email. It could be one of: "account", "domain", "script" or "sender_email"
+
+Usage:
+  ie-cli am [command]
+
+Available Commands:
+  limit           The limit value of sender object can be applied on particular domain, sender email and account
+  server-settings Operates by the server sender limit settings and allows to set default limit that is applied for all sender objects
+  stats           stats (statistics) returns the aggregated view of senders objects with various filters
+
+Flags:
+  -h, --help   help for am
+
+Use "ie-cli am [command] --help" for more information about a command.
 ```
 
 ### Activity Monitor and Sender limits
