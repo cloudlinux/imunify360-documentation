@@ -157,6 +157,7 @@ modsecurity_rules_file /etc/sysconfig/imunify360/generic/modsec.conf;
 Set the path and graceful restart script in the <span class="notranslate">`integration.conf`</span>
 
 * <span class="notranslate">`[web_server].graceful_restart_script`</span> – a script that restarts the web server to be called after any changes in web server config or ModSecurity rules
+* <span class="notranslate">`[web_server].config_test_script`</span> – a script that checks the web server's config to be called after any changes in the web server config or ModSecurity rules
 * <span class="notranslate">`[web_server].modsec_audit_log`</span> – a path to ModSecurity audit log file
 * <span class="notranslate">`[web_server].modsec_audit_logdir`</span> – a path to ModSecurity audit log directory (required when the <span class="notranslate">`SecAuditLogType`</span> set to the <span class="notranslate">`Concurrent`</span>)
 
@@ -168,6 +169,7 @@ Example
 [web_server]
 server_type = apache
 graceful_restart_script = /usr/sbin/apachectl restart
+config_test_script = /usr/sbin/apachectl -t
 modsec_audit_log = /var/log/httpd/modsec_audit.log
 modsec_audit_logdir = /var/log/modsec_audit
 ```
