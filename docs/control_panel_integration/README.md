@@ -75,6 +75,7 @@ stability issues (see [https://github.com/SpiderLabs/ModSecurity/issues/2381](ht
 
 Imunify360 Stand-alone version requires the following integrations before installation:
 
+* Specifying panel information
 * Integration with web server for serving UI
 * Interaction with ModSecurity
 * Integration with WebShield
@@ -83,6 +84,36 @@ Imunify360 Stand-alone version requires the following integrations before instal
 * Define administrators for Imunify360
 
 All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file).
+
+#### Specifying panel information
+
+To specify information about your hosting panel in Imunify360/ImunifyAV, use the `panel_info` option in the `[integration_scripts]` section of `integration.conf` file.
+
+<div class="notranslate">
+
+```
+[integration_scripts]
+panel_info = /path/to/info/script.sh
+```
+</div>
+
+The option should contain a full path to the executable that prints JSON data in the following format:
+
+<div class="notranslate">
+
+```
+{
+    "data": {
+        "name": "MyHostingPanel",
+        "version": "1.23.4"
+    },
+    "metadata": {
+        "result": "ok"
+    }
+}
+```
+</div>
+
 
 #### Integration with web server
       
@@ -632,6 +663,32 @@ service_name = system-auth
 
 The PAM service is used for user authentication in the Imunify360 UI application.
 By default the <span class="notranslate">`system-auth`</span> service is used.
+
+<div class="notranslate">
+
+```
+[integration_scripts]
+panel_info = /path/to/panel_info.sh
+```
+</div>
+
+The path to the executable script that generates a JSON file with the information about hosting panel.
+
+<div class="notranslate">
+
+```
+{
+  "data": {
+      "name": "CustomHostingPanel",
+      "version": "admin",
+  },
+  "metadata": {
+    "result": "ok"
+  }
+}
+```
+</div>
+
 
 <div class="notranslate">
 
