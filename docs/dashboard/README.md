@@ -1666,7 +1666,7 @@ The following integrated with Imunify360 backup providers are available:
 * <span class="notranslate">Acronis Backup</span>
 
 :::warning Warning
-JetBackup server backup application is not available right now because of rework. It will be available back again in 2022.
+**JetBackup**: The Imunify360 integration is implemented on the JetBackup side. JetBackup server backup application is not available right now because of the rework. 
 :::
 
 
