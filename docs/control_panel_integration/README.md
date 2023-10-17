@@ -89,6 +89,10 @@ All integrations set in the integration config file like <span class="notranslat
 
 To specify information about your hosting panel in Imunify360/ImunifyAV, use the `panel_info` option in the `[integration_scripts]` section of `integration.conf` file.
 
+:::warning
+This is a mandatory field and must be specified prior to the start of the installation.
+:::
+
 <div class="notranslate">
 
 ```
