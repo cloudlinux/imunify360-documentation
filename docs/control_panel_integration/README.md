@@ -1,12 +1,10 @@
-# Control panel integration
+# Generic panels and no-panel installation and integration
 
 [[TOC]]
 
 ## Introduction
 
-Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface.
-
-It is also called stand-alone, non-panel, generic panel integration).
+Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface. It is also called stand-alone, non-panel, generic panel integration.
 
 #### Limitations
 
@@ -32,10 +30,10 @@ It is also called stand-alone, non-panel, generic panel integration).
 
 #### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
 
-1. Install and configure the prerequisites like web servers modules or so
-2. Configure Imunify360 integrations like authentication or <span class="notranslate">`mod_security`</span> configuration
-3. Install Imunify360
-4. Change default Imunify360 settings to reflect your needs
+1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) like like ModSecurity, PHP with JSON support, and other common WEB server packages.
+2. Create [integration.conf](https://cloudlinux.zendesk.com/hc/en-us/article_attachments/10897631373852?_gl=1*24p3t*_ga*MTM5OTQ3NjE3OC4xNjk3NjM2MDk2*_up*MQ..*_ga_8LBSSX7VQX*MTY5NzYzNjA5NC4xLjAuMTY5NzYzNjA5NC4wLjAuMA..*_ga_1RCQ134PYC*MTY5NzYzNjA5NC4xLjAuMTY5NzYzNjA5NC4wLjAuMA..*_ga_V4QHJSZM47*MTY5NzYzNjA5NC4xLjAuMTY5NzYzNjA5NC4wLjAuMA..) file to configure Imunify360 integrations such as authentication,  <span class="notranslate">`mod_security`</span> settings and WEB server scripts.
+3. Install Imunify360 using the [deploy script](https://docs.imunify360.com/control_panel_integration/#install-imunify360)
+4. Check the [installed modules work](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) and change the Imunify360 settings to reflect your needs.
 
 :::warning Warning
 Imunify Web-UI PHP code has to be executed under a non-root user which has access to `/var/run/defence360agent/non_root_simple_rpc.sock`. If it runs in CageFS, you'll need to configure it accordingly.
@@ -83,7 +81,7 @@ Imunify360 Stand-alone version requires the following integrations before instal
 * Integration with authentication service
 * Define administrators for Imunify360
 
-All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file).
+All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://cloudlinux.zendesk.com/guide-media/01HD1FQ947RNZB4PYXRVA3PMM0) or check the [Knoledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
 
 #### Specifying panel information
 

@@ -29,8 +29,8 @@
 * <span class="notranslate">Plesk (Plesk</span> 17.5 or newer)
 * <span class="notranslate">DirectAdmin</span>
 * <span class="notranslate">CyberPanel</span> (only CloudLinux OS 7 and 8). See [3rd party integration guide from CyberPanel](https://community.cyberpanel.net/docs?category=49&tags=cloudlinux&topic=172)
-* Generic hosting panel ([Configuration required](/control_panel_integration/#settings-related-to-stand-alone-version/))
-* Webuzo ([Imunify360 installation guide](https://webuzo.com/docs/installing-webuzo/install-imunify360/))
+* <span class="notranslate">Webuzo</span> ([Imunify360 installation guide](https://webuzo.com/docs/installing-webuzo/install-imunify360/))
+* For other Generic hosting panels or no-panel configurations, the [dedicated Stand-Alone installation documentation](/control_panel_integration/#settings-related-to-stand-alone-version/) should be used
 
 **Required browsers**
 
@@ -52,7 +52,9 @@ On  <span class="notranslate">Debian 10</span>, <span class="notranslate">`buste
 before installation:
   
 <div class="notranslate">
-
+```
+Note: This instruction is intended for cPanel, Plesk, DirectAdmin and other supported panels. If you are using currenlty not supported  panel, please proceed with the Stand-Alone documentation section.
+```
 ```
 echo "deb http://ftp.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/backports.list
 apt-get update
