@@ -17,11 +17,7 @@ Imunify Email has been checked for compatibility with following tools and mail g
 Hosting administrator only.
 :::
 
-:::danger Important
-Imunify Email beta is available for installation for registered beta testers only. Make sure you have subscribed as beta tester using [https://imunifyemail.com/](https://imunifyemail.com/) and followed the instructions sent by email.
-:::
-
-Imunify Email Beta is simple to install. 
+Imunify Email is simple to install. 
 
 At the moment, it runs on the following distributions:
 
@@ -179,7 +175,7 @@ The table has the following columns:
     * Plain text - headers plus original email body
 
 :::tip Note
-In this Beta release, the notifications are not sent both when deleting or releasing an email. Will be added in the next release.
+In this release, the notifications are not sent both when deleting or releasing an email. Will be added in the next release.
 :::
 
 ### Settings
@@ -201,7 +197,7 @@ The table has the following columns:
 * <span class="notranslate">**Account**</span> — user account name
 * <span class="notranslate">**Limit (MB)**</span> — the space for the user's quarantine limit (default is 100 MB)
 * <span class="notranslate">**Used Space (MB)**</span> — the space used by files in quarantine (slight excess of the limit is possible)
-* <span class="notranslate">**State**</span> — the state of the user's quarantine. In the Beta version it is **Active** only
+* <span class="notranslate">**State**</span> — the state of the user's quarantine. 
 * <span class="notranslate">**Details**</span> — emails deleted permanently for the last hour
 * <span class="notranslate">**Actions**</span>
   * <span class="notranslate">**Purge quarantine**</span> — purge all quarantine for an account
