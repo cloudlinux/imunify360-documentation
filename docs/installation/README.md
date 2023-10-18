@@ -31,6 +31,7 @@
 * <span class="notranslate">CyberPanel</span> (only CloudLinux OS 7 and 8). See [3rd party integration guide from CyberPanel](https://community.cyberpanel.net/docs?category=49&tags=cloudlinux&topic=172)
 * Generic hosting panel ([Configuration required](/control_panel_integration/#settings-related-to-stand-alone-version/))
 * Webuzo ([Imunify360 installation guide](https://webuzo.com/docs/installing-webuzo/install-imunify360/))
+* For other generic panels or no-panel configurations, the  [dedicated Stand-Alone installation documentation](https://docs.imunify360.com/control_panel_integration/?_gl=1*1fwi19i*_up*MQ..*_ga*MTA3NTczMDEwOC4xNjk3NDc0MzMw*_ga_8LBSSX7VQX*MTY5NzQ3NDMyNy4xLjAuMTY5NzQ3NDMyNy4wLjAuMA..*_ga_KRP813FVT7*MTY5NzQ3NDMyNy4xLjAuMTY5NzQ3NDMyNy4wLjAuMA..#settings-related-to-stand-alone-version/) should be used
 
 **Required browsers**
 
@@ -52,7 +53,9 @@ On  <span class="notranslate">Debian 10</span>, <span class="notranslate">`buste
 before installation:
   
 <div class="notranslate">
-
+```
+Note: This instruction is intended for cPanel, Plesk, DirectAdmin and other supported panels. If you are using currenlty not supported  panel, please proceed with the [Stand-Alone version](https://docs.imunify360.com/control_panel_integration/?_gl=1*1fwi19i*_up*MQ..*_ga*MTA3NTczMDEwOC4xNjk3NDc0MzMw*_ga_8LBSSX7VQX*MTY5NzQ3NDMyNy4xLjAuMTY5NzQ3NDMyNy4wLjAuMA..*_ga_KRP813FVT7*MTY5NzQ3NDMyNy4xLjAuMTY5NzQ3NDMyNy4wLjAuMA..#settings-related-to-stand-alone-version/) section.
+```
 ```
 echo "deb http://ftp.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/backports.list
 apt-get update

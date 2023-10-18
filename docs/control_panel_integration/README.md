@@ -1,12 +1,10 @@
-# Control panel integration
+# Generic panels and no-panel installation and integration
 
 [[TOC]]
 
 ## Introduction
 
-Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface.
-
-It is also called stand-alone, non-panel, generic panel integration).
+Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface. It is also called stand-alone, non-panel, generic panel integration.
 
 #### Limitations
 
@@ -32,7 +30,7 @@ It is also called stand-alone, non-panel, generic panel integration).
 
 #### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
 
-1. Install and configure the prerequisites like web servers modules or so
+1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) like like ModSecurity, PHP with JSON support, and other common WEB server packages.
 2. Configure Imunify360 integrations like authentication or <span class="notranslate">`mod_security`</span> configuration
 3. Install Imunify360
 4. Change default Imunify360 settings to reflect your needs
@@ -83,7 +81,7 @@ Imunify360 Stand-alone version requires the following integrations before instal
 * Integration with authentication service
 * Define administrators for Imunify360
 
-All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file).
+All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://cloudlinux.zendesk.com/guide-media/01HD1FQ947RNZB4PYXRVA3PMM0) or check the [Knoledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
 
 #### Specifying panel information
 
