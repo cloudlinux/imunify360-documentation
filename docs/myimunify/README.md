@@ -19,7 +19,7 @@ In the MyImunify Protection disabled mode, Imunify360 will still scan users' dir
 
 #### What features will be enabled/disabled when I turn MyImunify on?
 
-:::tip
+:::warning 
 When you enable the MyImunify feature on your server, you have to adjust your product plan to enable MyImunify protection for existing users. Otherwise, all the existing users on this server will have the protection disabled and no malware cleanup or Proactive Defense will be working until they purchase MyImunify individually. Please see how to enable MyImunify for existing users [**here**](/myimunify/#enabling-myimunify-for-existing-users-by-default).
 :::
 
