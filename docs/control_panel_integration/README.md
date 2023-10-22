@@ -20,7 +20,7 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 * CloudLinux OS 
 * Ubuntu 16.04/18.04/20.04/22
 * Debian 9/10
-* Rocky Linux 8
+* Rocky Linux 8/9
 
 **Web servers**
 
@@ -71,7 +71,7 @@ stability issues (see [https://github.com/SpiderLabs/ModSecurity/issues/2381](ht
 
 ## Configure Imunify360 integrations
 
-Imunify360 Stand-alone version requires the following integrations before installation:
+The Imunify360 Stand-alone version requires the following integrations before installation:
 
 * Specifying panel information
 * Integration with web server for serving UI
