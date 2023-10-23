@@ -15,8 +15,8 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 
 **Operating system**
 
-* CentOS 6/7/8
-* RHEL 6/7
+* CentOS 6/7/8/9
+* RHEL 6/7/8/9
 * CloudLinux OS 
 * Ubuntu 16.04/18.04/20.04/22
 * Debian 9/10
