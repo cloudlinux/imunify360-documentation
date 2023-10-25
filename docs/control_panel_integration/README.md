@@ -15,12 +15,12 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 
 **Operating system**
 
-* CentOS 6/7/8
-* RHEL 6/7
+* CentOS 6/7/8/9
+* RHEL 6/7/8/9
 * CloudLinux OS 
 * Ubuntu 16.04/18.04/20.04/22
 * Debian 9/10
-* Rocky Linux 8
+* Rocky Linux 8/9
 
 **Web servers**
 
@@ -30,8 +30,8 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 
 #### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
 
-1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) like like ModSecurity, PHP with JSON support, and other common WEB server packages.
-2. Create [integration.conf](https://cloudlinux.zendesk.com/hc/en-us/article_attachments/10897631373852?_gl=1*24p3t*_ga*MTM5OTQ3NjE3OC4xNjk3NjM2MDk2*_up*MQ..*_ga_8LBSSX7VQX*MTY5NzYzNjA5NC4xLjAuMTY5NzYzNjA5NC4wLjAuMA..*_ga_1RCQ134PYC*MTY5NzYzNjA5NC4xLjAuMTY5NzYzNjA5NC4wLjAuMA..*_ga_V4QHJSZM47*MTY5NzYzNjA5NC4xLjAuMTY5NzYzNjA5NC4wLjAuMA..) file to configure Imunify360 integrations such as authentication,  <span class="notranslate">`mod_security`</span> settings and WEB server scripts.
+1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) such as ModSecurity, PHP with JSON support, and other common WEB server packages.
+2. Create [integration.conf](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) file to configure Imunify360 integrations such as authentication,  <span class="notranslate">`mod_security`</span> settings and WEB server scripts.
 3. Install Imunify360 using the [deploy script](https://docs.imunify360.com/control_panel_integration/#install-imunify360)
 4. Check the [installed modules work](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) and change the Imunify360 settings to reflect your needs.
 
@@ -71,7 +71,7 @@ stability issues (see [https://github.com/SpiderLabs/ModSecurity/issues/2381](ht
 
 ## Configure Imunify360 integrations
 
-Imunify360 Stand-alone version requires the following integrations before installation:
+The Imunify360 Stand-alone version requires the following integrations before installation:
 
 * Specifying panel information
 * Integration with web server for serving UI

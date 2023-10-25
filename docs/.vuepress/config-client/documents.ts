@@ -20,7 +20,7 @@ export default [
         link: "/installation/",
     },
     {
-        title: "Control Panel Integration",
+        title: "Non-Supported Panel Integration",
         description: "Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface. It is also called stand-alone, non-panel, generic panel integration.",
         link: "/control_panel_integration/",
     },
