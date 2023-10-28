@@ -10,13 +10,9 @@
 * <span class="notranslate">CloudLinux</span> OS 6,7,8,9
 * <span class="notranslate">Ubuntu</span> 16.04 (LTS only), 18.04, 20.04 (LTS), and 22 (Plesk, DirectAdmin, and standalone)
 * <span class="notranslate">Debian</span> 9 (up to Imunify v6.11 (including)), 10 (requires buster-backports), and 11 (Plesk, DirectAdmin, and standalone)
-<<<<<<< HEAD
-* <span class="notranslate">AlmaLinux</span> 8
-* Rocky Linux 8 (cPanel, Plesk, and standalone)
-=======
 * <span class="notranslate">AlmaLinux</span> 8,9
 * <span class="notranslate">Rocky Linux</span> 8,9 (cPanel, Plesk, and standalone)
->>>>>>> 67d291dd9e07f80232f9dcb98beaec59af334f9f
+
 
 **Virtualization**
 
@@ -52,15 +48,11 @@
 
 ## Installation Instructions
 
-<<<<<<< HEAD
-::: No hosting panel installation note:
-This instruction is intended for supported panels such as cPanel, Plesk, DirectAdmin and other supported panels. If you are using currenlty not supported  panel, please proceed with the Stand-Alone documentation section.
-=======
-:::tip 
+
+:::tip
 **No hosting panel installation note:** 
 
 This instruction is intended for supported panels such as cPanel, Plesk, DirectAdmin, etc. from the list above. If you are currently using a non-supported control panel, please proceed with the [Stand-Alone documentation section](/control_panel_integration).
->>>>>>> 67d291dd9e07f80232f9dcb98beaec59af334f9f
 :::
 
 1. Get your license key at [https://www.imunify360.com/](https://www.imunify360.com/). You can purchase it or get a trial key from a received email.
