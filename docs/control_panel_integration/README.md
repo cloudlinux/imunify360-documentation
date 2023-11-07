@@ -37,9 +37,8 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 
 <details>
   <summary>CageFS Warning</summary>
-:::warning If you are using CageFS
-Imunify Web-UI PHP code has to be executed under a non-root user which has access to `/var/run/defence360agent/non_root_simple_rpc.sock`. If it runs in CageFS, you'll need to configure it accordingly.
-:::
+If Imunify360 runs in CageFS, you'll need to configure it accordingly. It is required to make sure Imunify Web-UI PHP code can be executed under a non-root user and grant access to `/var/run/defence360agent/non_root_simple_rpc.sock`. 
+
 To allow non-root user in CageFS access to the socket, this workaround should be applied:
 
 ```
