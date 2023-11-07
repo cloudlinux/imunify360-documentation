@@ -31,14 +31,15 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 #### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
 
 1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) such as ModSecurity, PHP with JSON support, and other common WEB server packages.
-2. Create [integration.conf](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) file to configure Imunify360 integrations such as authentication,  <span class="notranslate">`mod_security`</span> settings and WEB server scripts.
+2. Download and edit [integration.conf](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) file to configure Imunify360 required integrations BEFORE running the installation script.
 3. Install Imunify360 using the [deploy script](https://docs.imunify360.com/control_panel_integration/#install-imunify360)
 4. Check the [installed modules work](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) and change the Imunify360 settings to reflect your needs.
 
-:::warning Warning
+<details>
+  <summary>CageFS Warning</summary>
+:::warning If you are using CageFS
 Imunify Web-UI PHP code has to be executed under a non-root user which has access to `/var/run/defence360agent/non_root_simple_rpc.sock`. If it runs in CageFS, you'll need to configure it accordingly.
 :::
-
 To allow non-root user in CageFS access to the socket, this workaround should be applied:
 
 ```
@@ -54,12 +55,13 @@ echo "%/imunify-ui-shared" >> /etc/cagefs/cagefs.mp
 # remount all
 cagefsctl --remount-all
 ```
+</details>
 
-## Prerequisites
+## 1. Install and configure the prerequisites
 
 Imunify360 Stand-alone version requires the following components installed or enabled at the server:
 
-* ModSecurity 2.9.x for Apache or ModSecurity 3.0.x for Nginx
+* **ModSecurity 2.9.x** for Apache or **ModSecurity 3.0.x** for Nginx
 * Apache module <span class="notranslate">`mod_remoteip`</span> or nginx module <span class="notranslate">`ngx_http_realip_module`</span>
 * PHP with <span class="notranslate">`json`</span> extension loaded and <span class="notranslate">`proc_open`</span> function enabled (remove it from the <span class="notranslate">`disable_functions`</span> list in <span class="notranslate">`php.ini`</span>)
 
@@ -69,21 +71,19 @@ stability issues (see [https://github.com/SpiderLabs/ModSecurity/issues/2381](ht
 :::
 
 
-## Configure Imunify360 integrations
+## 2. Download and edit integration.conf file to set required integrations
 
 The Imunify360 Stand-alone version requires the following integrations before installation:
 
-* Specifying panel information
-* Integration with web server for serving UI
-* Interaction with ModSecurity
-* Integration with WebShield
-* Integration with Malware Scanner
-* Integration with authentication service
-* Define administrators for Imunify360
+* 2.1 Specifying panel information
+* 2.2 Integration with WEB server for serving UI
+* 2.3 Interaction with ModSecurity
+* 2.4 Integration with Authentication Service
+* 2.5 Integration with Malware Scanner
 
-All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://cloudlinux.zendesk.com/guide-media/01HD1FQ947RNZB4PYXRVA3PMM0) or check the [Knoledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
+All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) or check the [Knoledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
 
-#### Specifying panel information
+#### 2.1 Specifying panel information
 
 To specify information about your hosting panel in Imunify360/ImunifyAV, use the `panel_info` option in the `[integration_scripts]` section of `integration.conf` file.
 
@@ -95,7 +95,7 @@ This is a mandatory field and must be specified prior to the start of the instal
 
 ```
 [integration_scripts]
-panel_info = /path/to/info/script.sh
+panel_info = /etc/sysconfig/imunify360/panel-info.sh
 ```
 </div>
 
@@ -116,8 +116,9 @@ The option should contain a full path to the executable that prints JSON data in
 ```
 </div>
 
+The script can echo or print this information in JSON format, or you could configure the file in order to receive the actual information about the hosting panel in use. In case you don’t have a hosting panel at all, use the following stub file: [panel-info.sh](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/panel-info.sh)
 
-#### Integration with web server
+#### 2.2 Integration with web server for serving UI
       
 Imunify360 UI is implemented as a single-page application (SPA) and requires a web server to serve it.
 It’s required to specify a path to the web server directory, where the Imunify360 UI SPA application will be installed and served.
@@ -132,11 +133,33 @@ ui_path = /var/www/vhosts/imunify360/imunify360.hosting.example.com/html/im360
 ```
 </div>
 
-Ensure that the domain you are going to use for the Imunify360 web-based UI refers to this path and that there are no other scripts or files under <span class="notranslate">`ui_path`</span>, as they might be overridden by Imunify360 installation.
+Ensure that the domain you are going to use for the Imunify360 web-based UI refers to this path and that there are no other scripts or files under <span class="notranslate">`ui_path`</span>, to avoid overriting the files Imunify360 installation wil abort.
 
+
+#### 2.3 Web engine and Interaction with ModSecurity
+
+It is required to set the web server graceful restart script ang paths in the <span class="notranslate">`integration.conf`</span>
+
+* <span class="notranslate">`graceful_restart_script`</span> – a script that restarts the web server to be called after any changes in web server config or ModSecurity rules
+* <span class="notranslate">`config_test_script`</span> – a script that checks the web server's config to be called after any changes in the web server config or ModSecurity rules (optional)
+* <span class="notranslate">`modsec_audit_log`</span> – a path to ModSecurity audit log file
+* <span class="notranslate">`modsec_audit_logdir`</span> – a path to ModSecurity audit log directory (only required when the <span class="notranslate">`SecAuditLogType`</span> set to the <span class="notranslate">`Concurrent`</span>)
+
+Example
+
+<div class="notranslate">
+
+```
+[web_server]
+server_type = apache
+graceful_restart_script = /usr/sbin/apachectl restart
+config_test_script = /usr/sbin/apachectl -t
+modsec_audit_log = /var/log/httpd/modsec_audit.log
+modsec_audit_logdir = /var/log/modsec_audit
+```
+</div>
 
 #### Apache and LiteSpeed
-
 Configure [ModSecurity configuration directives](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-%28v2.x%29#Configuration_Directives) (so that it can block):
 
 <div class="notranslate">
@@ -148,7 +171,15 @@ SecRuleEngine On
 ```
 </div>
 
-Create the empty file <span class="notranslate">`/etc/sysconfig/imunify360/generic/modsec.conf`</span> and include it into the web server config as <span class="notranslate">`IncludeOptional`</span>. The file would be replaced with the actual config during the first Imunify360 installation or you can fill it via calling the Imunify360 ModSec ruleset installation <span class="notranslate">`imunify360-agent install-vendors`</span>.
+Create the empty file <span class="notranslate">`/etc/sysconfig/imunify360/generic/modsec.conf`</span> and include it into the web server config as <span class="notranslate">`IncludeOptional`</span>. To do this you need to find your web server config file, like **/etc/httpd/conf/httpd.conf** and add a line to it:
+<div class="notranslate">
+
+```
+IncludeOptional /etc/sysconfig/imunify360/generic/modsec.conf
+```
+</div>
+
+The file would be replaced with the actual config during the first Imunify360 installation or you can fill it via calling the Imunify360 ModSec ruleset installation <span class="notranslate">`imunify360-agent install-vendors`</span>.
 
 #### Nginx
 
@@ -184,31 +215,120 @@ modsecurity_rules_file /etc/nginx/modsec.conf;
 modsecurity_rules_file /etc/sysconfig/imunify360/generic/modsec.conf;
 ```
 
+#### 2.4 Integration with authentication service
 
-#### Imunify360 integration configuration
+Imunify360 Stand-alone version can use PAM service to authenticate users for the Imunify360 UI application.
 
-Set the path and graceful restart script in the <span class="notranslate">`integration.conf`</span>
+You can specify which PAM service Imunify360 should use with the <span class="notranslate">`service_name`</span> option:
 
-* <span class="notranslate">`[web_server].graceful_restart_script`</span> – a script that restarts the web server to be called after any changes in web server config or ModSecurity rules
-* <span class="notranslate">`[web_server].config_test_script`</span> – a script that checks the web server's config to be called after any changes in the web server config or ModSecurity rules (optional)
-* <span class="notranslate">`[web_server].modsec_audit_log`</span> – a path to ModSecurity audit log file
-* <span class="notranslate">`[web_server].modsec_audit_logdir`</span> – a path to ModSecurity audit log directory (required when the <span class="notranslate">`SecAuditLogType`</span> set to the <span class="notranslate">`Concurrent`</span>)
+<div class="notranslate">
+
+```
+[pam]
+service_name = system-auth
+```
+</div>
+
+You can get a token which can be used for authentication using the [<span class="notranslate">`login`</span> command](/command_line_interface/#login). The administrators have full access to Imunify360 UI and its settings.
+
+By default, root is considered to be the only admin user.
+
+#### 2.5 Integration with Malware Scanner
+
+To scan files for changes (to detect malware) using inotify, configure which directories to watch and which to ignore in the <span class="notranslate">`integration.conf`</span> file:
+
+* configure <span class="notranslate">`[malware].basedir`</span> – a root directory to watch (recursively)
+* configure <span class="notranslate">`[malware].pattern_to_watch`</span> – only directories that match this ([Python](https://docs.python.org/3/howto/regex.html#regex-howto)) regex in the basedir are actually going to be watched
 
 Example
 
 <div class="notranslate">
 
 ```
-[web_server]
-server_type = apache
-graceful_restart_script = /usr/sbin/apachectl restart
-config_test_script = /usr/sbin/apachectl -t
-modsec_audit_log = /var/log/httpd/modsec_audit.log
-modsec_audit_logdir = /var/log/modsec_audit
+[malware]
+basedir = /home
+pattern_to_watch = ^/home/.+?/(public_html|public_ftp|private_html)(/.*)?$
 ```
 </div>
 
 
+## 3. Install Imunify360
+3.1 Get your license key at https://www.imunify360.com/. You can purchase it or get a trial key from a received email.
+3.2 Log in with root privileges to the server where Imunify360 should be installed.
+3.3 Go to your home directory and run the commands:
+```
+wget https://repo.imunify360.cloudlinux.com/defence360/i360deploy.sh -O i360deploy.sh
+bash i360deploy.sh --key YOUR_KEY
+```
+
+Where YOUR_KEY is your license key. Replace YOUR_KEY with the actual key - trial or purchased one. The installation instructions are the same as for cPanel/Plesk/DirectAdmin version and can be found in the [Imunify360 documentation](/installation/#installation-instructions).
+
+After the successful installation, **you can reach the Imunify360 UI at the URL specified by the ui_path parameter** of the configuration file.
+
+#### 4. Set up modules and integrations and change other Imunify360 settings to reflect your needs
+
+#### 4.1 Define list of administrators for Imunify360
+
+The administrators have full access to Imunify360 UI and its settings. To grant non-root users full access add more administrators by listing them in the them in the <span class="notranslate">`/etc/sysconfig/imunify360/auth.admin`</span> file or specify the [integration scripts](https://cloudlinux.zendesk.com/hc/en-us/articles/4840433434524-How-to-filter-the-number-of-users-by-using-integration-scripts?_gl=1*1dtmkmt*_up*MQ..*_ga*ODUwMjA5NDYyLjE2OTkyMTAwOTI.*_ga_1RCQ134PYC*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..*_ga_V4QHJSZM47*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..*_ga_8LBSSX7VQX*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..) admin scetion. 
+
+Admin users will be merged from three sources: 
+* /etc/sysconfig/imunify360/auth.admin list 
+* scripts defined in the /etc/sysconfig/imunify360/integration.conf 
+* /opt/cpvendor/etc/integration.ini that return user lists.
+
+<details>
+  <summary>JSON data sample admin script should return</summary>
+
+<div class="notranslate">
+
+```
+[integration_scripts]
+admins = /etc/sysconfig/imunify360/get-admins-script.sh
+```
+</div>
+
+It should point to an executable file that generates a JSON file similar to the following:
+
+
+<div class="notranslate">
+
+```
+{
+  "data": [
+    {
+      "name": "admin1",
+      "unix_user": "admin",
+      "locale_code": "EN_us",
+      "email": "admin1@domain.zone",
+      "is_main": true
+    },
+	{
+      "name": "admin2",
+      "unix_user": "admin",
+      "locale_code": "Ru_ru",
+      "email": "admin2@domain.zone",
+      "is_main": false
+    },
+  ],
+  "metadata": {
+    "result": "ok"
+  }
+}
+```
+</div>
+</details>
+
+#### 4.2 FTP uploads scan
+To scan files uploaded via FTP, configure [PureFTPd](https://www.pureftpd.org/project/pure-ftpd/). Write in the <span class="notranslate">`pure-ftp.conf`</span>:
+
+<div class="notranslate">
+
+```
+CallUploadScript             yes
+```
+</div>
+
+#### 4.3 Per-domain rules constrol
 To enable domain-specific ModSecurity configuration, specify the <span class="notranslate">`modsec_domain_config_script`</span> in the <span class="notranslate">`integration.conf`</span>.
 
 <div class="notranslate">
@@ -235,7 +355,7 @@ The script should also restart the web server to apply the configuration. This s
 If configuration change failed, the script should return 1, and in the standard error stream (stderr) it should return the reason for failure. On success, the script should return 0.
 In a single run of the script, we might update a single domain/user, as well as multiple users (all users) on the system.
 
-#### Integration with WebShield
+#### 4.4 Integration with WebShield
 
 WebShield consists of four services:
 
@@ -419,364 +539,9 @@ instead of
 You can find more details at [http://httpd.apache.org/docs/current/mod/mod_log_config.html](http://httpd.apache.org/docs/current/mod/mod_log_config.html).
 :::
 
-#### Integration with Malware Scanner
-
-To scan files uploaded via FTP, configure [PureFTPd](https://www.pureftpd.org/project/pure-ftpd/). Write in the <span class="notranslate">`pure-ftp.conf`</span>:
-
-<div class="notranslate">
-
-```
-CallUploadScript             yes
-```
-</div>
-
-To scan files for changes (to detect malware) using inotify, configure which directories to watch and which to ignore in the <span class="notranslate">`integration.conf`</span> file:
-
-* configure <span class="notranslate">`[malware].basedir`</span> – a root directory to watch (recursively)
-* configure <span class="notranslate">`[malware].pattern_to_watch`</span> – only directories that match this ([Python](https://docs.python.org/3/howto/regex.html#regex-howto)) regex in the basedir are actually going to be watched
-
-Example
-
-<div class="notranslate">
-
-```
-[malware]
-basedir = /home
-pattern_to_watch = ^/home/.+?/(public_html|public_ftp|private_html)(/.*)?$
-```
-</div>
-
-#### Integration with authentication service
-
-Imunify360 Stand-alone version can use PAM service to authenticate users for the Imunify360 UI application.
-
-You can specify which PAM service Imunify360 should use with the <span class="notranslate">`service_name`</span> option:
-
-<div class="notranslate">
-
-```
-[pam]
-service_name = system-auth
-```
-</div>
-
-You can get a token which can be used for authentication using the [<span class="notranslate">`login`</span> command](/command_line_interface/#login). 
-
-#### Define administrators for Imunify360
-
-The administrators have full access to Imunify360 UI and its settings.
-
-By default, <span class="notranslate">`root`</span> is considered to be the only <span class="notranslate">`admin`</span> user. 
-
-To add more administrators, list them in the <span class="notranslate">`/etc/sysconfig/imunify360/auth.admin`</span> file 
-or specify the admins option in the <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>
-
-Admin users will be merged from three sources: <span class="notranslate">`/etc/sysconfig/imunify360/auth.admin`</span> list and scripts defined in the
-<span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span> or <span class="notranslate">`/opt/cpvendor/etc/integration.ini`</span> that return user lists.
-
-<div class="notranslate">
-
-```
-[integration_scripts]
-admins = /path/to/get-admins-script.sh
-```
-</div>
-
-It should point to an executable file that generates a JSON file similar to the following:
-
-
-<div class="notranslate">
-
-```
-{
-  "data": [
-    {
-      "name": "admin1",
-      "unix_user": "admin",
-      "locale_code": "EN_us",
-      "email": "admin1@domain.zone",
-      "is_main": true
-    },
-	{
-      "name": "admin2",
-      "unix_user": "admin",
-      "locale_code": "Ru_ru",
-      "email": "admin2@domain.zone",
-      "is_main": false
-    },
-  ],
-  "metadata": {
-    "result": "ok"
-  }
-}
-```
-</div>
-
-
-## Install Imunify360
-
-The installation instructions are the same as for cPanel/Plesk/DirectAdmin version and can be found in the [Imunify360 documentation](/installation/#installation-instructions).
-
-## Settings related to Stand-alone version
-
-The web-based UI is available via the domain configured in the <span class="notranslate">`ui_path`</span>.
-
-::: tip Note
-No files should be located in the folder configured with <span class="notranslate">`ui_path`</span>. We do not recommend using a directory in which any files are stored as a directory for Imunify UI files.  
-:::
-
-For example, if <span class="notranslate">`/var/www/vhosts/imunify360/imunify360.hosting.example.com/html/im360`</span> is the document root folder for the <span class="notranslate">`imunify360.hosting.example.com`</span> domain, then you could open Imunify360 with the following URL:
-
-* <span class="notranslate">`https://imunify360.hosting.example.com/`</span> (when you have TLS certificate configured for the domain) or
-* <span class="notranslate">`http://imunify360.hosting.example.com/`</span>
-
-
 #### Use a specific list of users in Imunify360
 
 By default, Imunify360 will use Linux system users, limited by <span class="notranslate">`uid_min`</span> and <span class="notranslate">`uid_max`</span> from the <span class="notranslate">`/etc/login.defs`</span>.
-
-If you want to see a specific list of users (note, that all of them must be real Linux users accessible via PAM), you can specify the <span class="notranslate">`users`</span> option in the <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>:
-
-
-<div class="notranslate">
-
-```
-[integration_scripts]
-users = /path/to/get-users-script.sh
-```
-</div>
-
-
-It should point to an executable file that generates a JSON file similar to the following (see details [here](/stand_alone/#integration-config-file)):
-
-
-<div class="notranslate">
-
-```
-{
-  "data": [
-    {
-      "id": 1000,
-      "username": "ins5yo3",
-      "owner": "root",
-      "domain": "ins5yo3.com",
-      "package": {
-        "name": "package",
-        "owner": "root"
-      },
-      "email": "ins5yo3@ins5yo3.com",
-      "locale_code": "EN_us"
-    },
-    {
-      "id": 1001,
-      "username": "ins5yo4",
-      "owner": "root",
-      "domain": "ins5yo4.com",
-      "package": {
-        "name": "package",
-        "owner": "root"
-      },
-      "email": "ins5yo4@ins5yo4.com",
-      "locale_code": "EN_us"
-    }
-  ],
-  "metadata": {
-    "result": "ok"
-  }
-}
-```
-</div>
-
-#### Use server domains
-
-To provide a list of domains for Imunify360, specify the script that generates a JSON file in the <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>:
-
-<div class="notranslate">
-
-```
-[integration_scripts]
-domains = /path/to/get-domains-script.sh
-```
-</div>
-
-A JSON file should be similar to the following:
-
-<div class="notranslate">
-
-```
-{
-  "data": {
-    "example.com": {
-      "document_root": "/home/username/public_html/",
-      "is_main": true,
-      "owner": "username",
-    },
-    "subdomain.example.com": {
-      "document_root": "/home/username/public_html/subdomain/",
-      "is_main": false,
-      "owner": "username",
-    }
-  },
-  "metadata": {
-    "result": "ok"
-  }
-}
-```
-</div>
-
-
-<span class="notranslate">`web_server_config_path`</span> should point to a path that is added as <span class="notranslate">`IncludeOptional`</span> in this domain's virtual host e.g., <span class="notranslate">`/path/to/example.com/specific/config/to/include`</span> path should be added for the <span class="notranslate">`example.com`</span> domain.
-
-## Integration config file
-
-The documentation for the Imunify360 Stand-alone version integration configuration file format.
-
-**Location** <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>
-
-**Parameters**
-
-<div class="notranslate">
-
-```
-[paths]
-ui_path = /var/www/vhosts/imunify360/imunify360.hosting.example.com/html/im360
-```
-</div>
-
-The path to the web server directory, where Imunify360 will be installed and served by web server. Need to be defined before Imunify360 installation.
-
-<div class="notranslate">
-
-```
-[paths]
-ui_path_owner = panel_user:web_server_group
-```
-</div>
-
-Allows executing `chown` to that owner for files after installation. The parameter is optional, if it is absent, `chown` doesn't execute.
-
-<div class="notranslate">
-
-```
-[pam]
-service_name = system-auth
-```
-</div>
-
-The PAM service is used for user authentication in the Imunify360 UI application.
-By default the <span class="notranslate">`system-auth`</span> service is used.
-
-<div class="notranslate">
-
-```
-[integration_scripts]
-panel_info = /path/to/panel_info.sh
-```
-</div>
-
-The path to the executable script that generates a JSON file with the information about hosting panel.
-
-<div class="notranslate">
-
-```
-{
-  "data": {
-      "name": "CustomHostingPanel",
-      "version": "admin",
-  },
-  "metadata": {
-    "result": "ok"
-  }
-}
-```
-</div>
-
-
-<div class="notranslate">
-
-```
-[integration_scripts]
-admins = /path/to/get-admins-script.sh
-```
-</div>
-
-The path to the executable script that generates a JSON file with the list of admin accounts.
-
-<div class="notranslate">
-
-```
-{
-  "data": [
-    {
-      "name": "admin1",
-      "unix_user": "admin",
-      "locale_code": "EN_us",
-      "email": "admin1@domain.zone",
-      "is_main": true
-    },
-	{
-      "name": "admin2",
-      "unix_user": "admin",
-      "locale_code": "Ru_ru",
-      "email": "admin2@domain.zone",
-      "is_main": false
-    }
-  ],
-  "metadata": {
-    "result": "ok"
-  }
-}
-```
-</div>
-
-<div class="notranslate">
-
-```
-[integration_scripts]
-users = /path/to/get-users-script.sh
-```
-</div>
-
-The script to provide the specific list of users used by Imunify360.
-
-It should point to an executable file that generates a JSON file similar to the following (domains are optional):
-
-<div class="notranslate">
-
-```
-{
-  "data": [
-    {
-      "id": 1000,
-      "username": "ins5yo3",
-      "owner": "root",
-      "domain": "ins5yo3.com",
-      "package": {
-        "name": "package",
-        "owner": "root"
-      },
-      "email": "ins5yo3@ins5yo3.com",
-      "locale_code": "EN_us"
-    },
-    {
-      "id": 1001,
-      "username": "ins5yo4",
-      "owner": "root",
-      "domain": "ins5yo4.com",
-      "package": {
-        "name": "package",
-        "owner": "root"
-      },
-      "email": "ins5yo4@ins5yo4.com",
-      "locale_code": "EN_us"
-    }
-  ],
-  "metadata": {
-    "result": "ok"
-  }
-}
-```
-</div>
 
 #### Data description
 
