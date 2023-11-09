@@ -213,23 +213,8 @@ Records in the table are searchable and the parameters of the search can be narr
 
 ![](/images/EmailAdvSearch.png)
 
-#### Setting sender limits
 
-Setting up limits for sending out the messages for all of the Sender Objects adopts a 3-tier approach that is aimed to provide granular control over the outgoing messages to the administrator.
-
-#### 1. Settings tab
-
-This is the first level of control for sender limits. The values set at this level will be default for an entire server and will be applied by default to all Sender Objects.
-Go to Imunify360 → Email →Settings tab. Here, set a limit on the number of emails that can be sent by a particular entity - WHM account, domain, PHP Script, or email address of a user.
-
-* The limit is set for the number of messages within the space of the last 60 minutes.
-* The limits can be applied either to a number of emails or a number of recipients.
-
-![](/images/EmailSettingsTab.png)
-
-Once the values are chosen, press **Save Changes** to apply them.
-
-#### 2. Sender limits at the Activity monitor tab
+#### Sender limits
 
 This is the second level of control for sender limits. Limits set for a particular Sender Object here override the limits set on the previous stage.
 
@@ -237,7 +222,7 @@ Go to Imunify360 → Email → Activity Monitor → Actions → Update sender l
 
 ![](/images/EmailUpdSenderLimit.png)
 
-#### 3. Whitelisting
+#### Whitelisting
 
 This is the third level of control for sender limits. Limits set via this control override the limits set at the two the previous stages.
 Go to Imunify360 → Email → Activity Monitor → Actions → Whitelist sender. A particular Sender Object can be whitelisted, which means that the Sender limits will no longer be applied to this Sender Object - so it will be able to send out an unlimited number of messages. Only the **domain** and **email of the user** Sender Objects can be whitelisted, **WHM account** and **PHP script** cannot be whitelisted.
@@ -254,7 +239,23 @@ To confirm whitelisting for a particular Sender Object click **Yes, add to white
 Hosting administrator only.
 :::
 
-Go to <span class="notranslate">Imunify360 → Email → Settings</span> tab. The settings allow managing the space for quarantine. An administrator can increase or decrease the space for the user's quarantine. If all space is consumed, the oldest emails in quarantine will be permanently deleted.
+Go to <span class="notranslate">Imunify360 → Email → Settings</span> tab. The settings allow managing the space for quarantine and setting up limits for sending out the messages(set up a rate-limit)
+for all the Sender Objects adopts a 3-tier approach that is aimed to provide granular control over the outgoing messages to the administrator.
+An administrator can increase or decrease the space for the user's quarantine. If all space is consumed, the oldest emails in quarantine will be permanently deleted.
+
+#### Activity Monitor Settings
+
+This is the first level of control for sender limits. The values set at this level will be default for an entire server and will be applied by default to all Sender Objects.
+Go to Imunify360 → Email →Settings tab. Here, set a limit on the number of emails that can be sent by a particular entity - WHM account, domain, PHP Script, or email address of a user.
+
+* The limit is set for the number of messages within the space of the last 60 minutes.
+* The limits can be applied either to a number of emails or a number of recipients.
+
+![](/images/EmailSettingsTab.png)
+
+Once the values are chosen, press **Save Changes** to apply them.
+
+#### Quarantine Settings
 
 :::danger Note
 By default, the space for the user's quarantine is 100 MB.
