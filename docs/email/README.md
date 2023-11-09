@@ -142,6 +142,7 @@ Click <span class="notranslate">_Email_</span> in the main menu of the Imunify36
 The following tabs are available:
 
 * <span class="notranslate">[Quarantine](/email/#quarantine)</span>
+* <span class="notranslate">[Activity Monitor](/email/#activity-monitor-and-sender-limits)</span>
 * <span class="notranslate">[Settings](/email/#settings)</span>
 
 ### Quarantine
@@ -154,6 +155,10 @@ The table has the following columns:
 
 * <span class="notranslate">**Account**</span> — account name
 * <span class="notranslate">**Received Date**</span> — when an email was received by the server for sending
+* <span class="notranslate">**Reasons**</span> — the reason why message has been quarantined
+  * <span class="notranslate">**spam**</span> — means that a message has been classified as a spam
+  * <span class="notranslate">**winexec**</span> — means that a message contains windows executable attachments (you can allow that using ie-cli)
+  * <span class="notranslate">**ratelimit**</span> — means that a message exceeded a limit per hour for one of the Account/Domain/Sender email/Script. You might adjust the limit using the "Activity Monitor" tab.
 * <span class="notranslate">**Sender (From)**</span> — the user who sent the email
 * <span class="notranslate">**Recipients**</span> — recipients (including CC and BCC)
 * <span class="notranslate">**Subject**</span> — a subject from an email
