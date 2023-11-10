@@ -31,8 +31,8 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 #### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
 
 1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) such as ModSecurity, PHP with JSON support, and other common WEB server packages.
-2. Download and edit [integration.conf](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) file to configure Imunify360 required integrations BEFORE running the installation script.
-3. Install Imunify360 using the [deploy script](https://docs.imunify360.com/control_panel_integration/#install-imunify360)
+2. Download and edit [integration.conf](https://raw.githubusercontent.com/cloudlinux/imunify360-documentation/master/docs/control_panel_integration/integration.conf) file to configure Imunify360 required integrations BEFORE running the installation script.
+3. Install Imunify360 using the [deploy script](https://repo.imunify360.cloudlinux.com/defence360/i360deploy.sh)
 4. Check the [installed modules work](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) and change the Imunify360 settings to reflect your needs.
 
 <details>
@@ -264,7 +264,7 @@ Where YOUR_KEY is your license key. Replace YOUR_KEY with the actual key - trial
 
 After the successful installation, **you can reach the Imunify360 UI at the URL specified by the ui_path parameter** of the configuration file.
 
-#### 4. Set up modules and integrations and change other Imunify360 settings to reflect your needs
+## 4. Set up modules and integrations and change other Imunify360 settings to reflect your needs
 
 #### 4.1 Define list of administrators for Imunify360
 
