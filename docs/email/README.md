@@ -142,6 +142,7 @@ Click <span class="notranslate">_Email_</span> in the main menu of the Imunify36
 The following tabs are available:
 
 * <span class="notranslate">[Quarantine](/email/#quarantine)</span>
+* <span class="notranslate">[Activity Monitor](/email/#activity-monitor-and-sender-limits)</span>
 * <span class="notranslate">[Settings](/email/#settings)</span>
 
 ### Quarantine
@@ -154,6 +155,10 @@ The table has the following columns:
 
 * <span class="notranslate">**Account**</span> — account name
 * <span class="notranslate">**Received Date**</span> — when an email was received by the server for sending
+* <span class="notranslate">**Reasons**</span> — the reason why message has been quarantined
+  * <span class="notranslate">**spam**</span> — means that a message has been classified as a spam
+  * <span class="notranslate">**winexec**</span> — means that a message contains windows executable attachments (you can allow that using ie-cli)
+  * <span class="notranslate">**ratelimit**</span> — means that a message exceeded a limit per hour for one of the Account/Domain/Sender email/Script. You might adjust the limit using the "Activity Monitor" tab.
 * <span class="notranslate">**Sender (From)**</span> — the user who sent the email
 * <span class="notranslate">**Recipients**</span> — recipients (including CC and BCC)
 * <span class="notranslate">**Subject**</span> — a subject from an email
@@ -178,13 +183,79 @@ The table has the following columns:
 In this release, the notifications are not sent both when deleting or releasing an email. Will be added in the next release.
 :::
 
+### Activity Monitor and Sender limits
+
+Go to <span class="notranslate">Imunify360 → Email → Activity Monitor</span>. Activity Monitor provides a way to observe, control and regulate the flow of mail. From this tab the messages can be whitelisted or chosen to be explored in the Quarantine tab.
+
+The table lists the following columns:
+
+* **Sender Object** - a set of origination information that can be identified about an email is shown here. The four possible categories are:
+    * WHM account
+    * Domain
+    * PHP Script (able to send an email)
+    * Email address of a user
+* **Ham/Sent out** - quantity of a non-spam emails that were sent out is shown corresponding to a Sender Object in a first column.
+* **Limit** - the number of emails that corresponding Sender Object will be allowed to send out in a space of one hour. This number turns red and a warning sign is displayed as soon as the limit is exceeded.
+* **Whitelisted** - the records in this column only have two states "true" and "false" and show if the whitelisting is **on** or **off** for a particular Sender Object.
+* **Quarantined** - reflects emails from a particular Sender Object and their quantity.
+* **Actions** - several actions to perform on a particular Sender Object are available:
+    * **Go to quarantine** allows to explore a particular Sender Object in a Quarantine tab.
+    * **Update sender limit** allows to enable/disable granular limits for a particular Sender Object that override limits set in the Settings tab.
+    * **Whitelist sender** allows to remove any limit on sending out emails for a particular Sender Object.
+
+![](/images/EmailActivityMonitor.png)
+
+The **Timeframe** setting for the records visible in the table can be chosen from the following options under the **Timeframe** button.
+
+![](/images/EmileTimeframeBtn.png)
+
+Records in the table are searchable and the parameters of the search can be narrowed down by using the Account name, Sender address, Domain, and Script filters.
+
+![](/images/EmailAdvSearch.png)
+
+
+#### Sender limits
+
+This is the second level of control for sender limits. Limits set for a particular Sender Object here override the limits set on the previous stage.
+
+Go to Imunify360 → Email → Activity Monitor → Actions → Update sender limit. For a particular Sender Object the limit can be switched on and off. The limit value can be set higher or lower than the value in the Setting tab. This setting is aimed at providing a way to set needed exceptions from the general rules.
+
+![](/images/EmailUpdSenderLimit.png)
+
+#### Whitelisting
+
+This is the third level of control for sender limits. Limits set via this control override the limits set at the two the previous stages.
+Go to Imunify360 → Email → Activity Monitor → Actions → Whitelist sender. A particular Sender Object can be whitelisted, which means that the Sender limits will no longer be applied to this Sender Object - so it will be able to send out an unlimited number of messages. Only the **domain** and **email of the user** Sender Objects can be whitelisted, **WHM account** and **PHP script** cannot be whitelisted.
+
+![](/images/EmailWhitelist.png)
+
+To confirm whitelisting for a particular Sender Object click **Yes, add to whitelist**.
+
+![](/images/EmailYesAdd.png)
+
 ### Settings
 
 :::danger Note
 Hosting administrator only.
 :::
 
-Go to <span class="notranslate">Imunify360 → Email → Settings</span> tab. The settings allow managing the space for quarantine. An administrator can increase or decrease the space for the user's quarantine. If all space is consumed, the oldest emails in quarantine will be permanently deleted.
+Go to <span class="notranslate">Imunify360 → Email → Settings</span> tab. The settings allow managing the space for quarantine and setting up limits for sending out the messages(set up a rate-limit)
+for all the Sender Objects adopts a 3-tier approach that is aimed to provide granular control over the outgoing messages to the administrator.
+An administrator can increase or decrease the space for the user's quarantine. If all space is consumed, the oldest emails in quarantine will be permanently deleted.
+
+#### Activity Monitor Settings
+
+This is the first level of control for sender limits. The values set at this level will be default for an entire server and will be applied by default to all Sender Objects.
+Go to Imunify360 → Email →Settings tab. Here, set a limit on the number of emails that can be sent by a particular entity - WHM account, domain, PHP Script, or email address of a user.
+
+* The limit is set for the number of messages within the space of the last 60 minutes.
+* The limits can be applied either to a number of emails or a number of recipients.
+
+![](/images/EmailSettingsTab.png)
+
+Once the values are chosen, press **Save Changes** to apply them.
+
+#### Quarantine Settings
 
 :::danger Note
 By default, the space for the user's quarantine is 100 MB.
@@ -716,70 +787,3 @@ Flags:
 
 Use "ie-cli am [command] --help" for more information about a command.
 ```
-
-### Activity Monitor and Sender limits
-
-#### Activity monitor
-
-Go to Imunify360 → Email → Activity Monitor. Activity Monitor provides a way to observe, control and regulate the flow of mail. From this tab the messages can be whitelisted or chosen to be explored in the Quarantine tab.
-
-The table lists the following columns:
-
-* **Sender Object** - a set of origination information that can be identified about an email is shown here. The four possible categories are:
-	* WHM account
-	* Domain
-	* PHP Script (able to send an email)
-	* Email address of a user
-* **Ham/Sent out** - quantity of a non-spam emails that were sent out is shown corresponding to a Sender Object in a first column.
-* **Limit** - the number of emails that corresponding Sender Object will be allowed to send out in a space of one hour. This number turns red and a warning sign is displayed as soon as the limit is exceeded.
-* **Whitelisted** - the records in this column only have two states "true" and "false" and show if the whitelisting is **on** or **off** for a particular Sender Object.
-* **Quarantined** - reflects emails from a particular Sender Object and their quantity.
-* **Actions** - several actions to perform on a particular Sender Object are available:
-	* **Go to quarantine** allows to explore a particular Sender Object in a Quarantine tab.
-	* **Update sender limit** allows to enable/disable granular limits for a particular Sender Object that override limits set in the Settings tab.
-	* **Whitelist sender** allows to remove any limit on sending out emails for a particular Sender Object.
-
-![](/images/EmailActivityMonitor.png)
-
-The **Timeframe** setting for the records visible in the table can be chosen from the following options under the **Timeframe** button.
-
-![](/images/EmileTimeframeBtn.png)
-
-Records in the table are searchable and the parameters of the search can be narrowed down by using the Account name, Sender address, Domain, and Script filters.
-
-![](/images/EmailAdvSearch.png)
-
-#### Setting sender limits
-
-Setting up limits for sending out the messages for all of the Sender Objects adopts a 3-tier approach that is aimed to provide granular control over the outgoing messages to the administrator.
-
-#### 1. Settings tab
-
-This is the first level of control for sender limits. The values set at this level will be default for an entire server and will be applied by default to all Sender Objects.
-Go to Imunify360 → Email →Settings tab. Here, set a limit on the number of emails that can be sent by a particular entity - WHM account, domain, PHP Script, or email address of a user.
-
-* The limit is set for the number of messages within the space of the last 60 minutes.
-* The limits can be applied either to a number of emails or a number of recipients.
-
-![](/images/EmailSettingsTab.png)
-
-Once the values are chosen, press **Save Changes** to apply them.
-
-#### 2. Sender limits at the Activity monitor tab
-
-This is the second level of control for sender limits. Limits set for a particular Sender Object here override the limits set on the previous stage.
-
-Go to Imunify360 → Email → Activity Monitor → Actions → Update sender limit. For a particular Sender Object the limit can be switched on and off. The limit value can be set higher or lower than the value in the Setting tab. This setting is aimed at providing a way to set needed exceptions from the general rules.
-
-![](/images/EmailUpdSenderLimit.png)
-
-#### 3. Whitelisting
-
-This is the third level of control for sender limits. Limits set via this control override the limits set at the two the previous stages.
-Go to Imunify360 → Email → Activity Monitor → Actions → Whitelist sender. A particular Sender Object can be whitelisted, which means that the Sender limits will no longer be applied to this Sender Object - so it will be able to send out an unlimited number of messages. Only the **domain** and **email of the user** Sender Objects can be whitelisted, **WHM account** and **PHP script** cannot be whitelisted.
-
-![](/images/EmailWhitelist.png)
-
-To confirm whitelisting for a particular Sender Object click **Yes, add to whitelist**.
-
-![](/images/EmailYesAdd.png)
