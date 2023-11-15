@@ -13,16 +13,11 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 
 #### Requirements
 
-**Operating system**
+**Supported Operating Systems**
 
-* CentOS 6/7/8/9
-* RHEL 6/7/8/9
-* CloudLinux OS 
-* Ubuntu 16.04/18.04/20.04/22
-* Debian 9/10
-* Rocky Linux 8/9
+* The same list as [here](/installation/#requirements).
 
-**Web servers**
+**Web Servers**
 
 * Apache >= 2.4.30
 * LiteSpeed
@@ -122,7 +117,7 @@ The script can echo or print this information in JSON format, or you could confi
 Imunify360 UI is implemented as a single-page application (SPA) and requires a web server to serve it.
 It’s required to specify a path to the web server directory, where the Imunify360 UI SPA application will be installed and served.
      
-Example
+**Example:**
 
 <div class="notranslate">
 
@@ -144,7 +139,7 @@ It is required to set the web server graceful restart script ang paths in the <s
 * <span class="notranslate">`modsec_audit_log`</span> – a path to ModSecurity audit log file
 * <span class="notranslate">`modsec_audit_logdir`</span> – a path to ModSecurity audit log directory (only required when the <span class="notranslate">`SecAuditLogType`</span> set to the <span class="notranslate">`Concurrent`</span>)
 
-Example
+**Example:**
 
 <div class="notranslate">
 
@@ -239,7 +234,7 @@ To scan files for changes (to detect malware) using inotify, configure which dir
 * configure <span class="notranslate">`[malware].basedir`</span> – a root directory to watch (recursively)
 * configure <span class="notranslate">`[malware].pattern_to_watch`</span> – only directories that match this ([Python](https://docs.python.org/3/howto/regex.html#regex-howto)) regex in the basedir are actually going to be watched
 
-Example
+**Example:**
 
 <div class="notranslate">
 
