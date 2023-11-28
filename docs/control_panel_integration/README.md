@@ -247,9 +247,9 @@ pattern_to_watch = ^/home/.+?/(public_html|public_ftp|private_html)(/.*)?$
 
 
 ## 3. Install Imunify360
-3.1 Get your license key at https://www.imunify360.com/. You can purchase it or get a trial key from a received email.
-3.2 Log in with root privileges to the server where Imunify360 should be installed.
-3.3 Go to your home directory and run the commands:
+3.1. **Get your license key:** Visit https://www.imunify360.com/. You can purchase it or get a trial key from a received email.
+3.2. **Log in with root privileges:** Access the server where Imunify360 should be installed with root privileges.
+3.3. **Run the installation commands:** Navigate to your home directory and execute the following commands:
 ```
 wget https://repo.imunify360.cloudlinux.com/defence360/i360deploy.sh -O i360deploy.sh
 bash i360deploy.sh --key YOUR_KEY
