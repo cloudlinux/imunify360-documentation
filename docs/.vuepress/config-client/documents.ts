@@ -93,5 +93,10 @@ export default [
         title: "MyImunify Documentation",
         description: "MyImunify is a meticulously crafted solution aimed at turning security from a mere cost center into a powerful revenue generator.",
         link: "/myimunify/",
+    },
+    {
+        title: "Patchman",
+        description: "Automated vulnerability patching and malware removal.",
+        link: "/patchman/",
     }
 ]

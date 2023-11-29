@@ -157,5 +157,19 @@ export default {
                     "/myimunify/"
                 ]
             }
+        ],
+        '/patchman/': [
+            {
+                collapsable: false,
+                children: [
+                    "/patchman/",
+                    "/patchman/getting_started/",
+                    "/patchman/frequently_asked_questions/",
+                    "/patchman/portal/",
+                    "/patchman/policies/",
+                    "/patchman/agent/",
+                    "/patchman/platform_integrations/"
+                ]
+            }
         ]
     }
