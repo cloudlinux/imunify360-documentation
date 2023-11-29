@@ -127,8 +127,7 @@ ui_path = /var/www/vhosts/imunify360/imunify360.hosting.example.com/html/im360
 ```
 </div>
 
-Ensure that the domain you are going to use for the Imunify360 web-based UI refers to this path and that there are no other scripts or files under <span class="notranslate">`ui_path`</span>, to avoid overriting the files Imunify360 installation wil abort.
-
+Ensure that the domain you are going to use for the Imunify360 web-based UI refers to this path and that there are no other scripts or files under <span class="notranslate">`ui_path`</span>, to avoid overwriting the files Imunify360 installation will abort.
 
 #### 2.3 Web engine and Interaction with ModSecurity
 
