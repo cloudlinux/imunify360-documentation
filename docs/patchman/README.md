@@ -2,10 +2,10 @@
 
 **Getting started**
 
-* [Logging into the Patchman Portal](/patchman/gettting_started/#logging-into-the-patchman-portal)
-* [Adding your first server](/patchman/gettting_started/#adding-your-first-server)
-* [Insights Quick Start Guide](/patchman/gettting_started/#insights-quick-start-guide)
-* [Contact us](/patchman/gettting_started/#contact-us)
+* [Logging into the Patchman Portal](/patchman/getting_started/#logging-into-the-patchman-portal)
+* [Adding your first server](/patchman/getting_started/#adding-your-first-server)
+* [Insights Quick Start Guide](/patchman/getting_started/#insights-quick-start-guide)
+* [Contact us](/patchman/getting_started/#contact-us)
 
 * * *
 
