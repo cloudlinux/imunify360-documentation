@@ -1217,6 +1217,45 @@ Imunify360 DoS protection is automatically disabled if CSF is active - a warning
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 
+#### Enhanced DOS Protection
+
+The Enhanced DOS Protection feature forms an additional layer of protection, increasing the stability of servers facing DOS attacks. It takes a different approach than our existing [DOS Protection feature](/dashboard/#dos-protection), which focuses on monitoring the number of simultaneous connections. Enhanced DOS Protection, on the other hand, monitors the rate of requests originating from attacker IP addresses per unit of time.
+
+The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the captcha challenge.
+
+Standard DoS protection, in turn, will block attacks that use long-lived connections (e.g. Slowloris attacks), so these functions complement each other perfectly.
+
+You can find all incidents related to the new feature in the incidents table by the description: 
+
+```
+“Denial of Service (DoS) attack was discovered from %IP%: %threshold% connections per %timeframe% seconds to %port% port”.
+```
+
+<h4>Activating and fine-tuning Enhanced DOS Protection</h4>
+
+The feature is switched off by default. You can activate Enhanced DOS Protection in Imunify360 using the following CLI command:
+
+```
+imunify360-agent config update '{"ENHANCED_DOS":{"enabled":true}}
+```
+
+The default timeframe (seconds) and threshold of request (number) could be changed by the following CLI commands:
+
+```
+imunify360-agent config update '{"ENHANCED_DOS":{"time_frame":60}}
+```
+```
+imunify360-agent config update '{"ENHANCED_DOS":{"default_limit":500}}
+```
+
+Request limits for different ports could be set separately, using the following CLI commands:
+
+```
+imunify360-agent config update '{"ENHANCED_DOS": {"port_limits": {"80": 150}}}
+```
+
+We also recommend checking and configuring the CAPTCHA_DOS section of [parameters](/config_file_description) to blacklist IPs after repetitive requests to the captcha.
+
 #### SMTP Traffic Manager
 
 SMTP traffic management provides more control over SMTP traffic.

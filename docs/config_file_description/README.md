@@ -31,6 +31,21 @@ In the config file it is possible to set up Imunify360 configuration. The follow
 </td><td># limit on port 80 is set to 150 connections</td>
 </tr>
 <tr>
+<th colspan="2" align="left"><span class="notranslate">ENHANCED_DOS:</span></th>
+</tr>
+<tr>
+<td width="250px;"><span class="notranslate">enabled: True</span></td><td># allows to enable or disable (<span class="notranslate">False</span>) the Enhanced DOS protection</td></tr>
+<tr><td><span class="notranslate">time_frame: 60</span></td><td># the default timeframe in seconds between the Enhanced DoS detection system activation</td></tr>
+<tr><td><span class="notranslate">default_limit: 500</span></td><td># the threshold of requests (their number) from remote IP to local port before the Enhanced DoS protection will be triggered.</td></tr>
+<tr>
+<td><span class="notranslate">port_limits:</span>
+</td><td># allows to set requests limits for different ports</td>
+</tr>
+<tr>
+<td>80: 300
+</td><td># limit on port 80 is set to 300 connections</td>
+</tr>
+<tr>
 <th colspan="2" align="left"><span class="notranslate">FIREWALL:</span></th>
 </tr>
 <tr>
