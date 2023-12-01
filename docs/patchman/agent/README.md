@@ -100,48 +100,6 @@ Allocate a percentage of total available CPU threads to use for multi-threaded s
 **CPU Reservation**  
 Allocate the number of CPU threads for the Patchman daemon to leave unused. Note that there is a **minimum thread allocation of 1**. If a user configures a lower limit, for example 0, or -4 (an 8 thread reservation on a 4 core machine), the Patchman agent logs at `info` level and instead uses 1 thread.
 
-* * * 
-
-## Multi-threaded scanning, what is it and how do I configure it?
-
-### What is multithreaded scanning?
-
-While older versions were entirely single-threaded, version 1.12.0-1 introduces multi-threaded scanning to the Patchman agent. 
-
-Multithreaded scanning enables the Patchman agent process (patchmand) to create multiple worker threads, allowing it to perform multiple tasks concurrently. This allows the agent to better scale performance with the resources available (and allocated) on a hosting platform, and perform far better on tasks that are (mostly) CPU-bound.
-
-### How does multithreaded scanning benefit me?
-
-While multithreading does affect most tasks performed by the agent, the most drastic benefit is seen with the use of [Patchman CLEAN](/patchman/frequently_asked_questions/#what-is-patchman-clean-and-how-do-i-enable-configure-it)'s rule-scanning mechanism. Where before customers who used Patchman CLEAN could see longer scanning times depending on the size and density of their platform (and would likely have configured scanning limits to mitigate them), the introduction of multithreading—if employed and configured properly—will drastically improve scan times, allowing users to be far less restrictive in scanning configuration. This, in turn, greatly benefits the effective coverage of the CLEAN solution.  
-
-### Where do I configure multithreaded scanning?
-
-You can configure the agent's multithreaded scanning settings on the server group (once logged in; [https://portal.patchman.co/servers/group/](https://portal.patchman.co/servers/group/)) which allows you to easily manage it across multiple servers. 
-
-### What can I configure, and what do the settings mean?
-
-With the introduction of multithreading, the following settings can be configured for the agent:
-
-#### Absolute (thread count)
-
-Configure the exact number of threads to use for multithreaded scanning.
-
-#### CPU Ratio
-
-Allocate a percentage of total available CPU threads to use for multi-threaded scanning. As this is a percentage, it is worth noting that it **rounds down**, to whole threads.
-
-#### CPU Reservation
-
-Allocate the number of CPU threads for the Patchman daemon to leave unused. Note that there is a **minimum thread allocation of 1**. If a user configures a lower limit, for example 0, or -4 (an 8 thread reservation on a 4 core machine), the Patchman agent logs at `info` level and instead uses 1 thread.
-
-### Defaults, upon release and after
-
-Upon release of the multithreading feature, the 'Absolute' setting will be used as the default for all existing customers' server groups, and set to 1 core, meaning that for existing users, agent behaviour is unchanged until they explicitly increase the thread count. For _new_ server groups created after the feature is live, a sensible default is chosen that does allow users to benefit from multithreading out of the box; CPU Ratio, set to 50%.
-
-* * * 
-
-## Multi-threaded scanning, what is it and how do I configure it?
-
 ### What is multithreaded scanning?
 
 While older versions were entirely single-threaded, version 1.12.0-1 introduces multi-threaded scanning to the Patchman agent. 
