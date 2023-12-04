@@ -89,7 +89,7 @@ This is a mandatory field and must be specified prior to the start of the instal
 
 ```
 [integration_scripts]
-panel_info = /etc/sysconfig/imunify360/panel-info.sh
+panel_info = /etc/sysconfig/imunify360/get-panel-info.sh
 ```
 </div>
 
@@ -110,7 +110,7 @@ The option should contain a full path to the executable that prints JSON data in
 ```
 </div>
 
-The script can echo or print this information in JSON format, or you could configure the file in order to receive the actual information about the hosting panel in use. In case you don’t have a hosting panel at all, use the following stub file: [panel-info.sh](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/panel-info.sh)
+The script can echo or print this information in JSON format, or you could configure the file in order to receive the actual information about the hosting panel in use. In case you don’t have a hosting panel at all, use the following stub file: [get-panel-info.sh](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/get-panel-info.sh)
 
 #### 2.2 Integration with web server for serving UI
       
