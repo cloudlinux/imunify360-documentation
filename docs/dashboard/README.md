@@ -1274,6 +1274,14 @@ You can enable the <span class="notranslate">SMTP Traffic Management</span> in t
 * <span class="notranslate">**Allow local**</span> - block all except the local SMTP (localhost). By default it is disabled.
 * <span class="notranslate">**Redirect to local**</span> - enable automatic redirection to the local ports for outgoing mail traffic. By default it is disabled.
 
+::: warning 
+Note that the term "group" here means the primary group of UNIX users. 
+
+For example, we have a user "john" whose primary group is "john" and the supplementary group is "admin":
+* If you add a rule for the group "john", it'd match (the user would be allowed to send emails).
+* If a rule is added for the group "admin", it wouldn't match (the user would be denied sending emails) because "admin" isn't a primary group of user "john". 
+:::
+
 ::: tip Note
 The following is added by default into the _Allow users_ and the _Allow groups_ for cPanel:
 * UIDs - 0 (root), 202 (cpanel)
