@@ -2289,6 +2289,81 @@ OK
 |<span class="notranslate">`--to`</span>|Email to send.|
 |<span class="notranslate">`--sender`</span>|User email.|
 
+### False-positive/False-negative File Submission Tool
+
+This section describes how to use Imunify false positive/false negative submission tool. This tool allows you to submit files for analysis, review the list of your submissions, and monitor their statuses 
+
+#### Preparation
+
+The configuration phase consists of two steps:
+
+ 1. **Get an API token**. For the first run, a new API key should be created. Navigate to  cm.imunify.com/#/tokens. Use Imunify/CLN account credentials to log in. Get a new key by clicking on the button "Create API key"  
+
+<img src="/images/create-api-key-button.png" width="200">
+
+The API key can be used as many times as needed across all servers for the individual Imunify customer. 
+
+2. **Get the script and set permissions**. Run the script shown below. Please note that the script has to be executed with root privileges since it requires access to Imunify license file. 
+
+```
+# curl -o fpfn-submission.sh https://files.imunify360.com/static/cm/fpfn-submission.sh 
+# chmod 700 fpfn-submission.sh 
+``` 
+
+#### Requirements 
+
+For this process to work properly you need the following prerequisites: 
+
+*  **JSON Processor**. Jq is required to run the tool. If it is not installed please run the script below.
+```
+# yum install jq -y 
+``` 
+* **Imunify360 v6.7.3+** is required. Follow the [update instructions](https://blog.imunify360.com/release-notes-imunify360-v.6.8-beta) if the version you use is the earlier one. 
+* **Submission script**. The submission tool that can be downloaded from [https://files.imunify360.com/static/cm/fpfn-submission.sh](https://files.imunify360.com/static/cm/fpfn-submission.sh).  
+
+#### Usage 
+
+We designed the submission script to accept arguments through the use of the environment variables. Here is the output of the `--help` page. 
+
+<img src="/images/submission-tool-help.png" width="600"> 
+
+#### File submission 
+
+The following code snippets can be used to submit the false_negative file for analysis:  
+```
+# FILE_PATH=./eicar.suspicious REASON=false_negative NOTE='support ticket 400' API_TOKEN=<YOUR_API_KEY> ./fpfn submission.sh -p
+``` 
+
+The response is made to be transparent. The `_id` field represents a unique submission ID.  
+
+<img src="/images/file-submission-output.png" width="600"> 
+
+#### Fetching results 
+
+The results of submission processing can be viewed in 1-3 business days using a set of various filters (see `--help`). The following code uses NOTE to fetch results:  
+
+```
+# NOTE="400" API_TOKEN=<YOUR_API_KEY> ./fpfn-submission.sh -g 
+``` 
+
+Here is the response: 
+
+<img src="/images/fetching-results-submission-tool.png" width="600">  
+
+The response contains the section `verdicts` that describes the processing results. For recent verdicts, it may contain a signature base build id, e.g.  
+```
+   { 
+      "date": "2022-11-11 20:14:40", 
+      "verdict": "malicious", 
+      "comment": "Added after scan with build 9231" 
+   }
+```
+If the verdicts section is empty, it means that the file is in process.  
+
+#### Feedback  
+
+Please reach out to us should you have any concerns, questions, and/or feedback. We appreciate all the communication from you.
+
 ## Unregister
 
 Allows to unregister and disable Imunify360 on the server. 
