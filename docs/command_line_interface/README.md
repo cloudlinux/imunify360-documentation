@@ -463,7 +463,7 @@ imunify360-agent blocked-port-ip [command] <value> [--option]
 
 **Example:**
 
-The following command adds IP address 12.34.56.78 to the blocked port 5555 for tcp connections with a comment <span class="notranslate">'Some comment'</span>:
+The following command blocks port tcp 5555 to all IPs except 12.34.56.78 with a comment <span class="notranslate">'Some comment'</span>:
 
 <div class="notranslate">
 
