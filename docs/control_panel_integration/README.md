@@ -416,7 +416,8 @@ cat certs.json | im360-ssl-cache --add -
 ```
 </div>
 
-Format of JSON file:
+<details>
+  <summary>Format of JSON file:</summary>
 
 <div class="notranslate">
 
@@ -441,6 +442,7 @@ Format of JSON file:
 :::tip Note
 As JSON text is not allowed to have line breaks, all newline symbols must be escaped as in the example above.
 :::
+</details>
 
 To remove certificate(s) from the cache, a user is expected to run the command:
 
@@ -459,7 +461,8 @@ When no parameters are passed, the <span class="notranslate">`im360-ssl-cache`</
 Passing certificates data in JSON format is done to put data flow in good order, to avoid excessive checks of data. No certificate checks are made.
 :::
 
-#### Non-SNI requests
+<details>
+<summary>Non-SNI requests</summary>
 
 When a request without Server Name Indication (SNI) comes, WebShield has to guess what certificate from the cache to serve.
 
@@ -481,6 +484,43 @@ To allow WebShield to handle non-SNI requests properly, include an `ip` field in
 </div>
 
 WebShield will use this data to decide which certificate to serve if a request without Server Name Indication (SNI) arrives. If there are several domains with the specified IPs, WebShield will use the first one alphabetically.
+</details>
+
+#### How to test SSL configuration
+Administrators should see a warning in Settings in UI if no certificates are added:
+WebShield SSL-Cache is not configured. Although, even if a certificate is added, it doesn’t guarantee that the website is working correctly. The certificate may be outdated, invalid, or not applicable to that domain name.
+
+The worst scenario when SSL certificate is not cached or recognised by the WebShield is that the SSL certificate of the Captcha page redirect will not match the initial site the user was visiting. The WebShield will serve it's default that not likely to match with the domain name, or an outdated certificate and this may not be trusted. Thus SSL certificate waning will appear.
+
+To make sure WebShield can serve the Captcha page smoothly the relevant certificates should be in one of the lines of the cache file it uses:
+<div class="notranslate">
+	
+```
+/var/cache/imunify360-webshield/ssl.cache
+```
+</div>
+If the domain name and the certificate content with it's key are present in this file, WebShield's peak up algorithm will find this match and use on the Captcha page. 
+
+And to attest this mechanisms, it is required:
+
+1. While using non-whitelisted IP (ideally an another machine that is not used to login), get the Graylist verdict.
+2. Visit the site and validate that no SSL errors occurred while Captcha is shown.
+
+The first step can be achieved in various ways, the one that is also checks the ModSecurity layer is to send specific test tags, as [per link](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) describes. The approach is to send specific tags towards you site, trigger the test rule and get IP greylisted:
+<div class="notranslate">
+	
+```
+for i in {1..5} ; do curl -ks https://example.com/?i360test=88ff0adf94a190b9d1311c8b50fe2891c85af732 > /dev/null; echo $i; done
+```
+</div>
+
+Subsequently, the curl results should return WebShield have no errors:
+<div class="notranslate">
+	
+```
+curl -iv --ssl-reqd https://example.com
+```
+</div>
 
 #### Required web server configuration to correctly detect client IP addresses from headers
 
