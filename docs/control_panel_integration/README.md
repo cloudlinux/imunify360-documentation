@@ -492,16 +492,18 @@ WebShield SSL-Cache is not configured. Although, even if a certificate is added,
 
 The worst scenario when SSL certificate is not cached or recognised by the WebShield is that the SSL certificate of the Captcha page redirect will not match the initial site the user was visiting. The WebShield will serve it's default that not likely to match with the domain name, or an outdated certificate and this may not be trusted. Thus SSL certificate waning will appear.
 
-To make sure WebShield can serve the Captcha page smoothly the relevant certificates should be in one of the lines of the cache file it uses:
+To make sure WebShield can serve the Captcha page smoothly the relevant domain name (certificates cache) should be in the output of thec cache tool, e.g.:
 <div class="notranslate">
 	
 ```
-/var/cache/imunify360-webshield/ssl.cache
+im360-ssl-cache
+bob.example.com
+john.example.com
 ```
 </div>
-If the domain name and the certificate content with it's key are present in this file, WebShield's peak up algorithm will find this match and use on the Captcha page. 
+If the domain name is presented, its certificate content with it's key should be written in cache, WebShield's pick up algorithm will find this match to serve with domain's Captcha page. 
 
-And to attest this mechanisms, it is required:
+To attest this mechanisms, it is required:
 
 1. While using non-whitelisted IP (ideally an another machine that is not used to login), get the Graylist verdict.
 2. Visit the site and validate that no SSL errors occurred while Captcha is shown.
@@ -511,6 +513,14 @@ The first step can be achieved in various ways, the one that is also checks the 
 	
 ```
 for i in {1..5} ; do curl -ks https://example.com/?i360test=88ff0adf94a190b9d1311c8b50fe2891c85af732 > /dev/null; echo $i; done
+```
+</div>
+
+As well as without testing the ModSec layer, it is possible to add IP to the manual Greylist as per:
+<div class="notranslate">
+	
+```
+imunify360-agent graylist ip add 1.1.1.3 --comment "Greylisting my test IP" --expiration $(($(date "+%s")+3600))
 ```
 </div>
 
