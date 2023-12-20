@@ -43,7 +43,7 @@
 **Supported Web-servers**
 * <span class="notranslate">Apache</span>
 * <span class="notranslate">LiteSpeed</span>
-* <span class="notranslate">Nginx</span> ([only in <span class="notranslate">Standalone mode</span>](/control_panel_integration/#introduction))
+* <span class="notranslate">Nginx</span> (fully supported in the [<span class="notranslate">Standalone mode</span>](/control_panel_integration/#introduction); for supported control panels – with ModSec 3 only for now)
 
 
 ## Installation Instructions
