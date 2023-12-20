@@ -1150,7 +1150,7 @@ You can switch back to the normal mode by enabling WebShield or unchecking <span
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 
-#### WordPress account brute-force protection
+#### WordPress Account Brute-force Protection
 
 Server admin can enable an option to prevent access to WordPress accounts with well-known (trivial) passwords.
 When the option is enabled, all end-users that are trying to log into the admin account with weak/trivial or well-known passwords from the dictionary used by brute-forcers will be taken to the special alert page with an appeal to change their current password.
@@ -1161,7 +1161,8 @@ This feature can be enabled by setting <span class="notranslate">`cms_account_co
 This feature is implemented via modsec rule and could be partially [disabled on a per-domain basis](/command_line_interface/#rules) (the rule id is 33355)
 :::
 
-![](/images/waf_wordpress_acp_alert.png)
+![](/images/WAF_Compromised_Account_Login_Prevention.png) 
+![](/images/WAF_Weak_Password_Login_Prevention.png)
 
 The alert page supports localization and is displayed in the language of the browser (on an external Imunify domain).
 
