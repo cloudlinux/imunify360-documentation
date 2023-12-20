@@ -30,26 +30,32 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 3. Install Imunify360 using the [deploy script](https://repo.imunify360.cloudlinux.com/defence360/i360deploy.sh)
 4. Check the [installed modules work](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) and change the Imunify360 settings to reflect your needs.
 
-<details>
-  <summary>CageFS Warning</summary>
+:::warning CageFS Warning
 If Imunify360 runs in CageFS, you'll need to configure it accordingly. It is required to make sure Imunify Web-UI PHP code can be executed under a non-root user and grant access to `/var/run/defence360agent/non_root_simple_rpc.sock`. 
 
 To allow non-root user in CageFS access to the socket, this workaround should be applied:
 
 ```
-# create directory for moun-point
-mkdir /imunify-ui-shared
-# add symlink for user which belong to UI backend `imunify-web` in this example)
-ln -s /var/run/defence360agent /imunify-ui-shared/imunify-web
-# add symlink to cagefs skeleton
-rm -f /usr/share/cagefs-skeleton/var/run/defence360agent
-ln -s /imunify-ui-shared/imunify-web /usr/share/cagefs-skeleton/var/run/defence360agent
-# add mount point to cagefs
-echo "%/imunify-ui-shared" >> /etc/cagefs/cagefs.mp
-# remount all
+# Ensure the existence of the related cagefs directory for the user
+# and write necessary configuration for setting up virtual mp.
+# For more information, see docs:
+# https://docs.cloudlinux.com/shared/cloudlinux_os_components/#per-user-virtual-mount-points
+#
+export prefix=$(id -u {{ imunify_ui_user }} | tail -c 3)
+export cagefs_namespace_dir=/var/cagefs/${prefix}/{{ imunify_ui_user }}/
+mkdir -p ${cagefs_namespace_dir}
+#
+# The lines starting with @ mean they are subdirectories.
+# If we do not wanna mask everything else in /var/run,
+# we should not omit that line but make it an empty subdir under defence360agent, like shown
+#
+cat << EOF > ${cagefs_namespace_dir}/virt.mp
+/var/run/defence360agent
+@
+EOF
 cagefsctl --remount-all
 ```
-</details>
+:::
 
 ## 1. Install and configure the prerequisites
 
