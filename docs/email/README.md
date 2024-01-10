@@ -787,3 +787,365 @@ Flags:
 
 Use "ie-cli am [command] --help" for more information about a command.
 ```
+
+#### Usage of limit subcommand
+
+The `"ie-cli am limit"` command allows you to apply a limit value to a specific sender object, which can be a particular `domain`, `sender email`, or `account`. This command can be used with specific flags and subcommands.
+
+The available subcommand is `"set"`. This is used to set a limit for the sender object(s).
+
+The flags include `"-h"` or `"--help"`. This is used to get help for the limit command.
+
+For more information about a specific command, you can use the "ie-cli am limit [command] --help" command.
+In the `"ie-cli am limit set"` command, the flags include `"--id string"`, `"--limit int"`, and `"--so-type string"`. 
+
+
+:::tip Note
+To set limit you have to know the sender objects id and you can get id from the stat subcommand
+:::
+
+**Command**
+
+```
+ie-cli am limit --help
+```
+
+**Output**
+
+```
+The limit value of sender object can be applied on particular domain, sender email and account
+
+Usage:
+  ie-cli am limit [command]
+
+Available Commands:
+  set         set limit for the sender object(s)
+
+Flags:
+  -h, --help   help for limit
+
+Use "ie-cli am limit [command] --help" for more information about a command.
+```
+
+**Command**
+
+```
+ie-cli am limit set --help
+```
+
+**Output**
+
+```
+set limit for the sender object(s)
+
+Usage:
+  ie-cli am limit set [flags]
+
+Flags:
+  -h, --help             help for set
+      --id string        The id of sender object
+      --limit int        The limit value, 0 means unlimited (default -1)
+      --so-type string   supported values: [account domain sender_email script]
+```
+
+1. Get id from the stat subcommand 
+
+**Command usage with `--domain` for get sender-object id**
+
+```
+ie-cli am stats --domain=domain.com --since 3000000 
+```
+
+**Command usage with `--sender-email` for get sender-object id**
+
+```
+ie-cli am stats --sender-email=test@domain.com 
+```
+
+**Command usage with `--account-name` for get sender-object id**
+
+```
+ie-cli am stats --account-name=domain --since 3000000 
+```
+
+**Output**
+
+```
+{
+  "accounts": [
+    {
+        "domains": [
+            {
+                "account_id": "11111111-1111-1111-1111-11111111111",
+                "exclusion": false,
+                "id": "22222222-2222-2222-2222-222222222222",
+                "limit": 0,
+                "messages": 1,
+                "name": "domain.com",
+                "quarantined": 1,
+                "rateLimited": false,
+                "sender_emails": [
+                    {
+                        "account_id": "11111111-1111-1111-1111-11111111111",
+                        "domain_id": "22222222-2222-2222-2222-222222222222",
+                        "exclusion": false,
+                        "id": "33333333-3333-3333-3333-333333333333",
+                        "limit": 0,
+                        "messages": 1,
+                        "name": "test@domain.com",
+                        "quarantined": 1,
+                        "rateLimited": false,
+                        "whitelisted": false
+                    }
+                ],
+                "whitelisted": false
+            },
+        ],
+        "exclusion": false,
+        "id": "11111111-1111-1111-1111-11111111111",
+        "limit": 0,
+        "messages": 1,
+        "name": "domain",
+        "quarantined": 1,
+        "rateLimited": false,
+        "scripts": null,
+        "whitelisted": false
+    }
+  ]
+}
+```
+
+2. Uses of the limit subcommand according to the sender-object types (--so-type);
+
+**Command usage with `--so-type="account"` for set limit**
+
+```
+ie-cli am limit set --id="11111111-1111-1111-1111-11111111111" --limit=3 --so-type="account"
+```
+
+**Command usage with `--so-type="domain"` for set limit**
+
+```
+ie-cli am limit set --id="22222222-2222-2222-2222-222222222222" --limit=5 --so-type="domain"
+```
+
+**Command usage with `--so-type="sender_email"` for set limit**
+
+```
+ie-cli am limit set --id="33333333-3333-3333-3333-333333333333" --limit=7 --so-type="sender_email"
+```
+
+**Output**
+
+```
+OK
+```
+
+:::tip Note
+Changes can be observed by following `Imunify360 -> Email -> Activity Monitor` from the UI.
+:::
+
+#### Usage of server-settings subcommand
+
+The `"ie-cli am server-settings"` command operates by the server sender limit settings and allows to set a default limit that is applied for all sender objects. This command can be used with specific flags and subcommands.
+
+Among the available subcommands is `"set"`. This is used to set server sender limit defaults.
+
+Among the flags are `"-h"` or `"--help"`. This is used to get help for server-settings.
+
+For more information, you can use the `"ie-cli am server-settings [command] --help"` command. This provides more information about a specific command.
+
+
+**Command**
+
+```
+ie-cli am server-settings set -h
+```
+
+**Output**
+
+```
+Change server sender limit settings.
+        Limit mode should be 1 or 2, where:
+                - 1 means limit mode by sender and
+                - 2 means limit mode by the number of recipients
+        To remove limit for some sender object use value 0, e.g. --account=0
+
+Usage:
+  ie-cli am server-settings set [flags]
+
+Flags:
+      --account int         (default -1)
+      --domain int          (default -1)
+  -h, --help               help for set
+      --limit-mode int     1 or 2 (default -1)
+      --script int          (default -1)
+      --sender-email int    (default -1)
+```
+
+
+**Command**
+
+```
+ie-cli am server-settings -h
+```
+
+**Output**
+
+```
+Operates by the server sender limit settings and allows to set default limit that is applied for all sender objects
+
+Usage:
+  ie-cli am server-settings [flags]
+  ie-cli am server-settings [command]
+
+Available Commands:
+  set         set server sender limit defaults
+
+Flags:
+  -h, --help   help for server-settings
+
+Use "ie-cli am server-settings [command] --help" for more information about a command.
+```
+
+The `"ie-cli am server-settings set"` command is used to change the server sender limit settings. This command can be used with specific flags to set the limit mode and remove limits for certain sender objects.
+
+The `"--limit-mode int"` flag is used to set the limit mode. The limit mode should be either 1 or 2, where 1 means limit mode by sender and 2 means limit mode by the number of recipients.
+
+To remove the limit for a specific sender object, you can use a value of 0. For example, to remove the limit for an account, you can use `"--account=0"`.
+
+The other flags include `"--account int"`, `"--domain int"`, `"--script int"`, and `"--sender-email int"`. These are used to set the limit for a specific account, domain, script, or sender email, respectively. The default value for these flags is -1.
+
+For example, to set the limit mode to 1 (limit by sender) and remove the limit for a specific account, you could use the following command: `"ie-cli am server-settings set --limit-mode=1 --account=0"`
+
+To set the limit mode to 2 (limit by the number of recipients) and set a specific limit for a domain, you could use: `"ie-cli am server-settings set --limit-mode=2 --domain=100"`
+
+
+Examples;
+
+**Command**
+
+```
+ie-cli am server-settings set --limit-mode=2 --domain=100
+```
+
+**Output**
+
+```
+New server settings is:
+{
+    "account": 0,
+    "domain": 100,
+    "limit_mode": 2,
+    "script": 0,
+    "sender_email": 0
+}
+```
+
+**Command**
+
+```
+ie-cli am server-settings set --limit-mode=1 --account=0
+```
+
+**Output**
+
+```
+New server settings is:
+{
+    "account": 0,
+    "domain": 100,
+    "limit_mode": 1,
+    "script": 0,
+    "sender_email": 0
+}
+```
+
+
+
+#### Usage of stats subcommand
+
+The `"ie-cli am stats"` command returns an aggregated view of sender objects with various filters. This command can be used with specific flags to filter the results.
+
+Among the flags are `"--account-name string"`, `"--domain string"`, `"--limit int"`, `"--offset int"`, `"--script-name string"`, `"--sender-email string"`, and `"--since int"`. These are used to filter by account name, domain, limit the number of results, set the offset for results, filter by script name, filter by sender email, and set the number of seconds which passed from the flag value until now, respectively.
+
+The `"-h"` or `"--help"` flag is used to get help for stats.
+
+The `"--limit int"` flag also specifies that the limit applied is only for the number of accounts in the response, with a default of 25. The `"--since int"` flag has a default value of 3600 seconds.
+
+
+**Command**
+
+```
+ie-cli am stats --help
+stats (statistics) returns the aggregated view of senders objects with various filters
+
+Usage:
+  ie-cli am stats [flags]
+
+Flags:
+      --account-name string   Account name to filter
+      --domain string         Domain to filter
+  -h, --help                  help for stats
+      --limit int             How many results to return (pagination). The limit applied only for number of accounts in response (default 25)
+      --offset int            From which offset results to return (pagination)
+      --script-name string    Script name to filter
+      --sender-email string   Sender email to filter
+      --since int             The number of seconds which passed from the flag value until now (default 3600)
+```
+
+
+By using the stats command directly, all sender objects are returned as follows. The --since flag can be used to retrieve sender objects within a certain period of time (in seconds).
+
+**Command**
+
+```
+ie-cli am stats
+```
+
+**Output**
+
+```
+{
+  "accounts": [
+    {
+        "domains": [
+            {
+                "account_id": "11111111-1111-1111-1111-11111111111",
+                "exclusion": false,
+                "id": "22222222-2222-2222-2222-222222222222",
+                "limit": 0,
+                "messages": 1,
+                "name": "domain.com",
+                "quarantined": 1,
+                "rateLimited": false,
+                "sender_emails": [
+                    {
+                        "account_id": "11111111-1111-1111-1111-11111111111",
+                        "domain_id": "22222222-2222-2222-2222-222222222222",
+                        "exclusion": false,
+                        "id": "33333333-3333-3333-3333-333333333333",
+                        "limit": 0,
+                        "messages": 1,
+                        "name": "test@domain.com",
+                        "quarantined": 1,
+                        "rateLimited": false,
+                        "whitelisted": false
+                    }
+                ],
+                "whitelisted": false
+            },
+        ],
+        "exclusion": false,
+        "id": "11111111-1111-1111-1111-11111111111",
+        "limit": 0,
+        "messages": 1,
+        "name": "domain",
+        "quarantined": 1,
+        "rateLimited": false,
+        "scripts": null,
+        "whitelisted": false
+    }
+  ]
+}
+```
