@@ -787,3 +787,293 @@ Flags:
 
 Use "ie-cli am [command] --help" for more information about a command.
 ```
+
+#### Usage of limit subcommand
+
+The `ie-cli am limit` command is a versatile tool that enables you to assign a limit value to any sender object. This object could be an `account`, `domain`, `sender email`, or `script`. The command can be further customized with the use of specific flags and subcommands.
+
+The set subcommand is available for use with this command. Its primary function is to establish a limit for the designated sender object(s).
+
+In the context of the `"ie-cli am limit set"` command, the flags that can be used include `"--id string"`, `"--limit int"`, and `"--so-type string"`.
+
+:::tip Note
+In order to set a limit, it's essential to know the sender object's id. This id can be obtained from the `ie-cli am stats` subcommand. For guidance on how to obtain the sender object id, please refer to the [`ie-cli am stats` documentation provided below.](#usage-of-stats-subcommand)
+:::
+
+
+**Command**
+
+```
+ie-cli am limit set --help
+```
+
+**Output**
+
+```
+set limit for the sender object(s)
+
+Usage:
+  ie-cli am limit set [flags]
+
+Flags:
+  -h, --help             help for set
+      --id string        The id of sender object
+      --limit int        The limit value, 0 means unlimited (default -1)
+      --so-type string   supported values: [account domain sender_email script]
+```
+
+
+The utilization of the limit subcommand varies according to the sender-object types (--so-type);
+
+**Command usage with `--so-type="account"` for set limit**
+
+```
+ie-cli am limit set --id="11111111-1111-1111-1111-11111111111" --limit=3 --so-type="account"
+```
+
+**Command usage with `--so-type="domain"` for set limit**
+
+```
+ie-cli am limit set --id="22222222-2222-2222-2222-222222222222" --limit=5 --so-type="domain"
+```
+
+**Command usage with `--so-type="sender_email"` for set limit**
+
+```
+ie-cli am limit set --id="33333333-3333-3333-3333-333333333333" --limit=7 --so-type="sender_email"
+```
+
+**Output**
+
+```
+OK
+```
+
+:::tip Note
+Modifications can be tracked by navigating through the User Interface (UI) via `Imunify360 -> Email -> Activity Monitor`.
+:::
+
+#### Usage of server-settings subcommand
+
+The `ie-cli am server-settings` command is designed to manage server sender limit settings, allowing you to establish a default limit that is applied to any sender object by default. This command can be further customized with the use of specific flags and subcommands.
+
+The `ie-cli am server-settings set` command is designed to modify the server sender limit settings. This command can be paired with specific flags to establish the limit mode and eliminate limits for certain sender objects.
+
+The `--limit-mode int` flag is utilized to define the limit mode. The limit mode can be either 1 or 2, where 1 signifies limit mode by sender and 2 denotes limit mode by the number of recipients.
+
+To eliminate the limit for any sender object, a value of 0 can be used. For instance, to remove the limit for an account, the `--account=0` command can be employed. A value of 0 indicates that the sender object will have no restrictions, effectively rendering it unlimited.
+
+Additional flags encompass `--account int`, `--domain int`, `--script int`, and `--sender-email int`. These are utilized to establish the threshold for any account, domain, script, or sender email, correspondingly. The default value for these flags is set to -1.
+
+The existing `server-settings` can be accessed by utilizing the `ie-cli am server-settings` command.
+
+**Command**
+
+```
+ie-cli am server-settings
+```
+
+**Output**
+
+```
+{
+    "account": 0,
+    "domain": 1,
+    "limit_mode": 1,
+    "script": 0,
+    "sender_email": 0
+}
+```
+
+To establish the limit mode to 2 (limit by the number of recipients) and designate any limit for a domain, the subsequent command could be utilized: `ie-cli am server-settings set --limit-mode=2 --domain=100`.
+
+**Command**
+
+```
+ie-cli am server-settings set --limit-mode=2 --domain=100
+```
+
+**Output**
+
+```
+New server settings is:
+{
+    "account": 0,
+    "domain": 100,
+    "limit_mode": 2,
+    "script": 0,
+    "sender_email": 0
+}
+```
+
+For instance, to configure the limit mode to 1 (limit by sender) and eliminate the limit for any account, the following command could be employed: `ie-cli am server-settings set --limit-mode=1 --account=0`.
+
+**Command**
+
+```
+ie-cli am server-settings set --limit-mode=1 --account=0
+```
+
+**Output**
+
+```
+New server settings is:
+{
+    "account": 0,
+    "domain": 100,
+    "limit_mode": 1,
+    "script": 0,
+    "sender_email": 0
+}
+```
+
+
+#### Usage of stats subcommand
+
+The `ie-cli am stats` command provides a consolidated view of sender objects, complete with a variety of filters. This command can be paired with specific flags to refine the results.
+
+The flags include `--account-name string`, `--domain string`, `--limit int`, `--offset int`, `--script-name string`, `--sender-email string`, and `--since int`. These are employed to filter by account name, domain, limit the quantity of results, set the offset for results, filter by script name, filter by sender email, and set the duration in seconds that has elapsed from the flag value until the present moment, respectively.
+
+The `--limit int` flag also indicates that the limit applied pertains solely to the number of accounts in the response, with a default of 25. 
+
+The `--since int` flag defaults to a value of 3600 seconds.
+
+:::tip Note
+The functionality mirrors that of the ActivityMonitor user interface.
+:::
+
+**Command**
+
+```
+ie-cli am stats --help
+stats (statistics) returns the aggregated view of senders objects with various filters
+
+Usage:
+  ie-cli am stats [flags]
+
+Flags:
+      --account-name string   Account name to filter
+      --domain string         Domain to filter
+  -h, --help                  help for stats
+      --limit int             How many results to return (pagination). The limit applied only for number of accounts in response (default 25)
+      --offset int            From which offset results to return (pagination)
+      --script-name string    Script name to filter
+      --sender-email string   Sender email to filter
+      --since int             The number of seconds which passed from the flag value until now (default 3600)
+```
+
+
+By using the stats command directly, all sender objects are returned as follows. The `--since` flag can be used to retrieve sender objects within a certain period of time (in seconds).
+
+**Command**
+
+```
+ie-cli am stats --since 5000
+```
+
+**Output**
+
+```
+{
+  "accounts": [
+    {
+        "domains": [
+            {
+                "account_id": "11111111-1111-1111-1111-11111111111",
+                "exclusion": false,
+                "id": "22222222-2222-2222-2222-222222222222",
+                "limit": 0,
+                "messages": 1,
+                "name": "domain.com",
+                "quarantined": 1,
+                "rateLimited": false,
+                "sender_emails": [
+                    {
+                        "account_id": "11111111-1111-1111-1111-11111111111",
+                        "domain_id": "22222222-2222-2222-2222-222222222222",
+                        "exclusion": false,
+                        "id": "33333333-3333-3333-3333-333333333333",
+                        "limit": 0,
+                        "messages": 1,
+                        "name": "test@domain.com",
+                        "quarantined": 1,
+                        "rateLimited": false,
+                        "whitelisted": false
+                    }
+                ],
+                "whitelisted": false
+            },
+        ],
+        "exclusion": false,
+        "id": "11111111-1111-1111-1111-11111111111",
+        "limit": 0,
+        "messages": 1,
+        "name": "domain",
+        "quarantined": 1,
+        "rateLimited": false,
+        "scripts": null,
+        "whitelisted": false
+    }
+  ]
+}
+```
+
+
+**Command usage with `--sender-email` for get sender-object id**
+
+```
+ie-cli am stats --sender-email=test@domain.com 
+```
+
+**Command usage with `--account-name` for get sender-object id**
+
+```
+ie-cli am stats --account-name=domain --since 3000000 
+```
+
+**Output**
+
+```
+{
+  "accounts": [
+    {
+        "domains": [
+            {
+                "account_id": "11111111-1111-1111-1111-11111111111",
+                "exclusion": false,
+                "id": "22222222-2222-2222-2222-222222222222",
+                "limit": 0,
+                "messages": 1,
+                "name": "domain.com",
+                "quarantined": 1,
+                "rateLimited": false,
+                "sender_emails": [
+                    {
+                        "account_id": "11111111-1111-1111-1111-11111111111",
+                        "domain_id": "22222222-2222-2222-2222-222222222222",
+                        "exclusion": false,
+                        "id": "33333333-3333-3333-3333-333333333333",
+                        "limit": 0,
+                        "messages": 1,
+                        "name": "test@domain.com",
+                        "quarantined": 1,
+                        "rateLimited": false,
+                        "whitelisted": false
+                    }
+                ],
+                "whitelisted": false
+            },
+        ],
+        "exclusion": false,
+        "id": "11111111-1111-1111-1111-11111111111",
+        "limit": 0,
+        "messages": 1,
+        "name": "domain",
+        "quarantined": 1,
+        "rateLimited": false,
+        "scripts": null,
+        "whitelisted": false
+    }
+  ]
+}
+```

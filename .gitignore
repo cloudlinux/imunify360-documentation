@@ -5,3 +5,8 @@ node_modules
 
 .idea
 yarn.lock
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
