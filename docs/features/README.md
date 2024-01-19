@@ -331,7 +331,7 @@ Version Imunify360 6.0 or later supports the use of MDS in UI.
 :::
 
 :::danger Warning
-For now, Malware Database Scanner (MDS) supports WordPress databases only.
+For now, Malware Database Scanner (MDS) supports WordPress and Joomla databases only.
 :::
 
 ### How to use Malware Database Scanner (MDS)
