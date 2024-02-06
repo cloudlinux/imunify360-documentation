@@ -1,4 +1,4 @@
-import {inject} from "vue";
+import sidebarItems from "../config-client/sidebar";
 
 export const hashRE = /#.*$/ // a regular expression to match the hash portion of a URL.
 export const extRE = /\.(md|html)$/ // a regular expression to match file extensions.
@@ -163,8 +163,7 @@ function resolvePath(relative, base, append) {
  */
 
 export function resolveSidebarItems(page, route, pages) {
-    const {locales} = inject('themeConfig')
-    const {base, config} = resolveMatchingConfig(route, locales.sidebar)
+    const {base, config} = resolveMatchingConfig(route, sidebarItems)
     return config
         ? config.map(item => resolveItem(item, pages, base))
         : []
