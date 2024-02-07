@@ -1237,22 +1237,22 @@ You can find all incidents related to the new feature in the incidents table by 
 The feature is switched off by default. You can activate Enhanced DOS Protection in Imunify360 using the following CLI command:
 
 ```
-imunify360-agent config update '{"ENHANCED_DOS":{"enabled":true}}
+imunify360-agent config update '{"ENHANCED_DOS":{"enabled":true}}'
 ```
 
 The default timeframe (seconds) and threshold of request (number) could be changed by the following CLI commands:
 
 ```
-imunify360-agent config update '{"ENHANCED_DOS":{"time_frame":60}}
+imunify360-agent config update '{"ENHANCED_DOS":{"time_frame":60}}'
 ```
 ```
-imunify360-agent config update '{"ENHANCED_DOS":{"default_limit":500}}
+imunify360-agent config update '{"ENHANCED_DOS":{"default_limit":500}}'
 ```
 
 Request limits for different ports could be set separately, using the following CLI commands:
 
 ```
-imunify360-agent config update '{"ENHANCED_DOS": {"port_limits": {"80": 150}}}
+imunify360-agent config update '{"ENHANCED_DOS": {"port_limits": {"80": 150}}}'
 ```
 
 We also recommend checking and configuring the CAPTCHA_DOS section of [parameters](/config_file_description) to blacklist IPs after repetitive requests to the captcha.
