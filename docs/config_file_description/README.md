@@ -77,8 +77,8 @@ Changes of config files will be applied automatically. You don’t need to resta
 <tr>
 <td width="250px;"><span class="notranslate">syscall_monitor: False</span></td>
 <td>
-  Collect and report the source of suspicious actions using Syscall Monitor (<span class="notranslate">True</span>).<br>
-  <b>Supported operating systems</b>:
+  <p>Collect and report the source of suspicious actions using Syscall Monitor (<span class="notranslate">True</span>).</p>
+  Supported operating systems:
   <ul>
     <li>CentOS 6/7</li>
     <li>CloudLinux OS 6/7.</li>
@@ -90,6 +90,8 @@ Changes of config files will be applied automatically. You don’t need to resta
   </ul>
   <p>
     Imunify360 uses auditd to discover malicious cron jobs that are not detected by other methods yet and thus block them much faster.
+  </p>
+  <p>
     Additionally, it's also used for internal quality control and monitoring - e.g. if auditd records that PHP processes drop malware, but there are no related events/blocks from Proactive Defense, Imunify team receives an alert prompting an investigation.
   </p>
 </td>
