@@ -75,7 +75,24 @@ Changes of config files will be applied automatically. You don’t need to resta
 <tr>
 <td width="250px;"><span class="notranslate">backup_count: 5</span></td><td># defines how many log files to store. If 5, it will store <span class="notranslate"><em>app.log</em>, <em>app.log.1</em></span>, and up to <span class="notranslate"><em>app.log.5</em></span>.</td></tr>
 <tr>
-<td width="250px;"><span class="notranslate">syscall_monitor: False</span></td><td># collect and report the source of suspicious actions using Syscall Monitor (<span class="notranslate">True</span>).<br><b>Supported operating systems</b>:<br>* CentOS 6/7<br>* CloudLinux OS 6/7.<br><b>auditd</b> needs to be installed<br><b>auditsp</b> needs to be switched off.</td>
+<td width="250px;"><span class="notranslate">syscall_monitor: False</span></td>
+<td>
+  Collect and report the source of suspicious actions using Syscall Monitor (<span class="notranslate">True</span>).<br>
+  <b>Supported operating systems</b>:
+  <ul>
+    <li>CentOS 6/7</li>
+    <li>CloudLinux OS 6/7.</li>
+  </ul>
+  Additional requirements:
+  <ul>
+    <li><b>auditd</b> needs to be installed</li>
+    <li><b>auditsp</b> needs to be switched off.</li>
+  </ul>
+  <p>
+    Imunify360 uses auditd to discover malicious cron jobs that are not detected by other methods yet and thus block them much faster.
+    Additionally, it's also used for internal quality control and monitoring - e.g. if auditd records that PHP processes drop malware, but there are no related events/blocks from Proactive Defense, Imunify team receives an alert prompting an investigation.
+  </p>
+</td>
 </tr>
 <tr>
 <th align="left"><span class="notranslate">MOD_SEC:</span></th>
