@@ -1077,3 +1077,15 @@ ie-cli am stats --account-name=domain --since 3000000
   ]
 }
 ```
+
+### Uninstallation
+
+To remove Imunify Email from your system, execute the following command:
+
+**Command**
+
+```
+yum autoremove imunifyemail
+```
+
+This command ensures the removal of all associated components related to Imunify Email from your system.
