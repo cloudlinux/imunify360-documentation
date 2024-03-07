@@ -491,6 +491,10 @@ Messages can be released from the quarantine and sent to recipients if they are 
 The quarantine will automatically delete the oldest messages when the user's quarantine limit is reached. The limit can be adjusted in settings.
 :::
 
+:::tip Note
+Non-root users are currently limited to releasing only 5 messages from quarantine per hour. This limit can be adjusted using the ie-cli command-line interface (CLI) tool.
+:::
+
 #### Release
 
 **Command**
@@ -611,6 +615,40 @@ mws        8096          810692      active
    "used_bytes":160461,
    "state":"active"
 }
+```
+
+#### Edit account releases-limit
+
+Users' hourly `releases-limit` values can be adjusted according to your needs. This allows for a more dynamic and responsive management of user activity, ensuring optimal operational efficiency.
+
+To view the current account settings, use the following command:
+
+**Command**
+
+```
+ie-cli accounts list --name=imunifyemail
+```
+
+**Output**
+
+```
+Name             LimitBytes      UsedBytes       State   ReleasesLimit (hourly)
+imunifyemail     104857600       8324            active          5
+```
+
+To modify the release limit, use the `ie-cli accounts edit` command followed by the `--name` parameter (to specify the account) and the `--releases-limit` parameter (to set the new limit). For example:
+
+**Command**
+
+```
+ie-cli accounts edit --name=imunifyemail --releases-limit=50
+```
+
+**Output**
+
+```
+Name             LimitBytes      UsedBytes       State   ReleasesLimit (hourly)
+imunifyemail     104857600       8324            active          50
 ```
 
 #### Clean all quarantine for an account
