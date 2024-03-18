@@ -701,7 +701,7 @@ To enable it now, run the command:
 	
 <div class="notranslate">
 
-```sh
+```
 imunify360-agent config update '{"WEBSHIELD": {"known_proxies_support": true}}'
 ```
 
@@ -922,14 +922,14 @@ In the example the <span class="notranslate">`OPTIONS`</span> method is disabled
 2. Restart WebShield by running the following command:
    <div class="notranslate">
 
-   ```shell
+   ```
    service imunify360-webshield restart
    ```
    </div>
 3. Check that the <span class="notranslate">`OPTIONS`</span> method is disabled correctly by running the following command:
    <div class="notranslate">
 
-   ```shell
+   ```
    curl -i -X OPTIONS http://[server IP]:52224
    ```
    </div>

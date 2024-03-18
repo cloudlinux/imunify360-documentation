@@ -30,7 +30,7 @@ Imunify Web-UI PHP code has to be executed under a non-root user which has acces
 
 To allow non-root user in CageFS access to the socket, this workaround should be applied:
 
-```sh
+```
 # create directory for moun-point
 mkdir /imunify-ui-shared
 # add symlink for user which belong to UI backend `imunify-web` in this example)

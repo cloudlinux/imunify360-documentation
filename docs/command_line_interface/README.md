@@ -1844,7 +1844,7 @@ mkdir -p /etc/imunify360/emails/custom_scan_malware_found
 
 <div class="notranslate">
 
-```bash
+```
 cat <<EOF > /etc/imunify360/emails/custom_scan_malware_found/en.json
 [
     {

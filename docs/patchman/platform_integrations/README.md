@@ -106,7 +106,7 @@ In this case, Plesk has been configured to not allow access to the Plesk API fro
 
 1. Change the Plesk API ACL to allow requests from 127.0.0.1. In the Plesk interface, this can be found under Tools & Settings > IP Access Restriction Management > IP allow/deny list.
 2. Change the address Patchman uses to access the API. This approach is only useful if the API is made available on an external interface instead of an internal one - it won’t work if you made the API completely unavailable. To achieve this, add the following to `/etc/patchman/patchman.ini` (create the file if it doesn’t exist yet):  
-    ```bash
+    ```
     [plesk]
     api_address=<IP>
     ```

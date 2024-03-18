@@ -97,11 +97,11 @@ To include information in the email templates, we use Mustache, which is a very 
 
 |  Tag Type   |  Description   |
 | --- | --- |
-| **Variables** | Using `{{var}}` will display the value of the variable. If it is not available, an empty string will be displayed instead:<br><br>```bash<br>Dear {{username}},<br>``` |
+| **Variables** | Using `{{var}}` will display the value of the variable. If it is not available, an empty string will be displayed instead:<br><br>```<br>Dear {{username}},<br>``` |
 | **Verbatim** | If you need to include a variable unescaped (e.g. in text templates), use `{{&var}}` instead. |
-| **Sections: list** | When the variable is a list, you can use sections to repeat the same block multiple times. Inside the section, you can access the attributes of the individual list items:<br><br>```bash<br>{{#detections}}<br>We found a detection of {{name}}.<br>{{/detections}}<br>``` |
-| **Sections: conditional** | Similarly, sections work as conditional statements. When a variable is optional, the data within the section is only shown when the variable is available:<br><br>```bash<br>{{#definition_multiple}}<br>The detection consists of {{definition_count}} vulnerabilities<br>{{/definition_multiple}}<br>``` |
-| **Sections: invert** | If you need to invert the statement, i.e. show a message in the case of an empty list or untrue variable, you can use the caret:<br><br>```bash<br>{{^definition_multiple}}<br>The detection consists of only one vulnerability.<br>{{/definition_multiple}}<br>``` |
+| **Sections: list** | When the variable is a list, you can use sections to repeat the same block multiple times. Inside the section, you can access the attributes of the individual list items:<br><br>```<br>{{#detections}}<br>We found a detection of {{name}}.<br>{{/detections}}<br>``` |
+| **Sections: conditional** | Similarly, sections work as conditional statements. When a variable is optional, the data within the section is only shown when the variable is available:<br><br>```<br>{{#definition_multiple}}<br>The detection consists of {{definition_count}} vulnerabilities<br>{{/definition_multiple}}<br>``` |
+| **Sections: invert** | If you need to invert the statement, i.e. show a message in the case of an empty list or untrue variable, you can use the caret:<br><br>```<br>{{^definition_multiple}}<br>The detection consists of only one vulnerability.<br>{{/definition_multiple}}<br>``` |
 | **Comments** | If you need to place a comment in your template, you can do so using `{{! comment }}` |
 | **Partials** | You can include partials using `{{>partial}}`. A partial is a subtemplate and is used only by the policy generic templates to include the sub-templates.<br><br>You must always include the `{{>content}}` and `{{>branding}}` partial in your templates. |
 
