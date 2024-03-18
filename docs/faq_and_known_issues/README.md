@@ -436,7 +436,7 @@ Make sure [the option is enabled](/dashboard/#malware).
 And try to upload sample remotely, using user account:
  
 ```
-wget http://www.eicar.org/download/eicar.com.txt -O /tmp/eicar.com.txt
+wget https://secure.eicar.org/eicar.com.txt -O /tmp/eicar.com.txt
 scp /tmp/eicar.com.txt  mycooluser@X.Y.Z.A:/var/www/mycooluser/mycoolwebsite_docroot
 ```
  
