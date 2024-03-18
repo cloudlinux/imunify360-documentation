@@ -131,7 +131,7 @@ The arguments may vary depending on the backend used. To see which arguments are
 
 <div class="notranslate">
 
-``` Python 3
+```
 restore_infected acronis init
 usage: restore_infected [-h] BACKEND {init,list,restore,cleanup} ...
 restore_infected: error: init arguments required: username password
@@ -159,7 +159,7 @@ Example:
 
 <div class="notranslate">
 
-``` Python 3
+```
 restore_infected acronis list --until "01 Aug 2017"
 2017-08-06T10:22:00
 2017-08-05T06:00:00
@@ -238,7 +238,7 @@ For example <span class="notranslate">`restore_infected`</span> can be called li
 
 <div class="notranslate">
 
-``` Python 3
+```
 from restore_infected import backup_backends
 from restore_infected.restore import restore_infected
 from restore_infected.helpers import DateTime
@@ -266,7 +266,7 @@ In the following example let’s print out all backups. For <span class="notrans
 
 <div class="notranslate">
 
-``` Python 3
+```
 from restore_infected import backup_backends
 plesk = backup_backends.backend('plesk')
 for backup in plesk.backups():
@@ -293,7 +293,7 @@ This will give us the following list of backups:
 
 <div class="notranslate">
 
-``` Python 3
+```
 from restore_infected import backup_backends
 plesk = backup_backends.backend('plesk')
 from restore_infected.helpers import DateTime
@@ -311,7 +311,7 @@ Example:
 
 <div class="notranslate">
 
-``` Python 3
+```
 backups = plesk.backups()
 print(backups[4].created)
 print(backups[5].created)
@@ -340,7 +340,7 @@ Output:
 
 <div class="notranslate">
 
-``` Python 3
+```
 <FileData(
 fileobj=<ExFileObject name='/var/lib/psa/dumps/clients/u1/domains/u1.pl7.cloudlinux.com/backup_user-data_1708080700.tgz'>,
 filename='/var/www/vhosts/u1.pl7.cloudlinux.com/httpdocs/index.php',
@@ -359,7 +359,7 @@ Example:
 
 <div class="notranslate">
 
-``` Python 3
+```
 from restore_infected import backup_backends
 plesk = backup_backends.backend('plesk')
 backups = plesk.backups()
@@ -380,7 +380,7 @@ Example:
 
 <div class="notranslate">
 
-``` Python 3
+```
 from restore_infected import backup_backends
 acronis = backup_backends.backend('acronis')
 acronis.init(name, password, provision=True, force=True, tmp_dir=None)
@@ -394,7 +394,7 @@ acronis.init(name, password, provision=True, force=True, tmp_dir=None)
 
    <div class="notranslate">
 
-   ``` Python 3
+   ```
    from restore_infected import backup_backends
     acronis = backup_backends.backend('acronis')
     token = acronis.login_url()
@@ -408,7 +408,7 @@ acronis.init(name, password, provision=True, force=True, tmp_dir=None)
 
    <div class="notranslate">
 
-   ``` Python 3
+   ```
     from restore_infected import backup_backends
      acronis = backup_backends.backend('acronis')
     acronis.refresh_token()
@@ -422,7 +422,7 @@ acronis.init(name, password, provision=True, force=True, tmp_dir=None)
 
    <div class="notranslate">
 
-   ``` Python 3
+   ```
     from restore_infected import backup_backends
     acronis = backup_backends.backend('acronis')
     info = acronis.info()
@@ -437,7 +437,7 @@ acronis.init(name, password, provision=True, force=True, tmp_dir=None)
 
    <div class="notranslate">
 
-   ``` Python 3
+   ```
     from restore_infected import backup_backends
     acronis = backup_backends.backend('acronis')
     acronis.make_initial_backup(trace=False)
@@ -456,7 +456,7 @@ Here is an example of <span class="notranslate">`is_suitable`</span> function fo
 
 <div class="notranslate">
 
-``` Python 3
+```
 def is_suitable():
 return os.path.isfile('/usr/local/directadmin/directadmin')
 ```
@@ -491,7 +491,7 @@ There are 3 functions in the plugin, but only one of them is mandatory - <span c
 
 <div class="notranslate">
 
-``` Python 3
+```
 def init(*args):
 ...
 def backups(until=None):
@@ -510,7 +510,7 @@ To check that the plugin works as intended try passing your plugin name to the C
 
 <div class="notranslate">
 
-``` Python 3
+```
 restore_infected <your_backend_name> list
 ```
 
@@ -520,7 +520,7 @@ To be used in asynchronous libraries <span class="notranslate">`async_restore_in
 
 <div class="notranslate">
 
-``` Python 3
+```
 import logging
 from restore_infected import backup_backends
 from restore_infected.restore import async_restore_infected
