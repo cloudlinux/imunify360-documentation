@@ -5,7 +5,7 @@ Imunify360 is the security solution for Linux web servers based on machine learn
 
 Imunify360 provides:
 
- * Advanced firewall with cloud heuristics and artificial intelligence for detecting new threats and protecting all servers that run the software -  capable of defending against brute force attacks, DoS attacks, and port scans.
+ * Advanced firewall with cloud heuristics and artificial intelligence for detecting new threats and protecting all servers that run the software -  capable of defending against brute force attacks, DoS attacks.
 
  * Intrusion Detection and Protection System -  comprehensive collection of “deny” policy rules for blocking all known attacks.
 
