@@ -1161,7 +1161,7 @@ If you are seeing multiple invoices requiring this additional authorization, and
 
 ## Real-time scanning, what is it and how do I configure it?
 
-Real-time scanning is only available to customers with [Patchman CLEAN](/wiki/spaces/PT/pages/113246276).
+Real-time scanning is only available to customers with [Patchman CLEAN](/patchman/frequently_asked_questions/#what-is-patchman-clean-and-how-do-i-enable-configure-it).
 
 ### What is real-time scanning?
 
