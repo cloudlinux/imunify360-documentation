@@ -339,14 +339,31 @@ In order to see all emails stored use the following command. By default 'root' a
 **Command**
 
 ```
-ie-cli emails list -a <ACCOUNT_NAME> [--json]
+ie-cli emails list --help
+
+list emails in the quarantine, order by quarantined date descending
+
+Usage:
+  ie-cli emails list [flags]
+
+Flags:
+  -a, --account string   an account name
+  -h, --help             help for list
+      --json             output in json format
+  -l, --limit int        The maximum count of items to return (default 25)
+  -s, --since string     show entries starting from [now - since] time
+                         format: [DIGIT(s)][MODIFIER]
+                         	supported modifiers 's' - seconds, 'm' - minutes, 'h' - hours, 'd' - days, e.g. 1h, 2d
+                         	examples: 100s, 5m, 1h, 5d (default "30d")
 ```
 
 **Example**
 
 ```
-ie-cli emails list -a root
+ie-cli emails list -a root --since 24h
 ```
+
+That command shows all the quarantined emails for all accounts that have been quarantined within last 24 hours.
 
 **Output**
 
@@ -970,11 +987,11 @@ New server settings is:
 
 The `ie-cli am stats` command provides a consolidated view of sender objects, complete with a variety of filters. This command can be paired with specific flags to refine the results.
 
-The flags include `--account-name string`, `--domain string`, `--limit int`, `--offset int`, `--script-name string`, `--sender-email string`, and `--since int`. These are employed to filter by account name, domain, limit the quantity of results, set the offset for results, filter by script name, filter by sender email, and set the duration in seconds that has elapsed from the flag value until the present moment, respectively.
+The flags include `--account-name string`, `--domain string`, `--limit int`, `--offset int`, `--script-name string`, `--sender-email string`, and `--since string`. These are employed to filter by account name, domain, limit the quantity of results, set the offset for results, filter by script name, filter by sender email, and set the duration in seconds that has elapsed from the flag value until the present moment, respectively.
 
 The `--limit int` flag also indicates that the limit applied pertains solely to the number of accounts in the response, with a default of 25. 
 
-The `--since int` flag defaults to a value of 3600 seconds.
+The `--since string` flag defaults to a value of 1 hour - `1h`.
 
 :::tip Note
 The functionality mirrors that of the ActivityMonitor user interface.
@@ -997,16 +1014,19 @@ Flags:
       --offset int            From which offset results to return (pagination)
       --script-name string    Script name to filter
       --sender-email string   Sender email to filter
-      --since int             The number of seconds which passed from the flag value until now (default 3600)
+      --since string          show entries starting from [now - since] time
+                              format: [DIGIT(s)][MODIFIER]
+                              	supported modifiers 's' - seconds, 'm' - minutes, 'h' - hours, 'd' - days, e.g. 1h, 2d
+                              	examples: 100s, 5m, 1h, 5d (default "1h")
 ```
 
 
-By using the stats command directly, all sender objects are returned as follows. The `--since` flag can be used to retrieve sender objects within a certain period of time (in seconds).
+By using the stats command directly, all sender objects are returned as follows. The `--since` flag can be used to retrieve sender objects within a certain period of time.
 
 **Command**
 
 ```
-ie-cli am stats --since 5000
+ie-cli am stats --since 10h
 ```
 
 **Output**
@@ -1066,7 +1086,7 @@ ie-cli am stats --sender-email=test@domain.com
 **Command usage with `--account-name` for get sender-object id**
 
 ```
-ie-cli am stats --account-name=domain --since 3000000 
+ie-cli am stats --account-name=domain --since 30d 
 ```
 
 **Output**
