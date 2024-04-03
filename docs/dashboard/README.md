@@ -1709,7 +1709,6 @@ Click <span class="notranslate">_Save changes_</span> to apply changes.
 Imunify360 provides customers with the ability to integrate with backup providers and automatically or manually restore files from their backup if they have become infected. Only the administrator can choose a backup provider but the end-user has the ability to backup and restore files within this selected backup provider.
 
 The following integrated with Imunify360 backup providers are available:
-* <span class="notranslate">CloudLinux Backup</span>
 * Hosting panel Backup (cPanel, Plesk, or DirectAdmin)
 * <span class="notranslate">Acronis Backup</span>
 
@@ -1726,55 +1725,16 @@ The following integrated with Imunify360 backup providers are available:
 * For <span class="notranslate">Acronis Backup</span>, it is required to have Acronis account
 * For the hosting panel backup, it is required that the backup option is configured by the administrator of the hosting panel
 
-
-#### User Interface
-
-This section describes the following:
-* how to [enable](/dashboard/#how-to-enable-backups) and [disable](/dashboard/#how-to-disable-backups) backups
-* how to [manage](/dashboard/#manage-cloudlinux-backup) <span class="notranslate">CloudLinux Backup</span>
-* how to [resize](/dashboard/#change-cloudlinux-backup-storage-size) <span class="notranslate">CloudLinux Backup</span>
-* how to [schedule](/dashboard/#schedule-cloudlinux-backup) <span class="notranslate">CloudLinux Backup</span>
-* how to [restore](/dashboard/#how-to-restore-file) files
-
 #### How to enable backups
 
 To enable backups log in to a hosting panel as administrator, go to the Imunify360 plugin and do the following.
 * Go to <span class="notranslate">_Imunify360 → Settings → Backups_</span>. If the feature is not currently used the <span class="notranslate">_Backup and restore_</span> is <span class="notranslate">_Disabled_</span>.
 * To enable it, select the backup provider from the dropdown:
-  * <span class="notranslate">[CloudLinux Backup](/dashboard/#cloudlinux-backup)</span>
   * <span class="notranslate">[Acronis Backup](/dashboard/#acronis-backup)</span>
   * <span class="notranslate">[cPanel Plesk or DirectAdmin Backup](/dashboard/#cpanel-plesk-or-directadmin-backup)</span>
 
 ![](/images/settingsbackup.png)
 
-#### CloudLinux Backup
-
-<span class="notranslate">CloudLinux Backup</span> option provides a customer with the most integrated with Imunify360 backup feature. It is powered by the Acronis technology, but you do not need to have an active Acronis account (if you have an existing Acronis account and would like to continue using it, skip to the <span class="notranslate">Acronis Backup</span> section for choosing an <span class="notranslate">Acronis Backup</span> option).
-
-:::warning Warning
-On servers with **XFS**, ReiserFS3, ReiserFS4, JFS, CloudLinux Backup has the following limitations:
-
-- Files cannot be excluded from a disk backup
-- Fast incremental/ differential backup cannot be enabled
-- Volumes cannot be resized during a recovery
-:::
-
-With this backup and restore service, you can restore malicious or suspicious files from the backup if a clean version exists, schedule backups, see the total and used storage space, and locate the data storage server.
-
-To activate <span class="notranslate">CloudLinux Backup</span>, follow the next simple steps:
-* Select <span class="notranslate">_CloudLinux Backup_</span> in the dropdown
-* Click <span class="notranslate">_Connect Backup_</span> button
-* You will be redirected to the <span class="notranslate">CloudLinux Network</span> page which opens in a new tab. Please log in with the existing <span class="notranslate">[CloudLinux Network (CLN)](https://cln.cloudlinux.com/console/auth/login)</span> credentials otherwise create a new account.
-* On the purchase page, you can choose and purchase the required size of storage.
-* After successful payment, the installation will be in progress and you will see a Welcome Page with the follow-up instructions.
-  ::: tip Note
-   Installation can take up to 10 minutes depending on specific server size. You can use Imunify360 as usual during the installation process. Also, we will send you an email with detailed information to the specified email address.
-   :::
-* You can see the purchased storage space on the <span class="notranslate">_Settings → Backups_</span> tab.
-* Imunify360 creates an initial backup of a current server. If all is OK the system returns a successful message otherwise, please [contact our support team](https://cloudlinux.zendesk.com/hc/requests/new).
-* You can see used and total storage space on the <span class="notranslate">_Settings → Backups_</span> tab.
-
-![](/images/backuprestorecloudlinux.png)
 
 #### Acronis Backup
 
@@ -1805,29 +1765,6 @@ To disable backups do the following:
 * Move the slider to <span class="notranslate">_Disabled_</span>
 * Imunify360 returns confirmation pop-up
 * Click <span class="notranslate">_Yes, disable backup_</span> to disable backups or click <span class="notranslate">_Cancel_</span> to close the pop-up.
-  ::: tip Note
-  If you use <span class="notranslate">CloudLinux Backup</span> your backup will be still active in <span class="notranslate">CloudLinux Network (CLN)</span>. To disable backup totally and terminate billing, please log in to [CLN](https://cln.cloudlinux.com/console/auth/login) and deactivate <span class="notranslate">CloudLinux Backup</span> manually on the current server.
-  :::
-  ![](/images/disablebackup.png)
-
-#### Manage CloudLinux Backup
-
-Click <span class="notranslate">_Manage Backups_</span> button. You will be redirected to the <span class="notranslate">_Backup Management Console_</span>. The console opens in a new tab in the browser. Please go to [documentation](https://www.acronis.com/en-us/support/documentation/BackupService/index.html#33836.html) to find out more information.
-
-![](/images/managebackups.png)
-
-#### Change CloudLinux Backup storage size
-
-Click <span class="notranslate">_Resize_</span> link. You will be redirected to the <span class="notranslate">CloudLinux Network</span> where you can add or remove storage space.
-![](/images/resize.png)
-
-After successful payment, the backup storage size will be increased. Imunify360 creates an initial backup of a current server if it was not done before or it just increases the storage size.
-On the <span class="notranslate">_Settings → Backups_</span> tab you can see the actual and used amount of backup storage in GB.
-If you get an error message, please follow the instructions in the message or [contact our support team](https://cloudlinux.zendesk.com/hc/requests/new) .
-
-#### Schedule CloudLinux Backup
-
-Click <span class="notranslate">_Manage Backups_</span> button. You will be redirected to the <span class="notranslate">_Backup Management Console_</span> (read the documentation [here](https://www.acronis.com/en-us/support/documentation/BackupService/index.html#33507.html) ). When a schedule is set it is displayed on the <span class="notranslate">_Backups_</span> tab.
 
 #### How to restore file
 

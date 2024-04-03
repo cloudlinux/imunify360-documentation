@@ -62,7 +62,7 @@ Available commands:
 | | |
 |-|-|
 |[<span class="notranslate">`3rdparty`</span>](/command_line_interface/#_3rdparty)|Make Imunify360 the primary IDS|
-|[<span class="notranslate">`backup-systems`</span>](/command_line_interface/#backup-systems)|Allows to manage CloudLinux Backup|
+|[<span class="notranslate">`backup-systems`</span>](/command_line_interface/#backup-systems)|Allows to manage backup systems integrated to Imunify360|
 |[<span class="notranslate">`blacklist`</span>](/command_line_interface/#blacklist)|Return/Edit IP blacklist|
 |[<span class="notranslate">`blocked-port`</span>](/command_line_interface/#blocked-ports)|Return/Edit list of blocked ports|
 |[<span class="notranslate">`blocked-port-ip`</span>](/command_line_interface/#blocked-port-ip)|Allows to change the list of IPs that are excluded (allowed) for a certain blocked port|
@@ -177,7 +177,6 @@ imunify360-agent backup-systems [command] <value>
 |<span class="notranslate">`extended-status`</span>|Returns extended status including log file path, error on executing, current backup system, enabling status, current state, and current backup progress bar.|
 |<span class="notranslate">`init`</span>|<span class="notranslate">`<value>`</span> must be in the list of available backup systems. Initializes <span class="notranslate">`<value>`</span> backup system.|
 |<span class="notranslate">`disable`</span>|Disables backup system.|
-|<span class="notranslate">`check`</span>|Returns licenses info.|
 
 The <span class="notranslate">`status`</span> command returns <span class="notranslate">`{'<key>': <value>}`</span> (<span class="notranslate">JSON</span> formatted):
 
@@ -197,14 +196,6 @@ The <span class="notranslate">`extended-status`</span> command returns <span cla
 |<span class="notranslate">`state`</span>|<span class="notranslate">Str</span> with the current running condition. Statuses: <span class="notranslate">`not_running`, `init`, `backup`, `done`, `unpaid`</span>.|
 |<span class="notranslate">`progress`</span>|This key is optional. It represents the progress of backup if it is running.|
 
-The <span class="notranslate">`check`</span> command returns <span class="notranslate">`{'<key>': <value>}`</span> (<span class="notranslate">JSON</span> formatted):
-
-|Key|Value|
-|-|-|
-|<span class="notranslate">`status`</span>|<span class="notranslate">Str</span> with the license status. Statuses: <span class="notranslate">`paid`, `unpaid`</span>.|
-|<span class="notranslate">`size`</span>|<span class="notranslate">Int</span>, which represents a paid size of backups in GB. E.g. <span class="notranslate">`'size': 10`</span> means that you paid for 10GB.|
-
-
 **Examples:**
 
 1. The following command prints a list of all available backup systems:
@@ -215,46 +206,31 @@ The <span class="notranslate">`check`</span> command returns <span class="notran
    imunify360-agent backup-systems list
    acronis 
    r1soft 
-   cloudlinux
    cpanel
    ```
 </div>
 
 
-2. The following command initializes CloudLinux backup system:
+2. The following command initializes cPanel backup system:
 
 <div class="notranslate">
 
    ```
-   imunify360-agent backup-systems init cloudlinux
+   imunify360-agent backup-systems init cpanel
    Backup initialization process is in progress
    ```
 </div>
 
 
-3. The following command checks if the CloudLinux backup system is connected:
+3. The following command checks if the cPanel backup system is connected:
 
 <div class="notranslate">
 
    ```
-   imunify360-agent backup-systems check cloudlinux
-   {'url': 'https://cln.cloudlinux.com/clweb/cb/buy.html?id=YourServerIdHere', 'status': 'unpaid'}
+   imunify360-agent backup-systems status
+   {'backup_system': 'cpanel', 'enabled': True}
    ```
 </div>
-
-At first, it shows that it isn't, so you should open the URL from the JSON response in the browser to activate the backup. Once this is done, it shows in the CLN.
-
-Run the check again and now it returns the size and that the backup has been paid for.
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent backup-systems check cloudlinux
-   ```
-</div>
-
-
-The above commands create a new cloudlinuxbackup.com account and link that account to this server after following the link and confirming the payment of $0.00 for free 10GB.
 
 ## Blacklist
 
