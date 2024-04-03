@@ -210,12 +210,7 @@ If you want iptables rules to be applied to a specific NIC only, list them here 
 <th colspan="2" align="left"><span class="notranslate">BACKUP_RESTORE:</span></th></tr>
 <tr><td><span class="notranslate">max_days_in_backup: 90</span></td>
 <td># restore from backup files that are not older than <span class="notranslate"><em>max_days_in_backup</em></span></td></tr>
-<tr><td><span class="notranslate">cl_backup_allowed: True</span></td>
-<td># show <span class="notranslate">CloudLinux Backup</span> in the list of available backup system (<span class="notranslate">True</span> (default)) or hide it (<span class="notranslate">False</span>)</td></tr>
-<tr><td><span class="notranslate">cl_on_premise_backup_allowed: False</span></td>
-<td># do not allow CloudLinux backup (<span class="notranslate">False</span> (default)) or allow it (<span class="notranslate">True</span>)</td></tr>
-<tr>
-<th colspan="2" align="left"><span class="notranslate">CAPTCHA_DOS:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">CAPTCHA_DOS:</span></th>
 <tr><td><span class="notranslate">enabled: True</span></td>
 <td># enable (<span class="notranslate">True</span> (default) or disable (<span class="notranslate">False</span>) CAPTCHA Dos protection</td></tr>
 <tr><td><span class="notranslate">time_frame: 21600</span></td>
