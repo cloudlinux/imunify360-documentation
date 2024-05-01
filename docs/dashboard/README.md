@@ -1243,7 +1243,7 @@ imunify360-agent config update '{"ENHANCED_DOS":{"enabled":true}}'
 The default timeframe (seconds) and threshold of request (number) could be changed by the following CLI commands:
 
 ```
-imunify360-agent config update '{"ENHANCED_DOS":{"time_frame":60}}'
+imunify360-agent config update '{"ENHANCED_DOS":{"timeframe":60}}'
 ```
 ```
 imunify360-agent config update '{"ENHANCED_DOS":{"default_limit":500}}'
