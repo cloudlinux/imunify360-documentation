@@ -73,11 +73,11 @@ In the config file it is possible to set up ImunifyAV(+) configuration. The foll
 <tr>
 <th colspan="2" align="left"><span class="notranslate">RESOURCE_MANAGEMENT:</span></th></tr>
 <tr><td><span class="notranslate">ram_limit: 500</span></td>
-<td># set RAM consumption limit for ImunifyAV(+) in MB</td></tr>
+<td># intensity level for RAM consumption. Minimum value is 500, default is 500</td></tr>
 <tr><td><span class="notranslate">io_limit: 2</span></td>
-<td># set IO consumption limit for ImunifyAV(+) in MB</td></tr>
+<td># intensity level for file operations. Can be set from 1 to 7, default is 2</td></tr>
 <tr><td><span class="notranslate">cpu_limit: 2</span></td>
-<td># set CPU consumption limit for ImunifyAV(+) in MB.</td></tr>
+<td># intensity level for CPU consumption. Can be set from 1 to 7, default is 2</td></tr>
 </table>
 
 ## How to apply changes from CLI
