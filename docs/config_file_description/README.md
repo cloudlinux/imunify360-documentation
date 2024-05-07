@@ -5,7 +5,11 @@ Imunify360 config file is available on the following location after installation
 
 <span class="notranslate">_/etc/sysconfig/imunify360/imunify360.config_</span>
 
-In the config file it is possible to set up Imunify360 configuration. The following options are available:
+In the config file it is possible to set up Imunify360 configuration. The following options are available: 
+
+:::tip 
+Note that if YAML is used, it accepts any format: `True`/`true`/`yes`/`y`, etc. However, the CLI uses JSON which is strict – only lowercase `true`/`false`. Thus, if you are using the `imunify360-agent` CLI tool to make changes to the configuration, make sure you are using the lowercase. 
+:::
 
 <table>
 <tr>
