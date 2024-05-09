@@ -70,12 +70,12 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | **Plugin** | **Version(s)** | **Bundle / Plan (for patching)** | **Version detection (all plans)** |
 | --- | --- | --- | --- |
 | WordPress Plugin:  <br>Advanced Editor Tools / TinyMCE | 3.5.9 and later | COVERAGE, COVERAGE+CLEAN | all |
-| WordPress Plugin:  <br>Akismet |     |     | all |
+| WordPress Plugin:  <br>Akismet | 5.0 and later |  COVERAGE, COVERAGE+CLEAN   | all |
 | WordPress Plugin:  <br>All in One SEO Pack | 2.3.9.2 and later | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Contact Form 7 | 3.6 and later | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Duplicator | Specific, see below | Specific, see below | all |
 | WordPress Plugin:  <br>Easy WP SMTP | Specific, see below | Specific, see below | all |
-| WordPress Plugin:  <br>Elementor Website Builder |     |     | all |
+| WordPress Plugin:  <br>Elementor Website Builder | 3.17.0 and later    |  COVERAGE, COVERAGE+CLEAN   | all |
 | WordPress Plugin:  <br>GDPR Cookie Consent | Specific, see below | Specific, see below | all |
 | WordPress Plugin:  <br>Google XML Sitemaps | 4.0.8 and later | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>InfiniteWP Client | Specific, see below | Specific, see below | all |
@@ -83,7 +83,8 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Popup Builder | Specific, see below | Specific, see below | all |
 | WordPress Plugin:  <br>ThemeGrill Demo Importer | Specific, see below | Specific, see below | all |
 | WordPress Plugin:  <br>WordPress Importer | 0.6.2 and later | COVERAGE, COVERAGE+CLEAN | all |
-| WordPress Plugin:  <br>Yoast SEO | 1.6.1 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Yoast SEO | 1.6.1 and later | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>Classic Editor | 1.6 and later | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
@@ -1102,60 +1103,6 @@ To change the setting, hit the edit icon, which will open the policy edit view. 
 ![](/images/end-user-login-settings.png)
 
 Here you can choose whom to enable end user login for. It is also possible to disable this option entirely.
-
-* * *
-
-## Why was my card declined with the reason "the transaction requires authentication"?
-
-Credit card payments are usually authorized by providing the card number, the expiry date and the CVC code on the back of the card. While this is an easy payment method, it makes credit cards a frequent target for cybercriminals, as simply stealing these three sets of numbers is enough to make fraudulent payments with a stolen card. For this reason, banks have been working on improving security of online credit card payments.
-
-The most common security standard for MasterCard, Visa and American Express is [3D Secure 2](https://3dsecure2.com/). When we attempt to charge your credit card and it results in the error message “The card was declined as the transaction requires authentication”, it means that your bank wants the 3D Secure 2 authorization process to be completed.
-
-#### Why is this necessary?
-
-We do not enforce 3D Secure 2 on credit card payments. Instead, if this is required, it is always deemed necessary by your bank. This is a measure your bank takes to protect you; by making sure that an additional authorization process is completed, it prevents your card from being used for fraudulent purchases.
-
-Every bank has different criteria for this process. In general, it is based on a combination of the following criteria:
-
-* Whether the charge amount is above a certain threshold
-* Whether this is the first time this webshop/vendor charges to the card
-* Whether other charges on the card look like suspicious activity
-* The customer having enforced 3D Secure 2 for all online payments on the card
-* The card being considered high-risk due to a high limit, high payment volume, or other criteria
-
-Which criteria exactly are applicable to you is not visible to us. If you want to understand why your bank is enforcing 3D Secure 2, you will have to contact your bank.
-
-#### Previous payments completed successfully, why is it suddenly required now?
-
-Many banks have only recently started to enforce 3D Secure 2 for online payments. It may thus be the case that you have been a customer of us for years, and continued to pay through recurring credit card payments without problems, and you are suddenly required to complete this procedure because your bank has changed their policy.
-
-:::tip 
-Please be aware that this message does not mean your credit card details have become invalid or expired. If that is the case, the error message will be different, and explicitly state that your credit card can’t be used. 
-:::
-
-For information on your specific case, please contact your bank.
-
-#### What is the additional authorization procedure?
-
-Again, this is different for every bank. As a general rule though, you can expect some form of [second factor](https://en.wikipedia.org/wiki/Multi-factor_authentication), such as confirming through a mobile app, entering a one-time code from a TOTP app or SMS, or using a hardware token device issued by your bank.
-
-If you don’t know how to complete the authorization procedure for your bank, please contact your bank about it. We will not be able to help you with this.
-
-#### How do I complete the payment with this additional authorization procedure?
-
-If you received an email about a failed payment, it will contain a link that you need to click. When you follow that link, it will open up the second part of the payment process, which forwards to your bank system for completing the authorization.
-
-:::tip 
-Patchman uses Stripe for processing credit card payments. When you complete the authorization procedure, you may see pages loaded from [stripe.com](http://stripe.com) and branded with the Stripe logo. This is legitimate. 
-:::
-
-Alternatively, you can login to the Patchman Portal, go to the unpaid invoice (through Company → Billing) and click the Retry Charge button.
-
-#### Is this going to be necessary for every monthly payment?
-
-Once again, this depends on the criteria set by your bank. Our experience is that most banks will allow recurring payments after the first payment has been fully authorized, assuming that the amount stays the same. However, we can’t say for sure, and we are not in control of this.
-
-If you are seeing multiple invoices requiring this additional authorization, and you want to find out why this happens, you should contact your bank. Patchman customer support will unfortunately not be able to help you with answering that question.
 
 * * *
 
