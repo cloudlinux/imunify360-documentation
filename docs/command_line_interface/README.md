@@ -63,7 +63,6 @@ Available commands:
 |-|-|
 |[<span class="notranslate">`3rdparty`</span>](/command_line_interface/#_3rdparty)|Make Imunify360 the primary IDS|
 |[<span class="notranslate">`backup-systems`</span>](/command_line_interface/#backup-systems)|Allows to manage backup systems integrated to Imunify360|
-|[<span class="notranslate">`blacklist`</span>](/command_line_interface/#blacklist)|Return/Edit IP blacklist|
 |[<span class="notranslate">`blocked-port`</span>](/command_line_interface/#blocked-ports)|Return/Edit list of blocked ports|
 |[<span class="notranslate">`blocked-port-ip`</span>](/command_line_interface/#blocked-port-ip)|Allows to change the list of IPs that are excluded (allowed) for a certain blocked port|
 |[<span class="notranslate">`checkdb`</span>](/command_line_interface/#checkdb)|Check database integrity|
@@ -77,10 +76,10 @@ Available commands:
 |[<span class="notranslate">`feature-management`</span>](/command_line_interface/#feature-management)|Manage Imunify360 features available for users|
 |[<span class="notranslate">`fix modsec directives`</span>](/command_line_interface/#fix-modsec-directives)|Fixes the non-recommended values (sets them to ones<br>recommended by Imunify360)|
 |[<span class="notranslate">`get`</span>](/command_line_interface/#get)|Returns list of incidents|
-|[<span class="notranslate">`graylist`</span>](/command_line_interface/#graylist)|Return/Edit IP <span class="notranslate">Gray List</span>|
 |[<span class="notranslate">`hooks`</span>](/command_line_interface/#hooks)|Hooks-related commands|
 |[<span class="notranslate">`import`</span>](/command_line_interface/#import)|Import data|
 |[<span class="notranslate">`infected-domains`</span>](/command_line_interface/#infected-domains)|Returns infected domain list|
+|[<span class="notranslate">`ip-list`</span>](/command_line_interface/#ip-list)|To view or manage actual IPs within the local firewall lists (white/gray/blacklist)|
 |[<span class="notranslate">`login`</span>](/command_line_interface/#login)|Allows to get a token which can be used for authentication in [stand-alone Imunify UI](/stand_alone/).|
 |[<span class="notranslate">`malware`</span>](/command_line_interface/#malware)|Allows to manage malware options|
 |[<span class="notranslate">`notifications-config`</span>](/command_line_interface/#notifications-config)|Allows to show and update notifications in the configuration file via CLI|
@@ -94,7 +93,6 @@ Available commands:
 |[<span class="notranslate">`unregister`</span>](/command_line_interface/#unregister)|Unregister the agent|
 |[<span class="notranslate">`vendors`</span>](/command_line_interface/#vendors)|Command for manipulating Imunify360 vendors|
 |[<span class="notranslate">`version`</span>](/command_line_interface/#version)|Show version|
-|[<span class="notranslate">`whitelist`</span>](/command_line_interface/#whitelist)|Return/Edit operator for IP and domain white list|
 |[<span class="notranslate">`whitelisted-crawlers`</span>](/command_line_interface/#whitelisted-crawlers)|Allows do operate with search engine domains|
 
 
@@ -231,117 +229,6 @@ The <span class="notranslate">`extended-status`</span> command returns <span cla
    {'backup_system': 'cpanel', 'enabled': True}
    ```
 </div>
-
-## Blacklist
-
-This command allows you to view or edit actual IPs in the <span class="notranslate">Black List</span>.
-
-**Usage:**
-
-<div class="notranslate">
-
-```
-imunify360-agent blacklist [subject] [command] <value> [--option]
-```
-
-</div>
-
-<span class="notranslate">`subject`</span> is a positional argument and can be:
-
-| | |
-|-|-|
-|<span class="notranslate">`country`</span>| Allows to manipulate with countries in the <span class="notranslate">Black List</span>|
-|<span class="notranslate">`ip`</span>| Allows to manipulate with IPs in the <span class="notranslate">Black List</span>|
-
-<span class="notranslate">`command`</span> is a second positional argument and can be:
-
-| | |
-|-|-|
-|<span class="notranslate">`add`</span>| add item(-s) to <span class="notranslate">Black List</span>|
-|<span class="notranslate">`delete`</span>| remove item(-s) from <span class="notranslate">Black List</span>|
-|<span class="notranslate">`move`</span>| move item(-s) to <span class="notranslate">Black List</span>|
-|<span class="notranslate">`edit`</span>| edit comment on item in the <span class="notranslate">Black List</span>|
-|<span class="notranslate">`list`</span>| list items(-s) in <span class="notranslate">Black List</span>|
-
-
-Please note that by default <span class="notranslate">`list`</span> command outputs only first 100 items in the list as if it was run as <span class="notranslate">`imunify360-agent blacklist ip list --limit 100`</span>.
-To check whether specific IP address is in the list, you can run the following command:
-
-<div class="notranslate">
-
-```
-imunify360-agent blacklist ip list --by-ip 12.34.56.78
-```
-
-</div>
-
-where 12.34.56.78 is that specific IP address.
-
-<span class="notranslate">`value`</span> is an item to manipulate with. It can be IP itself or a country code (find necessary country codes here in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in the column <span class="notranslate">ISO ALPHA-2 CODE</span>).
-
-<span class="notranslate">`option`</span> can be one or few of the optional arguments specified above and one more:
-
-| | |
-|-|-|
-|<span class="notranslate">`--comment`</span>|allows to add comment to the item|
-|<span class="notranslate">`--expiration`</span>|allows specifying expiration time for the blacklisted IP (in seconds since epoch)|
-
-**Examples:**
-
-* The following command adds IP 1.2.3.4 to the <span class="notranslate">Black List</span> with a comment “one bad IP”:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent blacklist ip add 1.2.3.4 --comment “one bad ip”
-   ```
-
-</div>
-
-* The following command returns a list of IPs in the <span class="notranslate">Black List</span> which are from Bolivia:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent blacklist --by-country-code BO
-   IP       TTL  COUNTRY  IMPORTED_FROM  COMMENT
-   1.2.3.4
-   ```
-
-</div>
-
-
-* The following command adds an IP 1.2.3.4 to the Black List and sets the scope to <span class="notranslate">`group`</span>:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent blacklist ip add 1.2.3.4 --scope group
-   OK
-   ```
-
-</div>
-
-To blacklist multiple IP addresses, put them into a file and add to the black list as follows:
-
-<div class="notranslate">
-
-```
-cat list.txt | xargs -n 1 imunify360-agent blacklist ip add
-```
-
-</div>
-
-The alternative would be using the [external white/black list feature](/features/#external-black-whitelist-management).
-	
-:::tip Note
-If an IP address has been added to the blacklist on a group of servers, it is enough to remove it from the blacklist on one of the servers, and it will be removed from the blacklist on all servers in the group.
-:::
-
-:::warning Warning
-For now, ipset supports only IPv6/64 networks. In most cases, it is enough to specify the mask `/64`. An example of 
- a proper IPv6 address with the subnet mask: `2001:db8:abcd:0012::0/64`.
-:::
 
 ## Blocked ports
 
@@ -926,61 +813,6 @@ TIMESTAMP   ABUSER        COUNTRY  TIMES    NAME                         SEVERIT
 
 To get more detailed output to check the plugin or the rule ID these incidents belong to, use the ```--json``` argument.
 
-## Graylist
-
-This command allows to view or edit IP <span class="notranslate">Gray List</span>.
-
-**Usage:**
-
-<div class="notranslate">
-
-```
-imunify360-agent graylist ip [command] [--optional argument]
-```
-
-</div>
-
-Available commands:
-
-| | |
-|-|-|
-|<span class="notranslate">`delete`</span>|allows to remove IP from <span class="notranslate">Gray List</span>|
-|<span class="notranslate">`list`</span>|allows to list IPs in <span class="notranslate">Gray List</span>|
-
-Optional arguments for <span class="notranslate">`list`</span>:
-
-| | |
-|-|-|
-|<span class="notranslate">`--by-country-code [country_code]`</span>|Filters output by country code.<br>Requires valid country code as argument.<br>Find valid country codes<br>in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in column ISO ALPHA-2 CODE.|
-|<span class="notranslate">`--by-ip [ip_address]`</span>|Filters output by abuser's IP or by subnet in CIDR notation.<br>Example: <span class="notranslate">`--by-ip 1.2.3.0/24`</span>|
-|<span class="notranslate">`--limit`</span>|Limits the output with specified number of IPs.<br>Must be a number greater than zero. By default, equals 100.|
-|<span class="notranslate">`--offset`</span>|Offset for pagination. By default, equals 0.|
-
-Please note that by default <span class="notranslate">`list`</span> command outputs only first 100 items in the list as if it was run as <span class="notranslate">`graylist ip list --limit 100`</span>.
-To check whether specific IP address is in the list, you can run the following command:
-
-<div class="notranslate">
-
-```
-imunify360-agent graylist ip list --by-ip 12.34.56.78
-```
-
-</div>
-
-where `12.34.56.78` is that specific IP address.
-
-**Example:**
-
-The following command will remove IP `1.2.3.4` from the Gray List:
-
-<div class="notranslate">
-
-```
-imunify360-agent graylist ip delete 1.2.3.4
-OK
-```
-
-</div>
 
 ## Hooks <Badge text="Deprecated" type="warning"/>
 
@@ -1098,6 +930,263 @@ imunify360-agent infected-domains
 ```
 
 </div>
+
+## IP-List
+
+This CLI tool allows you to view or manage actual IPs within the local firewall lists. 
+
+**Usage:** 
+
+```
+imunify360-agent ip-list local [command] <value> [--option] 
+```
+
+`command` is a positional argument and can be: 
+
+| | |
+|-|-|
+|<span class="notranslate">`add`</span>|Add item(-s) from local ip-list|
+|<span class="notranslate">`delete`</span>|Remove item(-s) from local ip-list|
+|<span class="notranslate">`list`</span>|List item(-s) in local ip-list| 
+
+`option`: 
+
+| | |
+|-|-|
+|<span class="notranslate">`-h`, `--help`</span>|Show this help message and exit| 
+
+`value` is an item to manipulate with. It can be IP itself or a country code (find necessary country codes here in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in the column ISO ALPHA-2 CODE). 
+
+### List 
+
+**Usage:** 
+
+```
+imunify360-agent ip-list local list [--options] <value>
+```
+
+`options`: 
+
+| | |
+|-|-|
+|<span class="notranslate">`--by-ip BY_IP`</span>|Filters output by abuser's IP or by subnet in CIDR notation.|
+|<span class="notranslate">`--purpose [PURPOSE ...]`</span>|IP List purpose can be:<br> `white` - do not block these IPs. <br>`drop` - deny access on the network level (DROP packets via iptables, and respond with 403 on web ports even when the request comes through a proxy). <br> `captcha` - deny access on the network level for all non-web ports, show a Splash Screen challenge page on web ports. <br> `splashscreen` - check the visitor's browser before allowing access to websites.|
+|<span class="notranslate">`-by-country-code BY_COUNTRY_CODE`</span>|Filters output by country code. Requires valid country code as argument. Find valid country codes here [www.nationsonline.org/oneworld/country_code_list.htm](https://www.nationsonline.org/oneworld/country_code_list.htm) in column ISO ALPHA-2 CODE.| 
+|<span class="notranslate">`--by-comment BY_COMMENT`</span>|Filters output by comment| 
+|<span class="notranslate">`--limit LIMIT`</span>|Limits the output with specified number of incidents| 
+|<span class="notranslate">`--offset OFFSET`</span>|Offset for pagination| 
+|<span class="notranslate">`--order-by [ORDER_BY ...]`</span>|List of fields to sort the results by| 
+|<span class="notranslate">`--by-type {ip,country}`</span>|Filters output by item tipe [country | ip]| 
+|<span class="notranslate">`--json`</span>|Returns data in JSON format|  
+
+:::tip
+Note that by default `list` command outputs only first 100 items in the list as if it was run as `imunify360-agent ip-list local list --limit 100`.
+::: 
+
+### Blacklist 
+
+This command allows you to view or edit actual IPs in the Black List.
+
+**Usage:** 
+
+```
+imunify360-agent ip-list local [command] --purpose drop <value> [--options]
+```
+
+`command` is a positional argument and can be: 
+
+| | |
+|-|-|
+|<span class="notranslate">`add`</span>|Add item(-s) from local ip-list|
+|<span class="notranslate">`delete`</span>|Remove item(-s) from local ip-list|
+|<span class="notranslate">`list`</span>|List item(-s) in local ip-list|  
+
+`options` is a second positional argument and can be: 
+
+| | |
+|-|-|
+|<span class="notranslate">`--purpose {white,drop,captcha}`</span>|IP List purpose can be `white` - do not block these IPs.<br>`drop` - deny access on the network level (DROP packets via iptables, and respond with 403 on web ports even when the request comes through a proxy).<br>`captcha` - deny access on the network level for all non-web ports, show a Splash Screen challenge page on web ports.<br> `splashscreen` - check the visitor's browser before allowing access to websites.|
+|<span class="notranslate">`--expiration EXPIRATION`</span>|Allows specifying expiration time for the listed IP (in seconds since epoch)|
+|<span class="notranslate">`-comment COMMENT`</span>|Allows to add comment to the item| 
+|<span class="notranslate">`--scope {local,group}`</span>|Allows to set the scope to Global/Local. Accepts two values local (a default value, means "add IP on this server only") and group (means "add IP for the whole group in which this server is").| 
+|<span class="notranslate">`--json`</span>|Returns data in JSON format|   
+
+**Examples:**
+
+* The following command lists IP addresses added to the Black List:
+```
+imunify360-agent ip-list local list --purpose drop 
+```
+
+* The following command adds IP 1.2.3.4 to the Black List with a comment “one bad IP”:
+```
+imunify360-agent ip-list local add --purpose drop 1.2.3.4 --comment "one bad IP"
+OK
+```
+
+* To check whether specific IP address is in the list, you can run the following command (where 12.34.56.78 is that specific IP address):
+```
+imunify360-agent ip-list local list --by-ip 12.34.56.78
+```
+
+* The following command returns a list of IPs in the Black List which are from Bolivia ([visit here](https://countrycode.org/) for other country codes):
+```
+imunify360-agent ip-list local list --by-country-code BO
+```
+
+* The following command adds an IP 1.2.3.4 to the Black List and sets the scope to group:
+```
+imunify360-agent ip-list local add --purpose drop 1.2.3.4 --scope group
+OK
+```
+
+* To blacklist multiple IP addresses, put them into a file and add to the black list as follows:
+```
+cat list.txt | xargs -n 1 imunify360-agent ip-list local add --purpose drop
+```
+
+The alternative would be using the [external white/black list feature](/features/#external-black-whitelist-management).
+
+* For the following example, the old blacklist command syntax is used. This command adds Bolivia to the Black List (available commands `blacklist country add`/`delete`/`edit`/`list`):
+```
+imunify360-agent blacklist country add BO
+OK 
+```
+
+:::tip Note 
+If an IP address has been added to the blacklist on a group of servers, it is enough to remove it from the blacklist on one of the servers, and it will be removed from the blacklist on all servers in the group.
+:::
+
+:::warning Warning
+For now, ipset supports only IPv6/64 networks. In most cases, it is enough to specify the mask `/64`. An example of a proper IPv6 address with the subnet mask: `2001:db8:abcd:0012::0/64`. 
+:::
+
+### Graylist
+
+This command allows to view or edit IP Gray List.
+
+**Usage:**
+
+```
+imunify360-agent ip-list local [command] --purpose captcha <value> [--options]
+```
+
+`command` is a positional argument and can be:
+
+| | |
+|-|-|
+|<span class="notranslate">`delete`</span>|Remove item(-s) from local ip-list|
+|<span class="notranslate">`list`</span>|List item(-s) in local ip-list|   
+
+`options` is a second positional argument and can be: 
+
+| | |
+|-|-|
+|<span class="notranslate">`--purpose {white,drop,captcha}`</span>|IP List purpose can be `white` - do not block these IPs.<br>`drop` - deny access on the network level (DROP packets via iptables, and respond with 403 on web ports even when the request comes through a proxy).<br>`captcha` - deny access on the network level for all non-web ports, show a Splash Screen challenge page on web ports.<br> `splashscreen` - check the visitor's browser before allowing access to websites.|
+|<span class="notranslate">`--expiration EXPIRATION`</span>|Allows specifying expiration time for the listed IP (in seconds since epoch)|
+|<span class="notranslate">`-comment COMMENT`</span>|Allows to add comment to the item| 
+|<span class="notranslate">`--scope {local,group}`</span>|Allows to set the scope to Global/Local. Accepts two values local (a default value, means "add IP on this server only") and group (means "add IP for the whole group in which this server is").| 
+|<span class="notranslate">`--json`</span>|Returns data in JSON format|   
+
+Note that by default `list` command outputs only first 100 items in the list as if it was run as 
+```
+imunify360-agent ip-list local list --purpose captcha --limit 100
+```
+or
+```
+imunify360-agent ip-list local list --purpose splashscreen –limit 100
+```
+
+**Example**:
+
+* To check whether specific IP address is in the list, you can run the following command:
+```
+imunify360-agent ip-list local list --purpose captcha --by-ip 12.34.56.78
+```
+
+* The following command will remove IP `1.2.3.4` from the Gray List:
+```
+imunify360-agent ip-list local delete --purpose captcha 12.34.56.78
+```
+
+### Whitelist 
+
+This command allows to view or edit actual IPs and domains in the White List.
+
+**Usage:**
+
+```
+imunify360-agent ip-list local [command] --purpose white <value> [--options]
+```
+
+`command` is a positional argument and can be:
+
+| | |
+|-|-|
+|<span class="notranslate">`add`</span>|Add item(-s) from local ip-list|
+|<span class="notranslate">`delete`</span>|Remove item(-s) from local ip-list|
+|<span class="notranslate">`list`</span>|List item(-s) in local ip-list| 
+
+`options` is a second positional argument and can be: 
+
+| | |
+|-|-|
+|<span class="notranslate">`--purpose {white,drop,captcha}`</span>|IP List purpose can be `white` - do not block these IPs.<br>`drop` - deny access on the network level (DROP packets via iptables, and respond with 403 on web ports even when the request comes through a proxy).<br>`captcha` - deny access on the network level for all non-web ports, show a Splash Screen challenge page on web ports.<br> `splashscreen` - check the visitor's browser before allowing access to websites.|
+|<span class="notranslate">`--expiration EXPIRATION`</span>|Allows specifying expiration time for the listed IP (in seconds since epoch)|
+|<span class="notranslate">`-comment COMMENT`</span>|Allows to add comment to the item| 
+|<span class="notranslate">`--scope {local,group}`</span>|Allows to set the scope to Global/Local. Accepts two values local (a default value, means "add IP on this server only") and group (means "add IP for the whole group in which this server is").| 
+|<span class="notranslate">`--full-access`</span>|Only for the `add` command. Allows to grant full access to the IP or subnet ignoring the rules in Blocked ports.| 
+|<span class="notranslate">`--no-full-access`</span>|Only for the `add` command. Allows to remove full access of the IP or subnet.| 
+|<span class="notranslate">`--json`</span>|Returns data in JSON format|  
+
+**Examples:**
+
+* The following commands adds IP 1.2.3.4 to the White List with a comment “one good ip”:
+```
+imunify360-agent ip-list local add --purpose white 11.22.33.44 --comment "one good IP"
+OK
+```
+
+* To check whether specific IP address is in the list, you can run the following command (where 11.22.33.44 is that specific IP address):
+
+```
+imunify360-agent ip-list local list --purpose white --by-ip 11.22.33.44
+AUTO_WHITELISTED  COMMENT       COUNTRY  CTIME       DEEP  EXPIRATION  FULL_ACCESS  IMPORTED_FROM  IP           MANUAL  NETMASK     NETWORK_ADDRESS  PURPOSE  SCOPE  VERSION
+False             one good IP  US       1715940270  None  0           None         None           11.22.33.44  True    4294967295  185999660        white    local  4
+```
+
+* The following command returns a list of IPs in the White List which are from United States:
+```
+imunify360-agent ip-list local list --by-country-code US
+```
+
+* The following command adds an IP 1.2.3.4 to the White List and sets the scope to group:
+```
+imunify360-agent ip-list local add --purpose white 1.2.3.4 --scope group
+OK
+```
+
+* To whitelist multiple IP addresses, put them into a file and add to the white list as follows:
+
+```
+cat list.txt | xargs -n 1 imunify360-agent ip-list local add --purpose white
+```
+
+The alternative would be using the [external white/black list feature](https://docs.imunify360.com/features/#external-black-whitelist-management).
+
+* For the following example, the old whitelist command syntax is used:
+   * The following command adds Bolivia to the White List (available commands `whitelist country add`/`delete`/`edit`/`list`):
+```
+imunify360-agent whitelist country add BO
+OK
+```
+
+   * The following command adds domain with a name example.com to the White List (available commands: `add`/`delete`/`list`/`reset-to`):
+
+```
+imunify360-agent whitelist domain add example.com
+OK
+```
 
 
 ## Login
@@ -2408,181 +2497,6 @@ imunify360-agent version [--json]
 ```
 
 </div>
-
-## Whitelist
-
-This command allows to view or edit actual IPs and domains in the <span class="notranslate">White List</span>.
-
-**Usage:**
-
-<div class="notranslate">
-
-```
-imunify360-agent whitelist [subject] [command] <value> [--option]
-```
-
-</div>
-
-<span class="notranslate">`subject`</span> is a positional argument and can be:
-
-| | |
-|-|-|
-|<span class="notranslate">`ip`</span>|Allows to manipulate with IPs in the <span class="notranslate">White List</span>.|
-|<span class="notranslate">`domain`</span>|Allows to manipulate with domains in the <span class="notranslate">White List</span>.|
-|<span class="notranslate">`country`</span>|Allows to manipulate with countries in the <span class="notranslate">White List</span>.|
-
-:::warning Note
-A domain whitelisting will affect only greylisted IPs. It will not affect ModSecurity rules and blacklisted IPs.
-:::
-
-<span class="notranslate">`command`</span> is a second positional argument and can be:
-
-| | |
-|-|-|
-|<span class="notranslate">`add`</span>|Add item(-s) to the <span class="notranslate">White List</span>.|
-|<span class="notranslate">`delete`</span>|Remove item(-s) from the <span class="notranslate">White List.</span>|
-|<span class="notranslate">`move`</span>|Move item(-s) to the <span class="notranslate">White List</span>.|
-|<span class="notranslate">`edit`</span>|Edit TTL, comment and other parameters of the Whitelisted item.|
-|<span class="notranslate">`list`</span>|List items(-s) in the <span class="notranslate">White List</span>.|
-|<span class="notranslate">`reset-to`</span>|Replace whitelisted domains list with a new list.|
-
-Please note that by default <span class="notranslate">`list`</span> command outputs only first 100 items in the list as if it was run as <span class="notranslate">`imunify360-agent whitelist ip list --limit 100`</span>.
-To check whether specific IP address is in the list, you can run the following command:
-
-<div class="notranslate">
-
-```
-imunify360-agent whitelist ip list --by-ip 12.34.56.78
-```
-
-</div>
-
-where `12.34.56.78` is that specific IP address.
-
-<span class="notranslate">`value`</span> is an item to manipulate with. It can be IP itself or a country code (find the necessary country codes in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in ISO ALPHA-2 CODE column), or a domain name.
-
-<span class="notranslate">`option`</span> can be one or few of the optional arguments from the table above and one more:
-
-| | |
-|-|-|
-|<span class="notranslate">`--comment`</span>|Allows to add a comment to the item.|
-|<span class="notranslate">`--full-access`</span>|Only for <span class="notranslate">`move`</span> and <span class="notranslate">`edit`</span> commands.<br>Allows to grant full access to the IP or subnet ignoring the rules in Blocked ports.|
-|<span class="notranslate">`--no-full-access`</span>|Only for <span class="notranslate">`move`</span> and <span class="notranslate">`edit`</span> commands.<br>Allows to remove full access of the IP or subnet.|
-|<span class="notranslate">`--expiration`</span>|Allows specifying TTL for the whitelisted IP (in seconds since epoch).|
-|<span class="notranslate">`--scope`</span>|Allows to set the scope to <span class="notranslate">_Global/Local_</span>. Accepts two values: <span class="notranslate">`local`</span> (a default value, means "add IP on this server only") and <span class="notranslate">`group`</span> (means "add IP for the whole group in which this server is").|
-
-**Examples:**
-
-1. The following commands adds IP `1.2.3.4` to the <span class="notranslate">White List</span> with a comment <span class="notranslate">“one good ip”</span>:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist ip add 1.2.3.4 --comment "one good ip"
-   OK
-   ```
-
-   </div>
-
-2. The following command returns a list of IPs in the <span class="notranslate">White List</span> which are from Bolivia:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist --by-country-code BO
-   ```
-
-</div>
-
-3. The following command adds domain with a name <span class="notranslate">`example.com`</span> to the White List:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist domain add example.com
-   OK
-   ```
-
-   </div>
-
-4. The following command checks domains in the <span class="notranslate">White List</span>:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist domain list
-   OK
-   ```
-
-</div>
-
-5. The following command adds an IP 1.2.3.4 to the White List and sets the scope to <span class="notranslate">`group`</span>:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist ip add 1.2.3.4 --scope group
-   OK
-   ```
-
-</div>
-
-6. The following command adds Bolivia to the <span class="notranslate">White List</span>:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist country add BO
-   OK
-   ```
-
-</div>
-	
-7. The <span class="notranslate">`--json`</span> key can be used to get additional details about the IP address. For example, whether it has full access on the server or has just been added to a whitelist:
-
-<div class="notranslate">
-
-   ```
-   imunify360-agent whitelist ip list --by-ip 1.2.3.4 -v --json
-   ...
-    {
-      "auto_whitelisted": false,
-      "comment": "Manually added on 2022-09-05 05:16:54",
-      "country": {
-        "code": "US",
-        "id": "1234001",
-        "name": "United States"
-    },
-      "ctime": 1662355015,
-      "deep": null,
-      "expiration": 0,
-      "full_access": true,
-      "imported_from": null,
-      "ip": "1.2.3.4",
-      "listname": "WHITE",
-      "manual": true,
-      "netmask": 1234967295,
-      "network_address": 123495478,
-      "scope": "local",
-      "version": 4
-    }
-   ...
-   ```
-
-</div>
- 
-To whitelist multiple IP addresses, put them into a file and add to the white list as follows:
-
-<div class="notranslate">
-
-```
-cat list.txt | xargs -n 1 imunify360-agent whitelist ip add
-```
-
-</div>
-
-The alternative would be using the [external white/black list feature](/features/#external-black-whitelist-management).
-
 
 ## Whitelisted crawlers
 
