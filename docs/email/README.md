@@ -124,7 +124,7 @@ It will remove filter configuration and stop Imunify Email services.
 
 #### Enable Imunify Email
 
-If Imunify Email was installed, but then disabled it can be re-enabled it in CLN.
+If Imunify Email was installed, but then disabled it can be re-enabled in CLN.
 
 
 ### WHM user interface
