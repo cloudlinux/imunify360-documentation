@@ -15,28 +15,35 @@ Imunify Email has been checked for compatibility with following tools and mail g
 
 :::danger Note
 Hosting administrator only.
+
+Imunify Email requires Imunify360 to be installed on the server.
 :::
 
 Imunify Email is simple to install. 
 
 At the moment, it runs on the following distributions:
 
-* CentOS 7,8 with support of cPanel/WHM control panel.
-* CloudLinux OS 7,8 with support of cPanel/WHM control panel.
-* AlmaLinux 8 with support of cPanel/WHM control panel.
+* CentOS 7, 8 with support of cPanel/WHM control panel.
+* CloudLinux OS 7, 8 with support of cPanel/WHM control panel.
+* AlmaLinux 8, 9 with support of cPanel/WHM control panel.
 
 Minimum system requirements for installation:
-* x64 | 512 Mb** | 20 Gb disk space ***
+
+**x64 | 512 Mb | 20 Gb disk space**
 
 :::tip Note
-** Imunify Email RAM consumption depends on the mail traffic. In a waiting state it consume little RAM, however for scanning large mails temporary increase of RAM consumption can be observed.
+- Imunify Email RAM consumption depends on the mail traffic. In a waiting state it consumes little RAM, however for scanning large mails temporary increase of RAM consumption can be observed.
 
-*** Used disk space depends on the number of accounts on a server. By default, each account will have 100 MB limitation for quarantine space. This limit can be adjusted using UI later.
+- Used disk space depends on the number of accounts on a server. By default, each account will have 100 MB limitation for quarantine space. This limit can be adjusted using UI later.
 :::
 
-To install Imunify360, open an SSH connection to your server using your preferred SSH console application. You will need to have the root level access in order to proceed.
+To install ImunifyEmail, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically 
+within 24 hours. To install it immediately you can use on of the following command as root user:
+```
+/usr/bin/imunify360-agent update-license
+```
 
-To start installation, run the following script with your activation key:
+or 
 
 ```
 wget https://repo.imunify360.cloudlinux.com/defence360/imunifyemail-deploy.sh
@@ -52,29 +59,25 @@ During installation, the following users will be created:
 * _rspamd
 * _imunifyemail
 
-The `_imunifyemai` user will also be added to the `_imunify` group.
+The `_imunifyemail` user will also be added to the `_imunify` group.
 
-#### Directories
+#### Components and resources
 
-Imunify Email has following components:
+Imunify Email has the following components:
 
-* Imunify RSpamd 
-* Imunify Quarantine 
+* **Imunify RSpamd**
+  * acts as an email filter
+  * it is installed in system directories such as /etc/rspamd, /usr/bin, /usr/lib, /usr/share/rspamd, as a part of `imunify-email-rspamd` RPM package and brings `rspamd` service
+* Quarantine (ie-quarantine) 
+  * acts as a storage for quarantined emails and as a back-end for the user interface (UI) and CLI
+  * it is installed in the /var/imunifyemail/quarantine directory, as a part of `imunify-email-quarantine` RPM package and brings `ie-quarantine` and `ie-notification` service.
+* CLI (ie-cli)
+  * it is a command line interface for managing Quarantine and Activity Monitor  that is installed as a part of `imunify-email-cli` RPM package
+* Dec Node (ie-dec-node)
+  * it is a statistical component that helps to improve the filtering quality
+  * it is installed in the /var/imunifyemail/dec-node directory, as a part of `imunify-email-dec-node` RPM package and brings `ie-dec-node` service
 
-Imunify RSpamd acts as an email filter and is installed in system directories such as:
-
-* /etc/rspamd
-* /usr/bin
-* /usr/lib
-* /usr/share/rspamd
-
-Imunify Quarantine is installed in the following directory: `/var/imunifyemail/quarantine`.
-
-#### Quarantine directories
-
-Imunify Quarantine component keeps all quarantine content, including emails and meta data in the following directory: 
-`/var/imunifyemail/quarantine/storage/`.
-
+All these packages are installed as part of `imunify-email` RPM package.
 
 #### Exim configuration modifications
 
@@ -109,10 +112,11 @@ ie-config status
 
 #### Disable Imunify Email
 
-In order to disable Imunify Email, run following command as root:
+In order to disable Imunify Email, you need to disable the corresponding option in your CLN account.
+Imunify Email will be disabled automatically within 24 hours. To disable it immediately, run following command as root:
 
 ```
-ie-config disable
+/usr/bin/imunify360-agent update-license
 ```
 
 It will remove filter configuration and stop Imunify Email services.
@@ -120,11 +124,7 @@ It will remove filter configuration and stop Imunify Email services.
 
 #### Enable Imunify Email
 
-If Imunify Email was installed, but then disabled it can be re-enabled using the following command, run as root: 
-
-```
-ie-config enable
-```
+If Imunify Email was installed, but then disabled it can be re-enabled in CLN.
 
 
 ### WHM user interface
@@ -1138,7 +1138,9 @@ ie-cli am stats --account-name=domain --since 30d
 
 ### Uninstallation
 
-To remove Imunify Email from your system, execute the following command:
+To remove Imunify Email from your system, you need to disable the corresponding option in your CLN account. 
+That will **disable** Imunify Email on the server, but rpm packages still will be presented. 
+To remove them as well, execute the following command as root:
 
 **Command**
 
