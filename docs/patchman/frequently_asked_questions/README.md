@@ -23,7 +23,6 @@ Patch and detection support for various versions of the supported applications a
 | Magento | 1.9.2.0 and later | Patchman COVERAGE,  <br>Patchman COVERAGE+CLEAN | all |
 | WooCommerce | 2.1.0 and later | Patchman COVERAGE,  <br>Patchman COVERAGE+CLEAN | all |
 | PrestaShop | 1.6.0.1 and later | Patchman COVERAGE,  <br>Patchman COVERAGE+CLEAN | all |
-| Booked |     |     | all |
 | Coppermine |     |     | all |
 | Dolibarr |     |     | all |
 | Dotproject |     |     | all |
@@ -49,7 +48,6 @@ Patch and detection support for various versions of the supported applications a
 | PHPFusion |     |     | all |
 | phpList |     |     | all |
 | phpMyChat |     |     | all |
-| phpScheduleIt |     |     | all |
 | PhpWiki |     |     | all |
 | Pligg |     |     | all |
 | PyroCMS |     |     | all |
@@ -85,6 +83,14 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>WordPress Importer | 0.6.2 and later | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Yoast SEO | 1.6.1 and later | COVERAGE, COVERAGE+CLEAN | all | 
 | WordPress Plugin:  <br>Classic Editor | 1.6 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Really Simple SSL | 7.2.2 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Updraft Plus | 1.23.13 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Duplicate pages | 4.5 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Classic Widgets | 0.3 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Popup Builder by OptinMonster | 1.15.0 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Smush | 3.15.2 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Popup Builder by Fooking Forward | 4.2.3 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Rank Math SEO | 1.0.215 and later | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
