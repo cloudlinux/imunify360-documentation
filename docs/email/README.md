@@ -19,7 +19,7 @@ Hosting administrator only.
 Imunify Email requires Imunify360 to be installed on the server.
 :::
 
-Imunify Email is simple to install. 
+Imunify Email is simple to install.
 
 At the moment, it runs on the following distributions:
 
@@ -37,13 +37,13 @@ Minimum system requirements for installation:
 - Used disk space depends on the number of accounts on a server. By default, each account will have 100 MB limitation for quarantine space. This limit can be adjusted using UI later.
 :::
 
-To install ImunifyEmail, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically 
+To install ImunifyEmail, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically
 within 24 hours. To install it immediately you can use on of the following command as root user:
 ```
 /usr/bin/imunify360-agent update-license
 ```
 
-or 
+or
 
 ```
 wget https://repo.imunify360.cloudlinux.com/defence360/imunifyemail-deploy.sh
@@ -54,7 +54,7 @@ bash imunifyemail-deploy.sh
 
 #### Users created
 
-During installation, the following users will be created: 
+During installation, the following users will be created:
 
 * _rspamd
 * _imunifyemail
@@ -68,7 +68,7 @@ Imunify Email has the following components:
 * **Imunify RSpamd**
   * acts as an email filter
   * it is installed in system directories such as /etc/rspamd, /usr/bin, /usr/lib, /usr/share/rspamd, as a part of `imunify-email-rspamd` RPM package and brings `rspamd` service
-* Quarantine (ie-quarantine) 
+* Quarantine (ie-quarantine)
   * acts as a storage for quarantined emails and as a back-end for the user interface (UI) and CLI
   * it is installed in the /var/imunifyemail/quarantine directory, as a part of `imunify-email-quarantine` RPM package and brings `ie-quarantine` and `ie-notification` service.
 * CLI (ie-cli)
@@ -81,14 +81,14 @@ All these packages are installed as part of `imunify-email` RPM package.
 
 #### Exim configuration modifications
 
-Imunify Email modifies Exim MTA configuration, adding RSpamd as a filter for email. 
+Imunify Email modifies Exim MTA configuration, adding RSpamd as a filter for email.
 It is done automatically during installation. In case if filtering needs to be disabled, see [Disable Imunify Email](/email/#disable-imunify-email). When disabled, Exim configuration will not contain an RSpamd filter. To re-able Imunify Email, see [Enable Imunify Email](/email/#enable-imunify-email).
 
-The configuration change is compatible with WHM Advanced Editor, you can continue using it for other modifications. 
+The configuration change is compatible with WHM Advanced Editor, you can continue using it for other modifications.
 
 ### User interface access
 
-In order to access the UI as a hosting administrator, navigate to WHM -> Plugins -> Imunify360 -> Email tab. 
+In order to access the UI as a hosting administrator, navigate to WHM -> Plugins -> Imunify360 -> Email tab.
 
 Your clients will be able to access the Imunify Email Quarantine under: cPanel -> Security -> Imunify360 -> Email.
 
@@ -251,24 +251,29 @@ Go to Imunify360 → Email →Settings tab. Here, set a limit on the number of 
 * The limit is set for the number of messages within the space of the last 60 minutes.
 * The limits can be applied either to a number of emails or a number of recipients.
 
-![](/images/EmailSettingsTab.png)
+![](/images/EmailActivityMonitorDefaultsTab.png)
 
 Once the values are chosen, press **Save Changes** to apply them.
 
 #### Quarantine Settings
 
-:::danger Note
-By default, the space for the user's quarantine is 100 MB.
+:::danger
+You can modify the default settings for storage capacity and release limits for all accounts.
+
+**Note**: If you change these settings in an individual account, the default settings will no longer apply to that account.
+
+To revert to the default settings, refer to the CLI section.
 :::
 
-![](/images/EmailSettings.png)
+![](/images/EmailQuarantineDefaultsTab.png)
 
 The table has the following columns:
 
 * <span class="notranslate">**Account**</span> — user account name
-* <span class="notranslate">**Limit (MB)**</span> — the space for the user's quarantine limit (default is 100 MB)
-* <span class="notranslate">**Used Space (MB)**</span> — the space used by files in quarantine (slight excess of the limit is possible)
-* <span class="notranslate">**State**</span> — the state of the user's quarantine. 
+* <span class="notranslate">**Storage Capacity MB**</span> — the space for the user's quarantine limit (default is 100 MB)
+* <span class="notranslate">**Used Space MB**</span> — the space used by files in quarantine (slight excess of the limit is possible)
+* <span class="notranslate">**Releases limit**</span> — limit for releases per hour for non-root user
+* <span class="notranslate">**State**</span> — the state of the user's quarantine.
 * <span class="notranslate">**Details**</span> — emails deleted permanently for the last hour
 * <span class="notranslate">**Actions**</span>
   * <span class="notranslate">**Purge quarantine**</span> — purge all quarantine for an account
@@ -283,10 +288,10 @@ The table has the following columns:
 
 The Command Line Interface (CLI) is designed to simplify usage of Imunify Email and as an enabler for integration with other tools and platforms.
 
-Main command for all operations with Imunify Email: 
+Main command for all operations with Imunify Email:
 
 ```
-ie-cli 
+ie-cli
 ```
 
 #### Basic usage
@@ -309,6 +314,7 @@ Use `--help` key to get list of the available commands and to get help for the p
 |`am`|interaction with the Activity Monitor, same API as in ActivityMonitor UI|
 |`emails`|interaction with emails in the quarantine|
 |`filter-settings`|toggle the filter settings, without any parameters - returns the current settings|
+|`quarantine-defaults`|interaction with default settings in the Quarantine
 |`version`|print the ImunifyEmail CLI version|
 |`whitelist`|interaction with the whitelist of authenticated users, senders and recipients|
 
@@ -322,7 +328,7 @@ Use `--help` key to get list of the available commands and to get help for the p
 
 ### Operations with emails in the quarantine
 
-Emails marked as spam by Imunify Email are stored in the quarantine. The following section describes CLI for operating with emails. 
+Emails marked as spam by Imunify Email are stored in the quarantine. The following section describes CLI for operating with emails.
 
 :::tip Note
 The quarantine is keeping email for various users separately, but root users can see all the emails and perform any operations on them.
@@ -369,23 +375,23 @@ That command shows all the quarantined emails for all accounts that have been qu
 
 ```
 -----------------------------------------------------------------------------------------------------------
-Email_ID ef69f707-d547-4b29-b8f0-f5331821c930 
-Size_Bytes	      8190 
-Account_Name	  mws 
+Email_ID ef69f707-d547-4b29-b8f0-f5331821c930
+Size_Bytes	      8190
+Account_Name	  mws
 Recipients	      me@somehost.com
 Subject        	  Ge t G:eneric V1agra f:or as 1ow as $2.50 per 50 mg
 
 ----------------------------------------------------------------------------------------------------------
-Email_ID faf96a73-5be4-481a-9c6c-7ab8fb2e3cf0 
-Size_Bytes	      8534 
-Account_Name	  mws 
+Email_ID faf96a73-5be4-481a-9c6c-7ab8fb2e3cf0
+Size_Bytes	      8534
+Account_Name	  mws
 Recipients	      frank@yahooo.com
 Subject           FWD: Want Pills V|AgR@ % Xan_a_x ^ Valiu|m| # At|v@`n \ Pn+ermin ' So+m+a  lNmAL
 
 -----------------------------------------------------------------------------------------------------------
-Email_ID fbc2efd0-1808-4e54-99ce-3082708b28ee 
-Size_Bytes	      8971 
-Account_Name	  oregdent 
+Email_ID fbc2efd0-1808-4e54-99ce-3082708b28ee
+Size_Bytes	      8971
+Account_Name	  oregdent
 Recipients	      steve@hillcabinet.com
 Subject        	  FWD:Xanax.x Valium.m Xanax.x Vicodin.n h ogzmwggi
 
@@ -502,7 +508,7 @@ Body: PCFET0NUWVBFIGh0bWwgcHVibGljICItLy9XM0MvL0RURCBIVE1MIDQuMDEgVHJhbnNpdGlvbm
 
 ### Release or Remove a message from the quarantine
 
-Messages can be released from the quarantine and sent to recipients if they are false positives. They can also be deleted if needed to free up space. 
+Messages can be released from the quarantine and sent to recipients if they are false positives. They can also be deleted if needed to free up space.
 
 :::tip Note
 The quarantine will automatically delete the oldest messages when the user's quarantine limit is reached. The limit can be adjusted in settings.
@@ -537,7 +543,7 @@ OK
 **Command**
 
 ```
-ie-cli emails remove --ids fb7c3537-8e5e-43d8-bc66-bd954c22d587 -a root 
+ie-cli emails remove --ids fb7c3537-8e5e-43d8-bc66-bd954c22d587 -a root
 ```
 
 **Output**
@@ -548,7 +554,7 @@ OK
 
 ### Accounts settings
 
-ImunifyEmail stores emails marked as spam in a quarantine space. The space is divided into virtual subspaces for every system account. Subspace is created when the first spam message is quarantined. It is filled with spam messages for a particular account until the size limitation is reached. When the size limitation is reached most old messages will be automatically deleted. 
+ImunifyEmail stores emails marked as spam in a quarantine space. The space is divided into virtual subspaces for every system account. Subspace is created when the first spam message is quarantined. It is filled with spam messages for a particular account until the size limitation is reached. When the size limitation is reached most old messages will be automatically deleted.
 
 :::tip Note
 Default limit for a quarantine subspace is 100 MB.
@@ -558,7 +564,7 @@ Default limit for a quarantine subspace is 100 MB.
 In some cases ImunifyEmail can’t attribute an email to a system account. In such cases the email will be stored under root user quarantine space.
 :::
 
-There are command line commands for managing quarantine space. 
+There are command line commands for managing quarantine space.
 
 #### List all accounts in the quarantine
 
@@ -571,11 +577,11 @@ ie-cli accounts list [--json]
 **Output**
 
 ```
-Name      	     LimitBytes	     UsedBytes	     State	
-mysite           125829120  	 810692     	 active 	
-dentistcenter    104857600  	 0          	 active 	
+Name      	     LimitBytes	     UsedBytes	     State
+mysite           125829120  	 810692     	 active
+dentistcenter    104857600  	 0          	 active
 
-Max Count 2	 
+Max Count 2
 ```
 
 **Output (JSON)**
@@ -619,11 +625,11 @@ ie-cli accounts edit -a mydomain --state=active --limit=8096
 **Output (JSON)**
 
 ```
-Name       LimitBytes	 UsedBytes	 State	
-mws        8096          810692      active 	
+Name       LimitBytes	 UsedBytes	 State
+mws        8096          810692      active
 ```
 
-**Output** 
+**Output**
 
 ```json
 {
@@ -670,7 +676,7 @@ imunifyemail     104857600       8324            active          50
 
 #### Clean all quarantine for an account
 
-If needed all quarantine for an account can be cleaned with one command. 
+If needed all quarantine for an account can be cleaned with one command.
 
 **Command**
 
@@ -692,7 +698,7 @@ OK
 
 ### Whitelisting
 
-Imunify Email supports whitelisting configuration. It is possible to whitelist domains and/or email addresses of a sender. 
+Imunify Email supports whitelisting configuration. It is possible to whitelist domains and/or email addresses of a sender.
 
 :::warning Warning
 When sender is whitelisted Imunify Email bypasses it’s emails without filtering. It may affect hosting reputation if a whitelisted sender will send spam.
@@ -811,9 +817,118 @@ Removing sender(s) from the whitelist:
 OK
 ```
 
+### Quarantine default settings (releases limit and storage capacity)
+
+**Command**
+
+```
+ie-cli quarantine-defaults --help
+
+
+List or edit default settings. Now supports two settings:
+releases-limit - Limit for releases per hour for non-root user
+storage-capacity - Limit in MB for the storage in the Quarantine for the account
+
+Usage:
+
+ie-cli quarantine-defaults [command]
+
+Available Commands:
+list - list accounts settings
+set - set default settings
+
+Flags:
+-h, --help help for quarantine-defaults
+
+Use "ie-cli quarantine-defaults [command] --help" for more information about a command.
+```
+
+
+#### `list` Command
+
+**Command**
+
+```
+ie-cli quarantine-defaults list --help
+
+List default settings for accounts.
+
+Usage:
+
+ie-cli quarantine-defaults list [flags]
+
+Flags:
+-h, --help help for list
+--json output in json format
+```
+
+**Example**
+```
+ie-cli quarantine-defaults list --json
+```
+
+**Output**
+
+```
+{
+  "settings": [
+    {
+      "setting": "releases-limit",
+      "value": 100
+    },
+    {
+      "setting": "storage-capacity",
+      "value": 1024
+    }
+  ]
+}
+```
+
+#### `set` Command
+
+**Command**
+```
+ie-cli quarantine-defaults set --help
+
+Set default settings for accounts. Use -1 to set common default value.
+
+Usage:
+ie-cli quarantine-defaults set [flags]
+
+Flags:
+-h, --help help for set
+--json output in json format
+-r, --releases-limit Limit for releases per hour for non-root user
+-s, --storage-capacity Limit in MB for the storage in the Quarantine for the account
+```
+
+**Example**
+```
+ie-cli quarantine-defaults set -r 50 -s 2048
+```
+
+That command sets the releases limit to 50 per hour and storage capacity to 2048 MB.
+
+**Output**
+
+```
+{
+  "settings": [
+    {
+      "setting": "releases-limit",
+      "value": 50
+    },
+    {
+      "setting": "storage-capacity",
+      "value": 2048
+    }
+  ]
+}
+```
+
 ### Activity Monitor
 
-To get understanding of Activity Monitor see the next section. `ie-cli` provides and API to get the same information as UI does from the Activity Monitor. 
+To get understanding of Activity Monitor see the next section. `ie-cli` provides and API to get the same information as UI does from the Activity Monitor.
 `ie-cli` allows to
 1. get the Activity Monitor statistics
 2. set/remove/update sender limits for the particular account/domain/email/script
@@ -989,7 +1104,7 @@ The `ie-cli am stats` command provides a consolidated view of sender objects, co
 
 The flags include `--account-name string`, `--domain string`, `--limit int`, `--offset int`, `--script-name string`, `--sender-email string`, and `--since string`. These are employed to filter by account name, domain, limit the quantity of results, set the offset for results, filter by script name, filter by sender email, and set the duration in seconds that has elapsed from the flag value until the present moment, respectively.
 
-The `--limit int` flag also indicates that the limit applied pertains solely to the number of accounts in the response, with a default of 25. 
+The `--limit int` flag also indicates that the limit applied pertains solely to the number of accounts in the response, with a default of 25.
 
 The `--since string` flag defaults to a value of 1 hour - `1h`.
 
@@ -1080,13 +1195,13 @@ ie-cli am stats --since 10h
 **Command usage with `--sender-email` for get sender-object id**
 
 ```
-ie-cli am stats --sender-email=test@domain.com 
+ie-cli am stats --sender-email=test@domain.com
 ```
 
 **Command usage with `--account-name` for get sender-object id**
 
 ```
-ie-cli am stats --account-name=domain --since 30d 
+ie-cli am stats --account-name=domain --since 30d
 ```
 
 **Output**
@@ -1138,8 +1253,8 @@ ie-cli am stats --account-name=domain --since 30d
 
 ### Uninstallation
 
-To remove Imunify Email from your system, you need to disable the corresponding option in your CLN account. 
-That will **disable** Imunify Email on the server, but rpm packages still will be presented. 
+To remove Imunify Email from your system, you need to disable the corresponding option in your CLN account.
+That will **disable** Imunify Email on the server, but rpm packages still will be presented.
 To remove them as well, execute the following command as root:
 
 **Command**
