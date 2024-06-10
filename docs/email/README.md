@@ -819,69 +819,31 @@ OK
 
 ### Quarantine default settings (releases limit and storage capacity)
 
+Two commands are available: set and edit
+Please run with `--help` flag to get more info
+
 **Command**
 
 ```
 ie-cli quarantine-defaults --help
-
-
-List or edit default settings. Now supports two settings:
-releases-limit - Limit for releases per hour for non-root user
-storage-capacity - Limit in MB for the storage in the Quarantine for the account
-
-Usage:
-
-ie-cli quarantine-defaults [command]
-
-Available Commands:
-list - list accounts settings
-set - set default settings
-
-Flags:
--h, --help help for quarantine-defaults
-
-Use "ie-cli quarantine-defaults [command] --help" for more information about a command.
 ```
 
 
 #### `list` Command
 
-**Command**
-
-```
-ie-cli quarantine-defaults list --help
-
-List default settings for accounts.
-
-Usage:
-
-ie-cli quarantine-defaults list [flags]
-
-Flags:
--h, --help help for list
---json output in json format
-```
+**Note**: The --json flag is available to output in JSON format.
 
 **Example**
 ```
-ie-cli quarantine-defaults list --json
+ie-cli quarantine-defaults list
 ```
 
 **Output**
 
 ```
-{
-  "settings": [
-    {
-      "setting": "releases-limit",
-      "value": 100
-    },
-    {
-      "setting": "storage-capacity",
-      "value": 1024
-    }
-  ]
-}
+Setting          IntValue
+limit_bytes      104857600
+releases_limit   5
 ```
 
 #### `set` Command
@@ -904,26 +866,17 @@ Flags:
 
 **Example**
 ```
-ie-cli quarantine-defaults set -r 50 -s 2048
+ie-cli quarantine-defaults set --releases-limit 50 --storage-capacity 120
 ```
 
-That command sets the releases limit to 50 per hour and storage capacity to 2048 MB.
+That command sets the releases limit to 50 per hour and storage capacity to 120 MB.
 
 **Output**
 
 ```
-{
-  "settings": [
-    {
-      "setting": "releases-limit",
-      "value": 50
-    },
-    {
-      "setting": "storage-capacity",
-      "value": 2048
-    }
-  ]
-}
+Setting          IntValue
+limit_bytes      125829120
+releases_limit   50
 ```
 
 ### Activity Monitor
