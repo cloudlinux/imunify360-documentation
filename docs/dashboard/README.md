@@ -1408,7 +1408,6 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
   * KeyCDN
   * Dartspeed.com
   * QUIC.cloud CDN
-* <span class="notranslate">_Google reCAPTCHA configuration window_</span> allows admin to specify reCAPTCHA keys for the server. Follow the [step by step guide](/features/#configuring-recaptcha-keys) to setup a <span class="notransate">_Site key_</span> and a <span class="notranslate">_Secret key_</span>.
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 

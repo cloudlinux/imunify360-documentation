@@ -441,7 +441,7 @@ service imunify360-webshield restart
 
 ### Greylist and Captcha
 
-The Greylist (ex. CAPTCHA) is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse. Imunify360 uses specially designed JavaScript challenge ([reCAPTCHA](https://www.google.com/recaptcha/intro/invisible.html) service was used before the Imunify360 webshield version 1.25).
+The Greylist (ex. CAPTCHA) is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
 
 :::warning Warning
 Please note that the WebShield Captcha is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Captcha from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Captcha functionality in the Imunify360.
