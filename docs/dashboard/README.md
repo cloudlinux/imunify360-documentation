@@ -1072,34 +1072,6 @@ HardenedPHP is free on the servers with Imunify360 installed.
 ![](/images/kc_install_log_zoom91.png)
 
 
-#### Invisible Captcha
-
-**Overview**
-
-This feature allows to automatically determine if the user is a human. The system falls back to CAPTCHA solving if the algorithm determines that a user may not be a human.
-It is possible to enable Invisible CAPTCHA feature via Imunify360 admin interface and via command line interface (CLI).
-
-**How to install Invisible CAPTCHA**
-
-Go to <span class="notranslate">Imunify360 → Settings → General → Installation → Invisible CAPTCHA</span> and click <span class="notranslate">_Install Invisible CAPTCHA_</span> button. Confirm the installation in the pop-up.
-
-![](/images/invisiblecaptchainstall_zoom70.png)
-
-**How to check if Invisible CAPTCHA is currently installed**
-
-Go to <span class="notranslate">Imunify360 → Settings → General → Installation → Invisible CAPTCHA</span>. The red <span class="notranslate">_Remove Invisible CAPTCHA_</span> button means that Invisible CAPTCHA is enabled.
-
-![](/images/invisiblecaptchaenabled_zoom70.png)
-
-**How to uninstall Invisible CAPTCHA**
-
-Go to <span class="notranslate">Imunify360 → Settings → General → Installation → Invisible CAPTCHA</span> and click <span class="notranslate">_Remove Invisible CAPTCHA_</span> button. Confirm the action in the pop-up.
-
-![](/images/invisiblecaptcharemove_zoom70.png)
-
-See [how to test invisible CAPTCHA](/webshield/#verification).
-
-
 #### KernelCare
 
 To install or uninstall KernelCare click on a button related. Please find additional information about KernelCare [here](https://www.kernelcare.com).

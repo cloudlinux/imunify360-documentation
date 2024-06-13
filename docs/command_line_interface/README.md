@@ -551,7 +551,6 @@ Allows to enable or disable additional CloudLinux software included in Imunify36
 
 * [KernelCare](https://www.kernelcare.com) – use `kernelcare` feature name
 * <span class="notranslate">[HardenedPHP](https://www.cloudlinux.com/hardenedphp)</span> – use <span class="notranslate">`hardened-php`</span> feature name
-* <span class="notranslate">Invisible Captcha</span> – use <span class="notranslate">`invisible-captcha`</span> feature name
 
 :::tip Note
 You cannot install arbitrary 3rd party components or anything besides the features listed above. Please, use legacy linux package installation process for that

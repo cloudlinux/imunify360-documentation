@@ -35,5 +35,3 @@ You can use this tool to simplify the process: [https://translation-manager-86c3
 
 Send the translated version to us and we will gladly include it in one of the nearest releases of Imunify360.
 
-Captcha localization is described in the [Captcha](/webshield/#captcha) article.
-
