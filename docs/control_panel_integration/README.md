@@ -496,9 +496,9 @@ WebShield will use this data to decide which certificate to serve if a request w
 Administrators should see a warning in Settings in UI if no certificates are added:
 WebShield SSL-Cache is not configured. Although, even if a certificate is added, it doesn’t guarantee that the website is working correctly. The certificate may be outdated, invalid, or not applicable to that domain name.
 
-The worst scenario when SSL certificate is not cached or recognised by the WebShield is that the SSL certificate of the Captcha page redirect will not match the initial site the user was visiting. The WebShield will serve it's default that not likely to match with the domain name, or an outdated certificate and this may not be trusted. Thus SSL certificate waning will appear.
+The worst scenario when SSL certificate is not cached or recognised by the WebShield is that the SSL certificate of the Anti-Bot Challenge page redirect will not match the initial site the user was visiting. The WebShield will serve it's default that not likely to match with the domain name, or an outdated certificate and this may not be trusted. Thus SSL certificate waning will appear.
 
-To make sure WebShield can serve the Captcha page smoothly the relevant domain name (certificates cache) should be in the output of thec cache tool, e.g.:
+To make sure WebShield can serve the Anti-Bot Challenge page smoothly the relevant domain name (certificates cache) should be in the output of thec cache tool, e.g.:
 <div class="notranslate">
 	
 ```
@@ -507,12 +507,12 @@ bob.example.com
 john.example.com
 ```
 </div>
-If the domain name is presented, its certificate content with it's key should be written in cache, WebShield's pick up algorithm will find this match to serve with domain's Captcha page. 
+If the domain name is presented, its certificate content with it's key should be written in cache, WebShield's pick up algorithm will find this match to serve with domain's Anti-Bot Challenge page. 
 
 To attest this mechanisms, it is required:
 
 1. While using non-whitelisted IP (ideally an another machine that is not used to login), get the Graylist verdict.
-2. Visit the site and validate that no SSL errors occurred while Captcha is shown.
+2. Visit the site and validate that no SSL errors occurred while Anti-Bot Challenge is shown.
 
 The first step can be achieved in various ways, the one that is also checks the ModSecurity layer is to send specific test tags, as [per link](https://docs.imunify360.com/faq_and_known_issues/#_15-how-to-check-modsecurity-scan-works) describes. The approach is to send specific tags towards you site, trigger the test rule and get IP greylisted:
 <div class="notranslate">

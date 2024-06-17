@@ -44,7 +44,7 @@ CSF as it is already in our graylist
 INFO [2017-04-15 18:30:01,663] defence360agent.internals.the_sink:
 SensorAlert:
 {'rule_id': 'LF_SMTPAUTH', 'timestamp': 1492281000.8720655, 'attackers_ip': '103.86.52.175', 'plugin_id': 'lfd', 'method': 'ALERT', 'ttl': '1'}
-When user unblocks himself by captcha, logs look like this:
+When user unblocks himself by Anti-bot Challenge, logs look like this:
 INFO [2017-04-17 00:51:26,956] defence360agent.internals.the_sink:
 CaptchaEvent:
 {'timestamp': 1492404686.9496775, 'errors': [], 'user_agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36', 'accept_language': 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4', 'event': 'PASSED', 'method': 'CAPTCHA', 'attackers_ip': '10.101.1.18'}
@@ -64,7 +64,7 @@ The following info is sent to our server:
 * all the messages from IDS OSSEC (can be found in OSSEC logs)
 * all the messages from <span class="notranslate">mod_security</span> (can be found in <span class="notranslate">`modsec_audit.log`</span>)
 * users domains (to be checked in reputation engine);
-* CAPTCHA verification info
+* Anti-bot Challenge verification info
 * all running scans for malware (maldet scans) and information on cleaning up or discovering suspicious files
 * optionally, suspicious files can be sent to us for the analysis. Files can be sent via UI by marking a proper checkbox
 
@@ -608,7 +608,7 @@ You can find additional information in the following config files:
 </div>
 
 
-### 20. How to check that CAPTCHA works?
+### 20. How to check that Anti-bot Challenge works?
 
 First, remove an IP from the White list:
 
@@ -629,7 +629,7 @@ After that, run the following loop which triggers ModSecurity test rule 5 times 
 ```
 </div>
 
-Where <span class="notranslate">`SERVER_IP`</span> is the server's IP address where Imunify360 is installed and where you want to check CAPTCHA.
+Where <span class="notranslate">`SERVER_IP`</span> is the server's IP address where Imunify360 is installed and where you want to check Anti-bot Challenge.
 
 Also, it is possible to use a domain name of a website which `DNS A` record is pointed to the server. In other words, which is located on the server, like [shown here](/webshield/#verification)
 

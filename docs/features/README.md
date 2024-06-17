@@ -63,7 +63,7 @@ To take advantage of this feature, go to your Imunify360 control panel and enabl
 
 This is a special operation mode where Imunify360 consumes less CPU and RAM. It is intended for servers with limited resources.
 
-This mode disables <span class="notranslate">[WebShield](/webshield/)</span> switching off GrayList and Captcha. 
+This mode disables <span class="notranslate">[WebShield](/webshield/)</span> switching off GrayList and Anti-bot Challenge. 
 
 <span class="notranslate">_Low Resource Usage_</span> mode also enables the <span class="notranslate">_[Minimized Modsec Ruleset](/dashboard/#waf-settings)_</span> option that disables Imunify WAF rules with a high memory footprint, leaving critical rulesets enabled. 
 
@@ -599,7 +599,7 @@ Setting Edge Cache TTL along with the Cache Everything option is not recommended
 
 Starting from version 5.6, Imunify360 distinguishes bots from real visitors using the JavaScript challenge <span class="notranslate">"Splash Screen</span>." Most bots don’t solve the challenge, and their requests will not reach web applications such as WordPress, Drupal, and others. This can save the server’s resources and protects websites from scanners, automated attacks, and web-spammers.
 
-Only bad actors will be redirected to the Imunify360 <span class="notranslate">Splash Screen</span> challenge page. Legitimate visitors get original content without any verification page nor any delay. The users forced to the <span class="notranslate">Splash Screen</span> will not see the challenge or CAPTCHA and be redirected to the page with the original content. Cookies and JavaScript support are required in a browser to successfully pass the challenge of <span class="notranslate">Anti-bot protection</span>.
+Only bad actors will be redirected to the Imunify360 <span class="notranslate">Splash Screen</span> challenge page. Legitimate visitors get original content without any verification page nor any delay. The users forced to the <span class="notranslate">Splash Screen</span> will not see the challenge or Anti-Bot Challenge and be redirected to the page with the original content. Cookies and JavaScript support are required in a browser to successfully pass the challenge of <span class="notranslate">Anti-bot protection</span>.
 
 The “Anti-bot protection” feature will not block legitimate bots (e.g., Google crawler).
 
@@ -633,7 +633,7 @@ To switch it off:
 
 :::warning Note
 1. The Webshield module with the [Splash Screen](/features/#splashscreen-for-chinese-customers) functionality should also be switched on for enabling the feature.
-2. You can find WebShield and Captcha-related logs in the **/var/log/imunify360-webshield** directory.
+2. You can find WebShield and Anti-bot related logs in the **/var/log/imunify360-webshield** directory.
 3. The feature works with the standard cPanel ports (2082, 2083). _Contact Support if you have a non-standard cPanel ports configuration or need the feature for other ports._
 :::
 

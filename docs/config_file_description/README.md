@@ -18,7 +18,7 @@ Note that if YAML is used, it accepts any format: `True`/`true`/`yes`/`y`, etc. 
 <tr>
 <td width="250px;"><span class="notranslate">timeout: 1440</span></td><td># set in minutes how long to keep automatically whitelisted IP</td></tr>
 <tr><td><span class="notranslate">after_unblock_timeout: 1440</span></td><td>
-# set in minutes for how long IP will be added to the <span class="notranslate">White List</span> after it passes Imunify360 CAPTCHA</td></tr>
+# set in minutes for how long IP will be added to the <span class="notranslate">White List</span> after it passes Imunify360 Anti-bot challenge</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">DOS:</span></th>
 </tr>
@@ -216,16 +216,16 @@ If you want iptables rules to be applied to a specific NIC only, list them here 
 <td># restore from backup files that are not older than <span class="notranslate"><em>max_days_in_backup</em></span></td></tr>
 <th colspan="2" align="left"><span class="notranslate">CAPTCHA_DOS:</span></th>
 <tr><td><span class="notranslate">enabled: True</span></td>
-<td># enable (<span class="notranslate">True</span> (default) or disable (<span class="notranslate">False</span>) CAPTCHA Dos protection</td></tr>
+<td># enable (<span class="notranslate">True</span> (default) or disable (<span class="notranslate">False</span>) Anti-bot Challenge Dos protection</td></tr>
 <tr><td><span class="notranslate">time_frame: 21600</span></td>
-<td># set a period in seconds during which requests to CAPTCHA from the same IP
+<td># set a period in seconds during which requests to Anti-bot Challenge from the same IP
 will be recorded as repeated</td></tr>
 <tr><td><span class="notranslate">max_count: 100</span></td>
-<td># set the maximum number of repeated CAPTCHA requests after which IP is moved
-to the CAPTCHA Dos list without an ability to request CAPTCHA again</td></tr>
+<td># set the maximum number of repeated Anti-bot Challenge requests after which IP is moved
+to the Anti-bot Challenge Dos list without an ability to request Anti-bot Challenge again</td></tr>
 <tr><td><span class="notranslate">timeout: 864000</span></td>
-<td># set in seconds the time on which to add the IP in CAPTCHA Dos list without an ability
-to request CAPTCHA again</td></tr>
+<td># set in seconds the time on which to add the IP in Anti-bot Challenge Dos list without an ability
+to request Anti-bot Challenge again</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">BLOCKED_PORTS:</span></th></tr>
 <tr><td><span class="notranslate">default_mode: allowed</span></td>
@@ -236,10 +236,6 @@ to request CAPTCHA again</td></tr>
 <td># enable CDN support, treat IPs behind CDN as any other IPs. (True is the default value).</td></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># enable (True) (default value) or disable (False) WebShield</td></tr>
-<tr><td><span class="notranslate">captcha_site_key: ""</span></td>
-<td># your site key; required to show reCAPTCHA on the page</td></tr>
-<tr><td><span class="notranslate">captcha_secret_key: ""</span></td>
-<td># your secret key; required for communication between Google server and this server to get reCAPTCHA pass results</td></tr>
 <tr><td><span class="notranslate">splash_screen: True</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) Anti-bot protection</td></tr>
 <tr>
@@ -329,9 +325,9 @@ to request CAPTCHA again</td></tr>
 <td># for internal usage, do not edit</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">WEB_SERVICES:</span></th></tr>
 <tr><td><span class="notranslate">http_ports: </span></td>
-<td># additional http ports for Captcha</td></tr>
+<td># additional http ports for Anti-bot Challenge</td></tr>
 <tr><td><span class="notranslate">https_ports: </span></td>
-<td># additional https ports for Captcha</td></tr>
+<td># additional https ports for Anti-bot Challenge</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">MALWARE_DATABASE_SCAN:</span></th></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, only WordPress databases are supported as for now.</td></tr>
