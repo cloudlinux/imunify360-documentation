@@ -455,7 +455,7 @@ There are two layers in GreyList (ex. CAPTCHA) behavior:
 
 ### CDN Support
 	
-Imunify360 correctly graylists and blocks IPs behind Cloudflare and other CDNs (see [here](/webshield/#supported-cdn-providers) for the full list).
+Imunify360 correctly graylists and blocks IPs behind Cloudflare and other CDNs (see [here](/features/#supported-cdn-providers) for the full list).
 	
 Imunify360 passes all requests from CDN through <span class="notranslate">WebShield</span>, and uses <span class="notranslate">CF-Connecting-IP</span> and <span class="notranslate">X-Forwarded-For</span> headers to identify real IPs.
 	
