@@ -294,8 +294,8 @@ Tne <span class="notranslate">_All Lists_</span> tab allows viewing and managing
 
 * <span class="notranslate">White</span> - the IP will not be blocked
 * <span class="notranslate">Drop/Black</span> - the IP will be blocked everywhere, on all ports and services
-* <span class="notranslate">Captcha</span> - the IP will be blocked completely on non-web ports (SSH, FTP, etc.), and will be shown CAPTCHA on web ports (80, 443, hosting panel ports)
-* <span class="notranslate">SplashScreen</span> - the IP will be shown SplashScreen challenge on web ports, and will not be blocked on others
+* <span class="notranslate">Greylist</span> - the IP will be blocked completely on non-web ports (SSH, FTP, etc.), and will be shown Anti-Bot Challenge on web ports (80, 443, hosting panel ports)
+* <span class="notranslate">Anti-Bot Challenge</span> - the IP will be shown Anti-Bot challenge on web ports, and will not be blocked on others
 
 The counters for the lists are presented at the top of the table, reflecting the number of records matching the category.
 
