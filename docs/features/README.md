@@ -439,19 +439,19 @@ service imunify360-webshield restart
 </div>
 
 
-### Greylist and Captcha
+### Greylist and Anti-Bot Challenge
 
-The Greylist (ex. CAPTCHA) is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
+The Greylist is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
 
 :::warning Warning
-Please note that the WebShield Captcha is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Captcha from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Captcha functionality in the Imunify360.
+Please note that the WebShield Captcha is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Captcha functionality in the Imunify360.
 :::
 
-There are two layers in GreyList (ex. CAPTCHA) behavior:
+There are two layers in GreyList behavior:
 
-1. If a user of a website is added to the <span class="notranslate">Grey List</span> (the access is blocked), then the GreyList (ex. CAPTCHA) behavior allows him to unblock himself. When he tries to get to the website he receives the JS challenge. If the challenge is solved by the browser successfully (a human user is not required to go through human confirmation - the process will pass under the hood), a user is redirected to the website, which means that the access is unblocked and the IP address of this user is removed from the <span class="notranslate">Grey List</span>.
+1. If a user of a website is added to the <span class="notranslate">Grey List</span> (the access is blocked), then the GreyList behavior allows him to unblock himself. When he tries to get to the website he receives the JS challenge. If the challenge is solved by the browser successfully (a human user is not required to go through human confirmation - the process will pass under the hood), a user is redirected to the website, which means that the access is unblocked and the IP address of this user is removed from the <span class="notranslate">Grey List</span>.
 
-2. The GreyList (ex. CAPTCHA) behavior is always on guard of the websites and checks the activity of each IP, constantly adding suspicious IPs to the global GreyList. 
+2. The GreyList behavior is always on guard of the websites and checks the activity of each IP, constantly adding suspicious IPs to the global GreyList. 
 
 ### CDN Support
 	
@@ -516,58 +516,6 @@ replace `0` with `1`, save the file and restart WebShield, using the following c
 # service imunify360-webshield restart
 ```
 </div>
-
-
-#### SplashScreen for Chinese customers
-
-Imunify360 Captcha isn't available in some countries due to certain restrictions, for example, in China. To alleviate this, Chinese customers can use Imunify360 SplashScreen as Captcha.
-
-To enable SplashScreen, open the file <span class="notranslate">`/etc/imunify360-webshield/wscheck.conf`</span>, find the following line: 
-
-<div class="notranslate">
-
-```
-wscheck_splashscreen_as_captcha off;
-```
-</div>
-
-Change <span class="notranslate">`off`</span> to <span class="notranslate">`on`</span>:
-
-<div class="notranslate">
-
-```
-wscheck_splashscreen_as_captcha on;
-```
-</div>
-
-Save the file and run the following command:
-
-**For Ubuntu:**
-
-<div class="notranslate">
-
-```
-service imunify360-websheld reload
-```
-</div>
-
-**For CentOS:**
-
-<div class="notranslate">
-
-```
-systemctl reload imunify360-webshield
-```
-</div>
-
-
-The graylisted visitors will see such screen for 5 seconds before redirecting to their initial destination.
-
-![](/images/splash_as_captcha.png)
-
-:::warning Note
-You can find WebShield and Captcha related logs in the <span class="notranslate">`/var/log/imunify360-webshield/`</span> file.
-:::
 
 #### How to block attacks from a particular country in WebShield
 
