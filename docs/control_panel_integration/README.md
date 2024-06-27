@@ -588,6 +588,85 @@ instead of
 You can find more details at [http://httpd.apache.org/docs/current/mod/mod_log_config.html](http://httpd.apache.org/docs/current/mod/mod_log_config.html).
 :::
 
+#### Cloudflare: Preserving the original visitor IP addresses
+
+:::tip
+For cases when server logs indicate IP addresses that differ from actual ones when the domain is hosted within the CloudFlare network. 
+
+Suitable for all supported control panels and OS working on Apache/Nginx.
+:::
+
+When simulated IPv4 is configured to "Overwrite Headers" mode in Cloudflare settings, Cloudflare replaces the existing Cf-Connecting-IP and X-Forwarded-For headers with a pseudo IPv4 address. At the same time, it retains the real IPv6 address by placing it in the CF-Connecting-IPv6 header.
+
+In a nutshell, when a website's traffic flows through the CloudFlare network, CloudFlare acts as a reverse proxy. This setup optimises page load times by efficiently routing packets and caching static resources such as images, JavaScript, and CSS. Consequently, when the origin server responds to requests and logs them, it records a CloudFlare IP address.
+
+CloudFlare provides the original IP in an appended HTTP header named `CF-Connecting-IP` for applications that rely on the original visitor's IP address. 
+
+To log the original visitor IP address at the origin server level, the following instructions should be followed:
+
+**Apache**
+
+1. We need to ensure that Apache has a `mod_remoteip` module enabled.
+```
+[root@server ~]# apachectl -t -D DUMP_MODULES |grep 'rem'
+remoteip_module (shared)
+```
+2. The combined `LogFormat` should be changed as follows:
+```
+LogFormat "%a %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
+```
+3. At this point, defining the trust between CloudFlare and the Origin Server is crucial:
+```
+RemoteIPHeader CF-Connecting-IP
+RemoteIPTrustedProxy 192.0.2.1 (example IP address)
+RemoteIPTrustedProxy 192.0.2.2 (example IP address)
+```
+The current IPs are:
+```
+173.245.48.0/20
+103.21.244.0/22
+103.22.200.0/22
+103.31.4.0/22
+141.101.64.0/18
+108.162.192.0/18
+190.93.240.0/20
+188.114.96.0/20
+197.234.240.0/22
+198.41.128.0/17
+162.158.0.0/15
+104.16.0.0/13
+104.24.0.0/14
+172.64.0.0/13
+131.0.72.0/22
+
+2400:cb00::/32
+2606:4700::/32
+2803:f800::/32
+2405:b500::/32
+2405:8100::/32
+2a06:98c0::/29
+2c0f:f248::/32
+```
+The updated list is residing [here](https://www.cloudflare.com/ips/).
+
+**Nginx**
+
+For Nginx , we use its respective module called `ngx_http_realip_module`. You can check if that is enabled in the following way:
+```
+[root@server ~]# nginx -V
+nginx version: nginx/1.26.1
+built with OpenSSL 1.1.1k FIPS 25 Mar 2021
+TLS SNI support enabled
+configure arguments: --prefix=/usr/share --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --modules-path=/usr/share/nginx/modules --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid --http-client-body-temp-path=/var/lib/nginx/body --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --http-proxy-temp-path=/var/lib/nginx/proxy --http-scgi-temp-path=/var/lib/nginx/scgi --http-uwsgi-temp-path=/var/lib/nginx/uwsgi --user=nginx --group=nginx --with-file-aio --with-compat --with-ld-opt=-L/var/jenkins/workspace/PLESK/plesk-aws-bootstrap/buck-out/gen/unix/plesk/packages/brotli/brotli.files/usr/lib64 --with-http_ssl_module --with-http_realip_module --with-http_sub_module --with-http_dav_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_v2_module --with-http_v3_module --add-dynamic-module=mod_brotli --add-dynamic-module=mod_passenger/src/nginx_module --add-dynamic-module=mod_pagespeed --add-dynamic-module=mod_security --add-dynamic-module=mod_geoip2
+```
+If we get that confirmation, the steps of declaring the trust are mentioned [here](https://nginx.org/en/docs/http/ngx_http_realip_module.html).
+
+The IPs should be set here:
+```
+set_real_ip_from 192.0.2.1 (example IP address)
+real_ip_header CF-Connecting-IP;
+```
+
 #### Use a specific list of users in Imunify360
 
 By default, Imunify360 will use Linux system users, limited by <span class="notranslate">`uid_min`</span> and <span class="notranslate">`uid_max`</span> from the <span class="notranslate">`/etc/login.defs`</span>.
