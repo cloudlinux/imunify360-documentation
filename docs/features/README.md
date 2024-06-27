@@ -63,7 +63,7 @@ To take advantage of this feature, go to your Imunify360 control panel and enabl
 
 This is a special operation mode where Imunify360 consumes less CPU and RAM. It is intended for servers with limited resources.
 
-This mode disables <span class="notranslate">[WebShield](/webshield/)</span> switching off GrayList and Captcha. 
+This mode disables <span class="notranslate">[WebShield](/webshield/)</span> switching off GrayList and Anti-bot Challenge. 
 
 <span class="notranslate">_Low Resource Usage_</span> mode also enables the <span class="notranslate">_[Minimized Modsec Ruleset](/dashboard/#waf-settings)_</span> option that disables Imunify WAF rules with a high memory footprint, leaving critical rulesets enabled. 
 
@@ -439,19 +439,19 @@ service imunify360-webshield restart
 </div>
 
 
-### Greylist and Captcha
+### Greylist and Anti-Bot Challenge
 
-The Greylist (ex. CAPTCHA) is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
+The Greylist is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
 
 :::warning Warning
-Please note that the WebShield Captcha is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Captcha from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Captcha functionality in the Imunify360.
+Please note that the WebShield Captcha is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Captcha functionality in the Imunify360.
 :::
 
-There are two layers in GreyList (ex. CAPTCHA) behavior:
+There are two layers in GreyList behavior:
 
-1. If a user of a website is added to the <span class="notranslate">Grey List</span> (the access is blocked), then the GreyList (ex. CAPTCHA) behavior allows him to unblock himself. When he tries to get to the website he receives the JS challenge. If the challenge is solved by the browser successfully (a human user is not required to go through human confirmation - the process will pass under the hood), a user is redirected to the website, which means that the access is unblocked and the IP address of this user is removed from the <span class="notranslate">Grey List</span>.
+1. If a user of a website is added to the <span class="notranslate">Grey List</span> (the access is blocked), then the GreyList behavior allows him to unblock himself. When he tries to get to the website he receives the JS challenge. If the challenge is solved by the browser successfully (a human user is not required to go through human confirmation - the process will pass under the hood), a user is redirected to the website, which means that the access is unblocked and the IP address of this user is removed from the <span class="notranslate">Grey List</span>.
 
-2. The GreyList (ex. CAPTCHA) behavior is always on guard of the websites and checks the activity of each IP, constantly adding suspicious IPs to the global GreyList. 
+2. The GreyList behavior is always on guard of the websites and checks the activity of each IP, constantly adding suspicious IPs to the global GreyList. 
 
 ### CDN Support
 	
@@ -517,58 +517,6 @@ replace `0` with `1`, save the file and restart WebShield, using the following c
 ```
 </div>
 
-
-#### SplashScreen for Chinese customers
-
-Imunify360 Captcha isn't available in some countries due to certain restrictions, for example, in China. To alleviate this, Chinese customers can use Imunify360 SplashScreen as Captcha.
-
-To enable SplashScreen, open the file <span class="notranslate">`/etc/imunify360-webshield/wscheck.conf`</span>, find the following line: 
-
-<div class="notranslate">
-
-```
-wscheck_splashscreen_as_captcha off;
-```
-</div>
-
-Change <span class="notranslate">`off`</span> to <span class="notranslate">`on`</span>:
-
-<div class="notranslate">
-
-```
-wscheck_splashscreen_as_captcha on;
-```
-</div>
-
-Save the file and run the following command:
-
-**For Ubuntu:**
-
-<div class="notranslate">
-
-```
-service imunify360-websheld reload
-```
-</div>
-
-**For CentOS:**
-
-<div class="notranslate">
-
-```
-systemctl reload imunify360-webshield
-```
-</div>
-
-
-The graylisted visitors will see such screen for 5 seconds before redirecting to their initial destination.
-
-![](/images/splash_as_captcha.png)
-
-:::warning Note
-You can find WebShield and Captcha related logs in the <span class="notranslate">`/var/log/imunify360-webshield/`</span> file.
-:::
-
 #### How to block attacks from a particular country in WebShield
 
 Country blocking is available in both [Admin UI](/dashboard/#black-list) and [CLI](/command_line_interface/#blacklist)
@@ -597,9 +545,9 @@ Setting Edge Cache TTL along with the Cache Everything option is not recommended
 ### Anti-bot protection
 
 
-Starting from version 5.6, Imunify360 distinguishes bots from real visitors using the JavaScript challenge <span class="notranslate">"Splash Screen</span>." Most bots don’t solve the challenge, and their requests will not reach web applications such as WordPress, Drupal, and others. This can save the server’s resources and protects websites from scanners, automated attacks, and web-spammers.
+Starting from version 5.6, Imunify360 distinguishes bots from real visitors using the Anti-Bot Challenge. Most bots don’t solve the challenge, and their requests will not reach web applications such as WordPress, Drupal, and others. This can save the server’s resources and protects websites from scanners, automated attacks, and web-spammers.
 
-Only bad actors will be redirected to the Imunify360 <span class="notranslate">Splash Screen</span> challenge page. Legitimate visitors get original content without any verification page nor any delay. The users forced to the <span class="notranslate">Splash Screen</span> will not see the challenge or CAPTCHA and be redirected to the page with the original content. Cookies and JavaScript support are required in a browser to successfully pass the challenge of <span class="notranslate">Anti-bot protection</span>.
+Only bad actors will be redirected to the Imunify360 <span class="notranslate">Anti-Bot Challenge</span> page. Legitimate visitors get original content without any verification page nor any delay. Cookies and JavaScript support are required in a browser to successfully pass the challenge of <span class="notranslate">Anti-bot protection</span>.
 
 The “Anti-bot protection” feature will not block legitimate bots (e.g., Google crawler).
 
@@ -616,9 +564,9 @@ Or via CLI. To do so, run the following command:
 
 #### cPanel account protection
 
-Starting from v7.1, Imunify360 includes the extended the well-established [Anti-bot protection](/features/#anti-bot-protection) functionality to cPanel to ensure that users are protected from bot attacks. All users trying to log in to cPanel will face up with the “Splash Screen” JavaScript challenge. 
+Starting from v7.1, Imunify360 includes the extended the well-established [Anti-bot protection](/features/#anti-bot-protection) functionality to cPanel to ensure that users are protected from bot attacks. All users trying to log in to cPanel will face up with the “Anti-Bot Challenge”. 
 
-Most bots are unable to solve the challenge, and their requests will not reach the cPanel login page. All users using regular browsers may pass the challenge automatically. After passing the Splash Screen, a user receives a cookie for 24 hours and does not need to pass it again for the whole session. 
+Most bots are unable to solve the challenge, and their requests will not reach the cPanel login page. All users using regular browsers may pass the challenge automatically. After passing the Anti-Bot challenge, a user receives a cookie for 24 hours and does not need to pass it again for the whole session. 
 
 As bots and other automation are not supposed to pass the challenge, all legitimate automation should be [whitelisted by IPs](/command_line_interface/#whitelist).
 
@@ -632,9 +580,8 @@ To switch it off:
 ```
 
 :::warning Note
-1. The Webshield module with the [Splash Screen](/features/#splashscreen-for-chinese-customers) functionality should also be switched on for enabling the feature.
-2. You can find WebShield and Captcha-related logs in the **/var/log/imunify360-webshield** directory.
-3. The feature works with the standard cPanel ports (2082, 2083). _Contact Support if you have a non-standard cPanel ports configuration or need the feature for other ports._
+1. You can find WebShield and Anti-bot related logs in the **/var/log/imunify360-webshield** directory.
+2. The feature works with the standard cPanel ports (2082, 2083). _Contact Support if you have a non-standard cPanel ports configuration or need the feature for other ports._
 :::
 
 <!-- ## How to write custom code on WebShield

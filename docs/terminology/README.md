@@ -1,9 +1,9 @@
 # Terminology
 
 
-**<span class="notranslate">Black List</span>** is a list of IPs automatically blocked by Imunify360 without access to CAPTCHA and manually blocked by a user.
+**<span class="notranslate">Black List</span>** is a list of IPs automatically blocked by Imunify360 without access to Anti-bot Challenge and manually blocked by a user.
 
-**<span class="notranslate">Gray List</span>** is a list of IPs that will be redirected to Captcha to pass verification. Once the IP passes Captcha, it will be unblocked and removed from <span class="notranslate">Gray List</span>.
+**<span class="notranslate">Gray List</span>** is a list of IPs that will be redirected to Anti-bot Challenge to pass verification. Once the IP passes Anti-bot Challenge, it will be unblocked and removed from <span class="notranslate">Gray List</span>.
 
 **<span class="notranslate">White List</span>** is a list of IPs that will not be blocked in any case.
 
@@ -17,4 +17,4 @@
 
 **<span class="notranslate">IP</span>** – IPv4 or IPv6 address (corresponding to 64 bits subnet prefix length).
 
-**<span class="notranslate">Whitelisted domain</span>** – no Captcha will be shown while visiting a whitelisted domain from a graylisted IP.
+**<span class="notranslate">Whitelisted domain</span>** – no Anti-bot Challenge will be shown while visiting a whitelisted domain from a graylisted IP.

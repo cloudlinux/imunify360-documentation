@@ -19,6 +19,6 @@ Imunify360 provides:
 
 If a user violates Imunify360 security rules (trying to enter a wrong password, etc.), then Imunify360 will automatically block the access to this user IP-address, adding the IP-address to the <span class="notranslate">Gray List</span>.
 
-If, after that, a user will try to access the HTTP/S port (#80/443), he will see the [CAPTCHA](/features/#captcha). After entering the CAPTCHA correctly, Imunify360 will remove that user from the <span class="notranslate">Gray List</span>. In a case of repeated violation, the IP address will be automatically added to the <span class="notranslate">Gray List</span> again.
+If, after that, a user will try to access the HTTP/S port (#80/443), he will see the [Anti-bot Challenge](/features/#Anti-bot Challenge). After entering the Anti-bot Challenge correctly, Imunify360 will remove that user from the <span class="notranslate">Gray List</span>. In a case of repeated violation, the IP address will be automatically added to the <span class="notranslate">Gray List</span> again.
 
 An administrator can remove any IP-address from the <span class="notranslate">Gray List</span> and add to the <span class="notranslate">White List</span> if needed. In this case, the user will not be blocked when attempting to violate Imunify360 security rules.

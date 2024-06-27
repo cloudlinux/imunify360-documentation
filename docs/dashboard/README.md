@@ -167,9 +167,9 @@ The following charts are available.
 
 Security incidents recorded within the selected time interval. Data includes all ModSecurity incidents, Imunify360 DOS plugin alerts, cPanel Login Failure Daemon (for cPanel only) and OSSEC alerts. This is a summary of all major alert sources.
 
-* **CAPTCHA events**
+* **Anti-Bot challenge events**
 
-Recorded requests coming from detected attackers or bad bots that show the CAPTCHA challenge within the selected interval.
+Recorded requests coming from detected attackers or bad bots that show the Anti-Bot challenge within the selected interval.
 
 * **WAF alerts**
 
@@ -217,10 +217,10 @@ The list of incidents contains the following information:
 * <span class="notranslate">_Date_</span> – the time when the incident happened.
 * _IP_ - the IP address of the abuser.
 There is a color indication for IP address.
-  * A gray bubble means that this IP address is currently in the <span class="notranslate">Gray List</span> (so, every connection from this IP address will redirect to the CAPTCHA).
+  * A gray bubble means that this IP address is currently in the <span class="notranslate">Gray List</span> (so, every connection from this IP address will redirect to the Anti-Bot Challenge).
   * A blue bubble means that this IP address is currently in no one list (<span class="notranslate">White/Gray/Black</span>). IP is not blocked.
   * A white bubble means that this IP address is currently in the <span class="notranslate">White List</span>. IP will never be blocked by Imunify360.
-  * A black bubble means that this IP address is currently in the <span class="notranslate">Black List</span>. And access from this IP is totally blocked without ability to unblock by the CAPTCHA.
+  * A black bubble means that this IP address is currently in the <span class="notranslate">Black List</span>. And access from this IP is totally blocked without ability to unblock by the Anti-Bot Challenge.
   * No bubble is shown when this incident doesn’t contain IP address.
 * <span class="notranslate">_Country_ </span>– country origin of the abuser IP address.
 * <span class="notranslate">_Count_</span> – the number of times the abuser tried to repeat the action.
@@ -294,8 +294,8 @@ Tne <span class="notranslate">_All Lists_</span> tab allows viewing and managing
 
 * <span class="notranslate">White</span> - the IP will not be blocked
 * <span class="notranslate">Drop/Black</span> - the IP will be blocked everywhere, on all ports and services
-* <span class="notranslate">Captcha</span> - the IP will be blocked completely on non-web ports (SSH, FTP, etc.), and will be shown CAPTCHA on web ports (80, 443, hosting panel ports)
-* <span class="notranslate">SplashScreen</span> - the IP will be shown SplashScreen challenge on web ports, and will not be blocked on others
+* <span class="notranslate">Greylist</span> - the IP will be blocked completely on non-web ports (SSH, FTP, etc.), and will be shown Anti-Bot Challenge on web ports (80, 443, hosting panel ports)
+* <span class="notranslate">Anti-Bot Challenge</span> - the IP will be shown Anti-Bot challenge on web ports, and will not be blocked on others
 
 The counters for the lists are presented at the top of the table, reflecting the number of records matching the category.
 
@@ -1053,7 +1053,6 @@ Go to <span class="notranslate">_Imunify360 → Settings → General_</span>. Th
 
 Here you can install and uninstall the following components:
 * HardenedPHP
-* Invisible Captcha
 * KernelCare
 
 If you want to install it using CLI, please follow [this article](/command_line_interface/#features).
@@ -1070,34 +1069,6 @@ HardenedPHP is free on the servers with Imunify360 installed.
 :::
 
 ![](/images/kc_install_log_zoom91.png)
-
-
-#### Invisible Captcha
-
-**Overview**
-
-This feature allows to automatically determine if the user is a human. The system falls back to CAPTCHA solving if the algorithm determines that a user may not be a human.
-It is possible to enable Invisible CAPTCHA feature via Imunify360 admin interface and via command line interface (CLI).
-
-**How to install Invisible CAPTCHA**
-
-Go to <span class="notranslate">Imunify360 → Settings → General → Installation → Invisible CAPTCHA</span> and click <span class="notranslate">_Install Invisible CAPTCHA_</span> button. Confirm the installation in the pop-up.
-
-![](/images/invisiblecaptchainstall_zoom70.png)
-
-**How to check if Invisible CAPTCHA is currently installed**
-
-Go to <span class="notranslate">Imunify360 → Settings → General → Installation → Invisible CAPTCHA</span>. The red <span class="notranslate">_Remove Invisible CAPTCHA_</span> button means that Invisible CAPTCHA is enabled.
-
-![](/images/invisiblecaptchaenabled_zoom70.png)
-
-**How to uninstall Invisible CAPTCHA**
-
-Go to <span class="notranslate">Imunify360 → Settings → General → Installation → Invisible CAPTCHA</span> and click <span class="notranslate">_Remove Invisible CAPTCHA_</span> button. Confirm the action in the pop-up.
-
-![](/images/invisiblecaptcharemove_zoom70.png)
-
-See [how to test invisible CAPTCHA](/webshield/#verification).
 
 
 #### KernelCare
@@ -1222,7 +1193,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 The Enhanced DOS Protection feature forms an additional layer of protection, increasing the stability of servers facing DOS attacks. It takes a different approach than our existing [DOS Protection feature](/dashboard/#dos-protection), which focuses on monitoring the number of simultaneous connections. Enhanced DOS Protection, on the other hand, monitors the rate of requests originating from attacker IP addresses per unit of time.
 
-The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the captcha challenge.
+The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the Anti-Bot challenge.
 
 Standard DoS protection, in turn, will block attacks that use long-lived connections (e.g. Slowloris attacks), so these functions complement each other perfectly.
 
@@ -1386,7 +1357,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 ![](/images/webshield.png)
 
-* <span class="notranslate">_Enable WebShield_</span>. When the option is off, disable WebShield, GreyList, and CAPTCHA. A disabled state is recommended for servers with a small amount of RAM. A disabled option along with enabled "Minimized WAF Ruleset" will switch Imunify360 to the "Low Resource Usage" mode.  
+* <span class="notranslate">_Enable WebShield_</span>. When the option is off, disable WebShield, GreyList, and Anti-bot Challenge. A disabled state is recommended for servers with a small amount of RAM. A disabled option along with enabled "Minimized WAF Ruleset" will switch Imunify360 to the "Low Resource Usage" mode.  
 * <span class="notranslate">_Detect IPs behind CDN_</span> feature allows to recognize and block IPs with suspicious activity behind supported CDN providers.
   
   To enable/disable it, tick the <span class="notranslate">_Detect IPs behind CDN_</span> checkbox.
