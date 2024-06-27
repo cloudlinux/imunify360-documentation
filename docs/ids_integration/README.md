@@ -603,7 +603,7 @@ It is possible to enable <span class="notranslate">Service Status</span> checker
 
 1. Go to <span class="notranslate">_Service Configuration_</span> and choose <span class="notranslate">_Service Manager_</span>.
 
-2. In <span class="notranslate">_Additional Services_</span> section tick <span class="notranslate">`imunify360`</span> and <span class="notranslate">`imunify360-webshield`</span> checkboxes.
+2. In <span class="notranslate">_Additional Services_</span> section tick the <span class="notranslate">`imunify360`</span> checkbox.
 
 3. Click <span class="notranslate">_Save_</span> and wait until cPanel enables the <span class="notranslate">Service Status</span> checker for Imunify360.
 
@@ -695,7 +695,7 @@ To check, if Imunify360 ruleset is installed, run the following as root:
 
 <div class="notranslate">
 
-``` bash
+```
 # plesk bin server_pref --show-web-app-firewall | grep "\[waf-rule-set\]" -A2
 [waf-rule-set]
 custom
@@ -707,7 +707,7 @@ If the output does not contain imunify360, for example:
 
 <div class="notranslate">
 
-``` bash
+```
 # plesk bin server_pref --show-web-app-firewall | grep "\[waf-rule-set\]" -A2
 [waf-rule-set]
 comodo_free
@@ -719,7 +719,7 @@ Then install Imunify360 ruleset and check it again:
 
 <div class="notranslate">
 
-``` bash
+```
 # imunify360-agent install-vendors
 OK
 # plesk bin server_pref --show-web-app-firewall | grep "\[waf-rule-set\]" -A2
