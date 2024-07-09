@@ -567,7 +567,7 @@ The table can be sorted by <span class="notranslate">_User name_</span> and <spa
 
 Go to <span class="notranslate">Imunify360 → Malware Scanner → Malicious</span> tab. Here, there is a table with a list of infected files within all domains and user accounts.
 
-![](/images/MDSUI.png)
+![](/images/malwarescanner_malicious.png)
 
 The table has the following columns:
 
