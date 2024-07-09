@@ -702,7 +702,7 @@ The table can be sorted by <span class="notranslate">Date, Path to File, Cause</
 
 </div>
 
-<span class="notranslate">Ignore List</span> tab contains the list of files that are excluded from <span class="notranslate">Malware Scanner</span> scanning. Go to the <span class="notranslate">Imunify360 → Malware Scanner → Ignore List</span> tab. Here, there is a table with a list of files within all domains.
+<span class="notranslate">Ignore List</span> tab contains the list of files and directories that are excluded from <span class="notranslate">Malware Scanner</span> scanning. Go to the <span class="notranslate">Imunify360 → Malware Scanner → Ignore List</span> tab to see the table with a list of folders and files within all domains.
 
 ![](/images/malwarescanner_ignorelist.png)
 

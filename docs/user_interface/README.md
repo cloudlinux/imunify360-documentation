@@ -82,7 +82,7 @@ The table can be sorted by Date, Path to File, Cause, and Owner.
 
 ## Ignore List
 
-Ignore List tab contains the list of files that are excluded from Malware Scanner scanning. Go to Imunify360 → Ignore List tab. Here, there is a table with a list of files.
+Ignore List tab contains the list of files and directories that are excluded from Malware Scanner scanning. Go to Imunify360 → Ignore List tab. Here, there is a table with a list of files.
 
 ![](/images/ignore_list_user.png)
 
