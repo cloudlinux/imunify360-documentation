@@ -91,6 +91,13 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Smush | 3.15.2 and later | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Popup Builder by Fooking Forward | 4.2.3 and later | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Rank Math SEO | 1.0.215 and later | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WP super Cache | 1.5.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>GDPR cookie consent | 1.5.3+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>LimitLoginAttempts | 1.7.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>ThemeGrill demo importer | 1.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>ND shortcuts | 1.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>InfiniteWP client | 1.6.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Duplicator | 1.2.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
