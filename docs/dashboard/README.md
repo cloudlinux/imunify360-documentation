@@ -702,7 +702,7 @@ The table can be sorted by <span class="notranslate">Date, Path to File, Cause</
 
 </div>
 
-<span class="notranslate">Ignore List</span> tab contains the list of files and directories that are excluded from <span class="notranslate">Malware Scanner</span> scanning. Go to the <span class="notranslate">Imunify360 → Malware Scanner → Ignore List</span> tab to see the table with a list of folders and files within all domains.
+<span class="notranslate">Ignore List</span> tab contains the list of files, databases and directories that are excluded from <span class="notranslate">Malware Scanner</span> scanning. Go to the <span class="notranslate">Imunify360 → Malware Scanner → Ignore List</span> tab to see the table with a list of folders and files within all domains.
 
 ![](/images/malwarescanner_ignorelist.png)
 
@@ -712,7 +712,18 @@ The table has the following columns:
 * <span class="notranslate">**Path**</span> — path to the file starting from the root.
 * <span class="notranslate">**Actions**</span>:
   * <span class="notranslate">**Remove from Ignore List**</span> — click <span class="notranslate">_Bin_</span> symbol ![](/images/bin_symbol.png) to remove the file from the Ignore List and start scanning.
-  * <span class="notranslate">**Add new file or directory**</span> — click <span class="notranslate">_Plus_</span> symbol ![](/images/plus_symbol.png) to add a new file or directory to the <span class="notranslate">Ignore List</span>. In the opened pop-up enter the path to be added and click <span class="notranslate">_Add_</span>.
+  * <span class="notranslate">**Add new file, database or directory**</span> — click <span class="notranslate">_Plus_</span> symbol ![](/images/plus_symbol.png) to add a new file or directory to the <span class="notranslate">Ignore List</span>. In the opened pop-up enter the path to be added and click <span class="notranslate">_Add_</span>. 
+
+  ::: tip Note 
+  Databases can be added to the Ignore List via the regular procedure by choosing the DB type of the file: 
+
+  ![](/images/ignoredb.png) 
+  
+  In order to add a database, provide a path to the application root. For example, you have a website stored in the `public_html` directory that contains the `wp-config.php` file – then the "Application path" to add will be: 
+  ```
+  /home/testuser/public_html
+  ```
+  :::
    
 ::: tip Note
 Wildcards are not supported when adding paths to the <span class="notranslate">Ignore List</span>. For example, the following paths are not supported:
