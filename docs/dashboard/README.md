@@ -1691,7 +1691,6 @@ Imunify360 provides customers with the ability to integrate with backup provider
 
 The following integrated with Imunify360 backup providers are available:
 * Hosting panel Backup (cPanel, Plesk, or DirectAdmin)
-* <span class="notranslate">Acronis Backup</span>
 
 :::warning Warning
 **JetBackup**: The Imunify360 integration is implemented on the JetBackup side. JetBackup server backup application is not available right now because of the rework. 
@@ -1703,7 +1702,6 @@ The following integrated with Imunify360 backup providers are available:
 **Requirements**
 
 * Imunify360 version 2.7.0 and later
-* For <span class="notranslate">Acronis Backup</span>, it is required to have Acronis account
 * For the hosting panel backup, it is required that the backup option is configured by the administrator of the hosting panel
 
 #### How to enable backups
@@ -1711,23 +1709,10 @@ The following integrated with Imunify360 backup providers are available:
 To enable backups log in to a hosting panel as administrator, go to the Imunify360 plugin and do the following.
 * Go to <span class="notranslate">_Imunify360 → Settings → Backups_</span>. If the feature is not currently used the <span class="notranslate">_Backup and restore_</span> is <span class="notranslate">_Disabled_</span>.
 * To enable it, select the backup provider from the dropdown:
-  * <span class="notranslate">[Acronis Backup](/dashboard/#acronis-backup)</span>
   * <span class="notranslate">[cPanel Plesk or DirectAdmin Backup](/dashboard/#cpanel-plesk-or-directadmin-backup)</span>
 
 ![](/images/settingsbackup.png)
 
-
-#### Acronis Backup
-
-Choose it if you have an Acronis account. So that Imunify360 can use backups to restore malicious or suspicious files from the backup if a clean version exists.
-
-* Select <span class="notranslate">_Acronis Backup_</span> from the dropdown
-* Specify <span class="notranslate">_Acronis username_</span> and <span class="notranslate">_password_</span>
-* Click <span class="notranslate">_Connect Backup_</span> button
-
-Imunify360 checks if the Acronis agent is already installed. If not, Imunify360 installs it. Then Imunify360 checks, if a backup of the entire server exists, if not, Imunify360 creates a backup of a current server. If all is OK the system returns a successful message.
-
-![](/images/acronisbackup.png)
 
 #### cPanel Plesk or DirectAdmin Backup
 
