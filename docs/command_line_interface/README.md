@@ -201,9 +201,7 @@ The <span class="notranslate">`extended-status`</span> command returns <span cla
 <div class="notranslate">
 
    ```
-   imunify360-agent backup-systems list
-   acronis 
-   r1soft 
+   imunify360-agent backup-systems list 
    cpanel
    ```
 </div>
