@@ -444,7 +444,7 @@ service imunify360-webshield restart
 The Greylist is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
 
 :::warning Warning
-Please note that the WebShield Captcha is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Captcha functionality in the Imunify360.
+Please note that the WebShield Anti-Bot Challenge is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Anti-Bot Challenge functionality in the Imunify360.
 :::
 
 There are two layers in GreyList behavior:
@@ -525,7 +525,7 @@ Country blocking is available in both [Admin UI](/dashboard/#black-list) and [CL
 
 ### Using Cloudflare “Cache Everything” with Imunify360
 
-According to the [Cloudflare documentation](https://developers.cloudflare.com/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#summary-of-page-rules-settings), **Cache Everything** with **Edge Cache TTL** enabled makes Cloudflare ignore all origin cache-related headers (see attached screenshots) which in the past, caused issues by custom cache settings in the Cloudflare control panel resulting in the inability to pass the Captcha causing an endless loop:
+According to the [Cloudflare documentation](https://developers.cloudflare.com/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#summary-of-page-rules-settings), **Cache Everything** with **Edge Cache TTL** enabled makes Cloudflare ignore all origin cache-related headers (see attached screenshots) which in the past, caused issues by custom cache settings in the Cloudflare control panel resulting in the inability to pass the Anti-Bot Challenge causing an endless loop:
 
 ![](/images/CFPageRulesListExample.png)
 ![](/images/EditCFRuleCacheEverythngEdgeCacheTTL.png)
@@ -534,7 +534,7 @@ According to the [Cloudflare documentation](https://developers.cloudflare.com/su
 Level **“Cache Everything”** – Treats all content as static and caches all file types beyond the [Cloudflare default cached content](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/). Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > 0, **Cache Everything** removes cookies from the origin web server response.
 :::
 
-Setting Edge Cache TTL along with the Cache Everything option is not recommended though it should not create any issues now because Captcha is already disabled for Cloudflare IPs by default. It is possible to enable Captcha as long as you either:
+Setting Edge Cache TTL along with the Cache Everything option is not recommended though it should not create any issues now because Anti-Bot Challenge is already disabled for Cloudflare IPs by default. It is possible to enable Anti-Bot Challenge as long as you either:
 * don’t use [“Edge Cache TTL”](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl/#edge-cache-ttl) + [“Cache Everything”](https://developers.cloudflare.com/cache/how-to/create-page-rules/#cache-everything) in Cloudflare
 * or use “Edge Cache TTL” but add a page rule that would prevent Cloudflare from caching pages with a cookie <span class="notranslate">`cl-bypass-cache: yes`</span> ([“Bypass Cache on Cookie”](https://developers.cloudflare.com/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#bypass-cache-on-cookie-setting))
 
