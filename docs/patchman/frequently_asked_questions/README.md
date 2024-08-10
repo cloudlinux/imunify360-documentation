@@ -98,6 +98,16 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>ND shortcuts | 1.1+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>InfiniteWP client | 1.6.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Duplicator | 1.2.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>MonsterInsights | 8.1.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WPForms | 1.3.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WP Mail SMTP by WPForms | 1.2.3+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>All-in-One WP Migration and backup | 7.76+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>LiteSpeed Security | 1.9.1.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>MC4WP: Mailchimp for WordPress | 4.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WordFence Security | 3.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Yoast Duplicate Post | 3.2.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Site Kit by Google | 1.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Redirection | 3.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
