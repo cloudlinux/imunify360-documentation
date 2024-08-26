@@ -400,8 +400,8 @@ The following minimum operating system versions are supported:
 | **OS** | **Minimal supported version** |
 | --- | --- |
 | CentOS/RHEL | 6 (up to 8) |
-| Debian | 8, Jessie (up to 10, Buster) |
-| Ubuntu | 14.04 (Trusty Tahr) up to 20.04 (Focal Fossa) |
+| Debian | 8, Jessie (up to 11, Bullseye) |
+| Ubuntu | 14.10, Utopic Unicorn (up to 21.10, Impish Indri) |
 
 #### Control panel
 
