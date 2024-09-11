@@ -72,7 +72,7 @@ You don’t need to choose the ImunifyAV+ product if you already have paid licen
 
 **For the users who want to upgrade to Imunify360** 
 
-1. If you are using the old ImunifyAV/AV+ extension (Revisium.Free, Revisium.Premium) you have to upgrade to the new version of the Extension as described above.
+1. If you are using the old ImunifyAV/AV+ extension ((ImunifyAV and ImunifyAV Premium) you have to upgrade to the new version of the Extension as described above.
 2. Go to the Plesk marketplace and find the Imunify extension
 3. Choose one of the Imunify360 products from the list: Single-user, 30 users, 250 users, Unlimited users, and click on the “Buy” button. 
 
