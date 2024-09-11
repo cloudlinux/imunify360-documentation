@@ -1,10 +1,9 @@
 ### Upgrade from Revisium to Imunify extenstion manually
 
-Starting from the new version of Plesk the users of the Revisum antivirus extension will see the following warning about the upcoming extension deprecation. It will now be possible to manually switch to the new version of the ImunifyAV and ImunifyAV+ products with no additional costs.  
+Starting from the extension version 2.13.1 of the ImunifyAV antivirus extension users will see the following warning about the upcoming extension deprecation. It will now be possible to manually switch to the new version of the ImunifyAV and ImunifyAV+ products with no additional costs.  
 
-:::warning Warning 
+:::warning Warning:
 The extension will be deprecated soon and replaced with a modern version: Imunify Extension. Your license data will be transferred to the new extension, allowing you to enjoy all the benefits of Imunify. You can start using the new version now by following these steps:
-
 1. Install the Imunify Extension.
 2. Migrate your existing license, if you have one, through Plesk 360.
 Please note that in a few months, the migration to the new extension will occur automatically.
@@ -33,7 +32,7 @@ Please note that in a few months, the migration to the new extension will occur 
 
 #### How to do the upgrade: 
 
-**For users with Revisum.Free to upgrade to ImunifyAV** 
+**For users with ImunifyAV Free to upgrade to Imunify extension to the new ImunifyAV product** 
 
 1. Go to the Plesk marketplace and find the Imunify extension (you use the link from the old extension)
 2. Choose ImunifyAV (free) from the list of products and click on “Get it Free”  
@@ -45,12 +44,12 @@ Please note that in a few months, the migration to the new extension will occur 
 
 ![](/images/revisium-upgrade-3.png)
 
-5. After successful installation the old ImunifyAV (Revisium antivirus) extension will be disabled and can be removed
+5. After successful installation the old ImunifyAV extension will be disabled and can be removed
 
 ![](/images/revisium-upgrade-4.png)
 
 
-**For the users of Revisim.Premium to upgrade to ImunifyAV+** 
+**For the users of ImunifyAV Premium to upgrade to the Imunify extension with the new ImunifyAV+ product** 
 
 1. Go to the Plesk marketplace and find the Imunify extension (you use the link from the old extension)
 2. Choose **ImunifyAV (free)** from the list of products and click on “Get it Free”.  
@@ -66,12 +65,12 @@ You don’t need to choose the ImunifyAV+ product if you already have paid licen
 
 ![](/images/revisium-upgrade-6.png)
 
-5. Migrate your existing license with [Plesk360](https://platform360.io/) 
+5. Migrate your existing license with [https://www.plesk.com/upgrade-extension/](https://www.plesk.com/upgrade-extension/) 
 6. After successful installation, the old ImunifyAV(Revisium antivirus) extension will be disabled and can be removed
 
 ![](/images/revisium-upgrade-7.png)
 
-**For the users who want to upgrade to Imunify360.** 
+**For the users who want to upgrade to Imunify360** 
 
 1. If you are using the old ImunifyAV/AV+ extension (Revisium.Free, Revisium.Premium) you have to upgrade to the new version of the Extension as described above.
 2. Go to the Plesk marketplace and find the Imunify extension
