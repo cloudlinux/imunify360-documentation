@@ -1,6 +1,6 @@
-### Upgrade from Revisium to Imunify extenstion manually
+## Manual upgrade from deprecated ImunifyAV to the new Imunify Extension
 
-Starting from the extension version 2.13.1 of the ImunifyAV antivirus extension users will see the following warning about the upcoming extension deprecation. It will now be possible to manually switch to the new version of the ImunifyAV and ImunifyAV+ products with no additional costs.  
+Starting from the extension version 2.13.1 of the ImunifyAV antivirus extension users will see the following warning about the upcoming extension deprecation. It will now be possible to manually switch to the new version of the ImunifyAV and ImunifyAV+ products available in the Imunify extension with no additional costs.  
 
 :::warning Warning:
 The extension will be deprecated soon and replaced with a modern version: Imunify Extension. Your license data will be transferred to the new extension, allowing you to enjoy all the benefits of Imunify. You can start using the new version now by following these steps:
@@ -12,7 +12,7 @@ Please note that in a few months, the migration to the new extension will occur 
 ![](/images/revisium-upgrade-1.png)
 
 
-#### What benefits of this upgrade: 
+### What benefits of this upgrade: 
 
 **Enhancements for All Users:** 
 
@@ -30,7 +30,7 @@ Please note that in a few months, the migration to the new extension will occur 
 * Comprehensive Reputation Management Tools
 * Premium Support: 24/7 access to our Professional Technical Support team.
 
-#### How to do the upgrade: 
+### How to do the upgrade: 
 
 **For users with ImunifyAV Free to upgrade to Imunify extension to the new ImunifyAV product** 
 
