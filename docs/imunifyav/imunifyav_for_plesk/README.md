@@ -16,6 +16,7 @@ ImunifyAV for Plesk is an intelligent antivirus and security monitoring tool des
 * [Removing ImunifyAV for Plesk](/imunifyav/imunifyav_for_plesk/#removing-imunifyav-for-plesk)
 * [Extension diagnostics](/imunifyav/imunifyav_for_plesk/#extension-diagnostics)
     * [How to collect Plesk debug log](/imunifyav/imunifyav_for_plesk/#how-to-collect-plesk-debug-log)
+* [Manual upgrade from deprecated ImunifyAV to the new Imunify Extension](/imunifyav/imunifyav_for_plesk/#manual-upgrade-from-deprecated-imunifyav-to-the-new-imunify-extension)
 
 ## Quick introduction for server admins
 
