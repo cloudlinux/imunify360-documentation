@@ -510,6 +510,7 @@ A reason pattern looks like the following:
 |<span class="notranslate">`miner`</span>|All sorts of miners go under this category|
 |<span class="notranslate">`redi`</span>|Malware artifacts causing redirects for any sort of malicious reason can be covered under this category|
 |<span class="notranslate">`deface`</span>|Any sort of artifacts that are meant to show off attacker's intentions or to spread a certain message. Example: Defacements, banners, etc.|
+|<span class="notranslate">`url`</span>|Malicious URLs embedded in content|
 
 #### Table 3. Malware classification
 
@@ -574,6 +575,7 @@ The following table shows the <span class="notranslate">`mlwclassification`</spa
 |`skim`/`skimmer`|Covers malware artifacts that involve web skimming.|
 |`bot`/`botnet`|Malicious code that resembles activities of a bot/botnet.|
 |`irc`/`ircbot`|Covers malicious IRC artifacts.|
+|`url`|Covers malicious URLs.|
 
 #### Example
 
