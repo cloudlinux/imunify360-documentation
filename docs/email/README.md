@@ -50,7 +50,7 @@ wget https://repo.imunify360.cloudlinux.com/defence360/imunifyemail-deploy.sh
 bash imunifyemail-deploy.sh
 ```
 
-### Installation details
+#### Details
 
 #### Users created
 
@@ -86,13 +86,108 @@ It is done automatically during installation. In case if filtering needs to be d
 
 The configuration change is compatible with WHM Advanced Editor, you can continue using it for other modifications.
 
+### CLN: Managing Imunify Email 
+
+#### How to Enable Imunify Email
+
+#### Background 
+
+In order to use ImunifyEmail you have to enable it in CLN. You can achieve it in two ways:
+1. via UI
+2. via CLN API
+
+When you enable/disable Imunify Email, the script will automatically run the corresponding action within 24 hours. In order to apply changes on the particular server immediately, please run the following command on behalf of the `root` user: 
+```
+imunify360-agent update-license
+``` 
+
+#### CLN UI: enable/disable Imunify Email
+
+You can manage Imunify Email state on 3 levels: Account, Key, Server. 
+
+#### 1. Account 
+
+To manage permission on an account level choose the “Enable for all servers” option.
+
+![](/images/ie-cln-enabled-for-all-users.png)
+
+When you enable the feature on an account level, the script will install Imunify Email **on all Imunify360 servers in your account** in 24 hours. 
+
+When disabling the feature on an account level, the script will deactivate the Imunify Email **on all Imunify360 servers in your account** in 24 hours. 
+
+There's also a default option called “depends on lower level”. This allows you to control permissions based on each key or license, rather than for the whole account.
+
+#### 2. Key 
+
+To manage permission on a key level go to the “Activation keys” tab and select “add-ons”. 
+
+![](/images/ie-cln-manage-keys.png)
+
+You will see this screen: 
+
+![](/images/ie-cln-permissions-depend.png)
+
+When you enable the feature on all servers in the key, the script will install Imunify Email **on all Imunify360 servers under this key** in 24 hours.  
+
+When disabling the feature on a key level, the script will deactivate the Imunify Email **on all Imunify360 servers under this key** in your account in 24 hours. 
+
+There's also a default option called “depends on lower level”. This allows you to control permissions based on each server.
+
+#### 3. Server
+To manage permission on a server level. Go to the “Servers” tab and select “add-ons”. 
+
+![](/images/ie-cln-permissions-server-level.png)
+
+You will see this pop up: 
+
+![](/images/ie-cln-popup.png)
+
+When you enable the feature, the script will install Imunify Email **on a server** in 24 hours.  
+
+When disabling the feature, the script will deactivate the Imunify Email **on a server** in 24 hours.
+
+#### CLN API: enable/disable Imunify Email
+
+Useful links:
+1. [CLN API documentation](https://docs.cloudlinux.com/cloudlinux_rest_api.pdf) (page 30 is about Imunify Email)
+2. [CLN API swagger file](https://cln.cloudlinux.com/cln/api/webjars/swagger-ui/index.html#/)
+
+Imunify Email state is managed by the next requests: 
+
+1. `PATCH /api/v2/features/account`: to enable/disable Imunify Email for account.
+2. `PATCH /api/v2/imunify/keys`: to enable/disable Imunify Email for Imunify360 key.
+3. `PATCH /api/v2/imunify/server`: to enable/disable Imunify Email for server with Imunify360.
+
+In CLN terms Imunify Email is a "feature" and it has **id=4600**.
+
+Below is a example of how to enable Imunify Email for particular server: 
+
+1. Generate API token:  
+```
+$> token=$(login=YOUR_CLN_LOGIN; ts=$(date +"%s"); secret=YOUR_CLN_SECRET; echo -n $login\|$ts\|$(echo -n $secret$ts| sha1sum) | cut -d " " -f1)
+```
+2. Get product names to product type id mapping: 
+```
+$> curl -X 'GET' -H 'accept: application/json' -H 'Content-Type: application/json' \
+'https://cln.cloudlinux.com/api/v2/ip-license/licenses/types?token=YOUR_TOKEN’ 
+```
+3. Enable Imunify Email using its product type id (from the previous request) on a server using IP license: 
+```
+$> curl -X 'PATCH' -H 'accept: application/json' -H 'Content-Type: application/json' \
+'https://cln.cloudlinux.com/api/v2/imunify/server?token=YOUR_TOKEN' \
+--data '{"id": "SERVER_ID_HERE", "permissions": {"4600": "ENABLED"}}' 
+```
+Where "4600" the Imunify Email's feature id.
+
+To enable Imunify Email on account/key level you have to follow almost the same algorithm but use endpoints (1)/(2) (refer to documentation above to get more details).
+
 ### User interface access
 
 In order to access the UI as a hosting administrator, navigate to WHM -> Plugins -> Imunify360 -> Email tab.
 
 Your clients will be able to access the Imunify Email Quarantine under: cPanel -> Security -> Imunify360 -> Email.
 
-### Managing Imunify Email
+### Version and Status
 
 #### Check Imunify Email version
 
