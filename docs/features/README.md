@@ -444,7 +444,7 @@ service imunify360-webshield restart
 The Greylist is a feature intended to distinguish human from machine input and protect websites from the spam and different types of automated abuse.
 
 :::warning Warning
-Please note that the WebShield Anti-Bot Challenge is not compatible with aggressive CDN caching modes, like Cloudflare 'cache everything' with 'Edge Cache TTL'. If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Anti-Bot Challenge functionality in the Imunify360.
+Please note that the WebShield Anti-Bot Challenge is not compatible with aggressive CDN caching modes, like Cloudflare "Browser Cache TTL" or "cache everything" with "Edge Cache TTL". If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Anti-Bot Challenge functionality in the Imunify360.
 :::
 
 There are two layers in GreyList behavior:
@@ -523,7 +523,7 @@ replace `0` with `1`, save the file and restart WebShield, using the following c
 Country blocking is available in both [Admin UI](/dashboard/#black-list) and [CLI](/command_line_interface/#blacklist)
 
 
-### Using Cloudflare “Cache Everything” with Imunify360
+### Using Cloudflare “Edge Cache TTL“, “Cache Everything”, and “Browser Cache TTL” with Imunify360
 
 According to the [Cloudflare documentation](https://developers.cloudflare.com/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#summary-of-page-rules-settings), **Cache Everything** with **Edge Cache TTL** enabled makes Cloudflare ignore all origin cache-related headers (see attached screenshots) which in the past, caused issues by custom cache settings in the Cloudflare control panel resulting in the inability to pass the Anti-Bot Challenge causing an endless loop:
 
@@ -542,6 +542,7 @@ Setting Edge Cache TTL along with the Cache Everything option is not recommended
 2. Set <span class="notranslate">`cloudflare_captcha on;`</span>
 3. Run <span class="notranslate">`systemctl reload imunify360-webshield`</span>
 
+Similarly, [Browser Cache TTL](https://developers.cloudflare.com/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl) overrides the original `Cache-Control` and `Expires` headers served to the browser. We recommend setting it to "Respect Existing Header".
 
 ### Anti-bot protection
 
