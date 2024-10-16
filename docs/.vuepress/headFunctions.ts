@@ -3,14 +3,6 @@ export default [
     "script",
     {
       type: "text/javascript",
-      charset: "UTF-8",
-      src: "//cdn.cookie-script.com/s/c9f81de32507a4fec1eb03ee80d0f0ed.js",
-    },
-  ],
-  [
-    "script",
-    {
-      type: "text/javascript",
       id: "hs-script-loader",
       async: true,
       defer: true,
