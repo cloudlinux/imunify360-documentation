@@ -1268,7 +1268,7 @@ Available commands:
 |<span class="notranslate">`suspicious`</span>|malware Suspicious List operations|
 |<span class="notranslate">`cleanup status`</span>|show the status of the cleanup process|
 |<span class="notranslate">`history list`</span>|lists the complete history of all malware-related incidents/actions (optional arguments available)|
-|<span class="notranslate">`rebuild patterns`</span>|allows to save changes after editing watched and excluded patterns for Malware Scanner. See details [here](/faq_and_known_issues/#_22-how-to-edit-watched-and-excluded-patterns-for-malware-scanner).|
+|<span class="notranslate">`rebuild patterns`</span>|allows to save changes after editing watched and excluded patterns for Malware Scanner. See details [here](/faq_and_known_issues/#_21-how-to-edit-watched-and-excluded-patterns-for-malware-scanner).|
 |<span class="notranslate">`user`</span>|allows to perform Malware Scanner operations for a user|
  
 Optional arguments:
