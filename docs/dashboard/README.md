@@ -1134,19 +1134,28 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 #### WordPress Account Brute-force Protection
 
+We have two protection features against brute-force - one, Weak Password Login Prevention - prevents any logins with a weak password (e.g. "1234"), and the other Compromised Account Login Detection redirects known compromised accounts to reset their passwords.
+
 Server admin can enable an option to prevent access to WordPress accounts with well-known (trivial) passwords.
 When the option is enabled, all end-users that are trying to log into the admin account with weak/trivial or well-known passwords from the dictionary used by brute-forcers will be taken to the special alert page with an appeal to change their current password.
 
 This feature can be enabled by setting <span class="notranslate">`cms_account_compromise_prevention` to `true`</span> in MOD_SEC [config file section](/config_file_description/#config-file-description)
 
 :::tip Note
-This feature is implemented via modsec rule and could be partially [disabled on a per-domain basis](/command_line_interface/#rules) (the rule id is 33355)
+This feature is implemented via modsec rule and could be [disabled on a per-domain basis](/command_line_interface/#rules) (the rule id is 33355)
 :::
 
-![](/images/WAF_Compromised_Account_Login_Prevention.png) 
 ![](/images/WAF_Weak_Password_Login_Prevention.png)
 
 The alert page supports localization and is displayed in the language of the browser (on an external Imunify domain).
+
+The WordPress Compromised Account Detection works independently of the Weak Passwords Prevention feature utilizing Cloud Based heuristic analysis. 
+
+Our heuristics analyze suspicions actions of the accounts such as malware drops, malicious plugins installation, other account actions and deliver a verdict to the specific host that are considered compromised. When account tries to login on the host, it will be redirected to the reminder to change the password. This feature does not have a switch in our settings and will produce alerts until the breach is fixed.
+
+It employs the RBL system, and there is currently no settings switch to enable/disable it.
+
+![](/images/WAF_Compromised_Account_Login_Prevention.png) 
 
 #### CMS-specific WAF Rules
 
