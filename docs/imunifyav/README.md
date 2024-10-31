@@ -86,7 +86,7 @@ ImunifyAV provides malware scanning features for cPanel, Plesk and DirectAdmin c
 
 :::warning Warning
  - On **DirectAdmin**, Imunify UI requires the `proc_open` PHP function to be enabled. If you are unable to open the Imunify UI, you might see a related message in the `errror.log` of the web-server. If so, please remove it from the `disable_functions` list in `php.ini`.  
- - On **Plesk** panel you can install the "Imunify" extension from the Plesk market as the alternative of steps below.
+ - On **Plesk** panel you can install the **Imunify** extension from the Plesk market as an alternative of steps below.
 :::
 
 To install ImunifyAV proceed the following steps:
