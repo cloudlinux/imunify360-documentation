@@ -561,7 +561,21 @@ This doesn’t concern a WordPress core vulnerability. If we would patch this vu
 **Mitigating factors**  
 N/A
 
-### Joomla!
+### Joomla! 
+
+#### Fixing the file permissions for new installations 
+ 
+**Vulnerability details**
+Fixing the file permissions for new installations. Due to a packaging error when building the 5.2.0 release, new installations had default file permissions which were too permissive. All files and folders in a new installation had the permissions set to 777, where 755 for folders and 644 for files would have been correct. This might make the installation vulnerable on specific hosting setups. This issue does NOT affect updates to 5.2.0 of existing Joomla sites, as during the update process, Joomla already automatically sets the permissions correctly, overwriting permissions in the archive.
+
+**Affected versions**
+Joomla! 5.2.1
+
+**Fix complications**
+The issue stems from a packaging error during the 5.2.0 release build, which affects only new installations. Patchman cannot access customer sites to update them directly, and Joomla has not released a separate patch for this.
+
+**Mitigating factors**
+For sites created with the affected 5.2.0 packages, an automated solution updating the permissions of affected files and folders will be shipped with the next regular 5.2.x release
 
 #### [20230502] Bruteforce prevention within the mfa screen
 
