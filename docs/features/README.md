@@ -42,6 +42,36 @@ Specifying IPs in those files will not prevent Imunify from adding the same IPs 
 :::
 
 
+## Global Ignore List
+
+The Global Ignore List feature allows you to exclude files from malware scanning based on their content instead of location.
+
+The following file contains the list of file hashes to be excluded:
+
+<div class="notranslate">
+
+```
+/etc/imunify360/malware-ignore-hashes.txt
+```
+</div>
+
+The file format requires one SHA256 hash per line. Comments can also be included. Here's an example:
+
+<div class="notranslate">
+
+```
+# PHP file managers, added 1/10/2024
+f157c3ede78333087829cdd211c55822e635d6c419606c3675bc8201b556bc9f
+8f6b0462e1ee9c498fe6ae055419eb79b5ef0e8cb359a6d991dbeffa0589ce9b
+
+# Adminer, added 14/09/2024
+dcfd0433dc46bd82ec5aa7c9998b4ae7087731a45d3a443e3724da7aabe1e4c5
+```
+</div>
+
+A regular path-based ignore list is also functional.
+
+
 ## RapidScan
 
 The RapidScan feature increases scanning speed by lowering system resource usage. Increased scanning speeds and a higher scanning rate further hardens system security posture.
