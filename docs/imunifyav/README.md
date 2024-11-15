@@ -52,7 +52,7 @@ ImunifyAV provides malware scanning features for cPanel, Plesk and DirectAdmin c
 
 * CentOS/RHEL 7, 8
 * CloudLinux OS 7, 8
-* Ubuntu 16.04 (LTS only), 18.04, 20.04 (LTS), and 22 (Plesk, DirectAdmin, and standalone)
+* Ubuntu 16.04 (LTS only), 18.04, 20.04 (LTS), 22.04 (Plesk, DirectAdmin, and standalone), and 24.04
 * Debian 9 (supported up to Imunify v6.11 (including)), 10, and 11
 * Rocky Linux 8 (cPanel, Plesk, and standalone)
 * AlmaLinux 8, 9
