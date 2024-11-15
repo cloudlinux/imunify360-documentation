@@ -1754,6 +1754,8 @@ You can configure the automatic restore. Please find more details [here](/dashbo
 
 ### Disabled Rules
 
+#### Editing in UI
+
 Go to <span class="notranslate">_Settings_</span> page and choose <span class="notranslate">_Disabled rules_</span>. This page allows users to manage disabled rules which have already been added.
 
 ::: tip Note
@@ -1792,6 +1794,43 @@ It is possible to specify domains only for ModSecurity rules. For OSSEC rules it
 To remove the rule from the disabled list click <span class="notranslate">_Enable_</span> and confirm the action in the pop-up.
 
 ![](/images/disabledrulesenablepopup_zoom60.png)
+
+:::tip Note
+To prevent managing the rules there's an option [allow_local_rules_management](/config_file_description/).
+:::
+
+#### Config file
+
+An alternative way to disable rules is to use the config file `/etc/imunify360/rules/disabled-rules`. It's especially usable with provisioning tools like Ansible, Puppet, Chef, etc.
+
+:::tip Note
+Please note that all rules in the config file are not visible in the UI above.
+:::
+
+The config file contains lines in the following format:
+
+`MODULE_ID:RULE_ID:Description`
+
+Where:
+
+- `MODULE_ID` can have one of the following values:
+
+  - `modsec` for ModSecurity rules
+  - `ossec` for OSSEC rules
+  - `cphulk` for cpHulkd rules
+  - `lfd` for Login Failuer daemon rules
+
+- `RULE_ID` is the rule id for the module and it is mandatory.
+
+- `Description` - text string without specialized symbols.
+
+Example:
+
+```text
+modsec:1010:
+ossec:1008
+modsec:1001:this is why
+```
 
 ### Features Management
 
