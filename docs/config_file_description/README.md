@@ -116,8 +116,6 @@ Changes of config files will be applied automatically. You don’t need to resta
 <th colspan="2" align="left"><span class="notranslate">MOD_SEC_BLOCK_BY_SEVERITY:</span></th></tr>
  <tr><td><span class="notranslate">enable: True</span></td><td># allows to enable or disable option that moves IPs to <span class="notranslate">Gray List</span> if the ModSecurity rule is triggered</td></tr>
 <tr><td><span class="notranslate">max_incidents: 2</span></td><td># set a number of repeats of the ModSecurity incident from the same IP for adding it to <span class="notranslate">Gray List</span></td></tr>
-<tr><td><span class="notranslate">denied_num_limit: 2</span></td>
-<td># set a number of repeats of the ModSecurity incidents that got Access Denied error from the same IP for adding it to <span class="notranslate">Gray List</span></td></tr>
 <tr><td><span class="notranslate">check_period: 120</span></td>
 <td># set a period in seconds during which incident from the same IP will be recorded as a repeat</td></tr>
 <tr><td><span class="notranslate">severity_limit: 2</span></td>
