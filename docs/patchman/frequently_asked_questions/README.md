@@ -108,6 +108,16 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Yoast Duplicate Post | 3.2.2+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Site Kit by Google | 1.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Redirection | 3.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WP Fastest Cache | >=0.8.6.6 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>File Manager | >=6.0 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Essential Addons for Elementor | >=4.3.8 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WP-Optimize - cache, compare images, minify & clean DB to boost page speed & performance | >=3.1.6 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Loginizer | >=1.6.6 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WPCode - insert headers and footers - custom code snippets | >=1.6.0 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Secure custom field aka Advanced custom field | >=5.9.0 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Cookie Notice & compliance for GDPR/CCPA | >=2.0.0 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>W3 Total cache | >=2.0.0 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Disable comments - Remove comments and remove spam | >=2.1.0 | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
