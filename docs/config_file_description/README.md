@@ -183,6 +183,8 @@ Scanner's behaviour is based on other scan optimizations, therefore it is better
 <td># enable (<span class="notranslate">True</span>) blocking malicious file uploads via cPanel File Manager. The default value is <span class="notranslate">False</span>. The type of operations processed are: edits and saves</td></tr>
 <tr><td><span class="notranslate">crontabs: True</span></td>
 <td># enable (<span class="notranslate">True</span>) scan of the system and user crontab files for malicious jobs. The default value is <span class="notranslate">True</span>.</td></tr>
+<tr><td><span class="notranslate">db_timeout: 15</span></td>
+<td># set the maximum time in seconds for connecting to or reading from a database during a scan/clean/restore operation.</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">CAPTCHA:</span></th></tr>
 <tr><td><span class="notranslate">cert_refresh_timeout: 3600</span></td>
