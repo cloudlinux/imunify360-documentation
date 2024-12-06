@@ -7,11 +7,7 @@ Below you can find the steps to install and run ImunifyAV(+), in stand-alone mod
 
 **Operating system**
 
-* CentOS/RHEL 7, 8
-* CloudLinux OS 7, 8
-* Ubuntu 16.04 (LTS only), 18.04, 20.04, and 22
-* Debian 9 (supported up to Imunify v6.11 (including)), 10, 11
-* Rocky Linux 8
+* The same list as [here](/imunifyav/#requirements).
 
 #### Prerequisites
 
