@@ -181,6 +181,36 @@ Where "4600" the Imunify Email's feature id.
 
 To enable Imunify Email on account/key level you have to follow almost the same algorithm but use endpoints (1)/(2) (refer to documentation above to get more details).
 
+### **Beta**: Incoming Emails Filtration
+
+:::tip Highlights
+ImunifyEmail now includes a **beta** feature for incoming email filtration, aimed at protecting server users from spam emails.
+This feature is currently in beta mode and is free to use.
+  :::
+
+#### Enabling/Disabling Incoming Filtration
+
+To enable the incoming filtration feature, the server administrator needs to run the following command from the console:
+```
+ie-config enable-incoming
+```
+
+To disable, run the following command:
+```
+ie-config disable-incoming
+```
+
+Once you enable the feature, ImunifyEmail will start filtering incoming emails. Additionally, the UI in cPanel will be updated with the following changes:
+
+ - **Quarantine Tab**: A new column will be added to show the email direction (whether the email is outgoing or incoming).
+ - **Settings Tab**:
+    - A toggle will be available to disable the incoming filtration feature for specific cPanel accounts.
+    - A table will be added to display statistics of incoming emails, showing the number of spam and ham emails by day.
+ - **Statistics Tab**: A new section will be added to display detailed statistics of incoming emails, including the number of spam and ham emails over time.
+
+The ie-cli utility reflects the same API as the UI, allowing customers to retrieve quarantine and statistics information via the command line interface.
+Use `--help` to get more info.
+
 ### User interface access
 
 In order to access the UI as a hosting administrator, navigate to WHM -> Plugins -> Imunify360 -> Email tab.
