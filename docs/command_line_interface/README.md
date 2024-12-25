@@ -2324,7 +2324,7 @@ To submit file as false positive (if Imunify360 considers file as a malicious bu
 <div class="notranslate">
 
 ```
-imunify360-agent submit false-positive --reason <reason> <file>
+imunify360-agent submit false-positive --reason your-reason-text /full/path/to/file
 ```
 
 </div>
@@ -2338,7 +2338,7 @@ To submit file as false negative (if Imunify360 considers file as a non-maliciou
 <div class="notranslate">
 
 ```
-imunify360-agent submit false-negative <file>
+imunify360-agent submit false-negative /full/path/to/file
 OK
 ```
 
