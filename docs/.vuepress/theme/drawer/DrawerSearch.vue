@@ -1,25 +1,27 @@
 <template>
-  <form id="search-form" class="drawer-header__input">
-    <input :value="modelValue"
+  <form id="search-form" class="drawer-header__input" @submit.prevent="performSearch">
+    <input type="text" 
+           :value="modelValue"
            @input="$emit('update:modelValue', $event.target.value)"
            id="algolia-search-input"
            :placeholder="placeholder"
            :class="activeSearchClass"
-           @keypress.enter.prevent="$emit('openDrawer')"
+           maxlength="100"
     />
     <div :class="activeSearchIconClass">
-      <img @click="$emit('openDrawer')" alt="search icon" :src="withBase(activeSearchIcon)"/>
+      <img v-if="!loading" @click="performSearch" alt="search icon" :src="withBase(activeSearchIcon)"/>
+      <div v-if="loading" class="spinner"></div>
     </div>
   </form>
 </template>
 
 <script setup>
 import {usePageFrontmatter, withBase} from "@vuepress/client";
-import {computed, inject, watch} from "vue";
-const { MAX_ALGOLIA_HITS_PER_PAGE } = inject('themeConfig')
+import {computed, inject, ref, watch} from "vue";
 
-
+const { MAX_HITS_PER_PAGE } = inject('themeConfig')
 const {headerDefaultSearchIcon, headerSearchIcon, headerSearchPlaceholder} = inject('themeConfig')
+
 const props = defineProps({
   options: {
     type: [Object, Array],
@@ -37,9 +39,10 @@ const props = defineProps({
     type: Boolean,
   }
 });
-const emit = defineEmits(["openDrawer", 'update:modelValue', 'result'])
 
+const emit = defineEmits(["openDrawer", 'update:modelValue', 'result'])
 const frontmatter = usePageFrontmatter()
+
 const isGlobalLayout = computed(() => {
   return frontmatter.value.layout === 'HomeLayout'
 })
@@ -61,42 +64,109 @@ const placeholderDesktop = computed(() => {
 })
 
 const placeholder = computed(() => {
-  return props.isMobileWidth ? 'Search accross all Imunify Security support' : placeholderDesktop.value
+  return props.isMobileWidth ? 'Search accross all Imunify360 Docs' : placeholderDesktop.value
 })
 
+function parseDocs(api_response) {
+  return api_response.imunify360_docs.map((doc) => {
+    const titleParts = doc.title.split("->").map((part) => part.trim());
 
-const initialize = async (userOptions) => {
-  if( typeof window === 'undefined' ) return
-  const [docsearchModule] = await Promise.all([
-    import(/* webpackChunkName: "docsearch" */ "docsearch.js/dist/cdn/docsearch.min.js"),
-    import(/* webpackChunkName: "docsearch" */ "docsearch.js/dist/cdn/docsearch.min.css"),
-  ]);
-  const docsearch = docsearchModule.default;
-  docsearch(
-      Object.assign({}, userOptions, {
-        inputSelector: "#algolia-search-input",
-        algoliaOptions: {
-            hitsPerPage: MAX_ALGOLIA_HITS_PER_PAGE,
+    const hierarchy = {
+      lvl0: titleParts[0] || null,
+      lvl1: titleParts[1] || null,
+      lvl2: titleParts[2] || null,
+      lvl3: titleParts[3] || null,
+      lvl4: titleParts[4] || null,
+      lvl5: null,
+      lvl6: null,
+    };
+
+    const anchor = doc.url.split("#")[1] || "";
+
+    const objectID = doc.id;
+
+    return {
+      anchor,
+      content: null,
+      hierarchy,
+      url: doc.url,
+      title: doc.title,
+      preview: doc.preview,
+      category: doc.category,
+      section: doc.section,
+      objectID,
+      _highlightResult: {
+        hierarchy: {
+          lvl0: {
+            value: hierarchy.lvl0 || "",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+          lvl1: {
+            value: hierarchy.lvl1 || "",
+            matchLevel: "full",
+            fullyHighlighted: false,
+            matchedWords: [hierarchy.lvl1?.toLowerCase()],
+          },
         },
-        handleSelected: () => {
-          emit('openDrawer')
-        },
-        transformData: (hits) => {
-          emit('result', hits)
-        },
-      })
-  );
-};
-watch(
-    () => props.options,
-    async (newValue) => {
-     await initialize(newValue);
-    }, {
-      immediate: true
+        hierarchy_camel: [
+          {
+            lvl0: {
+              value: hierarchy.lvl0 || "",
+              matchLevel: "none",
+              matchedWords: [],
+            },
+            lvl1: {
+              value: `<span class="algolia-docsearch-suggestion--highlight">${hierarchy.lvl1 || ""}</span>`,
+              matchLevel: "full",
+              fullyHighlighted: false,
+              matchedWords: [hierarchy.lvl1?.toLowerCase()],
+            },
+          },
+        ],
+      },
+    };
+  });
+}
+
+async function queryGlobalSearch(query, n_results=10) {
+  const baseUrl = 'https://global-search.cl-edu.com/search';  let urlEncodedQuery = encodeURIComponent(query);
+  let url = `${baseUrl}?query=${urlEncodedQuery}&collections=imunify360_docs&n_results=${n_results}&source=imunify360_docs`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error querying global search:', error);
+    return null;
+  }
+}
+
+const loading = ref(false); // Reactive variable for loading state
+
+const performSearch = async () => {
+  loading.value = true; // Set loading to true when search starts
+  const data = await queryGlobalSearch(props.modelValue, MAX_HITS_PER_PAGE);
+  loading.value = false; // Set loading to false when search finishes
+  if (data) {
+    const hits = parseDocs(data);
+    emit('result', hits);
+    emit('openDrawer');
+  }
+}
+
+watch(
+  () => props.options,
+  async (newValue) => {
+    // Initialize if needed or any other dependent setup
+  }, {
+    immediate: true
+  }
 );
 </script>
-
 
 <style lang="stylus">
 @import '../../styles/config.styl'
@@ -139,7 +209,6 @@ watch(
   justify-content center
   align-content center
 
-
 @media (max-width: $mobileBreakpoint)
   .drawer-header__search
     width 100%
@@ -158,4 +227,18 @@ watch(
     width 75%
   .header-layout__search-title
     text-align center
+
+.spinner
+  border 4px solid rgba(0, 0, 0, 0.1)
+  border-top 4px solid #6ccc93
+  border-radius 50%
+  width 20px
+  height 20px
+  animation spin 1s linear infinite
+
+@keyframes spin
+  0%
+    transform rotate(0deg)
+  100%
+    transform rotate(360deg)
 </style>
