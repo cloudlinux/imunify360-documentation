@@ -11,19 +11,15 @@
           <p @click="onCloseDrawer" class="drawer-cross__text">close</p>
         </div>
       </div>
-      <DrawerTabs v-model="selectedTabIndex" :data="tabs"/>
       <main>
-       <div class="drawer-main">
-         <div class="drawer-main__wrapper">
-           <div class="drawer-main__breadcrumb">
-             <p v-if="drawerArticleResult.length" class="drawer-main__breadcrumb__text">Home
-               <img :src="withBase('/arrows/arrow-right-breadcrumb.svg')" alt="breadcrumb icon"/>
-               Documentation
-             </p>
-           </div>
-           <DrawerSearchResult :modelValue="modelValue" :data="drawerArticleResult"/>
-         </div>
-       </div>
+        <div class="drawer-main">
+          <div class="drawer-main__wrapper">
+            <div class="drawer-main__breadcrumb">
+              <!-- Optional breadcrumb can stay here -->
+            </div>
+            <DrawerSearchResult :modelValue="modelValue" :data="drawerArticleResult"/>
+          </div>
+        </div>
         <Footer v-if="isOpenDrawer && isMobileWidth" class="drawer-footer__mobile"/>
       </main>
     </div>
@@ -32,10 +28,9 @@
 </template>
 
 <script setup>
-import {withBase} from "@vuepress/client";
+import { withBase } from "@vuepress/client";
 import Footer from "../footer/Footer.vue";
-import {computed, ref, watch} from "vue";
-import DrawerTabs from "./DrawerTabs.vue";
+import { computed, ref, watch } from "vue";
 import DrawerSearchResult from "./DrawerSearchResult.vue";
 
 const props = defineProps({
@@ -44,7 +39,7 @@ const props = defineProps({
     required: true,
     default: false
   },
-  isMobileWidth:{
+  isMobileWidth: {
     type: Boolean,
     required: true,
     default: false
@@ -59,39 +54,21 @@ const props = defineProps({
     required: true,
     default: () => []
   }
-})
-
-
-const emit = defineEmits(['closeDrawer', 'update:modelValue'])
-
-const selectedTabIndex = ref(0);
-
-const tabs = computed(() => {
-    const uniqueTitles = props.homeLayoutSearchResult.reduce((unique, result) => {
-        const title = result.hierarchy?.lvl0;
-        unique[title] = unique[title] || { title, numberResults: 0 };
-        unique[title].numberResults++;
-        return unique;
-    }, {});
-    return Object.values(uniqueTitles);
 });
 
+const emit = defineEmits(['closeDrawer', 'update:modelValue']);
+
 const drawerArticleResult = computed(() => {
-  if (selectedTabIndex.value === -1) {
-    return props.homeLayoutSearchResult || [];
-  }
-  const selectedTab = tabs.value[selectedTabIndex.value];
-  return props.homeLayoutSearchResult.filter(result => result.hierarchy.lvl0 === selectedTab?.title);
-})
+  return props.homeLayoutSearchResult; // Now directly returning all results since there are no tabs
+});
 
 const onCloseDrawer = () => {
-  emit('closeDrawer')
-  selectedTabIndex.value = 0
+  emit('closeDrawer');
 }
 
 watch(() => props.isOpenDrawer, () => {
-  document.body.classList.toggle('disable-scroll', props.isOpenDrawer)
-})
+  document.body.classList.toggle('disable-scroll', props.isOpenDrawer);
+});
 </script>
 
 <style lang="stylus">

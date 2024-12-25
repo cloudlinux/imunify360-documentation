@@ -14,11 +14,12 @@
     "@types/vue-select": "3.16.2",
     "@vuepress/core": "1.9.9",
     "@vuepress/plugin-container": "2.0.0-beta.8",
+    "@vuepress/plugin-prismjs": "2.0.0-beta.4",
     "@vuepress/theme-default": "1.9.9",
     "@vuepress/utils": "2.0.0-alpha.1",
     "cl-doc-vue-bot-ui": "0.1.4",
+    "marked": "^15.0.4",
     "mitt": "3.0.0",
-    "@vuepress/plugin-prismjs": "2.0.0-beta.4",
     "stylus": "0.59.0",
     "vue-multiselect": "3.0.0-beta.2",
     "vue-select": "4.0.0-beta.6"
