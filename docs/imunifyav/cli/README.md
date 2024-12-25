@@ -902,7 +902,7 @@ To submit file as false positive for analysis (if ImunifyAV considers file as a 
 <div class="notranslate">
 
 ```
-imunify-antivirus submit false-positive <file>
+imunify-antivirus submit false-positive /full/path/to/file
 ```
 
 </div>
@@ -912,7 +912,7 @@ To submit file as false negative for analysis (if ImunifyAV considers file as a 
 <div class="notranslate">
 
 ```
-imunify-antivirus submit false-negative <file>
+imunify-antivirus submit false-negative /full/path/to/file
 ```
 
 </div>
