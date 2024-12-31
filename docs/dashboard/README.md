@@ -965,11 +965,10 @@ Choose <span class="notranslate">_Reputation Management_</span> in the main menu
 
 <span class="notranslate">Reputation Management</span> allows to check if a domain registered on your server is safe or not based on the following reputation engines:
 
-* [Google Safe Browsing](https://safebrowsing.google.com/)
 * [Yandex Safe Browsing](https://tech.yandex.com/safebrowsing/)
-* [Spamhaus](https://www.spamhaus.org/)
 * [PhishTank](https://www.phishtank.com/)
-* [OpenPhish](https://openphish.com/).
+* [OpenPhish](https://openphish.com/)
+* [Mitchellkrogz](https://github.com/mitchellkrogza/Phishing.Database/)
 
 How does it work:
 
