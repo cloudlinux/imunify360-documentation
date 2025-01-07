@@ -564,9 +564,7 @@ According to the [Cloudflare documentation](https://developers.cloudflare.com/su
 Level **“Cache Everything”** – Treats all content as static and caches all file types beyond the [Cloudflare default cached content](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/). Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > 0, **Cache Everything** removes cookies from the origin web server response.
 :::
 
-Setting Edge Cache TTL along with the Cache Everything option is not recommended though it should not create any issues now because Anti-Bot Challenge is already disabled for Cloudflare IPs by default. It is possible to enable Anti-Bot Challenge as long as you either:
-* don’t use [“Edge Cache TTL”](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl/#edge-cache-ttl) + [“Cache Everything”](https://developers.cloudflare.com/cache/how-to/create-page-rules/#cache-everything) in Cloudflare
-* or use “Edge Cache TTL” but add a page rule that would prevent Cloudflare from caching pages with a cookie <span class="notranslate">`cl-bypass-cache: yes`</span> ([“Bypass Cache on Cookie”](https://developers.cloudflare.com/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#bypass-cache-on-cookie-setting))
+Setting Edge Cache TTL along with the Cache Everything option is not recommended though it should not create any issues now because Anti-Bot Challenge is already disabled for Cloudflare IPs by default. It is possible to enable Anti-Bot Challenge as long as you don’t use [“Edge Cache TTL”](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl/#edge-cache-ttl) + [“Cache Everything”](https://developers.cloudflare.com/cache/how-to/create-page-rules/#cache-everything) in Cloudflare.
 
 1. Edit the file <span class="notranslate">`/etc/imunify360-webshield/wscheck.conf`</span>
 2. Set <span class="notranslate">`cloudflare_captcha on;`</span>
