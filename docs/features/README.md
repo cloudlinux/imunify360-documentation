@@ -236,33 +236,43 @@ Since the module is fresh, it is in experimental mode – disabled by default fo
 Now two options can be used to control how brute force protection works for Dovecot:
 
 <table>
-	<tr>
-	    <th colspan="2">Condition</th>
-	    <th rowspan="2">Behavior</th>
-	</tr >
-	<tr >
-	    <td>PAM.exim_dovecot_protection</td>
-	    <td>PAM.exim_dovecot_native</td>
-	</tr>
-  	<tr >
-	    <td><center>false</center></td>
-	    <td><center>any</center></td>
+  <thead>
+    <tr>
+      <th colspan="2">Condition</th>
+      <th rowspan="2">Behavior</th>
+    </tr>
+    <tr>
+      <td>PAM.exim_dovecot_protection</td>
+      <td>PAM.exim_dovecot_native</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><center>false</center></td>
+      <td><center>any</center></td>
       <td>Dovecot protection <b>disabled</b></td>
-	</tr>
-    <tr >
-	    <td><center>true</center></td>
-	    <td><center>false</center></td>
-      <td>Dovecot protection <b>enabled</b> (default)
-      <ul><li>PAM-based module</li></ul>
+    </tr>
+    <tr>
+      <td><center>true</center></td>
+      <td><center>false</center></td>
+      <td>
+        Dovecot protection <b>enabled</b> (default)
+        <ul>
+          <li>PAM-based module</li>
+        </ul>
       </td>
-	</tr>
-      <tr>
-	    <td><center>true</center></td>
-	    <td><center>true</center></td>
-      <td>Dovecot protection <b>enabled</b>
-      <ul><li>Native module ON</li></ul>
+    </tr>
+    <tr>
+      <td><center>true</center></td>
+      <td><center>true</center></td>
+      <td>
+        Dovecot protection <b>enabled</b>
+        <ul>
+          <li>Native module ON</li>
+        </ul>
       </td>
-	</tr>
+    </tr>
+  </tbody>
 </table>
 
 The following commands can be used to control the Dovecot native module:
