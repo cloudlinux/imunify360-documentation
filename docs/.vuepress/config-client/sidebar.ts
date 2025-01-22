@@ -168,7 +168,8 @@ export default {
                     "/patchman/portal/",
                     "/patchman/policies/",
                     "/patchman/agent/",
-                    "/patchman/platform_integrations/"
+                    "/patchman/platform_integrations/",
+                    "/patchman/imunify/"
                 ]
             }
         ]

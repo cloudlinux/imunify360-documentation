@@ -117,7 +117,13 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Secure custom field aka Advanced custom field | >=5.9.0 | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Cookie Notice & compliance for GDPR/CCPA | >=2.0.0 | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>W3 Total cache | >=2.0.0 | COVERAGE, COVERAGE+CLEAN | all |
-| WordPress Plugin:  <br>Disable comments - Remove comments and remove spam | >=2.1.0 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Disable comments - Remove comments and remove spam | >=2.1.0 | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>Limit login Attempts reloaded | 2.10.0+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>Ultimate Addons for Elementor | 1.1.0+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>SVG-support | 2.4+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>ultimate-addons-for-gutenberg | 0.0.1+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>safe svg | 1.8.0+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>Automize | 2.5.1+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
