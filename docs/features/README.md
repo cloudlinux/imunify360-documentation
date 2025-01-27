@@ -567,20 +567,18 @@ Country blocking is available in both [Admin UI](/dashboard/#black-list) and [CL
 
 According to the [Cloudflare documentation](https://developers.cloudflare.com/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/#summary-of-page-rules-settings), **Cache Everything** with **Edge Cache TTL** enabled makes Cloudflare ignore all origin cache-related headers (see attached screenshots) which in the past, caused issues by custom cache settings in the Cloudflare control panel resulting in the inability to pass the Anti-Bot Challenge causing an endless loop:
 
-![](/images/CFPageRulesListExample.png)
-![](/images/EditCFRuleCacheEverythngEdgeCacheTTL.png)
+![](/images/new_cache_everything.png)
 
 ::: tip Quote:
 Level **“Cache Everything”** – Treats all content as static and caches all file types beyond the [Cloudflare default cached content](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/). Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > 0, **Cache Everything** removes cookies from the origin web server response.
 :::
 
-Setting Edge Cache TTL along with the Cache Everything option is not recommended though it should not create any issues now because Anti-Bot Challenge is already disabled for Cloudflare IPs by default. It is possible to enable Anti-Bot Challenge as long as you don’t use [“Edge Cache TTL”](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl/#edge-cache-ttl) + [“Cache Everything”](https://developers.cloudflare.com/cache/how-to/create-page-rules/#cache-everything) in Cloudflare.
-
-1. Edit the file <span class="notranslate">`/etc/imunify360-webshield/wscheck.conf`</span>
-2. Set <span class="notranslate">`cloudflare_captcha on;`</span>
-3. Run <span class="notranslate">`systemctl reload imunify360-webshield`</span>
+Setting Edge Cache TTL along with the Cache Everything option is not recommended.
 
 Similarly, [Browser Cache TTL](https://developers.cloudflare.com/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl) overrides the original `Cache-Control` and `Expires` headers served to the browser. We recommend setting it to "Respect Existing Header".
+
+Instead consider using [Cache Rules](https://developers.cloudflare.com/cache/how-to/cache-rules/settings/#edge-ttl), that respect cache headers of the origin response, as shown on the screenshot below:
+![](/images/new_cache_control.png)
 
 ### Anti-bot protection
 
