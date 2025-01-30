@@ -1,5 +1,30 @@
 # Email
 
+## Quick Start Guide
+
+Welcome to Imunify Email, a powerful plugin designed to enhance your Imunify360 experience with advanced email protection features such as:
+- **Advanced Server Protection**: Provides robust protection against outgoing spam, ensuring your server maintains a high reputation and reliable email delivery.
+- **Rate-Limit Settings**: Allows you to define how many messages can be sent on behalf of specific accounts, domains, emails, or scripts, helping to prevent abuse and maintain control over email traffic.
+- **BETA: Incoming Filtration**: A new feature, currently in beta, that can be enabled to protect your users from incoming spam. Learn more about enabling this feature [here](https://docs.imunify360.com/email/#beta-incoming-emails-filtration).
+
+### Installation Steps
+
+:::tip Requirements
+- cPanel
+- Imunify360
+:::
+
+1. **Install Imunify360**
+
+    Imunify Email is a plugin for the Imunify360 product. To use Imunify Email, you must first install Imunify360. Follow the [installation instructions for Imunify360](https://docs.imunify360.com/installation/#installation-instructions) to get started.
+
+2. **Enable Imunify Email in CLN**
+
+Once Imunify360 is installed and registered, you can enable the Imunify Email plugin through the CLN (CloudLinux Network) portal. This will automatically install all necessary components. Follow the [instructions to enable Imunify Email in CLN](https://docs.imunify360.com/email/#how-to-enable-imunify-email).
+For the system requirements and installation steps, refer to the [Installation](https://docs.imunify360.com/email/#installation).
+
+## Full Documentation
+
 #### Imunify Email compatibility
 
 Imunify Email has been checked for compatibility with following tools and mail gateways:
@@ -37,7 +62,7 @@ Minimum system requirements for installation:
 - Used disk space depends on the number of accounts on a server. By default, each account will have 100 MB limitation for quarantine space. This limit can be adjusted using UI later.
 :::
 
-To install ImunifyEmail, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically
+To install Imunify Email, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically
 within 24 hours. To install it immediately you can use on of the following command as root user:
 ```
 /usr/bin/imunify360-agent update-license
@@ -93,7 +118,7 @@ The configuration change is compatible with WHM Advanced Editor, you can continu
 #### Background 
 
 In order to use ImunifyEmail you have to enable it in CLN. You can achieve it in two ways:
-1. via UI
+1. via CLN UI
 2. via CLN API
 
 When you enable/disable Imunify Email, the script will automatically run the corresponding action within 24 hours. In order to apply changes on the particular server immediately, please run the following command on behalf of the `root` user: 
