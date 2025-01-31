@@ -2,10 +2,7 @@
   <section v-if="data.length" class="drawer-main__search-results">
     <template v-for="(item, index) in visibleResults" :key="item.objectID || index">
       <div class="search-result" @click="gotTo(parseUrl(item.url))">
-        <div
-          class="search-result__title"
-          v-html="highlightMatchingWords(getTitleForArticle(item.title), modelValue)"
-        ></div>
+        <a :href="item.url" class="search-result__title" v-html="highlightMatchingWords(getTitleForArticle(item.title), modelValue)"></a>
         <div
           class="search-result__breadcrumb"
           v-html="highlightMatchingWords(getBreadcrumbsForArticle(item.title), modelValue)"
