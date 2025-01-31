@@ -36,9 +36,21 @@ Plugin adds a notice to the WordPress admin dashboard visible to non-administrat
 
 ## Screenshots
 
+### Admin widget - malware cleaned
+
+![](/images/wordpress-plugin/widget-malware-cleaned.png)
+
+### Malware details
+
+![](/images/wordpress-plugin/malware-found-details.png)
+
 ### Admin widget - no malware found
 
 ![](/images/wordpress-plugin/widget-no-malware.png)
 
 ### Admin widget - site not protected
 ![](/images/wordpress-plugin/widget-not-protected.png)
+
+### Notice (non-admin user)
+
+![](/images/wordpress-plugin/notice.png)
