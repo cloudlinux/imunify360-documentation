@@ -30,10 +30,6 @@ Plugin adds a dashboard widget that helps administrators keep track of their sit
 - the timestamps for the last and next scheduled scans
 - detailed list of malware items that have been detected and cleaned, including the file path, signature, and the clean-up time
 
-### Notice
-
-Plugin adds a notice to the WordPress admin dashboard visible to non-administrator users. The notice informs users about the security status of the website and provides a link to the Imunify360 dashboard for more information.
-
 ## Screenshots
 
 ### Admin widget - malware cleaned
@@ -50,7 +46,3 @@ Plugin adds a notice to the WordPress admin dashboard visible to non-administrat
 
 ### Admin widget - site not protected
 ![](/images/wordpress-plugin/widget-not-protected.png)
-
-### Notice (non-admin user)
-
-![](/images/wordpress-plugin/notice.png)
