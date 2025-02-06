@@ -1071,7 +1071,8 @@ imunify360-agent ip-list local [command] --purpose captcha <value> [--options]
 `command` is a positional argument and can be:
 
 | | |
-|-|-|
+|-|-| 
+|<span class="notranslate">`add`</span>|Add item(-s) to local ip-list|
 |<span class="notranslate">`delete`</span>|Remove item(-s) from local ip-list|
 |<span class="notranslate">`list`</span>|List item(-s) in local ip-list|   
 
