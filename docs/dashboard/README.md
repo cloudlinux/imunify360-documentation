@@ -333,6 +333,19 @@ You will see a notification if an IP has been added successfully.
 
 ![](/images/added_zoom80.png)
 
+Starting with imunify360-firewall-8.2.0, manual addition can be disabled. To disable it, set <span class="notranslate">`PERMISSIONS.allow_local_ip_management = false`</span> configuration option from a command line:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"PERMISSIONS": {"allow_local_ip_management": false}}'
+```
+</div>
+
+After local IP management is disabled an attempt to add IP address results in error:
+
+![](/images/iplists-disabled-error.png)
+
 #### How to add a country manually
 
 To add a country to the Black List, click <span class="notranslate">_Add_</span> on the right side of the page.
