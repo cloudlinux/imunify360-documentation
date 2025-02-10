@@ -37,6 +37,10 @@ imunify360-agent reload-lists
 
 Or restart the agent.
 
+:::tip Note
+Starting with imunify360-firewall-8.2.0 all IP lists are applied automatically. Manual reloading is no longer required.
+:::
+
 :::warning Warning
 Specifying IPs in those files will not prevent Imunify from adding the same IPs to dynamic lists (like Gray list), but all White lists always have the priority over Black lists when it comes to actual filtering of requests/packages.
 :::
