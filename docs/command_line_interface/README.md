@@ -952,7 +952,7 @@ imunify360-agent ip-list local [command] <value> [--option]
 |-|-|
 |<span class="notranslate">`-h`, `--help`</span>|Show this help message and exit| 
 
-`value` is an item to manipulate with. It can be IP itself or a country code (find necessary country codes here in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in the column ISO ALPHA-2 CODE). 
+`value` is an item to manipulate with. It must be a valid IP address.
 
 ### List 
 
