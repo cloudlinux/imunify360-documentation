@@ -972,8 +972,8 @@ imunify360-agent ip-list local list [--options] <value>
 |<span class="notranslate">`--by-comment BY_COMMENT`</span>|Filters output by comment| 
 |<span class="notranslate">`--limit LIMIT`</span>|Limits the output with specified number of incidents| 
 |<span class="notranslate">`--offset OFFSET`</span>|Offset for pagination| 
-|<span class="notranslate">`--order-by [ORDER_BY ...]`</span>|List of fields to sort the results by| 
-|<span class="notranslate">`--by-type {ip,country}`</span>|Filters output by item tipe [country | ip]| 
+|<span class="notranslate">`--order-by [ORDER_BY ...]`</span>|List of fields to sort the results by. Each field must be followed by "+" for ascending order or "-" for descending order (e.g., --order-by ip+ or --order-by purpose-)| 
+|<span class="notranslate">`--by-type {ip,country}`</span>|Filters output by item tipe [country\|ip]| 
 |<span class="notranslate">`--json`</span>|Returns data in JSON format|  
 
 :::tip
