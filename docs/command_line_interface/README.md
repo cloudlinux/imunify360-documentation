@@ -1285,7 +1285,7 @@ Optional arguments:
 |<span class="notranslate">`--by-status [BY_STATUS [BY_STATUS ...]]`</span>|Return items with selected status.|
 |<span class="notranslate">`--by-scan-id BY_SCAN_ID`</span>|Return items with selected ID.|
 |<span class="notranslate">`--items ITEMS`</span>|Return selected items.|
-|<span class="notranslate">`--search SEARCH`</span>|Search query.|
+|<span class="notranslate">`--search SEARCH`</span>|Search query.| 
 
 
 <span class="notranslate">`action`</span> is the second positional argument for <span class="notranslate">`ignore`</span> and can be one of the following:
@@ -1332,7 +1332,8 @@ The optional arguments for <span class="notranslate">`on-demand start`</span> an
 |<span class="notranslate">`--no-follow-symlinks`</span>|
 |<span class="notranslate">`--file-mask FILE_MASK`</span>|
 |<span class="notranslate">`--intensity-cpu {1 to 7}`</span> 1 means the lowest intensity, 7 means the highest intensity|
-|<span class="notranslate">`--intensity-io {1 to 7}`</span> 1 means the lowest intensity, 7 means the highest intensity|
+|<span class="notranslate">`--intensity-io {1 to 7}`</span> 1 means the lowest intensity, 7 means the highest intensity| 
+|<span class="notranslate">`--prioritize`</span>|Initiate a new on-demand scan immediately, despite other scans queued.|
 
 <span class="notranslate">`action`</span> is the second positional argument for <span class="notranslate">`suspicious`</span> and can be one of:
 
