@@ -1305,11 +1305,22 @@ where PATHS are the absolute paths to files or folders divided by a whitespace.
 |<span class="notranslate">`cleanup`</span>|clean up infected ITEMS for a USER|
 |<span class="notranslate">`cleanup-all`</span>|clean up all files that have been detected as infected for all users|
 |<span class="notranslate">`restore-original`</span>|restore the original (malicious/infected) file to its original location|
+|<span class="notranslate">`diff`</span>|get difference between infected and cleaned file|
 |<span class="notranslate">`list`</span>|list malicious/infected files|
 |<span class="notranslate">`move-to-ignore`</span>|move a <span class="notranslate">Malicious List</span> entry to the (malware) <span class="notranslate">Ignore List</span>|
 |<span class="notranslate">`remove-from-list`</span>|remove malicious/infected files from the <span class="notranslate">Malicious List</span>|
 |<span class="notranslate">`restore-from-backup`</span>|restore a clean version of infected file from backup|
 |<span class="notranslate">`restore-from-quarantine`</span>|<b>deprecated in ver. 5.9.</b> Restore a quarantined file. The file will be automatically re-scanned|
+
+
+The optional arguments for <span class="notranslate">`malicious diff`</span> are:
+
+| | |
+|-|-|
+|<span class="notranslate">`--id ID`</span>|specific file by ID. IDs be obtained via `malware malicious list`|
+|<span class="notranslate">`--user USER`</span>|admins can filter results by user. Users can only see their own files|
+|<span class="notranslate">`--json`</span>|return data in JSON format. |
+|<span class="notranslate">`--verbose, -v`</span>||
 
 
 <span class="notranslate">`action`</span> is the second positional argument for <span class="notranslate">`on-demand`</span> and can be one of the following:
