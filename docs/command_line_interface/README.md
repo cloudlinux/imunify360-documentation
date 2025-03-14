@@ -952,7 +952,7 @@ imunify360-agent ip-list local [command] <value> [--option]
 |-|-|
 |<span class="notranslate">`-h`, `--help`</span>|Show this help message and exit| 
 
-`value` is an item to manipulate with. It can be IP itself or a country code (find necessary country codes here in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in the column ISO ALPHA-2 CODE). 
+`value` is an item to manipulate with. It must be a valid IP address.
 
 ### List 
 
@@ -972,8 +972,8 @@ imunify360-agent ip-list local list [--options] <value>
 |<span class="notranslate">`--by-comment BY_COMMENT`</span>|Filters output by comment| 
 |<span class="notranslate">`--limit LIMIT`</span>|Limits the output with specified number of incidents| 
 |<span class="notranslate">`--offset OFFSET`</span>|Offset for pagination| 
-|<span class="notranslate">`--order-by [ORDER_BY ...]`</span>|List of fields to sort the results by| 
-|<span class="notranslate">`--by-type {ip,country}`</span>|Filters output by item tipe [country | ip]| 
+|<span class="notranslate">`--order-by [ORDER_BY ...]`</span>|List of fields to sort the results by. Each field must be followed by "+" for descending order or "-" for ascending order (e.g., --order-by ip+ or --order-by purpose-)| 
+|<span class="notranslate">`--by-type {ip,country}`</span>|Filters output by item tipe [country\|ip]| 
 |<span class="notranslate">`--json`</span>|Returns data in JSON format|  
 
 :::tip
@@ -1071,7 +1071,8 @@ imunify360-agent ip-list local [command] --purpose captcha <value> [--options]
 `command` is a positional argument and can be:
 
 | | |
-|-|-|
+|-|-| 
+|<span class="notranslate">`add`</span>|Add item(-s) to local ip-list|
 |<span class="notranslate">`delete`</span>|Remove item(-s) from local ip-list|
 |<span class="notranslate">`list`</span>|List item(-s) in local ip-list|   
 
@@ -1284,7 +1285,7 @@ Optional arguments:
 |<span class="notranslate">`--by-status [BY_STATUS [BY_STATUS ...]]`</span>|Return items with selected status.|
 |<span class="notranslate">`--by-scan-id BY_SCAN_ID`</span>|Return items with selected ID.|
 |<span class="notranslate">`--items ITEMS`</span>|Return selected items.|
-|<span class="notranslate">`--search SEARCH`</span>|Search query.|
+|<span class="notranslate">`--search SEARCH`</span>|Search query.| 
 
 
 <span class="notranslate">`action`</span> is the second positional argument for <span class="notranslate">`ignore`</span> and can be one of the following:
@@ -1304,11 +1305,22 @@ where PATHS are the absolute paths to files or folders divided by a whitespace.
 |<span class="notranslate">`cleanup`</span>|clean up infected ITEMS for a USER|
 |<span class="notranslate">`cleanup-all`</span>|clean up all files that have been detected as infected for all users|
 |<span class="notranslate">`restore-original`</span>|restore the original (malicious/infected) file to its original location|
+|<span class="notranslate">`diff`</span>|get difference between infected and cleaned file|
 |<span class="notranslate">`list`</span>|list malicious/infected files|
 |<span class="notranslate">`move-to-ignore`</span>|move a <span class="notranslate">Malicious List</span> entry to the (malware) <span class="notranslate">Ignore List</span>|
 |<span class="notranslate">`remove-from-list`</span>|remove malicious/infected files from the <span class="notranslate">Malicious List</span>|
 |<span class="notranslate">`restore-from-backup`</span>|restore a clean version of infected file from backup|
 |<span class="notranslate">`restore-from-quarantine`</span>|<b>deprecated in ver. 5.9.</b> Restore a quarantined file. The file will be automatically re-scanned|
+
+
+The optional arguments for <span class="notranslate">`malicious diff`</span> are:
+
+| | |
+|-|-|
+|<span class="notranslate">`--id ID`</span>|specific file by ID. IDs be obtained via `malware malicious list`|
+|<span class="notranslate">`--user USER`</span>|admins can filter results by user. Users can only see their own files|
+|<span class="notranslate">`--json`</span>|return data in JSON format. |
+|<span class="notranslate">`--verbose, -v`</span>||
 
 
 <span class="notranslate">`action`</span> is the second positional argument for <span class="notranslate">`on-demand`</span> and can be one of the following:
@@ -1331,7 +1343,8 @@ The optional arguments for <span class="notranslate">`on-demand start`</span> an
 |<span class="notranslate">`--no-follow-symlinks`</span>|
 |<span class="notranslate">`--file-mask FILE_MASK`</span>|
 |<span class="notranslate">`--intensity-cpu {1 to 7}`</span> 1 means the lowest intensity, 7 means the highest intensity|
-|<span class="notranslate">`--intensity-io {1 to 7}`</span> 1 means the lowest intensity, 7 means the highest intensity|
+|<span class="notranslate">`--intensity-io {1 to 7}`</span> 1 means the lowest intensity, 7 means the highest intensity| 
+|<span class="notranslate">`--prioritize`</span>|Initiate a new on-demand scan immediately, despite other scans queued.|
 
 <span class="notranslate">`action`</span> is the second positional argument for <span class="notranslate">`suspicious`</span> and can be one of:
 

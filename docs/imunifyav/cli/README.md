@@ -147,7 +147,7 @@ Allows to update configuration file via CLI.
 imunify-antivirus config update [configuration options]
 ```
 
-You can find instructions on how to apply configuration changes from CLI [here](/cli/#how-to-apply-changes-from-cli) and configuration options can be taken from the `/etc/sysconfig/imunify360/imunify360.config` file.
+You can find instructions on how to apply configuration changes from CLI [here](./#how-to-apply-changes-from-cli) and configuration options can be taken from the `/etc/sysconfig/imunify360/imunify360.config` file.
 
 **Example:**
 
@@ -272,7 +272,7 @@ succeeded:
 ## Hooks <Badge text="Deprecated" type="warning"/>
 
 :::danger Warning!
-You can use a new notification system via [CLI](/cli/#notifications-config).
+You can use a new notification system via [CLI described here](./#notifications-config).
 :::
 
 You can read more about hooks [here](/imunifyav/#hooks-cli).

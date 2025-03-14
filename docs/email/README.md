@@ -40,13 +40,14 @@ Imunify Email has been checked for compatibility with following tools and mail g
 
 :::danger Note
 Hosting administrator only.
-
 Imunify Email requires Imunify360 to be installed on the server.
+::: 
+
+:::warning 
+Ensure that port 11335 is open. Additionally, note that it is a UDP server, and therefore, it is not accessible via telnet. 
 :::
 
-Imunify Email is simple to install.
-
-At the moment, it runs on the following distributions:
+Imunify Email is simple to install. At the moment, it runs on the following distributions:
 
 * CentOS 7, 8 with support of cPanel/WHM control panel.
 * CloudLinux OS 7, 8, 9 with support of cPanel/WHM control panel.

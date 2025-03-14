@@ -399,7 +399,7 @@ For instance:
 <div class="notranslate">
 
 ```
-wget http://www.eicar.org/download/eicar.com.txt -O /tmp/eicar.com.txt
+wget https://secure.eicar.org/eicar.com.txt -O /tmp/eicar.com.txt
 curl -v -s -o /dev/null -F 'data=@/tmp/eicar.com.txt' http://mycoolwebsite.net/
 ```
 </div>

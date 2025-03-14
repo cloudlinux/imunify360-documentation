@@ -2,7 +2,12 @@
 
 [[toc]]
 
-## IDS Integration
+## IDS Integration 
+
+:::tip Note 
+Please be aware that *firewalld* is not fully compatible with Imunify360.
+While it is possible to use Imunify360 and firewalld on the same server, you may need to duplicate certain rules or permissions and manually implement changes to configure both Imunify360 and firewalld. Therefore, we recommend utilizing either the Imunify360 firewall exclusively or Imunify360 in conjunction with CSF.  
+:::
 
 ### CSF Integration
 
@@ -569,7 +574,7 @@ This section includes specific settings for each hosting panel that Imunify360 s
 
 * Web application firewall
 * Malware scanning of files uploaded using web
-:::
+::: 
 
 <span class="notranslate">Mod_security</span> installation process is specific for different panels:
 
@@ -595,7 +600,7 @@ If <span class="notranslate">mod_security</span> is installed before Imunify360,
 
 ::: tip Note
 If Imunify360 installer detects any existing ruleset, it installs only minimal set of its rules. So, you need to disable all third-party rulesets prior to Imunify360 installation to get the full ruleset installed automatically.
-:::
+::: 
 
 ### cPanel
 

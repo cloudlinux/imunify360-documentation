@@ -37,6 +37,10 @@ imunify360-agent reload-lists
 
 Or restart the agent.
 
+:::tip Note
+Starting with imunify360-firewall-8.2.0 all IP lists are applied automatically. Manual reloading is no longer required.
+:::
+
 :::warning Warning
 Specifying IPs in those files will not prevent Imunify from adding the same IPs to dynamic lists (like Gray list), but all White lists always have the priority over Black lists when it comes to actual filtering of requests/packages.
 :::
@@ -371,7 +375,7 @@ Version Imunify360 6.0 or later supports the use of MDS in UI.
 :::
 
 :::danger Warning
-For now, Malware Database Scanner (MDS) supports WordPress and Joomla databases only.
+For now, Malware Database Scanner (MDS) supports WordPress, Joomla, and Magento 2 databases only.
 :::
 
 ### How to use Malware Database Scanner (MDS)
@@ -535,6 +539,7 @@ For cPanel/EasyApache 4, Plesk, DirectAdmin and LiteSpeed _mod_remoteip_ will be
 * Sucuri WAF
 * Ezoic
 * Fastly
+* OGO CDN
 
 #### How to trust all IPs that are specified by Ezoic CDN
 

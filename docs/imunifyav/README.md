@@ -505,6 +505,14 @@ The table has the following columns:
   * **Add new file or directory** — click _Plus_ icon to add a new file or directory to the Ignore list.
 To perform a bulk action, tick the required files and click the corresponding button above the table.
 
+::: tip Note
+Wildcards are not supported when adding paths to the <span class="notranslate">Ignore List</span>. For example, the following paths are not supported:
+* <span class="notranslate">`/home/*/mail/`</span>
+* <span class="notranslate">`/home/user/*.html`</span>
+* <span class="notranslate">`/home/*`</span>
+:::
+ 
+
 The following filters are available:
 
 **Timeframe** — displays the results filtered by chosen period or date.
