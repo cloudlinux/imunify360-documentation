@@ -1070,6 +1070,7 @@ Go to <span class="notranslate">_Imunify360 → Settings → General_</span>. Th
 * <span class="notranslate">[OSSEC](/dashboard/#ossec)</span>
 * <span class="notranslate">[PAM](/dashboard/#pam)</span>
 * <span class="notranslate">[Error Reporting](/dashboard/#error-reporting)</span>
+* <span class="notranslate">[WordPress plugin](/dashboard/#wordpress-plugin)</span>
 * <span class="notranslate">[Contact Details](/dashboard/#contact-details)</span>
 
 #### Installation
@@ -1510,6 +1511,25 @@ imunify360-agent config update '{"PAM": {"ftp_protection": true}}'
 </div>
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes. This will enable protection for SSH/FTP protocols.
+
+#### WordPress plugin
+
+:::warning
+The WordPress plugin installation is currently allowed only if _Settings > Malware > General > Default action on detect_ is set to _Cleanup_. Other installation options will be introduced in the future release.
+:::
+
+Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites.
+
+![](/images/wordpress-plugin/panel-settings.png)
+
+You can also enable it via CLI with the following command:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"security_plugin_enabled": true}}'
+```
+</div>
 
 #### Error Reporting
  

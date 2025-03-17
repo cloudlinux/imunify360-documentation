@@ -98,5 +98,10 @@ export default [
         title: "Patchman",
         description: "Automated vulnerability patching and malware removal.",
         link: "/patchman/",
+    },
+    {
+        title: "WordPress Plugin",
+        description: "Documentation for Imunify Security plugin for WordPress available in Imunify360.",
+        link: "/wordpress_plugin/",
     }
 ]
