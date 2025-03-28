@@ -129,7 +129,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-$primary-color = #3f83f8
+$primary-color = #43a069
 $background-color = white
 $border-radius = 16px
 mobile-breakpoint = 768px
