@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-4033d0f8","path":"/patchman/","title":"Patchman","lang":"en-US","frontmatter":{},"headers":[{"level":2,"title":"Introduction","slug":"introduction","link":"#introduction","children":[]}]}');export{t as data};
