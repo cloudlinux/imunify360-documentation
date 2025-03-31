@@ -517,10 +517,10 @@ _Query String Modification and Creation for jQuery_ released version 2.2.3 conta
 * [Preventing prototype pollution](https://github.com/alrusdi/jquery-plugin-query-object/commit/816b875dc6251d7303533916dfbf8eb158e6f474)
 
 **Affected versions**  
-WordPress! 3.6 - 5.9.1
+WordPress 3.6 - 5.9.1
 
 **Fix complications**  
-This doesn’t concern a WordPress! core vulnerability. If we would patch this vulnerability, we would also affect projects that depend on this library other than WordPress! We want to avoid that because we can’t guarantee that those other projects will be compatible with our changes to the code.
+This doesn’t concern a WordPress core vulnerability. If we would patch this vulnerability, we would also affect projects that depend on this library other than WordPress. We want to avoid that because we can’t guarantee that those other projects will be compatible with our changes to the code.
 
 **Mitigating factors**  
 N/A
