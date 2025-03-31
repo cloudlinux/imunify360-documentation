@@ -8,26 +8,19 @@ Patchman continuously scans for known vulnerabilities in popular Content Managem
 
 **Key Features** 
 
-* **Automatic Vulnerability Detection**
-  Identifies security flaws in popular CMS platforms and third-party plugins.
+* **Automatic Vulnerability Detection**: Identifies security flaws in popular CMS platforms and third-party plugins.
 
-* **Virtual Patching**
-  Applies lightweight, non-intrusive patches to vulnerable files, reducing the risk of exploitation without requiring full upgrades.
+* **Virtual Patching**: Applies lightweight, non-intrusive patches to vulnerable files, reducing the risk of exploitation without requiring full upgrades.
 
-* **Malware Detection and Quarantine**
-  Scans websites for malware and isolates infected files to prevent further damage or spread.
+* **Malware Detection and Quarantine**: Scans websites for malware and isolates infected files to prevent further damage or spread.
 
-* **Outdated Software Detection**
-  Notifies administrators and users about outdated CMS installations and plugins to encourage timely updates.
+* **Outdated Software Detection**: Notifies administrators and users about outdated CMS installations and plugins to encourage timely updates.
 
-* **Automated Cleanup**
-  Removes known malware patterns and reintegrates cleaned files into the hosting environment.
+* **Automated Cleanup**: Removes known malware patterns and reintegrates cleaned files into the hosting environment.
 
-* **User Notifications**
-  Sends customizable alerts to end users, prompting action when needed (e.g., outdated software or detected threats).
+* **User Notifications**: Sends customizable alerts to end users, prompting action when needed (e.g., outdated software or detected threats).
 
-* **Seamless Integration**
-  Compatible with major hosting control panels, including cPanel, Plesk, and DirectAdmin, for easy deployment and management.
+* **Seamless Integration**: Compatible with major hosting control panels, including cPanel, Plesk, and DirectAdmin, for easy deployment and management.
 
 Patchman helps reduce support requests related to malware infections and outdated software, improves server reputation, and enhances customer trust. It’s a low-maintenance, high-impact solution that fits seamlessly into modern web hosting operations.
 
