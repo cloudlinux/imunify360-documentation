@@ -172,5 +172,13 @@ export default {
                     "/patchman/imunify/"
                 ]
             }
+        ],
+        '/wordpress_plugin/': [
+            {
+                collapsable: false,
+                children: [
+                    "/wordpress_plugin/"
+                ]
+            }
         ]
     }
