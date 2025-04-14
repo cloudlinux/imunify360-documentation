@@ -42,7 +42,7 @@ Starting with imunify360-firewall-8.2.0 all IP lists are applied automatically. 
 :::
 
 :::warning Warning
-Specifying IPs in those files will not prevent Imunify from adding the same IPs to dynamic lists (like Gray list), but all White lists always have the priority over Black lists when it comes to actual filtering of requests/packages.
+Specifying IPs in those files will not prevent Imunify from adding the same IPs to dynamic lists (like Grey list), but all White lists always have the priority over Black lists when it comes to actual filtering of requests/packages.
 :::
 
 
@@ -97,7 +97,7 @@ To take advantage of this feature, go to your Imunify360 control panel and enabl
 
 This is a special operation mode where Imunify360 consumes less CPU and RAM. It is intended for servers with limited resources.
 
-This mode disables <span class="notranslate">[WebShield](/webshield/)</span> switching off GrayList and Anti-bot Challenge. 
+This mode disables <span class="notranslate">[WebShield](/webshield/)</span> switching off GreyList and Anti-bot Challenge. 
 
 <span class="notranslate">_Low Resource Usage_</span> mode also enables the <span class="notranslate">_[Minimized Modsec Ruleset](/dashboard/#waf-settings)_</span> option that disables Imunify WAF rules with a high memory footprint, leaving critical rulesets enabled. 
 
@@ -494,7 +494,7 @@ Please note that the WebShield Anti-Bot Challenge is not compatible with aggress
 ::: tip Note: Handling Non-Text Requests for Greylisted IPs
 When a source IP address is added to the Greylist, WebShield typically presents an HTML-based Anti-Bot Challenge page (splashscreen) to verify the user. However, displaying this HTML page is not appropriate for requests explicitly asking for non-text content types.
 
-For requests from greylisted IPs, if the `Accept` header is present and does not start with `text/` (this includes heaaders like `Accept: application/json` or `Accept: */*`), WebShield returns an **HTTP 415 Unsupported Media Type** error instead of the HTML challenge page, as the challenge is unsuitable for non-text responses.
+For requests from greylisted IPs, if the `Accept` header is present and does not start with `text/` (this includes headers like `Accept: application/json` or `Accept: */*`), WebShield returns an **HTTP 415 Unsupported Media Type** error instead of the HTML challenge page, as the challenge is unsuitable for non-text responses.
 
 **Workarounds:**
 If legitimate traffic is being blocked with a 415 error due to this behavior, consider the following:
@@ -510,7 +510,7 @@ There are two layers in GreyList behavior:
 
 ### CDN Support
 	
-Imunify360 correctly graylists and blocks IPs behind Cloudflare and other CDNs (see [here](/features/#supported-cdn-providers) for the full list).
+Imunify360 correctly greylists and blocks IPs behind Cloudflare and other CDNs (see [here](/features/#supported-cdn-providers) for the full list).
 	
 Imunify360 passes all requests from CDN through <span class="notranslate">WebShield</span>, and uses <span class="notranslate">CF-Connecting-IP</span> and <span class="notranslate">X-Forwarded-For</span> headers to identify real IPs.
 	
