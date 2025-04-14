@@ -491,6 +491,21 @@ The Greylist is a feature intended to distinguish human from machine input and p
 Please note that the WebShield Anti-Bot Challenge is not compatible with aggressive CDN caching modes, like Cloudflare "Browser Cache TTL" or "cache everything" with "Edge Cache TTL". If the Сaptcha page is cached by CDN, a visitor will see the Anti-Bot challenge from CDN cache disregarding it has been passed or not. In order to fix that, either disable the aggressive CDN caching or the Anti-Bot Challenge functionality in the Imunify360.
 :::
 
+::: tip Note: Handling Non-Text Requests for Greylisted IPs
+When a source IP address is added to the Greylist, WebShield typically presents an HTML-based Anti-Bot Challenge page (splashscreen) to verify the user. However, displaying this HTML page is not appropriate for requests explicitly asking for non-text content types.
+
+WebShield examines the `Accept` HTTP header sent in the request. If an IP is greylisted and the request includes an `Accept` header that:
+1.  Is not empty, **and**
+2.  Does **not** start with the prefix `text/` (e.g., `text/html`, `text/plain`)
+
+Then, instead of showing the challenge page, WebShield will return an **HTTP 415 Unsupported Media Type** error. This includes requests sending `Accept: */*`, as this is treated as requesting a potentially non-text resource in this context.
+
+**Workarounds:**
+If legitimate traffic is being blocked with a 415 error due to this behavior, consider the following:
+* **Adjust the Client's Request:** Modify the application or client making the request to send a more specific `Accept` header (like `text/html`) or omit the `Accept` header entirely if appropriate for the expected response.
+* **Whitelist the Source IP:** Add the source IP address to the Imunify360 Whitelist to prevent it from being greylisted.
+:::
+
 There are two layers in GreyList behavior:
 
 1. If a user of a website is added to the <span class="notranslate">Grey List</span> (the access is blocked), then the GreyList behavior allows him to unblock himself. When he tries to get to the website he receives the JS challenge. If the challenge is solved by the browser successfully (a human user is not required to go through human confirmation - the process will pass under the hood), a user is redirected to the website, which means that the access is unblocked and the IP address of this user is removed from the <span class="notranslate">Grey List</span>.
