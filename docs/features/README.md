@@ -494,11 +494,7 @@ Please note that the WebShield Anti-Bot Challenge is not compatible with aggress
 ::: tip Note: Handling Non-Text Requests for Greylisted IPs
 When a source IP address is added to the Greylist, WebShield typically presents an HTML-based Anti-Bot Challenge page (splashscreen) to verify the user. However, displaying this HTML page is not appropriate for requests explicitly asking for non-text content types.
 
-WebShield examines the `Accept` HTTP header sent in the request. If an IP is greylisted and the request includes an `Accept` header that:
-1.  Is not empty, **and**
-2.  Does **not** start with the prefix `text/` (e.g., `text/html`, `text/plain`)
-
-Then, instead of showing the challenge page, WebShield will return an **HTTP 415 Unsupported Media Type** error. This includes requests sending `Accept: */*`, as this is treated as requesting a potentially non-text resource in this context.
+For requests from greylisted IPs, if the `Accept` header is present and does not start with `text/` (this includes heaaders like `Accept: application/json` or `Accept: */*`), WebShield returns an **HTTP 415 Unsupported Media Type** error instead of the HTML challenge page, as the challenge is unsuitable for non-text responses.
 
 **Workarounds:**
 If legitimate traffic is being blocked with a 415 error due to this behavior, consider the following:
