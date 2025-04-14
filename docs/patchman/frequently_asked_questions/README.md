@@ -124,6 +124,8 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>ultimate-addons-for-gutenberg | 0.0.1+ | COVERAGE, COVERAGE+CLEAN | all | 
 | WordPress Plugin:  <br>safe svg | 1.8.0+ | COVERAGE, COVERAGE+CLEAN | all | 
 | WordPress Plugin:  <br>Automize | 2.5.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Better Search Replace | >=1.3.4 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>ElementsKit Elementor Addons and Templates | >=1.2.6 | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
