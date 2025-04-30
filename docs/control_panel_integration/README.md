@@ -81,7 +81,7 @@ The Imunify360 Stand-alone version requires the following integrations before in
 * 2.4 Integration with Authentication Service
 * 2.5 Integration with Malware Scanner
 
-All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) or check the [Knoledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
+All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) or check the [Knowledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
 
 #### 2.1 Specifying panel information
 
@@ -669,7 +669,69 @@ real_ip_header CF-Connecting-IP;
 
 #### Use a specific list of users in Imunify360
 
-By default, Imunify360 will use Linux system users, limited by <span class="notranslate">`uid_min`</span> and <span class="notranslate">`uid_max`</span> from the <span class="notranslate">`/etc/login.defs`</span>.
+By default, Imunify360 will use Linux system users, limited by <span class="notranslate">`uid_min`</span> and <span class="notranslate">`uid_max`</span> from the <span class="notranslate">`/etc/login.defs`</span>. 
+
+**Configuring a custom user list (optional)**
+
+If you need to restrict (or expand) that scope — for example, to include only hosting panel users, or to skip system accounts created by third-party software, — you can point Imunify360 to **your own users script**. Enable the script in `integration.conf`:
+
+```
+# /etc/sysconfig/imunify360/integration.conf 
+
+[integration_scripts]
+users = /path/to/get-users-script.sh
+``` 
+
+It should point to an executable file that generates a JSON file similar to the following (see details [here](/control_panel_integration/#_2-download-and-edit-integration-conf-file-to-set-required-integrations)):
+
+
+<div class="notranslate">
+
+```
+{
+  "data": [
+    {
+      "id": 1000,
+      "username": "demo1",
+      "owner": "root",
+      "domain": "demo1.com",           // optional
+      "package": {                     // optional
+        "name": "basic",
+        "owner": "root"
+      },
+      "email": "demo1@demo1.com",
+      "locale_code": "en_US"
+    },
+    {
+      "id": 1001,
+      "username": "demo2",
+      "owner": "root",
+      "email": "demo2@demo2.com",
+      "locale_code": "en_US"
+    }
+  ],
+  "metadata": {
+    "result": "ok"
+  }
+}
+```
+</div> 
+
+**Testing** 
+
+Run once to ensure the script works:
+
+```
+sudo -u imunify360 /path/to/get-users-script.sh | jq . 
+```
+
+If the JSON looks correct, restart the agent:
+
+```
+systemctl restart imunify360
+```
+
+Imunify360 will now protect **only** the users returned by your script.  
 
 #### Data description
 
