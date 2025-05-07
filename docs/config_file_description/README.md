@@ -254,6 +254,12 @@ to request Anti-bot Challenge again</td></tr>
 <td># intensity level for file operations. Can be set from 1 to 7, default is 2</td></tr>
 <tr><td><span class="notranslate">ram: 1024</span></td>
 <td># intensity level for RAM consumption. The default value is 1024</td></tr>
+<tr><td><span class="notranslate">user_scan_cpu: 2</span></td>
+<td># intensity level for CPU consumption. Can be set from 1 to 7, default is 2. <br><br>This option is <b>for scans initiated by end-users</b>. More at <a href="/faq_and_known_issues/#_27-how-to-enable-scan-for-end-users">How to enable scan for end-users?</a> <br><br><b>Note:</b> The global/admin resource limits (<code>cpu</code>, <code>io</code>, <code>ram</code> without the <code>user_scan_</code> prefix) can also be <a href="/dashboard/#resource-consumption">controlled through UI.</a></br></br></br></br> </td></tr>
+<tr><td><span class="notranslate">user_scan_io: 2</span></td>
+<td># intensity level for file operations for scans initiated by end-users. Can be set from 1 to 7, default is 2</td></tr>
+<tr><td><span class="notranslate">user_scan_ram: 1024</span></td>
+<td># intensity level for RAM consumption for scans initiated by end-users. The default value is 1024</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_SCHEDULE:</span></th></tr>
 <tr><td><span class="notranslate">day_of_month: &lt;next day after installation&gt;</span></td>
