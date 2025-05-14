@@ -158,7 +158,35 @@ After that, restart the `imunify-notifier` service:
 systemctl restart imunify-notifier
 ```
 
-</div>
+</div> 
+
+If `checkmodule` command is not found, install it with:
+
+* If you’re on CloudLinux/CentOS 7
+<div class="notranslate">
+	
+```
+yum install checkpolicy
+```
+</div> 
+
+* If you’re on CloudLinux/CentOS 8
+<div class="notranslate">
+	
+```
+yum install policycoreutils-python-utils
+```
+</div> 
+(will also pull in checkpolicy → checkmodule)
+
+* If you’re on CloudLinux/CentOS 9
+<div class="notranslate">
+	
+```
+dnf install checkpolicy
+```
+(plus `policycoreutils-python-utils` if you need the other SELinux tools). 
+</div> 
 
 ### Update Instructions
 
