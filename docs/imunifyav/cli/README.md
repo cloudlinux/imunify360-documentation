@@ -418,6 +418,7 @@ where PATHS are the absolute paths to files or folders divided by a whitespace.
 |-|-|
 |<span class="notranslate">`cleanup`</span>|clean up infected ITEMS for a USER|
 |<span class="notranslate">`cleanup-all`</span>|clean up all files that have been detected as infected for all users|
+|<span class="notranslate">`diff`</span>|obtain the base64-encoded unified diff between the infected and cleaned version of the file|
 |<span class="notranslate">`restore-original`</span>|restore the original (malicious/infected) file to its original location|
 |<span class="notranslate">`list`</span>|list malicious/infected files|
 |<span class="notranslate">`move-to-ignore`</span>|move a <span class="notranslate">Malicious List</span> entry to the (malware) <span class="notranslate">Ignore List</span>|
@@ -556,6 +557,17 @@ imunify-antivirus malware user list
 </div>
 
 The successful initiation/stopping of a scanning process or adding of ignore directories/files should give you ```OK``` in the output.
+
+10. The following command shows how to get the difference between the infected and cleaned version of the file.
+
+<div class="notranslate">
+
+```
+imunify-antivirus malware malicious diff --id=1 --json | jq .diff -r | base64 --decode
+```
+</div>
+
+The required ID can be obtained from the <span class="notranslate">`malware malicious list`</span> command output.
 
 
 ## Notifications config
