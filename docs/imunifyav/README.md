@@ -136,6 +136,30 @@ imunify-antivirus register YOUR_KEY
 
 Where `YOUR_KEY` is your activation key or IPL in case of IP-based license.
 
+### SELinux support
+
+If SELinux (Security-Enhanced Linux) is enabled on your server, you should install the Imunify360 SELinux policy module. You can check SELinux status by `sestatus` command. Policy is shipped with Imunify360 package and is located in the <span class="notranslate">`/var/imunify360/imunify-antivirus.te`</span>
+
+To apply it, run the following commands:
+
+<div class="notranslate">
+
+```
+checkmodule -M -m -o /var/imunify360/imunify-antivirus.mod /var/imunify360/imunify-antivirus.te
+semodule_package -o /var/imunify360/imunify-antivirus.pp -m /var/imunify360/imunify-antivirus.mod
+semodule -i /var/imunify360/imunify-antivirus.pp
+```
+</div>
+
+After that, restart the `imunify-notifier` service:
+<div class="notranslate">
+
+```
+systemctl restart imunify-notifier
+```
+
+</div>
+
 ### Update Instructions
 
 To upgrade ImunifyAV, run the command:
