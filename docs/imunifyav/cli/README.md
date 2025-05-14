@@ -35,7 +35,7 @@ The following options are available for all commands.
 
 #### Examples
 
-1. This command allows to show help for the `start` command:
+This command allows to show help for the `start` command:
     ```
     imunify-antivirus start [-h]
     ```
@@ -556,7 +556,7 @@ imunify-antivirus malware user list
 ```
 </div>
 
-The successful initiation/stopping of a scanning process or adding of ignore directories/files should give you ```OK``` in the output.
+The successful initiation/stopping of a scanning process or adding of ignore directories/files should give you ```OK``` in the output. 
 
 10. The following command shows how to get the difference between the infected and cleaned version of the file.
 
