@@ -52,7 +52,7 @@
 :::tip
 **No hosting panel installation note:** 
 
-This instruction is intended for supported panels such as cPanel, Plesk, DirectAdmin, etc. from the list above. If you are currently using a non-supported control panel, please proceed with the [Stand-Alone documentation section](/control_panel_integration).
+This instruction is intended for supported panels such as cPanel, Plesk, DirectAdmin, etc. from the list above. If you are currently using a non-supported control panel, proceed with the [Stand-Alone documentation section](/control_panel_integration).
 :::
 
 1. Get your license key at [https://www.imunify360.com/](https://www.imunify360.com/). You can purchase it or get a trial key from a received email.
@@ -142,8 +142,10 @@ semodule -i /var/imunify360/imunify360.pp
 ```
 </div>
 
-After that, restart imunify360 and imunify360-webshield services.
-For CentOS6/CloudLinux6:
+After that, restart imunify360 and imunify360-webshield services. 
+
+* For CentOS6/CloudLinux6:
+
 <div class="notranslate">
 
 ```
@@ -153,7 +155,7 @@ service imunify360-webshield restart
 
 </div>
 
-For other systems:
+* For other systems:
 
 <div class="notranslate">
 
@@ -163,8 +165,9 @@ systemctl restart imunify360-webshield
 ```
 </div>
 
-If <i>checkmodule</i> command is not found, please, install it:
-For CentOS8/CloudLinux 8:
+If <i>checkmodule</i> command is not found, install it:
+
+* For CentOS8/CloudLinux 8:
 
 <div class="notranslate">
 
@@ -176,7 +179,7 @@ yum install policycoreutils-python-utils
 
 ### Troubleshooting
 
-On DirectAdmin, Imunify UI requires the <span class="notranslate">`proc_open`</span> PHP function to be enabled. If you are unable to open the Imunify UI, you might see a related message in the web server error log. If so, please remove it from the <span class="notranslate">`disable_functions`</span> list in <span class="notranslate">`php.ini`</span>.
+On DirectAdmin, Imunify UI requires the <span class="notranslate">`proc_open`</span> PHP function to be enabled. If you are unable to open the Imunify UI, you might see a related message in the web server error log. If so, remove it from the <span class="notranslate">`disable_functions`</span> list in <span class="notranslate">`php.ini`</span>.
 
 ## Compatibility
 
