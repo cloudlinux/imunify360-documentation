@@ -1188,7 +1188,7 @@ OK
 
 **Wildcard Domain Support:**
 
-You can also use wildcards to whitelist subdomains or a domain and all its subdomains.
+Use wildcards to efficiently whitelist all subdomains, with the option to also include the main domain itself.
 
 1. Whitelisting all subdomains (but not the parent domain itself):
    To whitelist all subdomains like `foo.example.com` or `bar.example.com` (e.g., anything before `.example.com`), but not `example.com` itself, use the *. prefix:
