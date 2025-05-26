@@ -1193,7 +1193,7 @@ Use wildcards to efficiently whitelist all subdomains, with the option to also i
 1. Whitelisting all subdomains (but not the parent domain itself):
    To whitelist all subdomains like `foo.example.com` or `bar.example.com` (e.g., anything before `.example.com`), but not `example.com` itself, use the *. prefix:
 ```
-imunify360-agent whitelist domain add *.example.com
+imunify360-agent whitelist domain add "*.example.com"
 OK
 ```
 2. Whitelisting a domain and all its subdomains:
