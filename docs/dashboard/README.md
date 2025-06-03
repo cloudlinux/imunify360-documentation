@@ -587,7 +587,7 @@ The table has the following columns:
 * <span class="notranslate">**Scan date**</span> — displays the exact time when a file was detected as malicious.
 * <span class="notranslate">**Type**</span> — <span class="notranslate">Malware Database Scanner</span> or <span class="notranslate">Malware Scanner</span>.
   :::tip Note
-  To function properly <span class="notranslate">Malware Database Scanner</span> requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, only WordPress databases are supported as for now.
+  To function properly <span class="notranslate">Malware Database Scanner</span> requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.
   :::
 * <span class="notranslate">**Username**</span> — displays file owner name.
 * <span class="notranslate">**Malicious**</span> — the path where the file is located starting with root.
@@ -1717,7 +1717,7 @@ Click <span class="notranslate">_Save changes_</span> at the page bottom to appl
 Enable <span class="notranslate">_Malware Database Scanner_</span> – a database antivirus: automated malware detection and clean-up of web applications.
 
 :::tip Note
-Requires MariaDB/MySQL DB management system version 5.5. The recommended version is 5.6+. Note, only WordPress databases are supported as of now.
+Requires MariaDB/MySQL DB management system version 5.5. The recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.
 :::
 
 

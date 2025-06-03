@@ -338,7 +338,7 @@ to request Anti-bot Challenge again</td></tr>
 <td># additional https ports for Anti-bot Challenge</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">MALWARE_DATABASE_SCAN:</span></th></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
-<td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, only WordPress databases are supported as for now.</td></tr>
+<td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.</td></tr>
 </table>
 
 <span class="notranslate">Active Response</span> is an ossec-driven (IDS) feature of Imunify360 which has been re-engineered to make it capable of blocking access to a specific server port being attacked.
