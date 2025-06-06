@@ -90,6 +90,11 @@ export default [
         link: "/email/",
     },
     {
+        title: "Iminufy Patch",
+        description: "Iminufy Patch documentation section.",
+        link: "/imunify_patch/",
+    },
+    {
         title: "MyImunify Documentation",
         description: "MyImunify is a meticulously crafted solution aimed at turning security from a mere cost center into a powerful revenue generator.",
         link: "/myimunify/",
