@@ -781,13 +781,20 @@ It should point to an executable file that generates a JSON file similar to the 
 ```
 </div>
 
-<span class="notranslate">`web_server_config_path`</span> should point to a path that is added as <span class="notranslate">`IncludeOptional`</span> in this domain's virtual host e.g., <span class="notranslate">`/path/to/example.com/specific/config/to/include`</span> path should be added for the <span class="notranslate">`example.com`</span> domain.
+<span class="notranslate">`web_server_config_path`</span> should point to a path that is added as <span class="notranslate">`IncludeOptional`</span> in this domain's virtual host e.g., <span class="notranslate">`/path/to/example.com/specific/config/to/include`</span> path should be added for the <span class="notranslate">`example.com`</span> domain. 
 
-### WordPress Plugin with non-CloudLinux generic panel environment
+### 4.5 WordPress Plugin with non-CloudLinux generic panel environment 
 
 This section explains how install the [**Imunify Security WordPress Plugin**](https://docs.imunify360.com/wordpress_plugin/) on servers that **do not run CloudLinux OS** and use a **home-grown** or **“generic” hosting panel**.
 
-1. Ensure the PHP-handler discovery script is present. Add (or reuse) the PHP discovery script described in the [CloudLinux OS integration guide](https://docs.cloudlinux.com/cloudlinuxos/control_panel_integration/#php).  
+1. Ensure the PHP-handler discovery script is added to `integration.conf`.
+```
+[integration_scripts]
+...
+php = /scripts/php
+```
+
+Add (or reuse) the PHP discovery script described in the [CloudLinux OS integration guide](https://docs.cloudlinux.com/cloudlinuxos/control_panel_integration/#php).  
 
 2. Extend your [domain](https://docs.imunify360.com/control_panel_integration/#data-description) API response. Your `domain` script must now return PHP-handler details for **every** hosted domain.
 
