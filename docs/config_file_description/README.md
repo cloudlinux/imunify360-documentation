@@ -238,6 +238,8 @@ to request Anti-bot Challenge again</td></tr>
 <td># enable (True) (default value) or disable (False) WebShield</td></tr>
 <tr><td><span class="notranslate">splash_screen: True</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) Anti-bot protection</td></tr>
+<tr><td><span class="notranslate">panel_protection: False</span></td>
+<td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span> – default) <a href="https://docs.imunify360.com/features/#cpanel-account-protection">cPanel account protection</a> – applies the Anti-Bot JavaScript challenge on cPanel login ports 2082/2083.</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">PROACTIVE_DEFENCE:</span></th></tr>
 <tr><td><span class="notranslate">blamer: True</span></td>
