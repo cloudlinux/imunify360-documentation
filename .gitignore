@@ -10,3 +10,6 @@ yarn.lock
 ######################
 .DS_Store
 .DS_Store?
+
+# direnv local settings
+.envrc
