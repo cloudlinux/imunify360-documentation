@@ -1281,9 +1281,9 @@ def im_hook(dict_param):
 
 </div>
 
-## Manual ModSec rules update management (≥v8.6.0)
+## Manual ModSec rules update management
 
-Since 8.6.0 imunify360-firewall, we introduced a new way to control ModSecurity rules updates. Right now, it is possible to disable automatic updates and add the ability to manually choose the exact version of the rules.
+Since v8.6.0 imunify360-firewall, we introduced a new way to control ModSecurity rules updates. Right now, it is possible to disable automatic updates and add the ability to manually choose the exact version of the rules.
 To disable autoupdate, `disabled_types`  should be set to `["modsec-rules"]`, the default is an empty list (autoupdate enabled). 
 
 ```
