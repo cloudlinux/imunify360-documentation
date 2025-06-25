@@ -1280,3 +1280,33 @@ def im_hook(dict_param):
 ```
 
 </div>
+
+## Manual ModSec rules update management
+
+Since v8.6.0 imunify360-firewall, we introduced a new way to control ModSecurity rules updates. Right now, it is possible to disable automatic updates and add the ability to manually choose the exact version of the rules.
+To disable autoupdate, `disabled_types`  should be set to `["modsec-rules"]`, the default is an empty list (autoupdate enabled). 
+
+```
+FILES_UPDATE:
+  disables_types: ["modsec-rules"]
+  days_to_keep: 30
+```
+*`days_to_keep` - allows control over how long rules will be stored on disk; when expired, they will be automatically deleted.
+
+In this mode, the Imunify agent downloads new rules, but does not apply them automatically.
+
+To manage rules, we extended `imunify360-agent update modsec-rules` command:
+
+1. Get a list of available rules `imunify360-agent update modsec-rules --list`
+
+```
+# example of output
+$ imunify360-agent update modsec-rules --list
+6.80 (latest)
+6.79
+6.78 (current)
+```
+
+2. Update to exact version `imunify360-agent update modsec-rules --version x.x`
+
+This approach allows customers to set up test servers where they can check new rules and then update them on all servers when the tests pass.
