@@ -1,9 +1,9 @@
 # ImunifyAV(+) for Plesk <span style="background-color:red;color:white;padding:2px 6px;font-size:0.5em;border-radius:3px;">DEPRECATED</span>
 
 <div style="border: 2px solid red; background-color: #ffe6e6; padding: 10px; font-size: 14px;">
-⚠️ <strong>IMPORTANT NOTICE:</strong> This section describes <strong>ImunifyAV (Revisium)</strong>, which is <strong>deprecated</strong> and no longer supported or installable. 
+⚠️ <strong>IMPORTANT NOTICE:</strong> This section describes the <strong>ImunifyAV (Revisium)</strong> product, which is <strong>deprecated</strong> and no longer supported or installable. 
 <br><br>It is now replaced with a modern version: <strong>Imunify Extension</strong>. 
-<br><br>Please refer to the <a href="https://docs.imunify360.com/imunifyav/imunifyav_for_plesk/#manual-upgrade-from-deprecated-imunifyav-to-the-new-imunify-extension">migration guide</a> for upgrading to the current ImunifyAV version for Plesk.
+<br><br>Please refer to the <a href="https://docs.imunify360.com/imunifyav/imunifyav_for_plesk/#manual-upgrade-from-deprecated-imunifyav-to-the-new-imunify-extension">migration guide</a> for upgrading to the current ImunifyAV version for Plesk if the outdated version is still in use.
 </div>
 
 ImunifyAV for Plesk is an intelligent antivirus and security monitoring tool designed to work with Plesk CMS. It performs one-click automatic malware cleanup, domain reputation monitoring as well as blacklist status check and is available as a Free and a Premium (ImunifyAV+) version.
