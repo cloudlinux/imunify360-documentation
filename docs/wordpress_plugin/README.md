@@ -9,16 +9,17 @@ The **Imunify Security WordPress plugin** is available to all Imunify customers 
 * **WordPress Version**: 5.0.0 or higher
 * **PHP Version**: 5.6 or higher
 * **Imunify360**: 8.4.1 or higher
-* **ImunifyAV**: 8.6.0 or higher
+* **ImunifyAV/AV+**: 8.6.0 or higher
 
 ## Installation
 
 The plugin is not available in the WordPress plugin repository. To install:
 
 1. Navigate to Imunify settings in your hosting control panel (e.g., cPanel).
-2. Scroll to the `WordPress Plugin` section.
-3. Tick the `Install WordPress plugin` checkbox and click `Save changes`.
-4. The plugin will be installed in the background to all active WordPress installations on the server.
+2. Open the `General` tab.
+3. Scroll to the `WordPress Plugin` section.
+4. Tick the `Install WordPress plugin` checkbox and click `Save changes`.
+5. The plugin will be installed in the background to all active WordPress installations on the server.
 
 ![](/images/wordpress-plugin/panel-settings.png)
 *Plugin installation settings in the control panel*
