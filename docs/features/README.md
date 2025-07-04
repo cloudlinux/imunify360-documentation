@@ -468,6 +468,28 @@ Cleanup results will be stored in the <span class="notranslate">`results.json`</
 
 
 
+## Detect Admin Tools
+
+Imunify360 can automatically detect admin tools (such as Adminer or TinyFileManager) uploaded to user folders and treat them as malicious. When detected, these files will be zeroed for security.
+
+**Default:** Enabled
+
+### How to enable or disable
+
+To enable the feature via CLI:
+
+```
+imunify360-agent config update '{"MALWARE_SCANNING": {"detect_admin_tools": true}}'
+```
+
+To disable the feature via CLI:
+
+```
+imunify360-agent config update '{"MALWARE_SCANNING": {"detect_admin_tools": false}}'
+```
+
+
+
 ## Webshield
 
 

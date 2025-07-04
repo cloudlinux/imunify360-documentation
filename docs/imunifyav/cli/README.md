@@ -833,6 +833,28 @@ Add your path to the related hook (or multiple hooks) and implement the custom l
 
 Also in this script you could find the way to parse JSON that come from ImunifyAV(+) and description of this JSON schema in every possible case. Such descriptions are provided by docstring of the <span class="notranslate">`handle`</span> methods.
 
+
+## Detect Admin Tools
+
+ImunifyAV(+) can automatically detect admin tools (such as Adminer or file managers) uploaded to user folders and treat them as malicious. When detected, these files can be zeroed by ImunifyAV+ for security.
+
+**Default:** Enabled
+
+### How to enable or disable
+
+To enable the feature via CLI:
+
+```
+imunify-antivirus config update '{"MALWARE_SCANNING": {"detect_admin_tools": true}}'
+```
+
+To disable the feature via CLI:
+
+```
+imunify-antivirus config update '{"MALWARE_SCANNING": {"detect_admin_tools": false}}'
+```
+
+
 ## Register
 
 Allows to register and activate ImunifyAV. You can use it in case if ImunifyAV was not activated during installation process or in case if activation key of the ImunifyAV was changed for any reason. If you do not know what is an activation key or have any problem with it then, please, read [Installation Guide](/imunifyav/#installation-guide) or [contact our support team](https://cloudlinux.zendesk.com/hc/requests/new).
