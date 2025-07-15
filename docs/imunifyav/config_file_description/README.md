@@ -8,6 +8,7 @@ _/etc/sysconfig/imunify360/imunify360.config_
 In the config file it is possible to set up ImunifyAV(+) configuration. The following options are available:
 
 <table>
+<tbody>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">MALWARE_SCANNING:</span></th></tr>
 <tr><td><span class="notranslate">max_signature_size_to_scan: 1048576</span></td>
@@ -30,19 +31,17 @@ In the config file it is possible to set up ImunifyAV(+) configuration. The foll
 <td># allows to use (True) the regex matching Hyperscan library in Malware Scanner to greatly improve the scanning speed. True is the default value. Hyperscan requires its own signatures set that will be downloaded from the files.imunify360.com and compiled locally.<br><b>Platform requirements</b>:<br>* Hyperscan supports Debian, Ubuntu and CentOS/CloudLinux 7 and later.<br>* SSE3 processor instructions support. It is quite common nowadays, but may be lacking in virtual environments or in some rather old servers.</td></tr>
 <tr><td><span class="notranslate">crontabs: True</span></td>
 <td># enable (<span class="notranslate">True</span>) scan of the system and user crontab files for malicious jobs. The default value is <span class="notranslate">True</span>.</td></tr>
-<th colspan="2" align="left"><span class="notranslate">ERROR_REPORTING:</span></th>
+<tr><th colspan="2" align="left"><span class="notranslate">ERROR_REPORTING:</span></th></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># automatically report errors to the Imunify team</td></tr>
-<tr>
-<th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_INTENSITY:</span></th></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_INTENSITY:</span></th></tr>
 <tr><td><span class="notranslate">cpu: 2</span></td>
 <td># intensity level for CPU consumption. Can be set from 1 to 7, default is 2</td></tr>
 <tr><td><span class="notranslate">io: 2</span></td>
 <td># intensity level for file operations. Can be set from 1 to 7, default is 2</td></tr>
 <tr><td><span class="notranslate">ram: 2048</span></td>
 <td># intensity level for RAM consumption. Minimum value is 1024, default is 2048</td></tr>
-<tr>
-<th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_SCHEDULE:</span></th></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_SCHEDULE:</span></th></tr>
 <tr><td><span class="notranslate">day_of_month: &lt;next day after installation&gt;</span></td>
 <td># when the background scan shall start, day of the month. Can be from 1 to 31, the default value is the &lt;next day after installation&gt;.</td></tr>
 <tr><td><span class="notranslate">day_of_week: 0</span></td>
@@ -70,14 +69,14 @@ In the config file it is possible to set up ImunifyAV(+) configuration. The foll
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) (the default value) “scan” action in the UI of the end-user.</td></tr>
 <tr>
 <td width="250px;"><span class="notranslate">upgrade_button: True</span></td><td># enable (<span class="notranslate">True</span> - the default value) or disable (<span class="notranslate">False</span>) the Imunify upgrade button.</td></tr>
-<tr>
-<th colspan="2" align="left"><span class="notranslate">RESOURCE_MANAGEMENT:</span></th></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">RESOURCE_MANAGEMENT:</span></th></tr>
 <tr><td><span class="notranslate">ram_limit: 500</span></td>
 <td># intensity level for RAM consumption. Minimum value is 500, default is 500</td></tr>
 <tr><td><span class="notranslate">io_limit: 2</span></td>
 <td># intensity level for file operations. Can be set from 1 to 7, default is 2</td></tr>
 <tr><td><span class="notranslate">cpu_limit: 2</span></td>
 <td># intensity level for CPU consumption. Can be set from 1 to 7, default is 2</td></tr>
+</tbody>
 </table>
 
 ## How to apply changes from CLI
