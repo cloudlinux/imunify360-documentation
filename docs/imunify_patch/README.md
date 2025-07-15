@@ -1,4 +1,4 @@
-# Iminufy Patch
+# Imunify Patch
 
 ## Introduction
 
@@ -24,13 +24,13 @@ However, Imunify also provides CLI and UI controls in case if you do want to div
 
 ### Usage from CLI
 
-Iminufy Patch vulnerabilities scan for all users can be started with the following command:
+Imunify Patch vulnerabilities scan for all users can be started with the following command:
 
 ```
 $ imunify-antivirus malware scan user
 ```
 
-Iminufy Patch vulnerabilities scan for a specific files path can be started with the following command:
+Imunify Patch vulnerabilities scan for a specific files path can be started with the following command:
 
 ```
 $ imunify-antivirus malware on-demand queue put "/home/user1/*"
