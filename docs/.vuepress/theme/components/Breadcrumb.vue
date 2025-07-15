@@ -14,36 +14,20 @@
 <script setup>
 import { computed, inject } from "vue";
 import { usePageData, useSiteData } from "@vuepress/client";
+import documents from "../../config-client/documents";
 
 const page = usePageData();
 const site = useSiteData();
 const { locales: { siteTitle } } = inject("themeConfig");
 
-// Title mapping for specific paths
-const titleMap = {
-  '/billing/': 'Billing',
-  '/command_line_interface/': 'Command Line Interface',
-  '/config_file_description/': 'Config File Description',
-  '/control_panel_integration/': 'Control Panel Integration',
-  '/dashboard/': 'Dashboard',
-  '/email/': 'Email',
-  '/faq_and_known_issues/': 'FAQ and Known Issues',
-  '/features/': 'Features',
-  '/ids_integration/': 'IDS Integration',
-  '/imunify_patch/': 'Imunify Patch',
-  '/imunifyav/': 'ImunifyAV',
-  '/installation/': 'Installation',
-  '/introduction/': 'Introduction',
-  '/localization/': 'Localization',
-  '/myimunify/': 'MyImunify',
-  '/patchman/': 'Patchman',
-  '/terminology/': 'Terminology',
-  '/uninstall/': 'Uninstall',
-  '/update/': 'Update',
-  '/user_interface/': 'User Interface',
-  '/whmcs_plugin/': 'WHMCS Plugin',
-  '/wordpress_plugin/': 'WordPress Plugin',
-};
+// Generate title mapping from documents
+const titleMap = computed(() => {
+  const map = {};
+  documents.forEach(doc => {
+    map[doc.link] = doc.title;
+  });
+  return map;
+});
 
 const breadCrumbs = computed(() => {
   const segments = page.value.path.split("/").filter(Boolean);
@@ -60,7 +44,7 @@ const breadCrumbs = computed(() => {
     if (isLast) {
       title = page.value.title;
     } else {
-      title = titleMap[fullPath] || fullPath;
+      title = titleMap.value[fullPath] || fullPath;
     }
 
     crumbs.push({ path: fullPath, title });
@@ -87,7 +71,7 @@ const breadCrumbs = computed(() => {
     cursor pointer
 
     &:hover
-      color #1994f9
+      color $accentColor
 
   &:last-child
     cursor default
