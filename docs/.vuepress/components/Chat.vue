@@ -8,16 +8,12 @@
         @click="toggleChat"
         :class="{ 'chat-open': showChat }"
       >
-        <svg
+        <img
           v-if="!showChat"
-          viewBox="0 0 16 16"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="#ffffff"
-        >
-          <g id="SVGRepo_iconCarrier">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.48 4h4l.5.5v2.03h.52l.5.5V8l-.5.5h-.52v3l-.5.5H9.36l-2.5 2.76L6 14.4V12H3.5l-.5-.64V8.5h-.5L2 8v-.97l.5-.5H3V4.36L3.53 4h4V2.86A1 1 0 0 1 7 2a1 1 0 0 1 2 0 1 1 0 0 1-.52.83V4zM12 8V5H4v5.86l2.5.14H7v2.19l1.8-2.04.35-.15H12V8zm-2.12.51a2.71 2.71 0 0 1-1.37.74v-.01a2.71 2.71 0 0 1-2.42-.74l-.7.71c.34.34.745.608 1.19.79.45.188.932.286 1.42.29a3.7 3.7 0 0 0 2.58-1.07l-.7-.71zM6.49 6.5h-1v1h1v-1zm3 0h1v1h-1v-1z"></path>
-          </g>
-        </svg>
+          src="../assets/icons/bot-icon.webp"
+          alt="Bot icon"
+          class="bot-icon"
+        />
         <svg
           v-else
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +30,7 @@
       </button>
       
       <div v-if="!showChat" class="highlight-container">
-        <div class="tooltip-text">Try our new Virtual Assistant!</div>
+        <div class="tooltip-text"><b>Need help?</b><br>I'm an AI chatbot, trained to answer all your questions.</div>
       </div>
     </div>
 
@@ -162,8 +158,8 @@ mobile-breakpoint = 768px
 
 .chat-toggle {
   position: relative
-  background: $primary-color
-  border: none
+  background: white
+  border: 2px solid $primary-color
   border-radius: 50%
   width: 56px
   height: 56px
@@ -174,9 +170,18 @@ mobile-breakpoint = 768px
   box-shadow: 0 4px 12px rgba(0,0,0,0.15)
   transition: transform 0.3s ease, box-shadow 0.3s ease
   z-index: 10000
+  padding: 0
+  overflow: hidden
+
+  .bot-icon {
+    width: calc(100% - 4px)
+    height: calc(100% - 4px)
+    border-radius: 50%
+    object-fit: cover
+  }
 
   svg {
-    color: white
+    color: $primary-color
     width: 32px
     height: 32px
   }
@@ -201,18 +206,19 @@ mobile-breakpoint = 768px
 }
 
 .tooltip-text {
-  background: $primary-color;
-  color: white;
-  padding: 8px 16px;
+  background: white;
+  color: black;
+  padding: 12px 20px;
   border-radius: 20px;
   font-size: 0.95rem; /* Increase this value to make the tooltip text larger */
   animation: float 3s ease-in-out infinite;
   position: relative;
-  text-align: center;
-  white-space: nowrap;
+  text-align: right;
+  white-space: normal;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  max-width: 90vw;
+  box-shadow: 0 0 15px $primary-color;
+  max-width: 250px;
+  min-width: 200px;
   overflow: visible;
   text-overflow: clip;
 }
@@ -384,8 +390,10 @@ mobile-breakpoint = 768px
 
   .tooltip-text {
     font-size: 0.9rem; /* Adjust this value to change the tooltip text size on mobile devices */
-    padding: 6px 12px;
-    white-space: nowrap;
+    padding: 10px 16px;
+    white-space: normal;
+    max-width: 90vw;
+    min-width: 180px;
   }
 }
 </style>
