@@ -90,8 +90,8 @@ export default [
         link: "/email/",
     },
     {
-        title: "Iminufy Patch",
-        description: "Iminufy Patch documentation section.",
+        title: "Imunify Patch",
+        description: "Imunify Patch documentation section.",
         link: "/imunify_patch/",
     },
     {
