@@ -320,34 +320,34 @@ In the Patchman Portal, go to the server configuration page under Servers. If yo
 
 ### Installing imunify-antivirus with Patchman support
 
-1. Find a license key at https://portal.patchman.co/servers/add/. It is displayed under the `During installation, enter the following license key:` section.
+1. Find a license key on the [server add page](https://portal.patchman.co/servers/add/). It is displayed under the `During installation, enter the following license key:` section.
 
 2. Install or update `imunify-antivirus`
    1. If imunify-antivirus is not yet installed on a server:
-    ```bash
-    $ wget https://repo.imunify360.cloudlinux.com/defence360/imav-deploy.sh -O imav-deploy.sh
-    $ bash imav-deploy.sh 
+    ```
+    wget https://repo.imunify360.cloudlinux.com/defence360/imav-deploy.sh -O imav-deploy.sh
+    bash imav-deploy.sh 
     ```
     2. If it is already installed, check if the version of imunify-antivirus is at least `8.5.6`
-    ```bash
-    $ imunify-antivirus version
+    ```
+    imunify-antivirus version
     8.5.6 
     ```
     If it's lower, then update imunify-antivirus using your system package manager.
 
 3. Install the Patchman extension
-```bash
-$ imunify-antivirus patchman install
+```
+imunify-antivirus patchman install
 ```
 
 4. Configure the license key (obtained in the first step)
-```bash
-$ imunify-antivirus patchman register '<regkey>'
+```
+imunify-antivirus patchman register '<regkey>'
 ```
 
 5. Enable the Patchman extension
-```bash
-$ imunify-antivirus config update '{"PATCHMAN": {"enable": true}}'
+```
+imunify-antivirus config update '{"PATCHMAN": {"enable": true}}'
 ```
 
-6. Add the server in the Patchman portal https://portal.patchman.co/servers/add/multiple/
+6. Add the server in the Patchman portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/)
