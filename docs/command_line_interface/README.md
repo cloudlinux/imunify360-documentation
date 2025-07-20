@@ -1191,18 +1191,28 @@ OK
 Use wildcards to efficiently whitelist all subdomains, with the option to also include the main domain itself.
 
 1. Whitelisting all subdomains (but not the parent domain itself):
+
    To whitelist all subdomains like `foo.example.com` or `bar.example.com` (e.g., anything before `.example.com`), but not `example.com` itself, use the *. prefix:
 ```
 imunify360-agent whitelist domain add "*.example.com"
 OK
 ```
 2. Whitelisting a domain and all its subdomains:
+   
    To whitelist both the main domain (e.g., `example.com`) **AND** all its potential subdomains (e.g., `foo.example.com`, `blog.example.com`), use the . prefix:
 ```
 imunify360-agent whitelist domain add .example.com
 OK
 ```
 This is a convenient shorthand and is equivalent to adding `example.com` and `*.example.com` separately.
+
+3. Whitelisting all domains on the server (Global Whitelist):
+
+   To whitelist every domain and subdomain hosted on the server, use a single asterisk wildcard (`"*"`).
+```
+imunify360-agent whitelist domain add "*"
+OK
+```
 
 ## Login
 
