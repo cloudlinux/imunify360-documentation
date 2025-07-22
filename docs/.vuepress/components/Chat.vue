@@ -30,7 +30,10 @@
       </button>
       
       <div v-if="!showChat" class="highlight-container">
-        <div class="tooltip-text"><b>Need help?</b><br>I'm an AI chatbot, trained to answer all your questions.</div>
+        <div class="tooltip-text">
+          <div class="tooltip-title"><b>Need help?</b></div>
+          <div class="tooltip-subtitle">I'm an AI chatbot, trained to answer all your questions.</div>
+        </div>
       </div>
     </div>
 
@@ -195,11 +198,10 @@ mobile-breakpoint = 768px
 .highlight-container {
   position: absolute;
   bottom: calc(100% + 15px);
-  left: 50%;
-  transform: translateX(-35%);
+  right: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   pointer-events: none;
   z-index: 10001;
   max-width: 90vw;
@@ -214,13 +216,18 @@ mobile-breakpoint = 768px
   animation: float 3s ease-in-out infinite;
   position: relative;
   text-align: right;
-  white-space: normal;
   font-weight: 500;
   box-shadow: 0 0 15px $primary-color;
-  max-width: 250px;
-  min-width: 200px;
   overflow: visible;
   text-overflow: clip;
+}
+
+.tooltip-title {
+  margin-bottom: 4px;
+}
+
+.tooltip-subtitle {
+  white-space: nowrap;
 }
 
 .chat-container {
@@ -360,10 +367,10 @@ mobile-breakpoint = 768px
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0) translateX(-50%)
+    transform: translateY(0)
   }
   50% {
-    transform: translateY(-4px) translateX(-50%)
+    transform: translateY(-4px)
   }
 }
 
@@ -383,17 +390,17 @@ mobile-breakpoint = 768px
 
   .highlight-container {
     bottom: calc(100% + 15px)
-    right: auto
-    left: 50%
-    transform: translateX(-40%)
+    right: 0
   }
 
   .tooltip-text {
     font-size: 0.9rem; /* Adjust this value to change the tooltip text size on mobile devices */
     padding: 10px 16px;
-    white-space: normal;
     max-width: 90vw;
-    min-width: 180px;
+  }
+  
+  .tooltip-subtitle {
+    white-space: nowrap;
   }
 }
 </style>
