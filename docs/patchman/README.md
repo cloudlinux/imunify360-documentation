@@ -113,3 +113,8 @@ Patchman helps reduce support requests related to malware infections and outdate
       + [Linking more licenses](/patchman/platform_integrations/#linking-more-licenses)
       + [Potential problems](/patchman/platform_integrations/#potential-problems)
       + [Additional help](/patchman/platform_integrations/#additional-help)
+
+* * *
+
+**Imunify integration**
+   * [Installing imunify-antivirus with Patchman support](/patchman/agent/#installin-imunify-antivirus-with-patchman-support)
