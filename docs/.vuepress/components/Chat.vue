@@ -43,14 +43,6 @@
       :class="{ fullscreen: isMobile, 'desktop-view': !isMobile }"
     >
       <div class="chat-header">
-        <div class="header-content">
-          <img
-            :src="botOptions.botAvatarImg"
-            alt="Bot icon"
-            class="header-avatar"
-          />
-          <span class="bot-title">{{ botOptions.botTitle }}</span>
-        </div>
         <div class="header-actions">
           <button class="close-btn" @click="toggleChat">
             <svg
@@ -86,17 +78,11 @@
 </template>
 
 <script>
-import BotIcon from "cl-doc-vue-bot-ui/src/assets/icons/bot.png";
-
 export default {
   data() {
     return {
       showChat: false,
       isLoading: true,
-      botOptions: {
-        botAvatarImg: BotIcon,
-        botTitle: "AI Assistant",
-      },
       iframeUrl: "https://chatbot.cloudlinux.com/docs/imunify360",
       windowWidth: 0, // Changed from window.innerWidth to avoid SSR error
     };
@@ -265,26 +251,8 @@ mobile-breakpoint = 768px
   color: white
   padding: 1rem 1.5rem
   display: flex
-  justify-content: space-between
+  justify-content: flex-end
   align-items: center
-
-  .header-content {
-    display: flex
-    align-items: center
-
-    .header-avatar {
-      width: 32px
-      height: 32px
-      border-radius: 50%
-      margin-right: 10px
-      object-fit: cover
-    }
-
-    .bot-title {
-      font-weight: 600
-      font-size: 1rem
-    }
-  }
 
   .header-actions {
     display: flex
