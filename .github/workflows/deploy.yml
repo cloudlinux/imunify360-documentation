@@ -22,7 +22,7 @@ jobs:
 
       - name: Install and Build 🔧 # 
         run: |
-            yarn
+            yarn install --non-interactive --frozen-lockfile
             yarn docs:build
 
       - name: Deploy 🚀
