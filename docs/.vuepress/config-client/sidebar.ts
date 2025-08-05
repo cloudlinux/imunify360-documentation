@@ -135,6 +135,7 @@ export default {
                     "/imunifyav/imunifyav_for_plesk/",
                     "/imunifyav/imunifyav_for_ispmanager/",
                     "/imunifyav/imunifyav_for_webuzo/",
+                    "/imunifyav/imunifyav_for_openpanel/",
                     "/imunifyav/stand_alone_mode/",
                     "/imunifyav/cli/",
                     "/imunifyav/config_file_description/",
