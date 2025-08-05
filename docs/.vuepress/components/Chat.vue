@@ -29,8 +29,9 @@
         </svg>
       </button>
       
-      <div v-if="!showChat" class="highlight-container">
+      <div v-if="shouldShowTooltip" class="highlight-container">
         <div class="tooltip-text">
+          <div class="tooltip-close" @click="dismissTooltip">×</div>
           <div class="tooltip-title"><b>Need help?</b></div>
           <div class="tooltip-subtitle">I'm an AI chatbot, trained to answer all your questions.</div>
         </div>
@@ -85,16 +86,22 @@ export default {
       isLoading: true,
       iframeUrl: "https://chatbot.cloudlinux.com/docs/imunify360",
       windowWidth: 0, // Changed from window.innerWidth to avoid SSR error
+      showTooltip: true,
+      tooltipDismissDuration: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
     };
   },
   computed: {
     isMobile() {
       return this.windowWidth < 768;
     },
+    shouldShowTooltip() {
+      return !this.showChat && this.showTooltip;
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize(); // Set initial windowWidth on client-side
+    this.updateTooltipVisibility(); // Check tooltip dismissal state on mount
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
@@ -102,12 +109,39 @@ export default {
   methods: {
     toggleChat() {
       this.showChat = !this.showChat;
+      // If chat is opened, dismiss the tooltip for the set duration
+      if (this.showChat) {
+        this.dismissTooltip();
+      }
     },
     handleResize() {
       this.windowWidth = window.innerWidth;
     },
     onIframeLoad() {
       this.isLoading = false;
+    },
+    updateTooltipVisibility() {
+      const dismissedTime = localStorage.getItem('imdocs_chatbot_tooltip_dismissed_time');
+      let shouldBeDismissed = false;
+
+      if (dismissedTime) {
+        const currentTime = new Date().getTime();
+        // Check if the dismissal duration has passed
+        if (currentTime - parseInt(dismissedTime) < this.tooltipDismissDuration) {
+          shouldBeDismissed = true;
+        } else {
+          // If duration passed, clear the dismissal time so it can show again
+          localStorage.removeItem('imdocs_chatbot_tooltip_dismissed_time');
+        }
+      }
+
+      // Update tooltip visibility based on dismissal state
+      this.showTooltip = !shouldBeDismissed;
+    },
+    dismissTooltip() {
+      const currentTime = new Date().getTime();
+      localStorage.setItem('imdocs_chatbot_tooltip_dismissed_time', currentTime.toString());
+      this.updateTooltipVisibility();
     },
   },
 };
@@ -188,7 +222,7 @@ mobile-breakpoint = 768px
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 10001;
   max-width: 90vw;
 }
@@ -206,14 +240,51 @@ mobile-breakpoint = 768px
   box-shadow: 0 0 15px $primary-color;
   overflow: visible;
   text-overflow: clip;
+
+  /* Stop tooltip animation on hover */
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+.tooltip-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  color: #666;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+  pointer-events: auto;
+
+  &:hover {
+    background: #f5f5f5;
+    transform: scale(1.1);
+    color: #333;
+  }
 }
 
 .tooltip-title {
   margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
 }
 
 .tooltip-subtitle {
   white-space: nowrap;
+  position: relative;
+  z-index: 2;
 }
 
 .chat-container {
