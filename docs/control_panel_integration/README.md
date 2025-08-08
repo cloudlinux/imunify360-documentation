@@ -252,20 +252,21 @@ pattern_to_watch = ^/home/.+?/(public_html|public_ftp|private_html)(/.*)?$
 
 ## 3. Install Imunify360  
 
-3.1. **Get your license key:**  
-Visit [imunify360.com](https://www.imunify360.com/). You can purchase it or get a trial key from a received email. 
-3.2. **Log in with root privileges:**  
-Access the server where Imunify360 should be installed with **root** privileges. 
-3.3. **Run the installation commands:**  
-Navigate to your home directory and execute the following commands:
+1. **Get your license key:** Visit [imunify360.com](https://www.imunify360.com/). You can purchase it or get a trial key from a received email. 
+2. **Log in with root privileges:** Access the server where Imunify360 should be installed with **root** privileges. 
+3. **Run the installation commands:**  Navigate to your home directory and execute the following commands:
 ```
 wget https://repo.imunify360.cloudlinux.com/defence360/i360deploy.sh -O i360deploy.sh
+```
+```
 bash i360deploy.sh --key YOUR_KEY
 ```
 
-Where YOUR_KEY is your license key. Replace YOUR_KEY with the actual key - trial or purchased one. The installation instructions are the same as for cPanel/Plesk/DirectAdmin version and can be found in the [Imunify360 documentation](/installation/#installation-instructions).
+Where `YOUR_KEY` is your license key. Replace `YOUR_KEY` with the actual key - trial or purchased one. 
 
-After the successful installation, **you can reach the Imunify360 UI at the URL specified by the ui_path parameter** of the configuration file.
+The installation instructions are the same as for cPanel/Plesk/DirectAdmin version and can be found in the [Imunify360 documentation](/installation/#installation-instructions).
+
+After the successful installation, **you can reach the Imunify360 UI at the URL specified by the `ui_path` parameter** of the configuration file.
 
 ## 4. Set up modules and integrations and change other Imunify360 settings to reflect your needs
 
