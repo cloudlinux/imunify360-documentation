@@ -126,6 +126,13 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Automize | 2.5.1+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Better Search Replace | >=1.3.4 | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>ElementsKit Elementor Addons and Templates | >=1.2.6 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WPS Hide Login | 1.5+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Smash Balloon Social Photo Feed – Easy Social Feeds Plugin | 6.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Starter Templates – AI-Powered Templates for Elementor & Gutenberg | 4.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>One Click Demo Import | 3.2.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Ninja Forms – The Contact Form Builder That Grows With You | 3.8.13+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Solid Security – Password, Two Factor Authentication, and Brute Force Protection  | 8.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Website Builder by SeedProd — Theme Builder, Landing Page Builder, Coming Soon Page, Maintenance Mode | 6.0.5+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 

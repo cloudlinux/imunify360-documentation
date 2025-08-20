@@ -1085,7 +1085,7 @@ If you want to install it using CLI, please follow [this article](/command_line_
 
 #### HardenedPHP
 
-To install or uninstall HardenedPHP click on a button related. Please find additional information about HardenedPHP in [this article](https://docs.cloudlinux.com/cloudlinux_os_components/#php-selector).
+To install or uninstall HardenedPHP click on a button related. Please find additional information about HardenedPHP in [this article](https://docs.cloudlinux.com/cloudlinuxos/cloudlinux_os_components/#php-selector).
 During HardenedPHP installation process the installation log will appear and will update automatically.
 
 ::: tip Note

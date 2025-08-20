@@ -12,6 +12,7 @@ Note that if YAML is used, it accepts any format: `True`/`true`/`yes`/`y`, etc. 
 :::
 
 <table>
+<tbody>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">AUTO_WHITELIST:</span></th>
 </tr>
@@ -113,7 +114,8 @@ Changes of config files will be applied automatically. You don’t need to resta
 <tr>
 <td width="250px;"><span class="notranslate">prev_settings: </span></td><td># for internal usage, do not edit</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">MOD_SEC_BLOCK_BY_SEVERITY:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">MOD_SEC_BLOCK_BY_SEVERITY:</span></th>
+</tr>
  <tr><td><span class="notranslate">enable: True</span></td><td># allows to enable or disable option that moves IPs to <span class="notranslate">Gray List</span> if the ModSecurity rule is triggered</td></tr>
 <tr><td><span class="notranslate">max_incidents: 2</span></td><td># set a number of repeats of the ModSecurity incident from the same IP for adding it to <span class="notranslate">Gray List</span></td></tr>
 <tr><td><span class="notranslate">check_period: 120</span></td>
@@ -129,7 +131,8 @@ Changes of config files will be applied automatically. You don’t need to resta
 <tr><td><span class="notranslate">max_incidents: 10</span></td>
 <td># set a number of repeats of the ModSecurity incident from the same IP for adding it to <span class="notranslate">Gray List</span></td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">MALWARE_SCANNING:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">MALWARE_SCANNING:</span></th>
+</tr>
 <tr><td><span class="notranslate">try_restore_from_backup_first: False</span></td>
 <td># allows to enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span> – the default value) automatic malicious file restore from backup if a clean copy exists,
 otherwise <span class="notranslate"><em>default_action</em></span> is applied</td></tr>
@@ -184,24 +187,29 @@ Scanner's behaviour is based on other scan optimizations, therefore it is better
 <tr><td><span class="notranslate">db_timeout: 15</span></td>
 <td># set the maximum time in seconds for connecting to or reading from a database during a scan/clean/restore operation.</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">CAPTCHA:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">CAPTCHA:</span></th>
+</tr>
 <tr><td><span class="notranslate">cert_refresh_timeout: 3600</span></td>
 <td># set in seconds how often SSL certificate will be refreshed</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">CONTROL_PANEL:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">CONTROL_PANEL:</span></th>
+</tr>
 <tr><td><span class="notranslate">compromised_user_password_reset: True</span></td>
 <td># enables resetting passwords for compromised cPanel accounts. Upon activating this functionality, our platform will detect instances where a cPanel account password has been breached and will subsequently prevent access using the previous password. End-users will then be prompted to create a new password via the <a href="https://docs.cpanel.net/knowledge-base/security/how-to-reset-a-cpanel-account-password/" target="_blank">cPanel password reset process</a>.</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">ERROR_REPORTING:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">ERROR_REPORTING:</span></th>
+</tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># automatically report errors to imunify360 team</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">SEND_ADDITIONAL_DATA:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">SEND_ADDITIONAL_DATA:</span></th>
+</tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># send anonymized data from query string/post parameters and cookies. True is the default value.</td></tr>
 <tr>
 <th align="left"><span class="notranslate">NETWORK_INTERFACE:</span></th>
-<th aligh="left"># manages for what network interfaces Imunify360 rules will be applied</th></tr>
+<th aligh="left"># manages for what network interfaces Imunify360 rules will be applied</th>
+</tr>
 <tr>
 <td><span class="notranslate">eth_device: None</span></td>
 <td># by default, Imunify360 will auto-configure iptables to filter all traffic. 
@@ -211,10 +219,13 @@ If you want iptables rules to be applied to a specific NIC only, list them here 
 <tr><td><span class="notranslate">eth_device_skip: []</span></td>
 <td># if you don't want iptables\ip6tables rules to be applied to specific NICs, list them here (e.g <span class="notranslate">[eth1, eth2]</span>)</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">BACKUP_RESTORE:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">BACKUP_RESTORE:</span></th>
+</tr>
 <tr><td><span class="notranslate">max_days_in_backup: 90</span></td>
 <td># restore from backup files that are not older than <span class="notranslate"><em>max_days_in_backup</em></span></td></tr>
+<tr>
 <th colspan="2" align="left"><span class="notranslate">CAPTCHA_DOS:</span></th>
+</tr>
 <tr><td><span class="notranslate">enabled: True</span></td>
 <td># enable (<span class="notranslate">True</span> (default) or disable (<span class="notranslate">False</span>) Anti-bot Challenge Dos protection</td></tr>
 <tr><td><span class="notranslate">time_frame: 21600</span></td>
@@ -227,11 +238,13 @@ to the Anti-bot Challenge Dos list without an ability to request Anti-bot Challe
 <td># set in seconds the time on which to add the IP in Anti-bot Challenge Dos list without an ability
 to request Anti-bot Challenge again</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">BLOCKED_PORTS:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">BLOCKED_PORTS:</span></th>
+</tr>
 <tr><td><span class="notranslate">default_mode: allowed</span></td>
 <td># defines the default state of ports which is not explicitly set by user (<span class="notranslate"><em>denied</em></span> by default or <span class="notranslate"><em>allowed</em></span> by default). Currently only <span class="notranslate"><em>allowed</em></span> is supported</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">WEBSHIELD:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">WEBSHIELD:</span></th>
+</tr>
 <tr><td><span class="notranslate">known_proxies_support: True</span></td>
 <td># enable CDN support, treat IPs behind CDN as any other IPs. (True is the default value).</td></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
@@ -241,7 +254,8 @@ to request Anti-bot Challenge again</td></tr>
 <tr><td><span class="notranslate">panel_protection: False</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span> – default) <a href="https://docs.imunify360.com/features/#cpanel-account-protection">cPanel account protection</a> – applies the Anti-Bot JavaScript challenge on cPanel login ports 2082/2083.</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">PROACTIVE_DEFENCE:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">PROACTIVE_DEFENCE:</span></th>
+</tr>
 <tr><td><span class="notranslate">blamer: True</span></td>
 <td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False) Blamer</span>. See also: <a href="https://blog.imunify360.com/forcibly-enable-blamer" target="_blank">How to forcibly enable Blamer for all users on the server</a>.</td></tr>
 <tr><td><span class="notranslate">mode: LOG</span></td>
@@ -249,7 +263,8 @@ to request Anti-bot Challenge again</td></tr>
 <tr><td><span class="notranslate">php_immunity: False</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False (default)) PHP Immunity </span> (allows to automatically detect & patch vulnerabilities in software at the Proactive Defense level preventing re-infections through the same vulnerability). By enabling this feature, Blamer will be enabled as well and Proactive Defence switched into the KILL mode.</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_INTENSITY:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_INTENSITY:</span></th>
+</tr>
 <tr><td><span class="notranslate">cpu: 2</span></td>
 <td># intensity level for CPU consumption. Can be set from 1 to 7, default is 2</td></tr>
 <tr><td><span class="notranslate">io: 2</span></td>
@@ -263,7 +278,8 @@ to request Anti-bot Challenge again</td></tr>
 <tr><td><span class="notranslate">user_scan_ram: 1024</span></td>
 <td># intensity level for RAM consumption for scans initiated by end-users. The default value is 1024</td></tr>
 <tr>
-<th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_SCHEDULE:</span></th></tr>
+<th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_SCHEDULE:</span></th>
+</tr>
 <tr><td><span class="notranslate">day_of_month: &lt;next day after installation&gt;</span></td>
 <td># when the background scan shall start, day of the month. Can be from 1 to 31, the default value is the &lt;next day after installation&gt;.</td></tr>
 <tr><td><span class="notranslate">day_of_week: 0</span></td>
@@ -274,7 +290,8 @@ to request Anti-bot Challenge again</td></tr>
 <td># interval of scan. Supported values: strings <span class="notranslate">`NONE`</span> (no scan), <span class="notranslate">`DAY`</span>, <span class="notranslate">`WEEK`</span>, <span class="notranslate">`MONTH`</span>, the default value is <span class="notranslate">`MONTH`</span></td></tr>
 <tr>
 <th align="left"><span class="notranslate">PAM:</span></th>
-<th align="left"># effective way to prevent brute-force attacks against FTP/SSH</th></tr>
+<th align="left"># effective way to prevent brute-force attacks against FTP/SSH</th>
+</tr>
 <tr><td><span class="notranslate">enable: False</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) (default value) PAM brute-force attack protection</td></tr>
 <tr><td><span class="notranslate">exim_dovecot_protection: False</span></td>
@@ -285,7 +302,8 @@ to request Anti-bot Challenge again</td></tr>
 <td># enable (<span class="notranslate">True</span>) (default value) or disable (<span class="notranslate">False</span>) the Dovecot native module.</td></tr>
 <tr>
 <th align="left"><span class="notranslate">KERNELCARE:</span> (<b><font color="Red">deprecated</font></b>)</th>
-<th align="left"># KernelCare extension for Imunify360 which allows tracing malicious invocations to detect privilege escalation attempts</th></tr>
+<th align="left"># KernelCare extension for Imunify360 which allows tracing malicious invocations to detect privilege escalation attempts</th>
+</tr>
 <tr><td><span class="notranslate">edf: False</span> (<b><font color="Red">deprecated</font></b>)</td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) (default value) exploit detection framework</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">MALWARE_CLEANUP:</span></th></tr>
@@ -341,6 +359,7 @@ to request Anti-bot Challenge again</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">MALWARE_DATABASE_SCAN:</span></th></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.</td></tr>
+</tbody>
 </table>
 
 <span class="notranslate">Active Response</span> is an ossec-driven (IDS) feature of Imunify360 which has been re-engineered to make it capable of blocking access to a specific server port being attacked.

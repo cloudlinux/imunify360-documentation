@@ -4,7 +4,6 @@ docs/.vuepress/dist
 node_modules
 
 .idea
-yarn.lock
 
 # OS generated files #
 ######################

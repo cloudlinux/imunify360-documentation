@@ -8,16 +8,12 @@
         @click="toggleChat"
         :class="{ 'chat-open': showChat }"
       >
-        <svg
+        <img
           v-if="!showChat"
-          viewBox="0 0 16 16"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="#ffffff"
-        >
-          <g id="SVGRepo_iconCarrier">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.48 4h4l.5.5v2.03h.52l.5.5V8l-.5.5h-.52v3l-.5.5H9.36l-2.5 2.76L6 14.4V12H3.5l-.5-.64V8.5h-.5L2 8v-.97l.5-.5H3V4.36L3.53 4h4V2.86A1 1 0 0 1 7 2a1 1 0 0 1 2 0 1 1 0 0 1-.52.83V4zM12 8V5H4v5.86l2.5.14H7v2.19l1.8-2.04.35-.15H12V8zm-2.12.51a2.71 2.71 0 0 1-1.37.74v-.01a2.71 2.71 0 0 1-2.42-.74l-.7.71c.34.34.745.608 1.19.79.45.188.932.286 1.42.29a3.7 3.7 0 0 0 2.58-1.07l-.7-.71zM6.49 6.5h-1v1h1v-1zm3 0h1v1h-1v-1z"></path>
-          </g>
-        </svg>
+          src="../assets/icons/bot-icon.webp"
+          alt="Bot icon"
+          class="bot-icon"
+        />
         <svg
           v-else
           xmlns="http://www.w3.org/2000/svg"
@@ -33,8 +29,12 @@
         </svg>
       </button>
       
-      <div v-if="!showChat" class="highlight-container">
-        <div class="tooltip-text">Try our new Virtual Assistant!</div>
+      <div v-if="shouldShowTooltip" class="highlight-container">
+        <div class="tooltip-text">
+          <div class="tooltip-close" @click="dismissTooltip">×</div>
+          <div class="tooltip-title"><b>Need help?</b></div>
+          <div class="tooltip-subtitle">I'm an AI chatbot, trained to answer all your questions.</div>
+        </div>
       </div>
     </div>
 
@@ -44,14 +44,6 @@
       :class="{ fullscreen: isMobile, 'desktop-view': !isMobile }"
     >
       <div class="chat-header">
-        <div class="header-content">
-          <img
-            :src="botOptions.botAvatarImg"
-            alt="Bot icon"
-            class="header-avatar"
-          />
-          <span class="bot-title">{{ botOptions.botTitle }}</span>
-        </div>
         <div class="header-actions">
           <button class="close-btn" @click="toggleChat">
             <svg
@@ -87,29 +79,29 @@
 </template>
 
 <script>
-import BotIcon from "cl-doc-vue-bot-ui/src/assets/icons/bot.png";
-
 export default {
   data() {
     return {
       showChat: false,
       isLoading: true,
-      botOptions: {
-        botAvatarImg: BotIcon,
-        botTitle: "AI Assistant",
-      },
       iframeUrl: "https://chatbot.cloudlinux.com/docs/imunify360",
       windowWidth: 0, // Changed from window.innerWidth to avoid SSR error
+      showTooltip: true,
+      tooltipDismissDuration: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
     };
   },
   computed: {
     isMobile() {
       return this.windowWidth < 768;
     },
+    shouldShowTooltip() {
+      return !this.showChat && this.showTooltip;
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize(); // Set initial windowWidth on client-side
+    this.updateTooltipVisibility(); // Check tooltip dismissal state on mount
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
@@ -117,12 +109,39 @@ export default {
   methods: {
     toggleChat() {
       this.showChat = !this.showChat;
+      // If chat is opened, dismiss the tooltip for the set duration
+      if (this.showChat) {
+        this.dismissTooltip();
+      }
     },
     handleResize() {
       this.windowWidth = window.innerWidth;
     },
     onIframeLoad() {
       this.isLoading = false;
+    },
+    updateTooltipVisibility() {
+      const dismissedTime = localStorage.getItem('imdocs_chatbot_tooltip_dismissed_time');
+      let shouldBeDismissed = false;
+
+      if (dismissedTime) {
+        const currentTime = new Date().getTime();
+        // Check if the dismissal duration has passed
+        if (currentTime - parseInt(dismissedTime) < this.tooltipDismissDuration) {
+          shouldBeDismissed = true;
+        } else {
+          // If duration passed, clear the dismissal time so it can show again
+          localStorage.removeItem('imdocs_chatbot_tooltip_dismissed_time');
+        }
+      }
+
+      // Update tooltip visibility based on dismissal state
+      this.showTooltip = !shouldBeDismissed;
+    },
+    dismissTooltip() {
+      const currentTime = new Date().getTime();
+      localStorage.setItem('imdocs_chatbot_tooltip_dismissed_time', currentTime.toString());
+      this.updateTooltipVisibility();
     },
   },
 };
@@ -162,8 +181,8 @@ mobile-breakpoint = 768px
 
 .chat-toggle {
   position: relative
-  background: $primary-color
-  border: none
+  background: white
+  border: 2px solid $primary-color
   border-radius: 50%
   width: 56px
   height: 56px
@@ -174,9 +193,18 @@ mobile-breakpoint = 768px
   box-shadow: 0 4px 12px rgba(0,0,0,0.15)
   transition: transform 0.3s ease, box-shadow 0.3s ease
   z-index: 10000
+  padding: 0
+  overflow: hidden
+
+  .bot-icon {
+    width: calc(100% - 4px)
+    height: calc(100% - 4px)
+    border-radius: 50%
+    object-fit: cover
+  }
 
   svg {
-    color: white
+    color: $primary-color
     width: 32px
     height: 32px
   }
@@ -190,31 +218,73 @@ mobile-breakpoint = 768px
 .highlight-container {
   position: absolute;
   bottom: calc(100% + 15px);
-  left: 50%;
-  transform: translateX(-35%);
+  right: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  pointer-events: none;
+  align-items: flex-end;
+  pointer-events: auto;
   z-index: 10001;
   max-width: 90vw;
 }
 
 .tooltip-text {
-  background: $primary-color;
-  color: white;
-  padding: 8px 16px;
+  background: white;
+  color: black;
+  padding: 12px 20px;
   border-radius: 20px;
   font-size: 0.95rem; /* Increase this value to make the tooltip text larger */
   animation: float 3s ease-in-out infinite;
   position: relative;
-  text-align: center;
-  white-space: nowrap;
+  text-align: right;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  max-width: 90vw;
+  box-shadow: 0 0 15px $primary-color;
   overflow: visible;
   text-overflow: clip;
+
+  /* Stop tooltip animation on hover */
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+.tooltip-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  color: #666;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+  pointer-events: auto;
+
+  &:hover {
+    background: #f5f5f5;
+    transform: scale(1.1);
+    color: #333;
+  }
+}
+
+.tooltip-title {
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+.tooltip-subtitle {
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
 }
 
 .chat-container {
@@ -252,26 +322,8 @@ mobile-breakpoint = 768px
   color: white
   padding: 1rem 1.5rem
   display: flex
-  justify-content: space-between
+  justify-content: flex-end
   align-items: center
-
-  .header-content {
-    display: flex
-    align-items: center
-
-    .header-avatar {
-      width: 32px
-      height: 32px
-      border-radius: 50%
-      margin-right: 10px
-      object-fit: cover
-    }
-
-    .bot-title {
-      font-weight: 600
-      font-size: 1rem
-    }
-  }
 
   .header-actions {
     display: flex
@@ -354,10 +406,10 @@ mobile-breakpoint = 768px
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0) translateX(-50%)
+    transform: translateY(0)
   }
   50% {
-    transform: translateY(-4px) translateX(-50%)
+    transform: translateY(-4px)
   }
 }
 
@@ -377,14 +429,16 @@ mobile-breakpoint = 768px
 
   .highlight-container {
     bottom: calc(100% + 15px)
-    right: auto
-    left: 50%
-    transform: translateX(-40%)
+    right: 0
   }
 
   .tooltip-text {
     font-size: 0.9rem; /* Adjust this value to change the tooltip text size on mobile devices */
-    padding: 6px 12px;
+    padding: 10px 16px;
+    max-width: 90vw;
+  }
+  
+  .tooltip-subtitle {
     white-space: nowrap;
   }
 }

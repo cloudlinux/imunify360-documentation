@@ -468,6 +468,28 @@ Cleanup results will be stored in the <span class="notranslate">`results.json`</
 
 
 
+## Detect Admin Tools
+
+Imunify360 can automatically detect admin tools (such as Adminer or TinyFileManager) uploaded to user folders and treat them as malicious. When detected, these files will be zeroed for security.
+
+**Default:** Enabled
+
+### How to enable or disable
+
+To enable the feature via CLI:
+
+```
+imunify360-agent config update '{"MALWARE_SCANNING": {"detect_admin_tools": true}}'
+```
+
+To disable the feature via CLI:
+
+```
+imunify360-agent config update '{"MALWARE_SCANNING": {"detect_admin_tools": false}}'
+```
+
+
+
 ## Webshield
 
 
@@ -705,7 +727,17 @@ In the example the <span class="notranslate">`OPTIONS`</span> method is disabled
    </div>
 -->
 
+### Special flags
 
+#### Prevent endless loop in Anti-Bot Challenge
+
+In some very rare cases Anti-Bot Challenge falls into an endless loop, preventing the browser from redirect to the originally requested URL. The reason is too aggressive web page caching. To fix that, follow the steps below:
+
+* Open config <span class="notranslate">`/etc/imunify360-wafd/wafd.conf`</span> for editing.
+* Put the option <span class="notranslate">`append_random_query=yes`</span> and save changes.
+* Reload systemd unit: <span class="notranslate">`systemctl reload imunify360-wafd`</span>
+
+After that a random argument will be appended to every URL. Possible downside of this change is some sites and web applications have strict URL arguments validation and may not work properly.
 
 ## Overridable config
 
