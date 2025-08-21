@@ -46,6 +46,10 @@ When some IP address is blocked by <span class="notranslate">LFD, Imunify360</sp
 1. <span class="notranslate">_Automatically scan all modified files_</span>
 
    <span class="notranslate">CXS Watch</span> daemon must be disabled.
+
+<details> 
+<summary>Click here for more guidelines.</summary>
+
 ```
 # stop and disable the service so it won’t start on boot
 systemctl stop cxswatch
@@ -59,15 +63,18 @@ systemctl unmask cxswatch
 ```
 :::tip Note: 
 You normally don’t need to chmod or rename `/etc/cxs/cxswatch.sh`. Masking the unit already prevents activation by other services. (If you do want an extra safety lock, you can `chmod 000 /etc/cxs/cxswatch.sh` and revert with `chmod 755` later. The script path is standard for CXS. 
-:::
+::: 
+</details>
 
 2. <span class="notranslate">_Automatically scan any files uploaded using web_</span>
 
    <span class="notranslate">CXS ModSecurity</span> vendor should be disabled.
 
-You can do this by CLI (preferred for repeatability) or via WHM UI.
+<details>
+<summary>You can do this by CLI (preferred for repeatability) or via WHM UI. Click here for more guidelines.</summary>
 
-**CLI (root)**
+**CLI (root)** 
+
 The vendor short name for CXS is `configserver` (per vendor metadata). Use either the helper script or WHM API:
 
 ```
@@ -84,8 +91,10 @@ whmapi1 modsec_deploy_settings_changes
 /usr/local/cpanel/scripts/restartsrv_httpd
 ```
 
-**WHM UI (if you prefer)**
-WHM » Security Center » ModSecurity® Vendors → find **ConfigServer (CXS)** → toggle `Enabled` to `Off.` (You may also click Delete to remove it entirely.)
+**WHM UI (if you prefer)** 
+
+WHM » Security Center » ModSecurity® Vendors → find **ConfigServer (CXS)** → toggle `Enabled` to `Off.` (You may also click Delete to remove it entirely.) 
+</details>
 
 4. <span class="notranslate">_Automatically scan any file uploaded using ftp_</span>
 
