@@ -46,12 +46,48 @@ When some IP address is blocked by <span class="notranslate">LFD, Imunify360</sp
 1. <span class="notranslate">_Automatically scan all modified files_</span>
 
    <span class="notranslate">CXS Watch</span> daemon must be disabled.
+```
+# stop and disable the service so it won’t start on boot
+systemctl stop cxswatch
+systemctl disable cxswatch
+
+# hard-prevent other units from starting it
+systemctl mask cxswatch
+
+# (optional) to allow it again later, unmask it:
+systemctl unmask cxswatch
+```
+:::tip Note: 
+You normally don’t need to chmod or rename `/etc/cxs/cxswatch.sh`. Masking the unit already prevents activation by other services. (If you do want an extra safety lock, you can `chmod 000 /etc/cxs/cxswatch.sh` and revert with `chmod 755` later. The script path is standard for CXS. 
+:::
 
 2. <span class="notranslate">_Automatically scan any files uploaded using web_</span>
 
    <span class="notranslate">CXS ModSecurity</span> vendor should be disabled.
 
-3. <span class="notranslate">_Automatically scan any file uploaded using ftp_</span>
+You can do this by CLI (preferred for repeatability) or via WHM UI.
+
+**CLI (root)**
+The vendor short name for CXS is `configserver` (per vendor metadata). Use either the helper script or WHM API:
+
+```
+# Using cPanel helper script (works on all supported versions)
+# Disable the ConfigServer (CXS) ModSecurity vendor
+/usr/local/cpanel/scripts/modsec_vendor disable configserver
+
+# (optional) also disable that vendor’s individual config files & updates via API:
+whmapi1 modsec_disable_vendor_configs vendor_id=configserver
+whmapi1 modsec_disable_vendor_updates vendor_id=configserver
+
+# Apply ModSecurity settings and restart Apache
+whmapi1 modsec_deploy_settings_changes
+/usr/local/cpanel/scripts/restartsrv_httpd
+```
+
+**WHM UI (if you prefer)**
+WHM » Security Center » ModSecurity® Vendors → find **ConfigServer (CXS)** → toggle `Enabled` to `Off.` (You may also click Delete to remove it entirely.)
+
+4. <span class="notranslate">_Automatically scan any file uploaded using ftp_</span>
 
    Imunify360 supports only <span class="notranslate">[Pure-FTPd](https://www.pureftpd.org)</span>. For <span class="notranslate">Pure-FTPd CXS</span> launches pure-uploadscript for the scan. Any pure-uploadscript used by <span class="notranslate">CXS</span> must be disabled. You can use the following commands to do that:
    
