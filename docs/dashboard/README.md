@@ -444,11 +444,15 @@ Exact ports and port-ranges to be allowed can be configured by the following fie
 * FIREWALL.TCP_OUT_IPv4
 * FIREWALL.UDP_IN_IPv4
 * FIREWALL.UDP_OUT_IPv4
+* FIREWALL.TCP_IN_IPv6
+* FIREWALL.TCP_OUT_IPv6
+* FIREWALL.UDP_IN_IPv6
+* FIREWALL.UDP_OUT_IPv6
   
 Changes of config files will be applied automatically. You don’t need to restart the server or Imunify360.
 
 :::warning Note
-The feature doesn’t support IPv6 addresses at this moment and CSF needs to be disabled due to conflicts.
+CSF needs to be disabled due to conflicts.
 :::
 
 

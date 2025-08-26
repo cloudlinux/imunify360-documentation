@@ -62,8 +62,12 @@ Exact ports and port-ranges to be allowed can be configured by the following fie
 - FIREWALL.TCP_OUT_IPv4<br>
 - FIREWALL.UDP_IN_IPv4<br>
 - FIREWALL.UDP_OUT_IPv4<br><br>
+- FIREWALL.TCP_IN_IPv6<br>
+- FIREWALL.TCP_OUT_IPv6<br>
+- FIREWALL.UDP_IN_IPv6<br>
+- FIREWALL.UDP_OUT_IPv6<br><br>
 Changes of config files will be applied automatically. You don’t need to restart the server or Imunify360.<br><br>
-<em><b>Please note, the feature doesn’t support IPv6 addresses at this moment and CSF needs to be disabled due to conflicts.</b></em></td></tr>
+<em><b>Please note that CSF needs to be disabled due to conflicts.</b></em></td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">INCIDENT_LOGGING:</span></th>
 </tr>
