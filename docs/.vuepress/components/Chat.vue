@@ -33,7 +33,7 @@
         <div class="tooltip-text">
           <div class="tooltip-close" @click="dismissTooltip">×</div>
           <div class="tooltip-title"><b>Need help?</b></div>
-          <div class="tooltip-subtitle">I'm an AI chatbot, trained to answer all your questions.</div>
+          <div class="tooltip-subtitle">I'm a multilingual AI chatbot, trained to answer all your questions!</div>
         </div>
       </div>
     </div>
