@@ -1230,7 +1230,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 The Enhanced DOS Protection feature forms an additional layer of protection, increasing the stability of servers facing DOS attacks. It takes a different approach than our existing [DOS Protection feature](/dashboard/#dos-protection), which focuses on monitoring the number of simultaneous connections. Enhanced DOS Protection, on the other hand, monitors the rate of requests originating from attacker IP addresses per unit of time.
 
-The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the Anti-Bot challenge.
+The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the Anti-Bot challenge. However, it can also be configured to blacklist the IP immediately, completely dropping all further packets.
 
 Standard DoS protection, in turn, will block attacks that use long-lived connections (e.g. Slowloris attacks), so these functions complement each other perfectly.
 
@@ -1247,6 +1247,17 @@ The feature is switched off by default. You can activate Enhanced DOS Protection
 ```
 imunify360-agent config update '{"ENHANCED_DOS":{"enabled":true}}'
 ```
+
+<h4>Configure the Protective Action</h4>
+
+You can define the action taken against an attacking IP. The default action is graylist.
+```
+imunify360-agent config update '{"ENHANCED_DOS":{"action":"blacklist"}}'
+```
+* `"graylist"` (Default): The attacker's IP is added to the Graylist. Their requests are redirected to a splashscreen challenge, and they can regain access by solving it.
+* `"blacklist"`: The attacker's IP is added to the Blacklist, completely blocking them from accessing the server. They will not be presented with a challenge.
+
+<h4>Adjust Thresholds and Timeframe</h4>
 
 The default timeframe (seconds) and threshold of request (number) could be changed by the following CLI commands:
 
