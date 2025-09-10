@@ -39,6 +39,52 @@ The main setting that defines how Imunify360 works along with CSF is [3-rd Party
 When 3-rd Party Integration mode is **enabled** Imunify360 uses <span class="notranslate">Login Failure Daemon (LFD)</span> as source for security events instead of <span class="notranslate">[OSSEC](https://www.ossec.net)</span>. To get events from <span class="notranslate">Login Failure Daemon (LFD)</span>, Imunify360 automatically replaces <span class="notranslate">`BLOCK_REPORT`</span> variable to the file path of Imunify360 script.
 When some IP address is blocked by <span class="notranslate">LFD, Imunify360</span> adds this IP address to its <span class="notranslate">Graylist</span> and then **removes it from <span class="notranslate">CSF deny/tempdeny lists</span>**. The latter is done to unblock IP by passing Anti-Bot Challenge and to store all automatically blocked IP addresses in a single place. Thus, no IP is automatically added to <span class="notranslate">CSF deny/tempdeny lists</span>. 
 
+
+#### Migration from CSF to Imunify360
+
+The [migration tool](https://blog.imunify360.com/configserver-eol) is included in the latest version of Imunify360. Here’s how to use it in four simple steps.
+
+**Step 1: Verify the Tool's Presence**
+
+First, ensure your server has the latest version of Imunify360 by checking for the migration tool's directory:
+```
+/opt/imunify360/venv/share/imunify360/scripts/migrate_csf
+```
+
+If this directory is missing, your server has not yet updated. You can either force a manual update or wait a couple of days for the regular update cycle to complete.
+
+**Step 2: Run the Migration Script**
+
+Once you've confirmed the tool is present, navigate to the directory and execute the script.
+
+```
+cd /opt/imunify360/venv/share/imunify360/scripts/migrate_csf
+```
+```
+./main.py # executable, no python prefix needed
+```
+
+**Step 3: Verify the Migration** 
+
+The tool will display color coded logs in your console as it runs. For a complete record of all actions taken, you can review the detailed log file located at:
+```
+/var/log/imunify360/migrate_csf.log
+```
+
+**Step 4: Disable and Remove CSF**
+
+Once you have successfully migrated your configuration, you must disable CSF to allow Imunify360's firewall to take over your protection.
+
+```
+csf -x
+```
+```
+systemctl disable csf
+```
+```
+systemctl disable lfd
+```
+
 ### CXS Integration
 
 <span class="notranslate">[ConfigServer eXploit Scanner](https://configserver.com/cp/cxs.html) (CXS)</span> has different types of malware scanning, which affects <span class="notranslate">Imunify360 Malware Scanner</span> functionality. Below we describe how to make <span class="notranslate">Imunify360 Malware Scanner</span> work properly. These functionalities can be configured at <span class="notranslate">[Malware Scanner settings](/dashboard/#settings)</span> page, but <span class="notranslate">CXS</span> itself must be configured  as follows:
