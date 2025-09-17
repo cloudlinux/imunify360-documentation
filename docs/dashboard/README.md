@@ -536,7 +536,7 @@ Click <span class="notranslate">_Malware Scanner_</span> in the main menu of the
 The following tabs are available:
 
 * <span class="notranslate">[Users](/dashboard/#users)</span>
-* <span class="notranslate">[Files](/dashboard/#files)</span>
+* <span class="notranslate">[Malicious](/dashboard/#malicious)</span>
 * <span class="notranslate">[Scan](/dashboard/#scan)</span>
 * <span class="notranslate">[History](/dashboard/#history)</span>
 * <span class="notranslate">[Ignore List](/dashboard/#ignore-list)</span>
@@ -568,7 +568,7 @@ The table has the following columns:
   * <span class="notranslate">**No malware found**</span> — no malware was found during scanning.
 * <span class="notranslate">**Actions**</span>:
   * <span class="notranslate">**Scan for malware**</span> — click <span class="notranslate">_Scan_</span> ![](/images/scan_symbol.png) to start scanning files for a particular user.
-  * <span class="notranslate">**View report**</span> — click <span class="notranslate">_View Report_</span> ![](/images/view_report_symbol.png) to go to the <span class="notranslate">_Files_</span> tab and display the results of the last scan.
+  * <span class="notranslate">**View report**</span> — click <span class="notranslate">_View Report_</span> ![](/images/view_report_symbol.png) to go to the <span class="notranslate">_Malicious_</span> tab and display the results of the last scan.
   * <span class="notranslate">**Cleanup**</span> — click <span class="notranslate">_Cleanup_</span> ![](/images/cleanup_symbol.png) to start cleaning up infected files for the user.
   * <span class="notranslate">**Restore original**</span> — click <span class="notranslate">_Restore original_</span> ![](/images/restore_original_symbol.png) to restore original file after cleaning up if backup is available. To perform a bulk action, tick required users and click the corresponding button above the table.
 
@@ -677,7 +677,7 @@ After <span class="notranslate">Malware Scanner</span> stops on-demand scanning 
 
 ![](/images/MalwareScannerResults.png)
 
-To review and manage malicious files go to the <span class="notranslate">_Files_</span> tab described below.
+To review and manage malicious files go to the <span class="notranslate">_Malicious_</span> tab described below.
 
 <div class="notranslate">
 

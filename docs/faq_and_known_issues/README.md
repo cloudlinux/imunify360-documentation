@@ -457,7 +457,7 @@ You can find the results in the <span class="notranslate">_Malware scanner > Fil
 
 You can see the advanced reason why a file was detected as malicious.
 
-Go to <span class="notranslate">Imunify → Malware Scanner → Files tab → Reason</span>. See [Malware Scanner → Files tab](/dashboard/#files).
+Go to <span class="notranslate">Imunify → Malware Scanner → Malicious tab → Reason</span>. See [Malware Scanner → Malicious tab](/dashboard/#malicious).
 
 A reason pattern looks like the following:
 
