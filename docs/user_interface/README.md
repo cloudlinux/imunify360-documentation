@@ -6,7 +6,7 @@ There are following tabs in the Imunify360 end user interface:
 
 ## Files
 
-Go to Imunify360 → Files tab. Here, there is a table with a list of infected files.
+Go to Imunify360 → Malicious tab. Here, there is a table with a list of infected files.
 
 ![](/images/user_files.png)
 
