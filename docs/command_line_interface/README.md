@@ -293,7 +293,7 @@ Some comment  2   [{'comment': None, 'ip': '111.111.111.111'}, {'comment': None,
 
 ## Blocked Port IP
 
-This command allows to change the list of IPs that are excluded (allowed) for a certain blocked port.
+This command blocks traffic for the specified IP addresses on a given port. Use it when you want to restrict access to a port only for certain IPs, rather than blocking the port for everyone, as done by [`blocked-port`](/command_line_interface/#blocked-ports).
 
 **Usage:**
 
@@ -321,6 +321,7 @@ imunify360-agent blocked-port-ip [command] <value> [--option]
 | | |
 |-----|-|
 |<span class="notranslate">`--comment`</span>|allows to add comment to the IP|
+|<span class="notranslate">`--ip`</span>|one or more IP addresses to block on the given port (comma-separated list supported)|
 
 **Example:**
 
