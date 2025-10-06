@@ -210,7 +210,7 @@ To enable Imunify Email on account/key level you have to follow almost the same 
 ### **Beta**: Incoming Emails Filtration
 
 :::tip Highlights
-ImunifyEmail now includes a **beta** feature for incoming email filtration, aimed at protecting server users from spam emails.
+ImunifyEmail now includes a **beta** feature for incoming email filtration, designed to protect server users from spam emails.
 This feature is currently in beta mode and is free to use.
   :::
 
@@ -221,20 +221,25 @@ To enable the incoming filtration feature, the server administrator needs to run
 ie-config enable-incoming
 ```
 
-To disable, run the following command:
+To disable the feature, run:
 ```
 ie-config disable-incoming
 ```
 
-Once you enable the feature, ImunifyEmail will start filtering incoming emails. Additionally, the UI in cPanel will be updated with the following changes:
+Once enabled, ImunifyEmail will start filtering incoming emails.
 
- - **Quarantine Tab**: A new column will be added to show the email direction (whether the email is outgoing or incoming).
+:::warning
+Incoming emails identified as spam are **no longer quarantined** — instead, they are delivered to the recipient’s spam/junk mailbox.
+:::
+
+After enabling the feature, the cPanel UI will include the following changes:
+
  - **Settings Tab**:
-    - A toggle will be available to disable the incoming filtration feature for specific cPanel accounts.
-    - A table will be added to display statistics of incoming emails, showing the number of spam and ham emails by day.
- - **Statistics Tab**: A new section will be added to display detailed statistics of incoming emails, including the number of spam and ham emails over time.
+    - A toggle allows disabling the incoming filtration feature for specific cPanel accounts.
+    - A table displays daily incoming email statistics, including counts of spam and ham (non-spam) emails.
+ - **Statistics Tab**: A new section shows detailed incoming email statistics over time, including spam and ham counts.
 
-The ie-cli utility reflects the same API as the UI, allowing customers to retrieve quarantine and statistics information via the command line interface.
+The `ie-cli` utility mirrors the same API used by the UI, allowing administrators to retrieve quarantine and statistics information via the command line interface.
 Use `--help` to get more info.
 
 ### User interface access
