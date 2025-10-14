@@ -51,7 +51,7 @@ Imunify Email is simple to install. At the moment, it runs on the following dist
 
 * CentOS 7, 8 with support of cPanel/WHM control panel.
 * CloudLinux OS 7, 8, 9 with support of cPanel/WHM control panel.
-* AlmaLinux 8, 9 with support of cPanel/WHM control panel.
+* AlmaLinux 8, 9, 10 with support of cPanel/WHM control panel.
 
 Minimum system requirements for installation:
 

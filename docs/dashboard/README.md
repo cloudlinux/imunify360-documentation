@@ -1620,6 +1620,8 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
   |CentOS 6|✓|x|x|
   |CentOS 7|✓|✓|x|
   |CentOS 8 / AlmaLinux 8|✓|✓|x|
+* |AlmaLinux 9|✓|✓|x|
+  |AlmaLinux 10|✓|✓|x|
   |CloudLinux OS 6|✓|x|x|
   |CloudLinux OS 7|✓|✓|✓|
   |CloudLinux OS 7 hybryd|✓|✓|✓ (6.8+)|
