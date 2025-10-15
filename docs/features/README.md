@@ -775,6 +775,10 @@ Below is an example of the **INCORRECT** assumption of the config loading order:
 ```
 :::
 
+:::danger Upon the config changes, no Imunify services restart is needed.
+You may verify the changes in `/etc/sysconfig/imunify360/imunify360-merged.config`.
+:::
+
 This way you can keep your local customizations, and still be able to rollout your main config. 
 
 The following CLI command can be used to check current server configuration:
