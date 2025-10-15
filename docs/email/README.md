@@ -12,12 +12,12 @@ Welcome to Imunify Email, a powerful plugin designed to enhance your Imunify360 
 At the moment, Imunify Email runs on the following environments:
 
 **Supported distributions:**
-  * CentOS 7, 8
-  * CloudLinux OS 7, 8, 9
-  * AlmaLinux 8, 9, 10
+* CentOS 7, 8
+* CloudLinux OS 7, 8, 9
+* AlmaLinux 8, 9, 10
 
 **Control panel requirements:**
-  * cPanel/WHM control panel only
+* cPanel/WHM control panel only
 
 **Software requirements:**
   * Hosting administrator only.
@@ -29,9 +29,9 @@ At the moment, Imunify Email runs on the following environments:
       _Once Imunify360 is installed and registered, you can enable the Imunify Email plugin through the CLN (CloudLinux Network) portal. This will automatically install all necessary components. Follow the [instructions to enable Imunify Email in CLN](https://docs.imunify360.com/email/#how-to-enable-imunify-email). For the system requirements and installation steps, refer to the [Installation](https://docs.imunify360.com/email/#installation)_.
 
 **Minimum system requirements for installation**:
-  * x64
-  * 512 Mb
-  * 20 Gb disk space
+* x64
+* 512 Mb 
+* 20 Gb disk space
 
 :::tip Note
 - Imunify Email RAM consumption depends on the mail traffic. In a waiting state it consumes little RAM; however, for scanning large mails temporary increase of RAM consumption can be observed.
