@@ -100,5 +100,17 @@ The following filters are available:
 * **Timeframe** — displays the results filtered by chosen period or date.
 * **Items per page displayed** — click the number at the table bottom.
 
-The table can be sorted by Added and Path. By default, it is sorted from newest to oldest.
+The table can be sorted by Added and Path. By default, it is sorted from newest to oldest. 
+
+:::tip Note
+The end-user malware ignore list is disabled by default. Only Imunify360 administrators can enable it: 
+```
+imunify360-agent config update '{"PERMISSIONS": {"user_ignore_list": true}}'
+```
+For disabling: 
+```
+imunify360-agent config update '{"PERMISSIONS": {"user_ignore_list": false}}'
+```
+
+:::
 
