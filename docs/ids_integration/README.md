@@ -39,6 +39,52 @@ The main setting that defines how Imunify360 works along with CSF is [3-rd Party
 When 3-rd Party Integration mode is **enabled** Imunify360 uses <span class="notranslate">Login Failure Daemon (LFD)</span> as source for security events instead of <span class="notranslate">[OSSEC](https://www.ossec.net)</span>. To get events from <span class="notranslate">Login Failure Daemon (LFD)</span>, Imunify360 automatically replaces <span class="notranslate">`BLOCK_REPORT`</span> variable to the file path of Imunify360 script.
 When some IP address is blocked by <span class="notranslate">LFD, Imunify360</span> adds this IP address to its <span class="notranslate">Graylist</span> and then **removes it from <span class="notranslate">CSF deny/tempdeny lists</span>**. The latter is done to unblock IP by passing Anti-Bot Challenge and to store all automatically blocked IP addresses in a single place. Thus, no IP is automatically added to <span class="notranslate">CSF deny/tempdeny lists</span>. 
 
+
+#### Migration from CSF to Imunify360
+
+The [migration tool](https://blog.imunify360.com/configserver-eol) is included in the latest version of Imunify360. Here’s how to use it in four simple steps.
+
+**Step 1: Verify the Tool's Presence**
+
+First, ensure your server has the latest version of Imunify360 by checking for the migration tool's directory:
+```
+/opt/imunify360/venv/share/imunify360/scripts/migrate_csf
+```
+
+If this directory is missing, your server has not yet updated. You can either force a manual update or wait a couple of days for the regular update cycle to complete.
+
+**Step 2: Run the Migration Script**
+
+Once you've confirmed the tool is present, navigate to the directory and execute the script.
+
+```
+cd /opt/imunify360/venv/share/imunify360/scripts/migrate_csf
+```
+```
+./main.py # executable, no python prefix needed
+```
+
+**Step 3: Verify the Migration** 
+
+The tool will display color coded logs in your console as it runs. For a complete record of all actions taken, you can review the detailed log file located at:
+```
+/var/log/imunify360/migrate_csf.log
+```
+
+**Step 4: Disable and Remove CSF**
+
+Once you have successfully migrated your configuration, you must disable CSF to allow Imunify360's firewall to take over your protection.
+
+```
+csf -x
+```
+```
+systemctl disable csf
+```
+```
+systemctl disable lfd
+```
+
 ### CXS Integration
 
 <span class="notranslate">[ConfigServer eXploit Scanner](https://configserver.com/cp/cxs.html) (CXS)</span> has different types of malware scanning, which affects <span class="notranslate">Imunify360 Malware Scanner</span> functionality. Below we describe how to make <span class="notranslate">Imunify360 Malware Scanner</span> work properly. These functionalities can be configured at <span class="notranslate">[Malware Scanner settings](/dashboard/#settings)</span> page, but <span class="notranslate">CXS</span> itself must be configured  as follows:
@@ -47,11 +93,56 @@ When some IP address is blocked by <span class="notranslate">LFD, Imunify360</sp
 
    <span class="notranslate">CXS Watch</span> daemon must be disabled.
 
+<details> 
+<summary>Click here for more guidelines.</summary>
+
+```
+# stop and disable the service so it won’t start on boot
+systemctl stop cxswatch
+systemctl disable cxswatch
+
+# hard-prevent other units from starting it
+systemctl mask cxswatch
+
+# (optional) to allow it again later, unmask it:
+systemctl unmask cxswatch
+```
+:::tip Note: 
+You normally don’t need to chmod or rename `/etc/cxs/cxswatch.sh`. Masking the unit already prevents activation by other services. (If you do want an extra safety lock, you can `chmod 000 /etc/cxs/cxswatch.sh` and revert with `chmod 755` later. The script path is standard for CXS. 
+::: 
+</details>
+
 2. <span class="notranslate">_Automatically scan any files uploaded using web_</span>
 
    <span class="notranslate">CXS ModSecurity</span> vendor should be disabled.
 
-3. <span class="notranslate">_Automatically scan any file uploaded using ftp_</span>
+<details>
+<summary>You can do this by CLI (preferred for repeatability) or via WHM UI. Click here for more guidelines.</summary>
+
+**CLI (root)** 
+
+The vendor short name for CXS is `configserver` (per vendor metadata). Use either the helper script or WHM API:
+
+```
+# Using cPanel helper script (works on all supported versions)
+# Disable the ConfigServer (CXS) ModSecurity vendor
+/usr/local/cpanel/scripts/modsec_vendor disable configserver
+
+# (optional) also disable that vendor’s individual config files & updates via API:
+whmapi1 modsec_disable_vendor_configs vendor_id=configserver
+whmapi1 modsec_disable_vendor_updates vendor_id=configserver
+
+# Apply ModSecurity settings and restart Apache
+whmapi1 modsec_deploy_settings_changes
+/usr/local/cpanel/scripts/restartsrv_httpd
+```
+
+**WHM UI (if you prefer)** 
+
+WHM » Security Center » ModSecurity® Vendors → find **ConfigServer (CXS)** → toggle `Enabled` to `Off.` (You may also click Delete to remove it entirely.) 
+</details>
+
+4. <span class="notranslate">_Automatically scan any file uploaded using ftp_</span>
 
    Imunify360 supports only <span class="notranslate">[Pure-FTPd](https://www.pureftpd.org)</span>. For <span class="notranslate">Pure-FTPd CXS</span> launches pure-uploadscript for the scan. Any pure-uploadscript used by <span class="notranslate">CXS</span> must be disabled. You can use the following commands to do that:
    

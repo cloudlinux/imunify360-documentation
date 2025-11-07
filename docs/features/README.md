@@ -727,7 +727,17 @@ In the example the <span class="notranslate">`OPTIONS`</span> method is disabled
    </div>
 -->
 
+### Special flags
 
+#### Prevent endless loop in Anti-Bot Challenge
+
+In some very rare cases Anti-Bot Challenge falls into an endless loop, preventing the browser from redirect to the originally requested URL. The reason is too aggressive web page caching. To fix that, follow the steps below:
+
+* Open config <span class="notranslate">`/etc/imunify360-wafd/wafd.conf`</span> for editing.
+* Put the option <span class="notranslate">`append_random_query=yes`</span> and save changes.
+* Reload systemd unit: <span class="notranslate">`systemctl reload imunify360-wafd`</span>
+
+After that a random argument will be appended to every URL. Possible downside of this change is some sites and web applications have strict URL arguments validation and may not work properly.
 
 ## Overridable config
 
@@ -763,6 +773,10 @@ Below is an example of the **INCORRECT** assumption of the config loading order:
 100-host_custom.config
 101-xmlrpc.config
 ```
+:::
+
+:::danger Upon the config changes, no Imunify services restart is needed.
+You may verify the changes in `/etc/sysconfig/imunify360/imunify360-merged.config`.
 :::
 
 This way you can keep your local customizations, and still be able to rollout your main config. 
@@ -1302,3 +1316,33 @@ def im_hook(dict_param):
 ```
 
 </div>
+
+## Manual ModSec rules update management
+
+Since v8.6.0 imunify360-firewall, we introduced a new way to control ModSecurity rules updates. Right now, it is possible to disable automatic updates and add the ability to manually choose the exact version of the rules.
+To disable autoupdate, `disabled_types`  should be set to `["modsec-rules"]`, the default is an empty list (autoupdate enabled). 
+
+```
+FILES_UPDATE:
+  disables_types: ["modsec-rules"]
+  days_to_keep: 30
+```
+*`days_to_keep` - allows control over how long rules will be stored on disk; when expired, they will be automatically deleted.
+
+In this mode, the Imunify agent downloads new rules, but does not apply them automatically.
+
+To manage rules, we extended `imunify360-agent update modsec-rules` command:
+
+1. Get a list of available rules `imunify360-agent update modsec-rules --list`
+
+```
+# example of output
+$ imunify360-agent update modsec-rules --list
+6.80 (latest)
+6.79
+6.78 (current)
+```
+
+2. Update to exact version `imunify360-agent update modsec-rules --version x.x`
+
+This approach allows customers to set up test servers where they can check new rules and then update them on all servers when the tests pass.

@@ -444,11 +444,15 @@ Exact ports and port-ranges to be allowed can be configured by the following fie
 * FIREWALL.TCP_OUT_IPv4
 * FIREWALL.UDP_IN_IPv4
 * FIREWALL.UDP_OUT_IPv4
+* FIREWALL.TCP_IN_IPv6
+* FIREWALL.TCP_OUT_IPv6
+* FIREWALL.UDP_IN_IPv6
+* FIREWALL.UDP_OUT_IPv6
   
 Changes of config files will be applied automatically. You don’t need to restart the server or Imunify360.
 
 :::warning Note
-The feature doesn’t support IPv6 addresses at this moment and CSF needs to be disabled due to conflicts.
+CSF needs to be disabled due to conflicts.
 :::
 
 
@@ -532,7 +536,7 @@ Click <span class="notranslate">_Malware Scanner_</span> in the main menu of the
 The following tabs are available:
 
 * <span class="notranslate">[Users](/dashboard/#users)</span>
-* <span class="notranslate">[Files](/dashboard/#files)</span>
+* <span class="notranslate">[Malicious](/dashboard/#malicious)</span>
 * <span class="notranslate">[Scan](/dashboard/#scan)</span>
 * <span class="notranslate">[History](/dashboard/#history)</span>
 * <span class="notranslate">[Ignore List](/dashboard/#ignore-list)</span>
@@ -564,7 +568,7 @@ The table has the following columns:
   * <span class="notranslate">**No malware found**</span> — no malware was found during scanning.
 * <span class="notranslate">**Actions**</span>:
   * <span class="notranslate">**Scan for malware**</span> — click <span class="notranslate">_Scan_</span> ![](/images/scan_symbol.png) to start scanning files for a particular user.
-  * <span class="notranslate">**View report**</span> — click <span class="notranslate">_View Report_</span> ![](/images/view_report_symbol.png) to go to the <span class="notranslate">_Files_</span> tab and display the results of the last scan.
+  * <span class="notranslate">**View report**</span> — click <span class="notranslate">_View Report_</span> ![](/images/view_report_symbol.png) to go to the <span class="notranslate">_Malicious_</span> tab and display the results of the last scan.
   * <span class="notranslate">**Cleanup**</span> — click <span class="notranslate">_Cleanup_</span> ![](/images/cleanup_symbol.png) to start cleaning up infected files for the user.
   * <span class="notranslate">**Restore original**</span> — click <span class="notranslate">_Restore original_</span> ![](/images/restore_original_symbol.png) to restore original file after cleaning up if backup is available. To perform a bulk action, tick required users and click the corresponding button above the table.
 
@@ -673,7 +677,7 @@ After <span class="notranslate">Malware Scanner</span> stops on-demand scanning 
 
 ![](/images/MalwareScannerResults.png)
 
-To review and manage malicious files go to the <span class="notranslate">_Files_</span> tab described below.
+To review and manage malicious files go to the <span class="notranslate">_Malicious_</span> tab described below.
 
 <div class="notranslate">
 
@@ -1085,7 +1089,7 @@ If you want to install it using CLI, please follow [this article](/command_line_
 
 #### HardenedPHP
 
-To install or uninstall HardenedPHP click on a button related. Please find additional information about HardenedPHP in [this article](https://docs.cloudlinux.com/cloudlinux_os_components/#php-selector).
+To install or uninstall HardenedPHP click on a button related. Please find additional information about HardenedPHP in [this article](https://docs.cloudlinux.com/cloudlinuxos/cloudlinux_os_components/#php-selector).
 During HardenedPHP installation process the installation log will appear and will update automatically.
 
 ::: tip Note
@@ -1226,7 +1230,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 The Enhanced DOS Protection feature forms an additional layer of protection, increasing the stability of servers facing DOS attacks. It takes a different approach than our existing [DOS Protection feature](/dashboard/#dos-protection), which focuses on monitoring the number of simultaneous connections. Enhanced DOS Protection, on the other hand, monitors the rate of requests originating from attacker IP addresses per unit of time.
 
-The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the Anti-Bot challenge.
+The new feature works better against attacks based on short-living connections and against attacks where the number of requests grows fast (hundreds of requests per second). As Enhanced DOS Protection monitors the number of requests in real-time, it reacts to the threats almost instantly, greylisting the detected IPs and redirecting their requests to the Anti-Bot challenge. However, it can also be configured to blacklist the IP immediately, completely dropping all further packets.
 
 Standard DoS protection, in turn, will block attacks that use long-lived connections (e.g. Slowloris attacks), so these functions complement each other perfectly.
 
@@ -1243,6 +1247,17 @@ The feature is switched off by default. You can activate Enhanced DOS Protection
 ```
 imunify360-agent config update '{"ENHANCED_DOS":{"enabled":true}}'
 ```
+
+<h4>Configure the Protective Action</h4>
+
+You can define the action taken against an attacking IP. The default action is graylist.
+```
+imunify360-agent config update '{"ENHANCED_DOS":{"action":"blacklist"}}'
+```
+* `"graylist"` (Default): The attacker's IP is added to the Graylist. Their requests are redirected to a splashscreen challenge, and they can regain access by solving it.
+* `"blacklist"`: The attacker's IP is added to the Blacklist, completely blocking them from accessing the server. They will not be presented with a challenge.
+
+<h4>Adjust Thresholds and Timeframe</h4>
 
 The default timeframe (seconds) and threshold of request (number) could be changed by the following CLI commands:
 
@@ -1357,24 +1372,39 @@ Move the slider to change your preferences.
 
 There are 15 available levels related to [OSSEC](https://www.ossec.net/docs/manual/rules-decoders/rule-levels.html) and [ModSecurity](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#severity) severity levels:
 
-| |  | |
-|-|--|-|
-|Log level | ModSecurity | OSSEC|
-|1 | 7 – <span class="notranslate">DEBUG</span> | 01 – None|
-|2 | 6 – <span class="notranslate">INFO</span> | 02 – System low priority notification|
-|3 | 5 – <span class="notranslate">NOTICE</span> | 03 – Successful/Authorized events|
-|4 | 4 – <span class="notranslate">WARNING</span> | 04 – System low priority error|
-|5 | 4 – <span class="notranslate">WARNING</span> | 05 – User generated error|
-|6 | 3 – <span class="notranslate">ERROR</span> | 06 – Low relevance attack|
-|7 | 3 – <span class="notranslate">ERROR</span> | 07 – “Bad word” matching.|
-|8 | 3 – <span class="notranslate">ERROR</span> | 08 – First time seen|
-|9 | 3 – <span class="notranslate">ERROR</span> | 09 – Error from invalid source|
-|10 | 3 – <span class="notranslate">ERROR</span> | 10 – Multiple user generated errors|
-|11 | 3 – <span class="notranslate">ERROR</span> | 11 – Integrity checking warning|
-|12 | 2 – <span class="notranslate">CRITICAL</span> | 12 – High importancy event|
-|13 | 2 – <span class="notranslate">CRITICAL</span> | 13 – Unusual error (high importance)|
-|14 | 1 – <span class="notranslate">ALERT</span> | 14 – High importance security event.|
-|15 | 0 – <span class="notranslate">EMERGENCY</span> | 15 – Severe attack|
+**OSSEC**
+
+| Severity (Level) range  | Agent's action  | Notes  |
+|---|---|---|
+| 0  | Ignored by agent  | No action taken  |
+| 1  | Ignored by agent  | None  |
+| 2  | Ignored by agent  | System low priority notifications or status messages. No security relevance.  |
+| 3  | Just shows in reports  | Successful/Authorized events (successful login attempts, firewall allow events, etc.)  |
+| 4  | Just shows in reports  | System low priority error (related to bad configurations or unused devices/applications). No security relevance, usually caused by default installations or software testing. Default to be seen in Imunify360 UI on the fresh installation. |
+| 5  | Just shows in reports  | User generated error (missed passwords, denied actions, etc., no security relevance). Used in [Active Response](/dashboard/#ossec) rules that are blocking specific ports.  |
+| 6  | Blocking with greylists  | Low relevance attack. They indicate a worm or a virus that have no affect to the system (like code red for Apache servers, etc). They also include frequent IDS events and errors.  |
+| 7  | Blocking with greylists  | “Bad word” matching. |
+| 8  | Blocking with greylists  | Include first time seen events. First time an IDS event is fired or the first time an user logged in. If you just started using OSSEC HIDS, these messages will probably be frequent.  |
+| 9  | Blocking with greylists  | Error from invalid source. Include attempts to login as an unknown user or from an invalid source. May have security relevance (specially, if repeated). |
+| 10  | Blocking with greylists  | Multiple user generated error. They include multiple bad passwords, multiple failed logins, etc. They may indicate an attack or may just be that a user just forgot their credencials.  |
+| 11  | Blocking with greylists  | Integrity checking warning. Includes messages regarding the modification of binaries or the presence of rootkits (by rootcheck).  |
+| 12  | Blocking with greylists  | High importancy event. They include error or warning messages from the system, kernel, etc. They may indicate an attack against a specific application.  |
+| 13  | Blocking with greylists  | Unusual error (high importance). Most of the times, it matches a common attack pattern.  |
+| 14  | Blocking with greylists  | High importance security event. Most of the times, done with correlation and it indicates an attack.  |
+| 15  | Blocking with greylists  | Severe attack. No chances of false positives. Immediate attention is necessary.  |
+
+**ModSecurity** 
+
+| Severity (Level) range  | Incident type  | Notes  |
+|---|---|---|
+| 7  | <span class="notranslate">DEBUG</span>  | Used for monitoring  |
+| 6  | <span class="notranslate">INFO</span>  | Used for monitoring  |
+| 5  | <span class="notranslate">NOTICE</span>  | Used for monitoring  |
+| 4  | <span class="notranslate">WARNING</span>  | Generated by malicious client rules. Used for monitoring.  |
+| 3  | <span class="notranslate">ERROR</span>  | Mostly generated from outbound leakage rules. Used for greylisting.  |
+| 2  | <span class="notranslate">CRITICAL</span>  | Generated by the web attack rules. Used for greylisting.  |
+| 1  | <span class="notranslate">ALERT</span>  | Generated from correlation where there is an inbound attack and an outbound application level error.  |
+| 0  | <span class="notranslate">EMERGENCY</span>  | Generated from correlation of anomaly scoring data where there is an inbound attack and an outbound leakage.  |
 
 Autocleanup configuration allows to keep the <span class="notranslate">Incidents</span> page clean by default. The possible settings are as follows:
 
@@ -1605,6 +1635,8 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
   |CentOS 6|✓|x|x|
   |CentOS 7|✓|✓|x|
   |CentOS 8 / AlmaLinux 8|✓|✓|x|
+* |AlmaLinux 9|✓|✓|x|
+  |AlmaLinux 10|✓|✓|x|
   |CloudLinux OS 6|✓|x|x|
   |CloudLinux OS 7|✓|✓|✓|
   |CloudLinux OS 7 hybryd|✓|✓|✓ (6.8+)|

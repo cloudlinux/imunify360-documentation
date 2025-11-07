@@ -4,9 +4,11 @@ docs/.vuepress/dist
 node_modules
 
 .idea
-yarn.lock
 
 # OS generated files #
 ######################
 .DS_Store
 .DS_Store?
+
+# direnv local settings
+.envrc

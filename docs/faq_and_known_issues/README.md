@@ -457,7 +457,7 @@ You can find the results in the <span class="notranslate">_Malware scanner > Fil
 
 You can see the advanced reason why a file was detected as malicious.
 
-Go to <span class="notranslate">Imunify → Malware Scanner → Files tab → Reason</span>. See [Malware Scanner → Files tab](/dashboard/#files).
+Go to <span class="notranslate">Imunify → Malware Scanner → Malicious tab → Reason</span>. See [Malware Scanner → Malicious tab](/dashboard/#malicious).
 
 A reason pattern looks like the following:
 
@@ -850,16 +850,31 @@ or some lines with
 ```
 </div>
 
-The `imunify360.db` file is an sqlite3 database the Imunify360 relies on; it contains incidents, malware hits/lists, settings, etc. Using this workaround will force the database recreation:
-
-<div class="notranslate">
+Imunify360 relies on several sqlite3 database files: `imunify360.db`, `imunify360-resident.db`, and `imunify360-ipsetlists.db`. They contain incidents, malware hits/lists, settings, etc.
+In case any of the databases are missing, they will be recreated upon service start:
 
 ```
-# service imunify360 stop
+# systemctl stop imunify360-agent
+# systemctl restart imunify360
+# systemctl start imunify360-agent
+```
+
+Alternatively, if `imunify360-resident.db` and `imunify360-ipsetlists.db` are missing, they can be recreated using the following command:
+
+```
+# systemctl stop imunify360-agent imunify360 
+# imunify360-agent checkdb --recreate-schema
+# systemctl start imunify360 imunify360-agent
+```
+
+To force database recreation:
+```
+# systemctl stop imunify360-agent imunify360
 # mv /var/imunify360/imunify360.db /var/imunify360/imunify360.db_backup
-# service imunify360 start
+# mv /var/imunify360/imunify360-resident.db /var/imunify360/imunify360-resident.db_backup
+# mv /var/imunify360/imunify360-ipsetlists.db /var/imunify360/imunify360-ipsetlists.db_backup
+# systemctl start imunify360 imunify360-agent
 ```
-</div>
 
 If you face any difficulties during the progress or simply cannot make the agent start, please run
 

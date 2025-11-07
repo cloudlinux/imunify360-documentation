@@ -100,7 +100,7 @@ Optional arguments for the commands:
 
 | | |
 |-----------|-|
-|<span class="notranslate">`--by-country-code [country_code]`</span>|Filters output by country code.<br>Requires valid country code as argument.<br> Find valid country codes [here](https://www.nationsonline.org/oneworld/country_code_list.htm) in column ISO ALPHA-2 CODE.|
+|<span class="notranslate">`--by-country-code [country_code]`</span>|Filters output by country code.<br>Requires valid country code as argument.<br> Find valid country codes [here](https://www.iso.org/obp/ui/#search/code/) in column ISO ALPHA-2 CODE.|
 |<span class="notranslate">`--by-ip [ip_address]`</span>|Filters output by abuser's IP or by subnet in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks).<br>Example: <span class="notranslate">`--by-ip 1.2.3.0/24`</span>.|
 |<span class="notranslate">`--by-list`</span>|Can be:<br><ul><li><span class="notranslate">gray (Gray List)</span></li><li><span class="notranslate">white (White List)</span></li><li><span class="notranslate">black (Black List)</span></li></ul>Filters output based on the list type.<br>Example: <span class="notranslate">`--by-list black`</span>.|
 |<span class="notranslate">`--by-comment`</span>|Filters output by comment.|
@@ -293,7 +293,7 @@ Some comment  2   [{'comment': None, 'ip': '111.111.111.111'}, {'comment': None,
 
 ## Blocked Port IP
 
-This command allows to change the list of IPs that are excluded (allowed) for a certain blocked port.
+This command blocks traffic for the specified IP addresses on a given port. Use it when you want to restrict access to a port only for certain IPs, rather than blocking the port for everyone, as done by [`blocked-port`](/command_line_interface/#blocked-ports).
 
 **Usage:**
 
@@ -321,6 +321,7 @@ imunify360-agent blocked-port-ip [command] <value> [--option]
 | | |
 |-----|-|
 |<span class="notranslate">`--comment`</span>|allows to add comment to the IP|
+|<span class="notranslate">`--ip`</span>|one or more IP addresses to block on the given port (comma-separated list supported)|
 
 **Example:**
 
@@ -793,7 +794,7 @@ Option can be one or few of the optional arguments listed above and one more.
 |-|-|
 |<span class="notranslate">`--order-by [ORDER_BY [ORDER_BY ...]]`</span>|Sorting order.|
 |<span class="notranslate">`--limit`</span>|Limits the output with specified number of IPs.<br>Must be a number greater than zero. By default, equals 50.|
-|<span class="notranslate">`--by-country-code [country_code]`</span>|Filters output by country code.<br>Requires valid country code as argument.<br>Find valid country codes<br>in [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks) in column ISO ALPHA-2 CODE.|
+|<span class="notranslate">`--by-country-code [country_code]`</span>|Filters output by country code.<br>Requires valid country code as argument.<br>Find valid country codes<br>in [CIDR notation](https://www.iso.org/obp/ui/#search/code/) in column ISO ALPHA-2 CODE.|
 |<span class="notranslate">`--period [period]`</span>|Timeframe.<br>Allows to specify the amount of time starting from the current day.<br>Should be greater than (or equal to) 1 minute.<br>Can be specified in format:<ul><li><span class="notranslate">`<int>m`</span> – minutes, example <span class="notranslate">` --period 30m`</span></li><li><span class="notranslate">`<int>h`</span> – hours, example <span class="notranslate">`--period 4h`</span></li><li><span class="notranslate">`<int>d`</span> – days, example <span class="notranslate">`--period 7d`</span></li><li><span class="notranslate">`today`</span> – for today, example <span class="notranslate">`--period today`</span></li><li><span class="notranslate">`yesterday`</span> – for yesterday, example <span class="notranslate">`--period yesterday`</span></li></ul>For example, <span class="notranslate">` --period 5d`</span> will return a list of incidents for 5 days. |
 |<span class="notranslate">`--since [timestamp]`</span>|allows to set start time to filter the list of incidents by period|
 |<span class="notranslate">`--to [timestamp]`</span>|allows to set finish time to filter the list of incidents by period|
@@ -991,7 +992,7 @@ imunify360-agent ip-list local list [--options] <value>
 |-|-|
 |<span class="notranslate">`--by-ip BY_IP`</span>|Filters output by abuser's IP or by subnet in CIDR notation.|
 |<span class="notranslate">`--purpose [PURPOSE ...]`</span>|IP List purpose can be:<br> `white` - do not block these IPs. <br>`drop` - deny access on the network level (DROP packets via iptables, and respond with 403 on web ports even when the request comes through a proxy). <br> `captcha` - deny access on the network level for all non-web ports, show a Splash Screen challenge page on web ports. <br> `splashscreen` - check the visitor's browser before allowing access to websites.|
-|<span class="notranslate">`-by-country-code BY_COUNTRY_CODE`</span>|Filters output by country code. Requires valid country code as argument. Find valid country codes here [www.nationsonline.org/oneworld/country_code_list.htm](https://www.nationsonline.org/oneworld/country_code_list.htm) in column ISO ALPHA-2 CODE.| 
+|<span class="notranslate">`-by-country-code BY_COUNTRY_CODE`</span>|Filters output by country code. Requires valid country code as argument. Find [valid country codes here](https://www.iso.org/obp/ui/#search/code/) in column ISO ALPHA-2 CODE.| 
 |<span class="notranslate">`--by-comment BY_COMMENT`</span>|Filters output by comment| 
 |<span class="notranslate">`--limit LIMIT`</span>|Limits the output with specified number of incidents| 
 |<span class="notranslate">`--offset OFFSET`</span>|Offset for pagination| 
@@ -1214,18 +1215,28 @@ OK
 Use wildcards to efficiently whitelist all subdomains, with the option to also include the main domain itself.
 
 1. Whitelisting all subdomains (but not the parent domain itself):
+
    To whitelist all subdomains like `foo.example.com` or `bar.example.com` (e.g., anything before `.example.com`), but not `example.com` itself, use the *. prefix:
 ```
 imunify360-agent whitelist domain add "*.example.com"
 OK
 ```
 2. Whitelisting a domain and all its subdomains:
+   
    To whitelist both the main domain (e.g., `example.com`) **AND** all its potential subdomains (e.g., `foo.example.com`, `blog.example.com`), use the . prefix:
 ```
 imunify360-agent whitelist domain add .example.com
 OK
 ```
 This is a convenient shorthand and is equivalent to adding `example.com` and `*.example.com` separately.
+
+3. Whitelisting all domains on the server (Global Whitelist):
+
+   To whitelist every domain and subdomain hosted on the server, use a single asterisk wildcard (`"*"`).
+```
+imunify360-agent whitelist domain add "*"
+OK
+```
 
 ## Login
 

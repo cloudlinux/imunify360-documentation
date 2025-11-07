@@ -9,11 +9,6 @@ export default defineUserConfig({
     headers: {
       level: [2, 3, 4, 5],
     },
-    anchor: {
-      permalink: true,
-      permalinkBefore: true,
-      permalinkSymbol: '#',
-    },
   },
   plugins,
   bundler: viteBundler({

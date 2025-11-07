@@ -6,12 +6,11 @@
 
 Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface. It is also called stand-alone, non-panel, generic panel integration.
 
-#### Limitations
+### Limitations
 
 * No support for managing disabled rules yet. See also: [Disabled rules](/dashboard/#disabled-rules)
 
-
-#### Requirements
+### Requirements
 
 **Supported Operating Systems**
 
@@ -23,7 +22,7 @@ Imunify360 can be installed directly on the server, independent of any panel, re
 * LiteSpeed
 * Nginx
 
-#### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
+### There are four main steps in general required for having Imunify360 Stand-alone running on your server:
 
 1. Install and configure the [prerequisites](/control_panel_integration/#prerequisites) such as ModSecurity, PHP with JSON support, and other common WEB server packages.
 2. Download and edit [integration.conf](https://raw.githubusercontent.com/cloudlinux/imunify360-documentation/master/docs/control_panel_integration/integration.conf) file to configure Imunify360 required integrations BEFORE running the installation script.
@@ -83,7 +82,7 @@ The Imunify360 Stand-alone version requires the following integrations before in
 
 All integrations set in the integration config file like <span class="notranslate">`/etc/sysconfig/imunify360/integration.conf`</span>. You can find more details on the config file [here](/control_panel_integration/#integration-config-file), get a [template](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/integration.conf) or check the [Knowledgebase article](https://cloudlinux.zendesk.com/hc/en-us/articles/4716287786396).
 
-#### 2.1 Specifying panel information
+### 2.1 Specifying panel information
 
 To specify information about your hosting panel in Imunify360/ImunifyAV, use the `panel_info` option in the `[integration_scripts]` section of `integration.conf` file.
 
@@ -118,7 +117,7 @@ The option should contain a full path to the executable that prints JSON data in
 
 The script can echo or print this information in JSON format, or you could configure the file in order to receive the actual information about the hosting panel in use. In case you don’t have a hosting panel at all, use the following stub file: [get-panel-info.sh](https://github.com/cloudlinux/imunify360-documentation/blob/master/docs/control_panel_integration/get-panel-info.sh)
 
-#### 2.2 Integration with web server for serving UI
+### 2.2 Integration with web server for serving UI
       
 Imunify360 UI is implemented as a single-page application (SPA) and requires a web server to serve it.
 It’s required to specify a path to the web server directory, where the Imunify360 UI SPA application will be installed and served.
@@ -135,7 +134,7 @@ ui_path = /var/www/vhosts/imunify360/imunify360.hosting.example.com/html/im360
 
 Ensure that the domain you are going to use for the Imunify360 web-based UI refers to this path and that there are no other scripts or files under <span class="notranslate">`ui_path`</span>, to avoid overwriting the files Imunify360 installation will abort.
 
-#### 2.3 Web engine and Interaction with ModSecurity
+### 2.3 Web engine and Interaction with ModSecurity
 
 It is required to set the web server graceful restart script ang paths in the <span class="notranslate">`integration.conf`</span>
 
@@ -214,7 +213,7 @@ modsecurity_rules_file /etc/nginx/modsec.conf;
 modsecurity_rules_file /etc/sysconfig/imunify360/generic/modsec.conf;
 ```
 
-#### 2.4 Integration with authentication service
+### 2.4 Integration with authentication service
 
 Imunify360 Stand-alone version can use PAM service to authenticate users for the Imunify360 UI application.
 
@@ -232,7 +231,7 @@ You can get a token which can be used for authentication using the [<span class=
 
 By default, root is considered to be the only admin user.
 
-#### 2.5 Integration with Malware Scanner
+### 2.5 Integration with Malware Scanner
 
 To scan files for changes (to detect malware) using inotify, configure which directories to watch and which to ignore in the <span class="notranslate">`integration.conf`</span> file:
 
@@ -251,22 +250,27 @@ pattern_to_watch = ^/home/.+?/(public_html|public_ftp|private_html)(/.*)?$
 </div>
 
 
-## 3. Install Imunify360
-3.1. **Get your license key:** Visit https://www.imunify360.com/. You can purchase it or get a trial key from a received email.
-3.2. **Log in with root privileges:** Access the server where Imunify360 should be installed with root privileges.
-3.3. **Run the installation commands:** Navigate to your home directory and execute the following commands:
+## 3. Install Imunify360  
+
+1. **Get your license key:** Visit [imunify360.com](https://www.imunify360.com/). You can purchase it or get a trial key from a received email. 
+2. **Log in with root privileges:** Access the server where Imunify360 should be installed with **root** privileges. 
+3. **Run the installation commands:**  Navigate to your home directory and execute the following commands:
 ```
 wget https://repo.imunify360.cloudlinux.com/defence360/i360deploy.sh -O i360deploy.sh
+```
+```
 bash i360deploy.sh --key YOUR_KEY
 ```
 
-Where YOUR_KEY is your license key. Replace YOUR_KEY with the actual key - trial or purchased one. The installation instructions are the same as for cPanel/Plesk/DirectAdmin version and can be found in the [Imunify360 documentation](/installation/#installation-instructions).
+Where `YOUR_KEY` is your license key. Replace `YOUR_KEY` with the actual key - trial or purchased one. 
 
-After the successful installation, **you can reach the Imunify360 UI at the URL specified by the ui_path parameter** of the configuration file.
+The installation instructions are the same as for cPanel/Plesk/DirectAdmin version and can be found in the [Imunify360 documentation](/installation/#installation-instructions).
+
+After the successful installation, **you can reach the Imunify360 UI at the URL specified by the `ui_path` parameter** of the configuration file.
 
 ## 4. Set up modules and integrations and change other Imunify360 settings to reflect your needs
 
-#### 4.1 Define list of administrators for Imunify360
+### 4.1 Define list of administrators for Imunify360
 
 The administrators have full access to Imunify360 UI and its settings. To grant non-root users full access add more administrators by listing them in the them in the <span class="notranslate">`/etc/sysconfig/imunify360/auth.admin`</span> file or specify the [integration scripts](https://cloudlinux.zendesk.com/hc/en-us/articles/4840433434524-How-to-filter-the-number-of-users-by-using-integration-scripts?_gl=1*1dtmkmt*_up*MQ..*_ga*ODUwMjA5NDYyLjE2OTkyMTAwOTI.*_ga_1RCQ134PYC*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..*_ga_V4QHJSZM47*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..*_ga_8LBSSX7VQX*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..) admin scetion. 
 
@@ -317,7 +321,7 @@ It should point to an executable file that generates a JSON file similar to the 
 </div>
 </details>
 
-#### 4.2 FTP uploads scan
+### 4.2 FTP uploads scan
 To scan files uploaded via FTP, configure [PureFTPd](https://www.pureftpd.org/project/pure-ftpd/). Write in the <span class="notranslate">`pure-ftp.conf`</span>:
 
 <div class="notranslate">
@@ -327,7 +331,7 @@ CallUploadScript             yes
 ```
 </div>
 
-#### 4.3 Per-domain rules constrol
+### 4.3 Per-domain rules constrol
 To enable domain-specific ModSecurity configuration, specify the <span class="notranslate">`modsec_domain_config_script`</span> in the <span class="notranslate">`integration.conf`</span>.
 
 <div class="notranslate">
@@ -354,7 +358,7 @@ The script should also restart the web server to apply the configuration. This s
 If configuration change failed, the script should return 1, and in the standard error stream (stderr) it should return the reason for failure. On success, the script should return 0.
 In a single run of the script, we might update a single domain/user, as well as multiple users (all users) on the system.
 
-#### 4.4 Integration with WebShield
+### 4.4 Integration with WebShield
 
 WebShield consists of four services:
 
@@ -781,4 +785,57 @@ It should point to an executable file that generates a JSON file similar to the 
 ```
 </div>
 
-<span class="notranslate">`web_server_config_path`</span> should point to a path that is added as <span class="notranslate">`IncludeOptional`</span> in this domain's virtual host e.g., <span class="notranslate">`/path/to/example.com/specific/config/to/include`</span> path should be added for the <span class="notranslate">`example.com`</span> domain.
+<span class="notranslate">`web_server_config_path`</span> should point to a path that is added as <span class="notranslate">`IncludeOptional`</span> in this domain's virtual host e.g., <span class="notranslate">`/path/to/example.com/specific/config/to/include`</span> path should be added for the <span class="notranslate">`example.com`</span> domain. 
+
+### 4.5 WordPress Plugin with non-CloudLinux generic panel environment 
+
+This section explains how install the [**Imunify Security WordPress Plugin**](https://docs.imunify360.com/wordpress_plugin/) on servers that **do not run CloudLinux OS** and use a **home-grown** or **“generic” hosting panel**.
+
+1. Ensure the PHP-handler discovery script is added to `integration.conf`.
+```
+[integration_scripts]
+...
+php = /scripts/php
+```
+
+Add (or reuse) the PHP discovery script described in the [CloudLinux OS integration guide](https://docs.cloudlinux.com/cloudlinuxos/control_panel_integration/#php).  
+
+2. Extend your [domain](https://docs.imunify360.com/control_panel_integration/#data-description) API response. Your `domain` script must now return PHP-handler details for **every** hosted domain.
+
+```
+{
+  "data": {
+    "example.com": {
+      "document_root": "/home/example/public_html",
+      "php": {                 // <========== NB: lines 5-11 — required in full
+        "php_version_id": "alt-php56",
+        "version": "56",
+        "ini_path": "/opt/alt/php56/link/conf",
+        "is_native": true,
+        "handler": "lsapi"
+      }
+    }
+  },
+  "metadata": {
+    "result": "ok"
+  }
+} 
+```
+
+3. Provide Imunify Security integration settings – create the vendor-specific configuration directory and symlink the standard Imunify Security integration file into it:
+
+```
+mkdir -p /opt/cpvendor/etc/
+```
+```
+ln -s /etc/sysconfig/imunify360/integration.conf /opt/cpvendor/etc/integration.ini
+```
+## Video Instructions 
+
+* Standalone Mode on CentOS with Apache
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/anWKInh7Mqg?si=4bXXuJLVjcjzkpUt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+* Standalone Mode on CentOS with Nginx
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kpOFu6EWKpM?si=F8Bns-w-Wbkz6xCX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

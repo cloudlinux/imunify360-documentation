@@ -91,7 +91,7 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/config_file_description/"  
+                    "/config_file_description/"
                 ]
             }
         ],
@@ -107,7 +107,7 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/whmcs_plugin/"  
+                    "/whmcs_plugin/"
                 ]
             }
         ],
@@ -123,7 +123,7 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/uninstall/"  
+                    "/uninstall/"
                 ]
             }
         ],
@@ -135,6 +135,7 @@ export default {
                     "/imunifyav/imunifyav_for_plesk/",
                     "/imunifyav/imunifyav_for_ispmanager/",
                     "/imunifyav/imunifyav_for_webuzo/",
+                    "/imunifyav/imunifyav_for_openpanel/",
                     "/imunifyav/stand_alone_mode/",
                     "/imunifyav/cli/",
                     "/imunifyav/config_file_description/",
@@ -146,7 +147,16 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/email/"  
+                    "/email/"
+                ]
+            }
+        ],
+
+        '/imunify_patch': [
+            {
+                collapsable: false,
+                children: [
+                    "/imunify_patch/"
                 ]
             }
         ],

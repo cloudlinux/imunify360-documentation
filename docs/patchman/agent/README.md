@@ -315,3 +315,39 @@ apt-get remove patchman-client
 Make sure to cancel the server license in the Patchman Portal. We strongly suggest you do this **_after_** the removal of the software from your system, because if the software is still running it may automatically request a new license on your account (according to the standard installation procedure).
 
 In the Patchman Portal, go to the server configuration page under Servers. If your plan requires advance notice for cancelling servers, click the red Cancel button to cancel your license and deactivate it per the renewal date. Otherwise, click the red Delete button to immediately remove the server license from your account. This will make sure you are no longer billed for this server.
+
+* * * 
+
+### Installing imunify-antivirus with Patchman support
+
+1. Find a license key on the [server add page](https://portal.patchman.co/servers/add/). It is displayed under the `During installation, enter the following license key:` section.
+
+2. Install or update `imunify-antivirus`
+   1. If imunify-antivirus is not yet installed on a server:
+    ```
+    wget https://repo.imunify360.cloudlinux.com/defence360/imav-deploy.sh -O imav-deploy.sh
+    bash imav-deploy.sh 
+    ```
+    2. If it is already installed, check if the version of imunify-antivirus is at least `8.5.6`
+    ```
+    imunify-antivirus version
+    8.5.6 
+    ```
+    If it's lower, then update imunify-antivirus using your system package manager.
+
+3. Install the Patchman extension
+```
+imunify-antivirus patchman install
+```
+
+4. Configure the license key (obtained in the first step)
+```
+imunify-antivirus patchman register '<regkey>'
+```
+
+5. Enable the Patchman extension
+```
+imunify-antivirus config update '{"PATCHMAN": {"enable": true}}'
+```
+
+6. Add the server in the Patchman portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/)
