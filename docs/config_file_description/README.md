@@ -270,6 +270,53 @@ to request Anti-bot Challenge again</td></tr>
 <td># when the background scan shall start, hour. Can be from 0 to 23, the default value is 3</td></tr>
 <tr><td><span class="notranslate">interval: MONTH</span></td>
 <td># interval of scan. Supported values: strings <span class="notranslate">`NONE`</span> (no scan), <span class="notranslate">`DAY`</span>, <span class="notranslate">`WEEK`</span>, <span class="notranslate">`MONTH`</span>, the default value is <span class="notranslate">`MONTH`</span></td></tr>
+
+<tr>
+<td colspan="2">
+
+<p><b>Per-user overrides</b></p>
+<p>
+You can override <span class="notranslate">MALWARE_SCAN_SCHEDULE</span> <b>per user</b>.
+Per-user config files are stored at <span class="notranslate">/etc/imunify360/user_config/&lt;username&gt;/imunify360.config</span> and support the same schema as the admin config for this section.
+When both admin and user values exist, the user value is used for that option; missing user options inherit the admin value.
+</p>
+
+<p><b>Example (YAML) of per-user schedule:</b></p>
+<div class="notranslate">
+
+```
+MALWARE_SCAN_SCHEDULE:
+  interval: week   # allowed: none, day, week, month
+  hour: 2          # 0..23
+  day_of_week: 1   # 0..7 (0/7 = Sunday)
+```
+
+</div>
+
+<p><b>CLI examples for per-user:</b></p>
+<div class="notranslate">
+
+```
+# Show effective config for a user
+imunify360-agent config show --user <username> --json
+
+# Set a weekly scan at 03:00 on Monday for a user
+imunify360-agent config update '{"MALWARE_SCAN_SCHEDULE": {"interval": "week", "hour": 3, "day_of_week": 1}}' --user <username>
+
+# Disable scheduled scans for a user
+imunify360-agent config update '{"MALWARE_SCAN_SCHEDULE": {"interval": "none"}}' --user <username>
+```
+
+</div>
+
+<p><b>License notes</b></p>
+<p>
+Daily/Weekly schedules are available on <b>Imunify360</b> and <b>ImunifyAV+</b>. On <b>ImunifyAV</b>, only <span class="notranslate">none</span> and <span class="notranslate">month</span> intervals are available.
+If a non-eligible interval is configured, the agent will ignore it and keep the schedule at a safe default.
+</p>
+
+</td>
+</tr>
 <tr>
 <th align="left"><span class="notranslate">PAM:</span></th>
 <th align="left"># effective way to prevent brute-force attacks against FTP/SSH</th></tr>
