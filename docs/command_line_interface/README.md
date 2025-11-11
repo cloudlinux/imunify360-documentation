@@ -493,6 +493,29 @@ imunify360-agent config update '{"MALWARE_SCAN_INTENSITY": {"cpu": 5}}'
 
 The successful output should display the configuration file content.
 
+### Per-user configuration
+
+You can view and update configuration for a specific system user. Only the options allowed to end users are available (e.g., <span class="notranslate">MALWARE_SCAN_SCHEDULE</span>). Missing user options inherit values from the admin/global config.
+
+<div class="notranslate">
+
+```
+# Show effective configuration for a user
+imunify360-agent config show --user <username> --json
+
+# Set per-user background malware scan schedule: weekly at 03:00 on Monday
+imunify360-agent config update '{"MALWARE_SCAN_SCHEDULE": {"interval": "week", "hour": 3, "day_of_week": 1}}' --user <username>
+
+# Disable scheduled background scans for a user
+imunify360-agent config update '{"MALWARE_SCAN_SCHEDULE": {"interval": "none"}}' --user <username>
+```
+
+</div>
+
+::: tip Note
+Daily/Weekly schedules are available on <b>Imunify360</b> and <b>ImunifyAV+</b>. On <b>ImunifyAV</b>, only <span class="notranslate">none</span> and <span class="notranslate">month</span> intervals are available.
+:::
+
 ## Doctor
 
 Collecting information about Imunify360 state, generating the report and sending it to Imunify360 Support Team. This command can be used in case of any troubles or issues with Imunify360. This command will generate a key to be sent to Imunify360 Support Team. With that key Imunify360 Support Team can help with any problem as fast as possible.
