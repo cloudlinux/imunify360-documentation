@@ -112,7 +112,7 @@ Optional arguments for the commands:
 
 ## 3rdparty
 
-Command for disabling 3rd party IDS (currently they are cPHulk and fail2ban) and make Imunify360 agent the primary IDS.
+The `3rdparty` command allows users to view information about 3rd-party intrusion detection systems (IDS) and their potential conflicts with Imunify360.
 
 **Usage:**
 
