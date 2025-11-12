@@ -4,13 +4,13 @@
 
 **Patchman** is a powerful, automated security solution developed to protect Linux-based shared hosting environments. It’s designed with web hosts in mind, helping them secure customer websites by detecting and patching vulnerabilities, removing malware, and keeping systems clean with minimal manual intervention.
 
-Patchman continuously scans for known vulnerabilities in popular Content Management Systems (CMS) such as **WordPress**, **Joomla**, and **Drupal**. It applies virtual patches to vulnerable files without modifying core functionality or interrupting the user experience, making it an ideal solution for maintaining secure and stable hosting platforms.
+Patchman continuously scans for known vulnerabilities in popular Content Management Systems (CMS) such as **WordPress**, **Joomla**, and **Drupal**. It applies source code patches to vulnerable files without modifying core functionality or interrupting the user experience, making it an ideal solution for maintaining secure and stable hosting platforms.
 
 **Key Features** 
 
 * **Automatic Vulnerability Detection**: Identifies security flaws in popular CMS platforms and third-party plugins.
 
-* **Virtual Patching**: Applies lightweight, non-intrusive patches to vulnerable files, reducing the risk of exploitation without requiring full upgrades.
+* **Source Code Patching**: Applies lightweight, non-intrusive patches to vulnerable files, reducing the risk of exploitation without requiring full upgrades.
 
 * **Malware Detection and Quarantine**: Scans websites for malware and isolates infected files to prevent further damage or spread.
 

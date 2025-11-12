@@ -112,7 +112,7 @@ Optional arguments for the commands:
 
 ## 3rdparty
 
-Command for disabling 3rd party IDS (currently they are cPHulk and fail2ban) and make Imunify360 agent the primary IDS.
+The `3rdparty` command allows users to view information about 3rd-party intrusion detection systems (IDS) and their potential conflicts with Imunify360.
 
 **Usage:**
 
@@ -348,7 +348,17 @@ Checks database integrity. In case database is corrupt, then this command saves 
 imunify360-agent checkdb
 ```
 
-</div>
+</div>  
+
+The `checkdb` command includes the following options:
+
+| Option | Description |
+|--------|--------------|
+| `--recreate-schema` | Recreates schemas for **linked databases**. Use this option if schema corruption or migration issues occur in attached (linked) DBs. It does **not** remove or recreate the main database. |
+| `--no-recreate-schema` | Runs a standard consistency check and repair without recreating schemas. |
+| `--json` | Returns output in **JSON** format. |
+| `--verbose`, `-v` | Enables verbose mode for detailed output. |
+| `-h`, `--help` | Shows help message and exits. |
 
 **Example:**
 
