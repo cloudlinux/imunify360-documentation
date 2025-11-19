@@ -133,6 +133,7 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Ninja Forms – The Contact Form Builder That Grows With You | 3.8.13+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Solid Security – Password, Two Factor Authentication, and Brute Force Protection  | 8.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Website Builder by SeedProd — Theme Builder, Landing Page Builder, Coming Soon Page, Maintenance Mode | 6.0.5+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>King addons for Elementor | 24.12.57+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
