@@ -1629,25 +1629,27 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
     File change API can work only with ext4 file system.
     :::
 
-  | | | | |
-  |-|:-:|:-:|:-:|
-  | |**inotify**|**fanotify**|**File change API**|
-  |CentOS 6|✓|x|x|
-  |CentOS 7|✓|✓|x|
-  |CentOS 8 / AlmaLinux 8|✓|✓|x|
-* |AlmaLinux 9|✓|✓|x|
-  |AlmaLinux 10|✓|✓|x|
-  |CloudLinux OS 6|✓|x|x|
-  |CloudLinux OS 7|✓|✓|✓|
-  |CloudLinux OS 7 hybryd|✓|✓|✓ (6.8+)|
-  |CloudLinux OS 8|✓|✓|✓|
-  |CloudLinux OS Solo|✓|✓|x|
-  |Ubuntu 16.04 / Debian 9|✓|✓|x|
-  |Ubuntu 18.04 / Debian 10|✓|✓|x|
-  |Ubuntu 20.04|✓|✓|x|
-  |Ubuntu 22.04|✓|✓|x|
-  |Debian 11|✓|✓|x|
-  |Rocky Linux 8|✓|✓|x|
+  |                          |             |              |                     |
+  |--------------------------|:-----------:|:------------:|:-------------------:|
+  |                          | **inotify** | **fanotify** | **File change API** |
+  | CentOS 6                 |      ✓      |      x       |          x          |
+  | CentOS 7                 |      ✓      |      ✓       |          x          |
+  | CentOS 8 / AlmaLinux 8   |      ✓      |      ✓       |          x          |
+* | AlmaLinux 9              |      ✓      |      ✓       |          x          |
+  | AlmaLinux 10             |      ✓      |      ✓       |          x          |
+  | CloudLinux OS 6          |      ✓      |      x       |          x          |
+  | CloudLinux OS 7          |      ✓      |      ✓       |          ✓          |
+  | CloudLinux OS 7 hybryd   |      ✓      |      ✓       |      ✓ (6.8+)       |
+  | CloudLinux OS 8          |      ✓      |      ✓       |          ✓          |
+  | CloudLinux OS Solo       |      ✓      |      ✓       |          x          |
+  | Ubuntu 16.04 / Debian 9  |      ✓      |      ✓       |          x          |
+  | Ubuntu 18.04 / Debian 10 |      ✓      |      ✓       |          x          |
+  | Ubuntu 20.04             |      ✓      |      ✓       |          x          |
+  | Ubuntu 22.04             |      ✓      |      ✓       |          x          |
+  | Debian 11                |      ✓      |      ✓       |          x          |
+  | Debian 12                |      ✓      |      ✓       |          x          |
+  | Debian 13                |      ✓      |      ✓       |          x          |
+  | Rocky Linux 8            |      ✓      |      ✓       |          x          |
 
 * <span class="notranslate">_Automatically scan any file uploaded using web_</span> – enables real-time scanning of all the files that were uploaded via http/https.
   ::: tip Note

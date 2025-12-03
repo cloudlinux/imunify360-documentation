@@ -257,6 +257,23 @@ apt-get update
 apt-get install --only-upgrade imunify-antivirus
 ```
 
+To upgrade ImunifyAV **beta** on Debian 12, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/debian-testing/12/bookworm main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify-antivirus
+```
+
+To upgrade ImunifyAV **beta** on Debian 13, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/debian-testing/13/trixie main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify-antivirus
+```
+
+
 If you do not want to receive updates from beta, remove beta repository:
 
 ```
