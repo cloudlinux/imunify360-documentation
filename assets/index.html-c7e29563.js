@@ -19,9 +19,15 @@ apt-get install --only-upgrade imunify360-firewall
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>To upgrade Imunify360 on Debian 11, run the following command:</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>echo &#39;deb https://repo.imunify360.cloudlinux.com/imunify360/debian-testing/11/ bullseye main&#39; &gt; /etc/apt/sources.list.d/imunify360-testing.list
 apt-get update
 apt-get install --only-upgrade imunify360-firewall
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>To upgrade Imunify360 on Debian 12, run the following command:</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>echo &#39;deb https://repo.imunify360.cloudlinux.com/imunify360/debian-testing/12/ bookworm main&#39; &gt; /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify360-firewall
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>To upgrade Imunify360 on Debian 13, run the following command:</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>echo &#39;deb https://repo.imunify360.cloudlinux.com/imunify360/debian-testing/13/ trixie main&#39; &gt; /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify360-firewall
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="production" tabindex="-1"><a class="header-anchor" href="#production" aria-hidden="true">#</a> Production</h2><p>CentOS/CloudLinux/AlmaLinux systems:</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>yum update imunify360-firewall
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>Ubuntu 16.04, 18.04, 20.04, and 22* systems:</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>apt-get update
 apt-get install --only-upgrade imunify360-firewall
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>release-upgrade will require manually edit Imunify repositories before enabling them.</p><p>Debian 9 (supported up to Imunify v6.11 (including)), 10, and 11 systems:</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>apt-get update
 apt-get install --only-upgrade imunify360-firewall
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div>`,29)]))}const r=i(d,[["render",l],["__file","index.html.vue"]]);export{r as default};
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div>`,33)]))}const r=i(d,[["render",l],["__file","index.html.vue"]]);export{r as default};
