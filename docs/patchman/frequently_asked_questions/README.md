@@ -423,10 +423,10 @@ Patchman runs on CentOS, Red Hat Enterprise Linux, Debian and Ubuntu Linux serve
 
 The following minimum operating system versions are supported:
 
-| **OS** | **Minimal supported version** |
-| --- | --- |
-| CentOS/RHEL | 6 (up to 8) |
-| Debian | 8, Jessie (up to 11, Bullseye) |
+| **OS** | **Minimal supported version**                     |
+| --- |---------------------------------------------------|
+| CentOS/RHEL | 6 (up to 8)                                       |
+| Debian | 8, Jessie (up to 13)                    |
 | Ubuntu | 14.10, Utopic Unicorn (up to 21.10, Impish Indri) |
 
 #### Control panel
