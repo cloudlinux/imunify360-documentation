@@ -88,63 +88,8 @@ If not, [register](/installation/#registering) the agent.
 
 ### 7. I have an error peewee.DatabaseError: database disk image is malformed. What should I do?
 
-Imunify360 uses SQLite database to store its data. Although this database has proved its reliability, database files become corrupted in rare cases. To restore data try to perform the following steps:
+Imunify360 uses SQLite database to store its data. Although this database has proved its reliability, database files become corrupted in rare cases. To restore data try to perform the steps from the section [**23. "Imunify agent is not running" troubleshooting**](/faq_and_known_issues/#_23-imunify-agent-is-not-running-troubleshooting)
 
-Stop the agent.
-
-If you have sqlite3 application installed on your machine, try to make dump of Imunify360 database:
-
-<div class="notranslate">
-
-```
-#sqlite3 /var/imunify360/imunify360.db
-.mode insert
-.output dump_all.sql
-.dump
-.exit
-```
-
-</div>
-
-You should see new file <span class="notranslate">`dump_all.sql`</span> in the directory <span class="notranslate">`/var/imunify/`</span>
-
-Create a new database from this dump file:
-
-<div class="notranslate">
-
-```
-#sqlite3 imunify360.db.new < dump_all.sql
-```
-
-</div>
-
-Replace old database with the new one:
-
-<div class="notranslate">
-
-```
-#cd /var/imunify/
-#mv imunify360.db imunify360.db.corrupt && mv imunify360.db.new imunify360.db
-```
-
-</div>
-
-Start the Imunify360 agent.
-
-If these steps have not solved the problem or no sqlite3 package is installed, then you should create a completely new database:
-
-Stop the agent.
-
-<div class="notranslate">
-
-```
-#rm /var/imunify/imunify360.db
-#imunify360-agent migratedb
-```
-
-</div>
-
-Start the agent
 
 ### 8. Why does my cPanel with LiteSpeed and OWASP ModSecurity rule set trigger 500 error on all web pages after installing Imunify360?
 
@@ -837,16 +782,9 @@ Another similar workaround may be handy in case you locate some database-related
 <div class="notranslate">
 
 ```
-"Imunify360 database is corrupt. Application cannot run with corrupt database."
-```
-</div>
-
-or some lines with
-
-<div class="notranslate">
-
-```
-"sqlite3.DatabaseError".
+"Imunify360 database is corrupt. Application cannot run with corrupt database." 
+"sqlite3.DatabaseError"
+"peewee.DatabaseError"
 ```
 </div>
 
