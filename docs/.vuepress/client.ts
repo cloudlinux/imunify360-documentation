@@ -1,6 +1,7 @@
-import {provide} from "vue";
-import {defineClientConfig} from "@vuepress/client";
+import { provide } from "vue";
+import { defineClientConfig } from "@vuepress/client";
 import mitt from 'mitt';
+import copyCodeMixin from './mixins/copyCodeMixin.js';
 
 import Layout from "./theme/layouts/Layout.vue";
 import HomeLayout from "./theme/layouts/HomeLayout.vue";
@@ -16,11 +17,12 @@ import CodeTabs from "./components/CodeTabs.vue";
 import CodeWithCopy from "./components/CodeWithCopy.vue";
 
 export default defineClientConfig({
-        rootComponents: [
+    rootComponents: [
         Chat,
     ],
     async enhance({ app }) {
         app.config.globalProperties.$eventBus = mitt();
+        app.mixin(copyCodeMixin);
     },
     layouts: {
         Layout,

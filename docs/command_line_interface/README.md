@@ -1567,7 +1567,7 @@ The general structure of the <span class="notranslate">`imunify360-agent notific
 
 <div class="notranslate">
 
-```json
+```
 {
    "rules": {
       "SCRIPT_BLOCKED": {
@@ -1671,7 +1671,7 @@ Let's review all options for a specific event on the <span class="notranslate">R
 
 <div class="notranslate">
 
-```json
+```
    "REALTIME_MALWARE_FOUND": {
       "SCRIPT": {
          "scripts": [], 
@@ -1725,7 +1725,7 @@ The <span class="notranslate">`imunify360-agent notifications-config show`</span
 
 <div class="notranslate">
 
-```json
+```
 {
    "rules": {
       "SCRIPT_BLOCKED": {
@@ -1833,7 +1833,7 @@ The <span class="notranslate">`imunify360-agent notifications-config show`</span
 
 <div class="notranslate">
 
-```json
+```
 {
    "rules": {
       "CUSTOM_SCAN_MALWARE_FOUND": {

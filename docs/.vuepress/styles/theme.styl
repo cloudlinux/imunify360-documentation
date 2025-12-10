@@ -242,6 +242,35 @@ badge[type="danger"]
   &:before
     content: attr(text);
 
+// Copy code button styling
+.copy-code-button
+  position: absolute
+  top: 0.5rem
+  right: 0.5rem
+  background: transparent
+  border: none
+  cursor: pointer
+  padding: 0.25rem
+  z-index: 10
+  opacity: 0
+  transition: opacity 0.2s ease
+
+  .copy-icon
+    fill: #ccc
+    width: 18px
+    height: 18px
+    transition: fill 0.2s ease
+
+  &:hover .copy-icon
+    fill: $mainColor
+
+  &.copied .copy-icon
+    fill: $mainColor
+
+div[class*="language-"]
+  &:hover .copy-code-button
+    opacity: 1
+
 @media (max-width: $mobileBreakpoint)
   .content:not(.custom)
     width 100%

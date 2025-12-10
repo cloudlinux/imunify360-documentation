@@ -778,7 +778,7 @@ Proactive Defense requires [Hardened PHP](/dashboard/#installation) (alt-php) to
 
 Go to <span class="notranslate">Imunify360 → Proactive Defense</span>.
 
-![](/images/proactivedefensemain_zoom70.png)
+![](/images/proactivedefenseui.png)
 
 Here you can set a mode, view detected events and perform actions on them.
 
