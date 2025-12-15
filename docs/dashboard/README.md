@@ -17,8 +17,8 @@ Or you can do it later in the <span class="notranslate">[Settings | General | Co
 Log in to your control panel as an admin and go to <span class="notranslate">Plugins</span>, choose Imunify360 to get to the Imunify360 admin interface.
 
 It allows to access:
-* <span class="notranslate">[Support](/dashboard/#support)</span> – allows you to contact our support team directly from your Imunify360 Admin Interface
-  
+* <span class="notranslate">[AI Chatbot](/dashboard/#ai-chatbot)</span> – provides quick answers from our Docs, Blog, and Help Center. For other questions you can use human support form.
+
 * <span class="notranslate">[Dashboard](/dashboard/#dashboard)</span> – allows you to see retrospective data in form of charts/heatmaps in your Imunify360 Admin Interface
 
 * <span class="notranslate">[Incidents](/dashboard/#incidents)</span> – the list of all suspicious activity on the server.
@@ -36,16 +36,12 @@ It allows to access:
 * <span class="notranslate">[Imunify360 Settings](/dashboard/#settings)</span> – configuring and controlling Imunify360 options.
 
 
-## Support
+## AI Chatbot
 
-
-This tab allows you to contact our support team directly from your Imunify360 Admin Interface. You can create a request and attach some files to it.
-
-To contact our support team in Imunify360 Admin Interface, please click the _Call_ icon at the top right corner of the page.
-
-![](/images/contactsupport_zoom70.png)
-
+Chatbot provides quick answers from our Docs, Blog, and Help Center. If you prefer human support, type "human" or ask to connect with our support team at any time. We will then open a brief request form, where you can describe your question, attach files and run doctor script (optional) to collect logs and server info for the upcoming ticket. 
 A support ticket will be created and an email will be sent to a specified email address. When a status of your request will change you receive a notification to your email address. You will be able to track your request via [https://cloudlinux.zendesk.com/hc/](https://cloudlinux.zendesk.com/hc/) and email.
+
+![](/images/AI_support_chatbot_8_8_0.png)
 
 ## Dashboard
 
