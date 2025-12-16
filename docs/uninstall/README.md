@@ -30,6 +30,12 @@ To uninstall Imunify360, run:
 bash i360deploy.sh --uninstall
 ```
 
+This command should not purge state data or configuration files. To uninstall with a full cleanup, or to clean up after uninstalling, run:
+
+```
+bash i360deployy.sh --purge
+```
+
 </div>
 
 If you have already deleted <span class="notranslate">`i360deploy.sh`</span> then download it by running:
