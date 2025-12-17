@@ -305,6 +305,12 @@ To uninstall ImunifyAV, run the command:
 bash imav-deploy.sh --uninstall
 ```
 
+This command should not purge state data or configuration files. To uninstall with a full cleanup, or to clean up after uninstalling, run:
+
+```
+bash imav-deploy.sh --purge
+```
+
 If you have already removed `imav-deploy.sh` then download it by running:
 
 ```
