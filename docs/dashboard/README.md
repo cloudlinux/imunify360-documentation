@@ -1221,7 +1221,7 @@ Imunify360 DoS protection is automatically disabled if CSF is active - a warning
 	
 ![](/images/DosProtection.png)
 
-<h5>Per-port Max Connections Dialog</h5>
+<h4>Per-port Max Connections Dialog</h4>
 
 Click the "Manage per-port limits" button to open the port limits configuration dialog:
 
@@ -1265,7 +1265,7 @@ The following options are available:
 * <span class="notranslate">_Default action on detect_</span> – the action taken when an attack is detected (Gray list or Black list).
 * <span class="notranslate">_Per-port Max Connections_</span> – allows to set different request limits for specific ports. Click "Manage per-port limits" to open a dialog where you can add, edit, or remove port-specific limits.
 
-<h5>Per-port Max Connections Dialog</h5>
+<h4>Per-port Max Connections Dialog</h4>
 
 Click the "Manage per-port limits" button to open the port limits configuration dialog:
 
