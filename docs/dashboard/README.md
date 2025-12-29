@@ -1221,22 +1221,6 @@ Imunify360 DoS protection is automatically disabled if CSF is active - a warning
 	
 ![](/images/DosProtection.png)
 
-<h4>Per-port Max Connections Dialog</h4>
-
-Click the "Manage per-port limits" button to open the port limits configuration dialog:
-
-![](/images/PortLimitsDialog.png)
-
-In this dialog you can:
-* Add new port limits by clicking the "Add" button
-* Set the port number (single port like `80` or a range like `8080-8090`)
-* Set the maximum connections limit for that port (between 100 and 10000)
-* Remove existing port limits by clicking the delete icon
-
-Click "Apply" to save changes or "Cancel" to discard them.
-
-Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
-
 #### Enhanced DOS Protection
 
 The Enhanced DOS Protection feature forms an additional layer of protection, increasing the stability of servers facing DOS attacks. It takes a different approach than our existing [DOS Protection feature](/dashboard/#dos-protection), which focuses on monitoring the number of simultaneous connections. Enhanced DOS Protection, on the other hand, monitors the rate of requests originating from attacker IP addresses per unit of time.
