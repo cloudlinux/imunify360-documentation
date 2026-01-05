@@ -1459,6 +1459,14 @@ More about the feature [here](/features/#cpanel-account-protection).
 
 ![](/images/cPanelAccountProtectionFeatureWebshield.png)
 
+#### Compromised accounts
+
+_Compromised accounts password reset_ option prevents compromised accounts from accessing the server until their password is changed. When this setting is enabled, the owners of accounts that were flagged as compromised will be forced to reset their passwords during the next login.
+
+Tick the <span class="notranslate">_Enable email notifications about compromised accounts_</span> checkbox to receive email notifications about users with compromised passwords. The notifications contain a list of the corresponding users.
+
+![](/images/cPanelCompromisedAccountsSettings.png)
+
 
 #### OSSEC
 
