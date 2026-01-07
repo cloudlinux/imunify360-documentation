@@ -1199,7 +1199,8 @@ imunify360-agent config update '{"DOS": {"enabled": true}}'
 It is possible to configure how Imunify360 will behave:
 
 * <span class="notranslate">_Max Connections_</span>– allows to setup the number of simultaneous connections allowed before IP will be blocked. Cannot be set lower than 100.
-* <span class="notranslate">_Check delay_</span> – allows to setup period in seconds between each DoS detection system activation that will check a server for DoS attack. Also, it is possible to set different limits for different local ports by editing the [configuration file](/config_file_description/) directly.
+* <span class="notranslate">_Check delay_</span> – allows to setup period in seconds between each DoS detection system activation that will check a server for DoS attack.
+* <span class="notranslate">_Per-port Max Connections_</span> – allows to set different connection limits for specific ports. Click "Manage per-port limits" to open a dialog where you can add, edit, or remove port-specific limits.
 
 **The minimum values**: 
 
@@ -1220,8 +1221,6 @@ Imunify360 DoS protection is automatically disabled if CSF is active - a warning
 	
 ![](/images/DosProtection.png)
 
-Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
-
 #### Enhanced DOS Protection
 
 The Enhanced DOS Protection feature forms an additional layer of protection, increasing the stability of servers facing DOS attacks. It takes a different approach than our existing [DOS Protection feature](/dashboard/#dos-protection), which focuses on monitoring the number of simultaneous connections. Enhanced DOS Protection, on the other hand, monitors the rate of requests originating from attacker IP addresses per unit of time.
@@ -1233,10 +1232,38 @@ Standard DoS protection, in turn, will block attacks that use long-lived connect
 You can find all incidents related to the new feature in the incidents table by the description: 
 
 ```
-“Denial of Service (DoS) attack was discovered from %IP%: %threshold% connections per %timeframe% seconds to %port% port”.
+"Denial of Service (DoS) attack was discovered from %IP%: %threshold% connections per %timeframe% seconds to %port% port".
 ```
 
-<h4>Activating and fine-tuning Enhanced DOS Protection</h4>
+<h4>Configuring Enhanced DOS Protection via UI</h4>
+
+Enhanced DOS Protection settings are available in the Imunify360 admin interface under <span class="notranslate">Settings → General</span>.
+
+![](/images/EnhancedDosProtection.png)
+
+The following options are available:
+
+* <span class="notranslate">_Enhanced DoS Protection_</span> – enables or disables the feature.
+* <span class="notranslate">_Max Connections_</span> – the maximum number of requests allowed from a single IP within the timeframe before action is taken. Cannot be set lower than 100.
+* <span class="notranslate">_Timeframe (seconds)_</span> – the period in seconds during which requests are counted.
+* <span class="notranslate">_Default action on detect_</span> – the action taken when an attack is detected (Gray list or Black list).
+* <span class="notranslate">_Per-port Max Connections_</span> – allows to set different request limits for specific ports. Click "Manage per-port limits" to open a dialog where you can add, edit, or remove port-specific limits.
+
+<h4>Per-port Max Connections Dialog</h4>
+
+Click the "Manage per-port limits" button to open the port limits configuration dialog:
+
+![](/images/PortLimitsDialog.png)
+
+In this dialog you can:
+* Add new port limits by clicking the "Add" button
+* Set the port number (single port like `80` or a range like `8080-8090`)
+* Set the maximum connections limit for that port (between 100 and 10000)
+* Remove existing port limits by clicking the delete icon
+
+Click "Apply" to save changes or "Cancel" to discard them.
+
+<h4>Configuring Enhanced DOS Protection via CLI</h4>
 
 The feature is switched off by default. You can activate Enhanced DOS Protection in Imunify360 using the following CLI command:
 
@@ -1264,10 +1291,24 @@ imunify360-agent config update '{"ENHANCED_DOS":{"timeframe":60}}'
 imunify360-agent config update '{"ENHANCED_DOS":{"default_limit":500}}'
 ```
 
+<h4>Per-port Limits via CLI</h4>
+
 Request limits for different ports could be set separately, using the following CLI commands:
 
 ```
 imunify360-agent config update '{"ENHANCED_DOS": {"port_limits": {"80": 150}}}'
+```
+
+To set limits for multiple ports:
+
+```
+imunify360-agent config update '{"ENHANCED_DOS": {"port_limits": {"80": 150, "443": 200}}}'
+```
+
+To clear all port-specific limits:
+
+```
+imunify360-agent config update '{"ENHANCED_DOS": {"port_limits": {}}}'
 ```
 
 We also recommend checking and configuring the CAPTCHA_DOS section of [parameters](/config_file_description) to blacklist IPs after repetitive requests to the captcha.
