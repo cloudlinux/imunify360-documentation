@@ -491,7 +491,7 @@ To delete a port or separate IP/subnet, click _Bin_ icon in the row of the eleme
 
 #### Blocking mode: All close, except specified
 
-In this mode all ports, except specified will be blocked. You can add or remove ports from default list of allowed ports. Separately for IPv4 and IPv6. 
+In this mode, all ports, except those specified, will be blocked. You can add or remove ports from the default list of allowed ports. This can be configured separately for IPv4 and IPv6.
 
 ![](/images/BlockedPorts_close.png)
 
