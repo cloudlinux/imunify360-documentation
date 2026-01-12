@@ -425,7 +425,7 @@ This feature allows to block specific ports for TCP/UDP connection. It is also p
 
 Click <span class="notranslate">_Firewall_</span> and choose <span class="notranslate">_Ports_</span>.
 
-![](/images/Blocked_Ports1.png)
+![](/images/BlockedPorts_open.png)
 
 Choose the default blocking mode:
 
@@ -433,17 +433,6 @@ Choose the default blocking mode:
 * All close, except specified
 
 Or you can set the default blocking mode via [CLI and config file](/config_file_description/).
-
-Exact ports and port-ranges to be allowed can be configured by the following fields in the config file:
-
-* FIREWALL.TCP_IN_IPv4
-* FIREWALL.TCP_OUT_IPv4
-* FIREWALL.UDP_IN_IPv4
-* FIREWALL.UDP_OUT_IPv4
-* FIREWALL.TCP_IN_IPv6
-* FIREWALL.TCP_OUT_IPv6
-* FIREWALL.UDP_IN_IPv6
-* FIREWALL.UDP_OUT_IPv6
   
 Changes of config files will be applied automatically. You don’t need to restart the server or Imunify360.
 
@@ -499,6 +488,23 @@ To delete a port or separate IP/subnet, click _Bin_ icon in the row of the eleme
 
 ![](/images/add_port_02.png)
 
+
+#### Blocking mode: All close, except specified
+
+In this mode, all ports, except those specified, will be blocked. You can add or remove ports from the default list of allowed ports. This can be configured separately for IPv4 and IPv6.
+
+![](/images/BlockedPorts_close.png)
+
+Exact ports and port-ranges to be allowed can be configured by the following fields in the config file:
+
+* FIREWALL.TCP_IN_IPv4
+* FIREWALL.TCP_OUT_IPv4
+* FIREWALL.UDP_IN_IPv4
+* FIREWALL.UDP_OUT_IPv4
+* FIREWALL.TCP_IN_IPv6
+* FIREWALL.TCP_OUT_IPv6
+* FIREWALL.UDP_IN_IPv6
+* FIREWALL.UDP_OUT_IPv6
 
 ## Malware Scanner
 
