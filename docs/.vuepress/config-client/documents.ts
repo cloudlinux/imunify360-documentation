@@ -70,6 +70,11 @@ export default [
         link: "/whmcs_plugin/",
     },
     {
+        title: "CloudLinux Monetize WHMCS plugin",
+        description: "Integrate Imunify security services with WHMCS for automated billing and provisioning.",
+        link: "/whmcs_cloudlinux_monetize/",
+    },
+    {
         title: "FAQ and Known Issues",
         description: "Frequently asked questions about Imunify360 performance, configuration, and known issues troubleshooting and resolution.",
         link: "/faq_and_known_issues/",
