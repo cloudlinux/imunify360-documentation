@@ -849,12 +849,12 @@ worker_processes auto;
 Make sure to keep the trailing semicolon.
 :::
 
-Value `auto` seems to be a reasonable choice, as it will try to autodetect the number of CPU cores and set the value according to the number. Instead of `auto` you can set the number you find reasonable (typical value 2-8). After the file was created, reload webshield configuration with:
+Value `auto` seems to be a reasonable choice, as it will try to autodetect the number of CPU cores and set the value according to the number. Instead of `auto` you can set the number you find reasonable (typical value 2-8). After the file was created, restart webshield configuration with:
 
 <div class="notranslate">
 
 ```
-# service imunify360-webshield reload
+# systemctl restart imunify360-webshield
 ```
 </div>
 
