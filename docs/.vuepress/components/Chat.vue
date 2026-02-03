@@ -124,13 +124,17 @@ export default {
       this.handleScroll(); // Recalculate position on resize
     },
     handleScroll() {
+      // Only apply scroll positioning on desktop
+      if (this.isMobile) {
+        this.dynamicBottom = 15;
+        return;
+      }
       const distanceToPageBottom =
         document.documentElement.scrollHeight -
         window.scrollY -
         window.innerHeight;
-      const defaultBottom = this.isMobile ? 15 : 20;
       // Keep element at least stopFromBottom pixels from the page bottom
-      this.dynamicBottom = Math.max(defaultBottom, this.stopFromBottom - distanceToPageBottom);
+      this.dynamicBottom = Math.max(20, this.stopFromBottom - distanceToPageBottom);
     },
     onIframeLoad() {
       this.isLoading = false;
