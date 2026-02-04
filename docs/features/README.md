@@ -835,6 +835,38 @@ Those who don’t need this type of overridable configs can continue using custo
 
 This feature is backward compatible.
 
+## Performance Tuning for High-Traffic Environments
+
+By default webshield uses one worker, which is suitable for most cases and maintains a balance between resource consumption and performance. However, for high-load environments this might not be sufficient. To increase the number of workers, create a file with `.conf` extension in `/etc/imunify360-webshield/webshield-main.conf.d` folder, for instance, `/etc/imunify360-webshield/webshield-main.conf.d/tuning.conf` with the following content:
+<div class="notranslate">
+
+```
+worker_processes auto;
+```
+</div>
+
+:::warning Warning
+Make sure to keep the trailing semicolon.
+:::
+
+Value `auto` seems to be a reasonable choice, as it will try to autodetect the number of CPU cores and set the value according to the number. Instead of `auto` you can set the number you find reasonable (typical value 2-8). After the file was created, restart webshield configuration with:
+
+<div class="notranslate">
+
+```
+# systemctl restart imunify360-webshield
+```
+</div>
+
+To make sure that the changes took effect, the following command can be used:
+
+<div class="notranslate">
+
+```
+ps aux | grep im360
+```
+</div>
+
 
 ## Scan of the system and user crontab files for malicious jobs <Badge text="Experimental" type="note"/>
 
