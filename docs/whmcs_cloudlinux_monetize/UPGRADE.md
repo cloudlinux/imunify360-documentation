@@ -15,14 +15,13 @@ Before starting the upgrade, make sure you have:
 - Complete backup of your WHMCS files and database
 - Close all tabs with WHMCS admin in your browser
 - Full administrator access to your WHMCS installation
-- Access to download the latest module version (link will be provided later)
+- Access to download the latest module version from the [CloudLinux repository](https://repo.whmcs.cloudlinux.com/whmcs-cloudlinux-monetize-plugin-latest.zip) or from the [CloudLinux website](https://cloudlinux.com/)
 
 ## Upgrade Steps
 
 ### Step 1: Download Latest Version
 
-Download the latest version of the CloudLinux Monetize module from the provided link
-   - *(Download link will be provided here)*
+Download the latest version of the CloudLinux Monetize module from the [CloudLinux repository](https://repo.whmcs.cloudlinux.com/whmcs-cloudlinux-monetize-plugin-latest.zip) or select a specific version from the [CloudLinux website](https://cloudlinux.com/)
 
 Extract the archive to a temporary location on your computer.
 The extracted files should contain:
@@ -129,4 +128,4 @@ After upgrading, it's recommended to clear WHMCS cache:
 
 ---
 
-**Last Updated:** 27 Nov 2025
+**Last Updated:** 08 Feb 2026
