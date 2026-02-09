@@ -39,7 +39,7 @@ Before installing the module, ensure the following prerequisites are met:
 
 ### Step 1: Download Module Files
 
-1. Download the latest version of the CloudLinux Monetize module from the [CloudLinux repository](https://repo.whmcs.cloudlinux.com/whmcs-cloudlinux-monetize-plugin-latest.zip) or select a specific version from the [CloudLinux website](https://cloudlinux.com/)
+1. Download the latest version of the CloudLinux Monetize module from the [CloudLinux repository](https://repo.whmcs.cloudlinux.com/whmcs-cloudlinux-monetize-plugin-latest.zip) or select a specific version from the [CloudLinux website](https://repo.whmcs.cloudlinux.com/)
 2. Extract the archive to a temporary location on your computer
 
 :::tip Note
@@ -314,4 +314,4 @@ Version checks are performed automatically:
 
 ---
 
-**Last Updated:** 27 Nov 2025
+**Last Updated:** 08 Feb 2026
