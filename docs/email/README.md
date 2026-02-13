@@ -1,65 +1,94 @@
 # Email
 
-## Quick Start Guide
+## Overview
 
-Welcome to Imunify Email, a powerful plugin designed to enhance your Imunify360 experience with advanced email protection features such as:
-- **Advanced Server Protection**: Provides robust protection against outgoing spam, ensuring your server maintains a high reputation and reliable email delivery.
-- **Rate-Limit Settings**: Allows you to define how many messages can be sent on behalf of specific accounts, domains, emails, or scripts, helping to prevent abuse and maintain control over email traffic.
-- **BETA: Incoming Filtration**: A new feature, currently in beta, that can be enabled to protect your users from incoming spam. Learn more about enabling this feature [here](https://docs.imunify360.com/email/#beta-incoming-emails-filtration).
+Imunify Email is an Imunify360 add-on that protects your servers by filtering outgoing and incoming mail. It integrates directly with Exim MTA on cPanel/WHM servers, using Rspamd as a mail filter.
 
-### System Requirements
+### What it does
 
-At the moment, Imunify Email runs on the following environments:
+- **Stops outgoing spam at the source**: Emails are scanned before they leave the server. Messages identified as spam, containing malicious content, or exceeding send-rate limits are quarantined for admin review. You can release legitimate emails or delete confirmed spam. This keeps your server IP off blocklists and ensures reliable delivery for your users.
 
-**Supported distributions:**
-* CentOS 7, 8
-* CloudLinux OS 7, 8, 9
-* AlmaLinux 8, 9, 10
+- **Controls send rates per account, domain, email address, or script**: Set hourly sending limits at the server level, override them for individual senders, and whitelist trusted senders when needed. This three-tier system gives you fine-grained control over outgoing mail traffic.
 
-**Control panel requirements:**
-* cPanel/WHM control panel only
+- **Filters incoming spam** <sup style="background:#e67e22;color:#fff;padding:2px 6px;border-radius:3px;font-size:0.6em;">BETA</sup>: Enable server-wide incoming filtration to automatically route spam to recipients' spam mailboxes. Incoming filtration is an opt-in beta feature that must be explicitly enabled by the server administrator. See [Enabling Incoming Filtration](https://docs.imunify360.com/email/#beta-incoming-emails-filtration) for setup instructions.
 
-**Software requirements:**
-  * Hosting administrator only.
-  * Imunify Email **requires Imunify360** to be installed on the server.
-      1. **Install Imunify360**:
-      _Imunify Email is a plugin for the Imunify360 product. To use Imunify Email, you must first install Imunify360. Follow the [installation instructions for Imunify360](https://docs.imunify360.com/installation/#installation-instructions) to get started_.
+### Prerequisites at a glance
 
-      2. **Enable Imunify Email in CLN**:
-      _Once Imunify360 is installed and registered, you can enable the Imunify Email plugin through the CLN (CloudLinux Network) portal. This will automatically install all necessary components. Follow the [instructions to enable Imunify Email in CLN](https://docs.imunify360.com/email/#how-to-enable-imunify-email). For the system requirements and installation steps, refer to the [Installation](https://docs.imunify360.com/email/#installation)_.
+Before proceeding with installation, confirm that you meet these requirements:
 
-**Minimum system requirements for installation**:
-* x64
-* 512 Mb 
-* 20 Gb disk space
+<table>
+  <tr><td><strong>Imunify360</strong></td><td>Must be installed and registered</td></tr> 
+  <tr><td><strong>Control panel</strong></td><td>cPanel/WHM</td></tr>
+  <tr><td><strong>OS</strong></td><td>CloudLinux OS 7, 8, 9 · AlmaLinux 8, 9 · CentOS 7, 8</td></tr>
+  <tr><td><strong>Architecture</strong></td><td>x86_64</td></tr>
+  <tr><td><strong>RAM</strong></td><td>512 MB minimum (usage increases temporarily when scanning large messages)</td></tr>
+  <tr><td><strong>Disk</strong></td><td>20 GB minimum (quarantine uses ~100 MB per account by default, adjustable)</td></tr>
+</table>
+
+For full details, see [System Requirements](https://docs.imunify360.com/email/#system-requirements).
+
+### Compatibility
+
+Imunify Email has been tested with the following tools and mail gateways:
+
+<table>
+  <tr><td><strong>ConfigServer MailScanner</strong></td><td>✔</td></tr>
+  <tr><td><strong>ConfigServer Firewall (CSF)</strong></td><td>✔</td></tr>
+  <tr><td><strong>MailChannels</strong></td><td>✔ (Imunify Email 0.6+)</td></tr>
+  <tr><td><strong>SpamAssassin</strong></td><td>✔ (incoming and outgoing configurations)</td></tr>
+  <tr><td><strong>Smtp2go</strong></td><td>✔</td></tr>
+</table>
+
+Imunify Email operates alongside these tools. If your setup includes a tool not listed here, [contact support](https://cloudlinux.zendesk.com/hc/en-us/requests/new?product=im) to confirm compatibility before installing.
+
+### Getting started
+
+Setting up Imunify Email takes four steps:
+
+1. **Install Imunify360**: To use Imunify Email, you must first install Imunify360. Follow the [Installation Instructions](https://docs.imunify360.com/installation/#installation-instructions) to get started.
+2.  **Enable in CLN**: Turn on Imunify Email for your account, key, or individual server in the [CloudLinux Network](https://cln.cloudlinux.com/console) portal. The add-on installs automatically within 24 hours, or run <code>imunify360-agent update-license</code> to install immediately.
+3. **Verify installation**: Run <code>ie-config status</code> to confirm all services are running, and <code>ie-config version</code> to check the installed version.
+4. **Configure limits**: Navigate to WHM → Plugins → Imunify360 → Email → Settings to set your default sending limits. Adjust per-sender overrides in the Activity Monitor tab as needed.
+
+For more information, see [Installation](https://docs.imunify360.com/email/#installation) and [How to Enable Imunify Email](https://docs.imunify360.com/email/#how-to-enable-imunify-email).
+
+## System Requirements
+
+### Supported operating systems
+
+<table>
+  <tr><td><strong>CloudLinux OS</strong></td><td>7, 8, 9</td></tr>
+  <tr><td><strong>AlmaLinux</strong></td><td>8, 9</td></tr>
+  <tr><td><strong>CentOS</strong></td><td>7, 8</td></tr>
+</table>
+
+### Control panel
+
+cPanel/WHM is required. Other control panels (Plesk, DirectAdmin, etc.) are not supported yet.
+
+### Software
+
+Imunify Email requires an active Imunify360 installation. If you do not have Imunify360 installed, follow the [Imunify360 Installation Instructions](https://docs.imunify360.com/installation/#installation-instructions) before proceeding.
+
+### Hardware
+
+<table>
+  <tr><td><strong>Architecture</strong></td><td>x86_64</td></tr>
+  <tr><td><strong>RAM</strong></td><td>512 MB</td></tr>
+  <tr><td><strong>Disk</strong></td><td>20 GB</td></tr>
+</table>
 
 :::tip Note
-- Imunify Email RAM consumption depends on the mail traffic. In a waiting state it consumes little RAM; however, for scanning large mails temporary increase of RAM consumption can be observed.
-- Used disk space depends on the number of accounts on a server. By default, each account will have 100 MB limitation for quarantine space. This limit can be adjusted using the UI later.
+- RAM usage depends on mail traffic. Imunify Email consumes minimal RAM while idle, but usage increases temporarily when scanning large messages.
+- Disk usage depends on the number of accounts on the server. Each account is allocated 100 MB of quarantine space by default. This limit can be adjusted in the [Settings](https://docs.imunify360.com/email/#quarantine-settings) tab.
 :::
-
-:::warning 
-Ensure that **port 11335 is open**. Additionally, note that it is a UDP server, and therefore, it is not accessible via telnet. 
-:::
-
-### Imunify Email compatibility
-
-Imunify Email has been checked for compatibility with following tools and mail gateways:
-
-* Config Server Services
-  * [MailScanner](https://configserver.com/cp/osm.html)
-  * [Firewall](https://configserver.com/cp/csf.html)
-* [MailChannels](https://www.mailchannels.com/) from IE 0.6 version
-* SpamAssassin (incoming and outgoing configuration)
-* [Smtp2go](https://www.smtp2go.com/)
-
 
 ## Full Documentation
 
 ### Installation
 
 To install Imunify Email, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically
-within 24 hours. To install it immediately you can use on of the following command as root user:
+within 24 hours. To install it immediately you can use one of the following commands as root user:
 ```
 /usr/bin/imunify360-agent update-license
 ```
@@ -86,24 +115,24 @@ The `_imunifyemail` user will also be added to the `_imunify` group.
 
 Imunify Email has the following components:
 
-* **Imunify RSpamd**
+* **Imunify Rspamd**
   * acts as an email filter
   * it is installed in system directories such as /etc/rspamd, /usr/bin, /usr/lib, /usr/share/rspamd, as a part of `imunify-email-rspamd` RPM package and brings `rspamd` service
 * Quarantine (ie-quarantine)
   * acts as a storage for quarantined emails and as a back-end for the user interface (UI) and CLI
   * it is installed in the /var/imunifyemail/quarantine directory, as a part of `imunify-email-quarantine` RPM package and brings `ie-quarantine` and `ie-notification` service.
 * CLI (ie-cli)
-  * it is a command line interface for managing Quarantine and Activity Monitor  that is installed as a part of `imunify-email-cli` RPM package
+  * A command-line interface for managing Quarantine and Activity Monitor that is installed as a part of `imunify-email-cli` RPM package
 * Dec Node (ie-dec-node)
-  * it is a statistical component that helps to improve the filtering quality
-  * it is installed in the /var/imunifyemail/dec-node directory, as a part of `imunify-email-dec-node` RPM package and brings `ie-dec-node` service
+  * A statistical component that helps to improve the filtering quality
+  * Installed in the /var/imunifyemail/dec-node directory, as a part of `imunify-email-dec-node` RPM package and brings `ie-dec-node` service
 
 All these packages are installed as part of `imunify-email` RPM package.
 
 #### Exim configuration modifications
 
-Imunify Email modifies Exim MTA configuration, adding RSpamd as a filter for email.
-It is done automatically during installation. In case if filtering needs to be disabled, see [Disable Imunify Email](/email/#disable-imunify-email). When disabled, Exim configuration will not contain an RSpamd filter. To re-able Imunify Email, see [Enable Imunify Email](/email/#enable-imunify-email).
+Imunify Email modifies Exim MTA configuration, adding Rspamd as a filter for email.
+Imunify Email applies this change automatically during installation. If filtering needs to be disabled, see [Disable Imunify Email](/email/#disable-imunify-email). When disabled, Exim configuration will not contain an Rspamd filter. To re-enable Imunify Email, see [Enable Imunify Email](/email/#enable-imunify-email).
 
 The configuration change is compatible with WHM Advanced Editor, you can continue using it for other modifications.
 
@@ -113,7 +142,7 @@ The configuration change is compatible with WHM Advanced Editor, you can continu
 
 #### Background 
 
-In order to use ImunifyEmail you have to enable it in CLN. You can achieve it in two ways:
+To use Imunify Email, you have to enable it in CLN. You can achieve it in two ways:
 1. via CLN UI
 2. via CLN API
 
@@ -205,7 +234,7 @@ To enable Imunify Email on account/key level you have to follow almost the same 
 ### **Beta**: Incoming Emails Filtration
 
 :::tip Highlights
-ImunifyEmail now includes a **beta** feature for incoming email filtration, designed to protect server users from spam emails.
+Imunify Email now includes a **beta** feature for incoming email filtration, designed to protect server users from spam emails.
 This feature is currently in beta mode and is free to use.
   :::
 
@@ -221,7 +250,7 @@ To disable the feature, run:
 ie-config disable-incoming
 ```
 
-Once enabled, ImunifyEmail will start filtering incoming emails.
+Once enabled, Imunify Email will start filtering incoming emails.
 
 :::warning
 Incoming emails identified as spam are **no longer quarantined** — instead, they are delivered to the recipient’s spam/junk mailbox.
@@ -234,7 +263,7 @@ After enabling the feature, the cPanel UI will include the following changes:
     - A table displays daily incoming email statistics, including counts of spam and ham (non-spam) emails.
  - **Statistics Tab**: A new section shows detailed incoming email statistics over time, including spam and ham counts.
 
-The `ie-cli` utility mirrors the same API used by the UI, allowing administrators to retrieve quarantine and statistics information via the command line interface.
+The `ie-cli` utility mirrors the same API used by the UI, allowing administrators to retrieve quarantine and statistics information via the command-line interface.
 Use `--help` to get more info.
 
 ### User interface access
@@ -435,9 +464,9 @@ The table has the following columns:
 
    ![](/images/EmailAdd.png)
 
-### Imunify Email Command Line Interface
+### Imunify Email Command-Line Interface
 
-The Command Line Interface (CLI) is designed to simplify usage of Imunify Email and as an enabler for integration with other tools and platforms.
+The Command-Line Interface (CLI) is designed to simplify usage of Imunify Email and as an enabler for integration with other tools and platforms.
 
 Main command for all operations with Imunify Email:
 
@@ -466,7 +495,7 @@ Use `--help` key to get list of the available commands and to get help for the p
 |`emails`|interaction with emails in the quarantine|
 |`filter-settings`|toggle the filter settings, without any parameters - returns the current settings|
 |`quarantine-defaults`|interaction with default settings in the Quarantine
-|`version`|print the ImunifyEmail CLI version|
+|`version`|print the Imunify Email CLI version|
 |`whitelist`|interaction with the whitelist of authenticated users, senders and recipients|
 
 
@@ -493,7 +522,7 @@ Almost all CLI commands support output in plain text and JSON format. For switch
 
 In order to see all emails stored use the following command. By default 'root' account is used, so the command shows the whole content of the quarantine.
 
-**Command**
+**Usage**
 
 ```
 ie-cli emails list --help
@@ -514,7 +543,7 @@ Flags:
                          	examples: 100s, 5m, 1h, 5d (default "30d")
 ```
 
-**Example**
+**Command**
 
 ```
 ie-cli emails list -a root --since 24h
@@ -550,7 +579,7 @@ Subject        	  FWD:Xanax.x Valium.m Xanax.x Vicodin.n h ogzmwggi
 Max Count	     3
 ```
 
-**Example with JSON as output format**
+**Command for output in JSON format**
 
 ```
 ie-cli emails list -a root –-json
@@ -705,17 +734,17 @@ OK
 
 ### Accounts settings
 
-ImunifyEmail stores emails marked as spam in a quarantine space. The space is divided into virtual subspaces for every system account. Subspace is created when the first spam message is quarantined. It is filled with spam messages for a particular account until the size limitation is reached. When the size limitation is reached most old messages will be automatically deleted.
+ImunifyEmail stores emails marked as spam in a quarantine space. The space is divided into virtual subspaces for every system account. Subspace is created when the first spam message is quarantined. It is filled with spam messages for a particular account until the size limitation is reached. When the size limitation is reached, the oldest messages will be automatically deleted.
 
 :::tip Note
 Default limit for a quarantine subspace is 100 MB.
 :::
 
 :::tip Note
-In some cases ImunifyEmail can’t attribute an email to a system account. In such cases the email will be stored under root user quarantine space.
+In some cases Imunify Email can’t attribute an email to a system account. In such cases the email will be stored under root user quarantine space.
 :::
 
-There are command line commands for managing quarantine space.
+There are command-line commands for managing quarantine space.
 
 #### List all accounts in the quarantine
 
