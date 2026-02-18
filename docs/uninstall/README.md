@@ -33,7 +33,7 @@ bash i360deploy.sh --uninstall
 This command should not purge state data or configuration files. To uninstall with a full cleanup, or to clean up after uninstalling, run:
 
 ```
-bash i360deployy.sh --purge
+bash i360deploy.sh --purge
 ```
 
 </div>
