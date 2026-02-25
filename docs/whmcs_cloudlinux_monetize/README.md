@@ -4,7 +4,7 @@
 
 The CloudLinux Monetize module integrates Imunify security services (Patch) with your WHMCS installation, enabling you to sell and provision these services directly from your client area with automated billing and provisioning.
 
-**Current Version:** 1.0.4
+**Current Version:** 1.0.5
 
 ## See also
 
@@ -309,7 +309,7 @@ Version checks are performed automatically:
 ## Support and Resources
 
 - **CloudLinux Website:** https://cloudlinux.com/
-- **Module Version:** 1.0.3
+- **Module Version:** 1.0.5
 - **Author:** CloudLinux
 
 ---
