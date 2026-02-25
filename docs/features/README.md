@@ -45,6 +45,16 @@ Starting with imunify360-firewall-8.2.0 all IP lists are applied automatically. 
 Specifying IPs in those files will not prevent Imunify from adding the same IPs to dynamic lists (like Grey list), but all White lists always have the priority over Black lists when it comes to actual filtering of requests/packages.
 :::
 
+:::warning Note
+Adding an IP/subnet to the external **White List** affects only IP-based firewall decisions. It **does not override** the **Blocked ports** policy.
+
+If a port is restricted in **Blocked ports**, the port may remain inaccessible even for whitelisted IPs/subnets. To allow access, you must explicitly whitelist the IP/subnet for that specific port via:
+- [**🔗 GUI**](/dashboard/#edit-ports-in-the-blocked-ports-list)
+- [**🔗 CLI**](/command_line_interface/#blocked-ports)
+
+See also: [“IP whitelisting/port blocking precedence”](/faq_and_known_issues/#ip-whitelisting-port-blocking-precedence) in FAQ & Known Issues.
+:::
+
 
 ## Global Ignore List
 

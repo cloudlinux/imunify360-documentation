@@ -286,12 +286,16 @@ sed -ri "s/^(cmd=.*)$/\1--scan-archive/g" /etc/minidaemon/minidaemon-aibolit.cfg
 ## Firewall
 
 
-Tne <span class="notranslate">_All Lists_</span> tab allows viewing and managing the IP addresses in the following lists (listed by priority):
+The <span class="notranslate">_All Lists_</span> tab allows viewing and managing the IP addresses in the following lists (listed by priority):
 
 * <span class="notranslate">White</span> - the IP will not be blocked
 * <span class="notranslate">Drop/Black</span> - the IP will be blocked everywhere, on all ports and services
 * <span class="notranslate">Greylist</span> - the IP will be blocked completely on non-web ports (SSH, FTP, etc.), and will be shown Anti-Bot Challenge on web ports (80, 443, hosting panel ports)
 * <span class="notranslate">Anti-Bot Challenge</span> - the IP will be shown Anti-Bot challenge on web ports, and will not be blocked on others
+
+:::tip Note
+Blocked ports restrictions are enforced separately from IP list decisions. If you need a whitelisted IP/subnet to access a restricted port, allow it explicitly in [**Firewall → Ports**](/dashboard/#ports) by adding it to the [port’s allowlist](/dashboard/#edit-ports-in-the-blocked-ports-list), or grant **Full Access**.
+:::
 
 The counters for the lists are presented at the top of the table, reflecting the number of records matching the category.
 
