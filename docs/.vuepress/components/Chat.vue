@@ -1,5 +1,5 @@
 <template>
-  <div id="bot-ui">
+  <div id="bot-ui" :style="{ bottom: dynamicBottom + 'px' }">
     <!-- Conditionally show toggle button with highlight -->
     <div class="toggle-container" v-show="!(isMobile && showChat)">
       <div v-if="!showChat" class="pulse-ring"></div>
@@ -88,6 +88,8 @@ export default {
       windowWidth: 0, // Changed from window.innerWidth to avoid SSR error
       showTooltip: true,
       tooltipDismissDuration: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
+      dynamicBottom: 20, // Default bottom position
+      stopFromBottom: 110, // Stop 100px from page bottom
     };
   },
   computed: {
@@ -100,11 +102,14 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener("scroll", this.handleScroll);
     this.handleResize(); // Set initial windowWidth on client-side
+    this.handleScroll(); // Set initial bottom position
     this.updateTooltipVisibility(); // Check tooltip dismissal state on mount
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     toggleChat() {
@@ -116,6 +121,20 @@ export default {
     },
     handleResize() {
       this.windowWidth = window.innerWidth;
+      this.handleScroll(); // Recalculate position on resize
+    },
+    handleScroll() {
+      // Only apply scroll positioning on desktop
+      if (this.isMobile) {
+        this.dynamicBottom = 15;
+        return;
+      }
+      const distanceToPageBottom =
+        document.documentElement.scrollHeight -
+        window.scrollY -
+        window.innerHeight;
+      // Keep element at least stopFromBottom pixels from the page bottom
+      this.dynamicBottom = Math.max(20, this.stopFromBottom - distanceToPageBottom);
     },
     onIframeLoad() {
       this.isLoading = false;
