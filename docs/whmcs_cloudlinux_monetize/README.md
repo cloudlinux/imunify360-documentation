@@ -188,6 +188,10 @@ When products are imported, you can configure additional settings:
 
 ![](/images/whmcs_cloudlinux_monetize/product_notification_setting.png)
 
+### Advanced Configuration
+
+For additional product-level settings including webhooks and optional parameters, see the **[Advanced Configuration](./advanced_configuration)** guide.
+
 ### Price Recalculations
 
 The module automatically updates product pricing on a daily basis through a scheduled cron job. This ensures that:
