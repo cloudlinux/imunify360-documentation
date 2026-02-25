@@ -190,5 +190,14 @@ export default {
                     "/wordpress_plugin/"
                 ]
             }
+        ],
+        '/whmcs_cloudlinux_monetize/': [
+            {
+                collapsable: false,
+                children: [
+                    "/whmcs_cloudlinux_monetize/",
+                    "/whmcs_cloudlinux_monetize/UPGRADE"
+                ]
+            }
         ]
     }
