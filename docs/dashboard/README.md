@@ -1113,45 +1113,14 @@ To install or uninstall KernelCare click on a button related. Please find additi
 KernelCare is free on the servers with Imunify360 installed.
 :::
 
-#### Privilege escalation detection & protection <Badge text="Deprecated" type="error" vertical="top"/>
-
-:::warning Warning!
-This feature is deprecated.
-:::
-
-The KernelCare extension for Imunify360 allows tracing malicious invocations to detect privilege escalation attempts.
-
-You can find these attempts on the [Incidents tab](/dashboard/#incidents) (as part of the OSSEC log). The incidents can be seen by filtering events with the `EDF` label. 
-
-To enable the feature, tick the <span class="notranslate">_Privilege escalation detection & protection_</span> checkbox.
-
-![](/images/pep_kernelcare.png)
-
-:::warning Note
-The _Privilege escalation detection & protection_ feature is implemented for CentOS 7 only.
-:::
-
-Or you can enable it via CLI using the following command:
-
-<div class="notranslate">
-
-```
-imunify360-agent config update '{"KERNELCARE": {"edf": true}}'
-```
-</div>
-
-
-Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
-
 #### WAF Settings
+
+![](/images/waf_wordpress_acp.png)
+
 
 When the <span class="notranslate">_Minimized ModSec Ruleset_</span> option is on, it disables Imunify WAF rules with a high memory footprint, yet leaves critical ruleset enabled. It is recommended for the servers with a small amount of RAM. It is enabled by default for the installations with low RAM.
 
 You can switch back to the normal mode by enabling WebShield or unchecking <span class="notranslate">_Minimized ModSec Ruleset_</span> in Settings | General | WAF Settings
-
-
-![](/images/waf_wordpress_acp.png)
-
 
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 
@@ -1498,8 +1467,6 @@ Tick the <span class="notranslate">_Anti-bot protection_</span> checkbox to enab
 
 You can read more about Anti-bot protection [here](/features/#anti-bot-protection).
 	
-![](/images/AntiBotProtection.png)
-
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 
 #### cPanel account protection
@@ -1507,8 +1474,6 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 Tick the checkbox next to the <span class="notranslate">_cPanel account protection_</span> option to enable the JavaScript challenge for users trying to access the cPanel interface.
 
 More about the feature [here](/features/#cpanel-account-protection).
-
-![](/images/cPanelAccountProtectionFeatureWebshield.png)
 
 #### Compromised accounts
 
@@ -1537,12 +1502,12 @@ For now, the feature covers the following ports:
 
 #### PAM
 
+![](/images/pam_module.png)
+
 #### PAM brute-force attack protection
 
 Tick the <span class="notranslate">_PAM brute-force attack protection_</span> checkbox to enable an advanced brute-force protection technique based on the combination of PAM module authorization, RBL check, and IP blacklisting. 
 	
-![](/images/pam_module.png)
-
 You can also enable it via CLI with the following command:
 
 <div class="notranslate">
@@ -1561,8 +1526,6 @@ This protection type is available only in cPanel/WHM.
 :::
 
 Tick the <span class="notranslate">_Exim+Dovecot brute-force attack protection_</span> checkbox to enable advanced protection against Dovecot brute-force attacks. PAM module protects against IMAP/POP3 brute-force attacks and prevents mail accounts from being compromised via brute-forcing.
-
-![](/images/dovecot.png)
 
 You can also enable it via CLI with the following command: 
 
@@ -1584,8 +1547,6 @@ This protection type is available only in cPanel/WHM for the proftpd and pureftp
 
 Tick the <span class="notranslate">_FTP brute-force attack protection_</span> checkbox to enable protection for the ftpd server against FTP brute-force attacks. It uses a time-proven algorithm that we’ve been using in the SSH PAM extension.
 	
-![](/images/ftpBruteForceAttackProtection.png)
-
 You can also enable it via CLI with the following command:
 
 <div class="notranslate">
@@ -1737,16 +1698,10 @@ Those options may be hidden for end-user if Cleanup is disabled in Features Mana
 There are few platform requirements to use this feature:
   * Hyperscan supports Debian, Ubuntu and CentOS/CloudLinux 7 and later.
   * SSE3 processor instructions support. It is quite common nowadays, but may be lacking in virtual environments or in some rather old servers.
-
-#### Crontab files Scanning
-
-This is the mechanism allowing to address Crontab infections with our powerful Malware scanner. Enabled, it will catch any event of Crontab file modification on the fly in seconds and keep them malware-free in real-time.
-
-<img src="/images/crontabScanning.png" border="1px solid grey"/>
-
-The cleanup results are available on the *Malware* and *History* tabs of the Imunify360 interface as for any other type of malware.
-
-Tick required checkboxes and click <span class="notranslate">_Save changes_</span> button.
+* <span class="notranslate">_Enable Malware Database Scanner_</span> – a database antivirus: automated malware detection and clean-up of web applications.
+    :::tip Note
+    Requires MariaDB/MySQL DB management system version 5.5. The recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.
+    :::
 
 #### Background Scanning
 
@@ -1792,26 +1747,10 @@ To reduce the number of blamer events, similar events are combined by default in
 
 Once a vulnerable script or unknown malware executes any malicious flow which in turn leads to a malware drop, it causes the auto-generate rule to be released for the Proactive Defence. Ultimately, it will stop any further attempts to exploit the vulnerability or drop malware. Any dropped malware will be also auto-cleaned by the real-time malware scanner keeping the system clean and protected.
 
-![](/images/SettingsPHPImmunity.png)
-
 By enabling this feature Blamer will be enabled as well and Proactive Defence switched into the KILL mode.
 
 
 Click <span class="notranslate">_Save changes_</span> at the page bottom to apply all changes.
-
-#### Malware Database Scanner
-
-![](/images/MDSSetUI.png)
-
-Enable <span class="notranslate">_Malware Database Scanner_</span> – a database antivirus: automated malware detection and clean-up of web applications.
-
-:::tip Note
-Requires MariaDB/MySQL DB management system version 5.5. The recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.
-:::
-
-
-Click <span class="notranslate">_Save changes_</span> to apply changes.
-
 
 ### Backups
 
