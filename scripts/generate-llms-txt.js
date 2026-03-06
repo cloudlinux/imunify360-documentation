@@ -41,23 +41,21 @@ const routeToDocPath = (route) => {
   return path.join(docsDir, withSlash.replace(/^\//, ""), "README.md");
 };
 
-const docPathToRoute = (docPath) => {
-  const rel = path.relative(docsDir, docPath);
-  if (rel === "README.md") {
-    return "/";
-  }
-  if (path.basename(rel) === "README.md") {
-    return `/${path.posix.dirname(rel).replace(/\\/g, "/")}/`;
-  }
-  return `/${rel.replace(/\\/g, "/")}`;
-};
-
 const routeToMdUrl = (route) => {
   if (route.endsWith(".md")) {
     return `${baseUrl}${route}`;
   }
   const withSlash = route.endsWith("/") ? route : `${route}/`;
   return `${baseUrl}${withSlash}index.md`;
+};
+
+const routeToDistMarkdownPath = (route) => {
+  const cleaned = route.replace(/^\//, "");
+  if (route.endsWith(".md")) {
+    return path.join(distDir, cleaned);
+  }
+  const withSlash = route.endsWith("/") ? route : `${route}/`;
+  return path.join(distDir, withSlash.replace(/^\//, ""), "index.md");
 };
 
 const getMarkdownTitle = async (filePath) => {
@@ -79,6 +77,18 @@ const getMarkdownTitle = async (filePath) => {
   return path.basename(filePath, path.extname(filePath));
 };
 
+const sanitizeMarkdownTitle = (title) => {
+  const hasHtml = /<[^>]+>/.test(title);
+  let normalized = title.replace(/<[^>]*>/g, " ");
+  normalized = normalized.replace(/\s+/g, " ").trim();
+  if (hasHtml && /\bdeprecated\b/i.test(normalized)) {
+    normalized = normalized.replace(/\bdeprecated\b/gi, "[DEPRECATED]");
+    normalized = normalized.replace(/\s*\[DEPRECATED\]\s*/g, " [DEPRECATED] ");
+    normalized = normalized.replace(/\s+/g, " ").trim();
+  }
+  return normalized;
+};
+
 const stripFrontmatter = (content) => {
   const lines = content.split(/\r?\n/);
   if (lines[0] !== "---") {
@@ -96,37 +106,11 @@ const readMarkdownContent = async (filePath) => {
   return stripFrontmatter(content);
 };
 
-const collectMarkdownFiles = async (dir, results = []) => {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    if (entry.name === ".vuepress") {
-      continue;
-    }
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      await collectMarkdownFiles(fullPath, results);
-    } else if (entry.isFile() && entry.name.endsWith(".md")) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-};
-
-const writeMarkdownCopies = async (markdownFiles) => {
-  await fs.mkdir(distDir, { recursive: true });
-  await Promise.all(
-    markdownFiles.map(async (filePath) => {
-      const rel = path.relative(docsDir, filePath);
-      const dirName = path.dirname(rel);
-      const baseName = path.basename(rel);
-      const outputName = baseName === "README.md" ? "index.md" : baseName;
-      const outputDir = dirName === "." ? distDir : path.join(distDir, dirName);
-      const outputPath = path.join(outputDir, outputName);
-      await fs.mkdir(outputDir, { recursive: true });
-      const content = await fs.readFile(filePath, "utf8");
-      await fs.writeFile(outputPath, content);
-    })
-  );
+const writeMarkdownCopy = async (filePath, route) => {
+  const outputPath = routeToDistMarkdownPath(route);
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  const content = await fs.readFile(filePath, "utf8");
+  await fs.writeFile(outputPath, content);
 };
 
 const buildLlmsTxt = async () => {
@@ -143,9 +127,6 @@ const buildLlmsTxt = async () => {
     ])
   );
 
-  const markdownFiles = await collectMarkdownFiles(docsDir);
-  await writeMarkdownCopies(markdownFiles);
-
   const lines = [`# ${siteTitle}`, "", `> ${siteSummary}`, ""];
   const fullLines = [`# ${siteTitle}`, "", `> ${siteSummary}`, ""];
 
@@ -155,17 +136,7 @@ const buildLlmsTxt = async () => {
     const sidebarEntry = normalizedSidebar.get(docRoute) || [];
     const sidebarRoutes = sidebarEntry.flatMap((entry) => entry.children || []);
 
-    const childRoutes = new Set(sidebarRoutes);
-    const docDir = path.join(docsDir, docRoute.replace(/^\//, ""));
-    const extraRoutes = markdownFiles
-      .filter((filePath) => filePath.startsWith(docDir))
-      .map((filePath) => docPathToRoute(filePath))
-      .filter((route) => route !== "/" && !childRoutes.has(route));
-
-    const orderedRoutes = [
-      ...sidebarRoutes,
-      ...extraRoutes.sort((a, b) => a.localeCompare(b)),
-    ];
+    const orderedRoutes = sidebarRoutes;
 
     lines.push(`## ${heading}`, "");
     fullLines.push(`## ${heading}`, "");
@@ -177,7 +148,9 @@ const buildLlmsTxt = async () => {
       } catch {
         continue;
       }
-      const title = await getMarkdownTitle(docPath);
+      await writeMarkdownCopy(docPath, route);
+      const rawTitle = await getMarkdownTitle(docPath);
+      const title = sanitizeMarkdownTitle(rawTitle);
       lines.push(`- [${title}](${routeToMdUrl(route)})`);
 
       const content = await readMarkdownContent(docPath);
