@@ -1,0 +1,114 @@
+# Imunify360 Documentation
+
+> Imunify360 is a security solution for Linux web servers based on machine learning technology. It provides advanced firewall, intrusion detection, malware scanning, patch management, and proactive defense against zero-day attacks.
+
+## Introduction to Imunify360
+
+- [Introduction](https://docs.imunify360.com/introduction/index.md)
+
+## Terminology
+
+- [Terminology](https://docs.imunify360.com/terminology/index.md)
+
+## Licensing
+
+- [Licensing](https://docs.imunify360.com/billing/index.md)
+
+## Installation
+
+- [Installation Guide](https://docs.imunify360.com/installation/index.md)
+
+## Non-Supported Panel Integration
+
+- [Generic panels and no-panel installation and integration](https://docs.imunify360.com/control_panel_integration/index.md)
+
+## Other Integrations
+
+- [Other Integrations](https://docs.imunify360.com/ids_integration/index.md)
+
+## Features
+
+- [Features](https://docs.imunify360.com/features/index.md)
+
+## Admin Interface
+
+- [Admin Interface](https://docs.imunify360.com/dashboard/index.md)
+
+## User Interface
+
+- [User Interface](https://docs.imunify360.com/user_interface/index.md)
+
+## Command-Line Interface (CLI)
+
+- [Command-line Interface (CLI)](https://docs.imunify360.com/command_line_interface/index.md)
+
+## Config File Description
+
+- [Config File Description](https://docs.imunify360.com/config_file_description/index.md)
+
+## Update
+
+- [Update Guide](https://docs.imunify360.com/update/index.md)
+
+## Localization
+
+- [Localization](https://docs.imunify360.com/localization/index.md)
+
+## WHMCS Plugin
+
+- [WHMCS Plugin](https://docs.imunify360.com/whmcs_plugin/index.md)
+
+## CloudLinux Monetize WHMCS plugin
+
+- [CloudLinux Monetize WHMCS Module](https://docs.imunify360.com/whmcs_cloudlinux_monetize/index.md)
+
+## FAQ and Known Issues
+
+- [FAQ and Known Issues](https://docs.imunify360.com/faq_and_known_issues/index.md)
+
+## Uninstall
+
+- [Uninstall](https://docs.imunify360.com/uninstall/index.md)
+
+## ImunifyAV/AV+ Product
+
+- [ImunifyAV(+) for cPanel, Plesk and DirectAdmin](https://docs.imunify360.com/imunifyav/index.md)
+- [ImunifyAV(+) for Plesk [DEPRECATED]](https://docs.imunify360.com/imunifyav/imunifyav_for_plesk/index.md)
+- [ImunifyAV(+) for ISPmanager](https://docs.imunify360.com/imunifyav/imunifyav_for_ispmanager/index.md)
+- [ImunifyAV(+) for Webuzo](https://docs.imunify360.com/imunifyav/imunifyav_for_webuzo/index.md)
+- [ImunifyAV(+) for OpenPanel](https://docs.imunify360.com/imunifyav/imunifyav_for_openpanel/index.md)
+- [Stand-alone version of ImunifyAV(+) (non-panel, generic panel integration)](https://docs.imunify360.com/imunifyav/stand_alone_mode/index.md)
+- [Command-Line Interface](https://docs.imunify360.com/imunifyav/cli/index.md)
+- [Config File Description](https://docs.imunify360.com/imunifyav/config_file_description/index.md)
+- [FAQ and Known Issues](https://docs.imunify360.com/imunifyav/faq_and_known_issues/index.md)
+
+## Imunify Email Product
+
+- [Email](https://docs.imunify360.com/email/index.md)
+
+## Imunify Patch
+
+- [Imunify Patch](https://docs.imunify360.com/imunify_patch/index.md)
+
+## MyImunify Documentation
+
+- [MyImunify User Documentation](https://docs.imunify360.com/myimunify/index.md)
+
+## Patchman
+
+- [Patchman](https://docs.imunify360.com/patchman/index.md)
+- [Getting started](https://docs.imunify360.com/patchman/getting_started/index.md)
+- [Frequently Asked Question](https://docs.imunify360.com/patchman/frequently_asked_questions/index.md)
+- [Portal](https://docs.imunify360.com/patchman/portal/index.md)
+- [Policies](https://docs.imunify360.com/patchman/policies/index.md)
+- [Agent (patchman-client)](https://docs.imunify360.com/patchman/agent/index.md)
+- [Platform Integrations](https://docs.imunify360.com/patchman/platform_integrations/index.md)
+- [Migrating to new agent](https://docs.imunify360.com/patchman/imunify/index.md)
+
+## WordPress Plugin
+
+- [Imunify Security WordPress Plugin](https://docs.imunify360.com/wordpress_plugin/index.md)
+
+---
+
+For more comprehensive documentation, see [llms-full.txt](https://docs.imunify360.com/llms-full.txt)
