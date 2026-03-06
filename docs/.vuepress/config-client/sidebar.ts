@@ -152,7 +152,7 @@ export default {
             }
         ],
 
-        '/imunify_patch': [
+        '/imunify_patch/': [
             {
                 collapsable: false,
                 children: [

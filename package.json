@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "docs:build": "vuepress build docs && node scripts/generate-llms-txt.js",
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
