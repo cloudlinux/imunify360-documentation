@@ -304,6 +304,10 @@ Disable (default):
 
 ## Notifications
 
+::::tip Note
+This section describes Imunify event notifications (emails/scripts) configured in Imunify UI and via `notifications-config`. For panel notifications (iContact messages) delivered via cPanel iContact or Plesk Notifications, see [Panel notifications (iContact)](/features/panel_notifications/).
+::::
+
 Starting from version 4.10, an administrator is able to configure email addresses to submit reports and execute custom scripts. Go to <span class="notranslate">_Settings_</span> and choose <span class="notranslate">_Notifications_</span> tab.
 
 ![](/images/notifications.png)

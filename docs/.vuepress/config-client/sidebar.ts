@@ -51,7 +51,8 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/features/"
+                    "/features/",
+                    "/features/panel_notifications/"
                 ]
             },
         ],
