@@ -1,4 +1,4 @@
-﻿# Config File Description
+# Config File Description
 
 
 Imunify360 config file is available on the following location after installation:
@@ -200,6 +200,8 @@ Scanner's behaviour is based on other scan optimizations, therefore it is better
 </tr>
 <tr><td><span class="notranslate">compromised_user_password_reset: True</span></td>
 <td># enables resetting passwords for compromised cPanel accounts. Upon activating this functionality, our platform will detect instances where a cPanel account password has been breached and will subsequently prevent access using the previous password. End-users will then be prompted to create a new password via the <a href="https://docs.cpanel.net/knowledge-base/security/how-to-reset-a-cpanel-account-password/" target="_blank">cPanel password reset process</a>.</td></tr>
+<tr><td><span class="notranslate">generic_user_notifications: True</span></td>
+<td># allow sending user-targeted generic notifications (iContact messages) to panel end users when applicable. Default value is True.</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">ERROR_REPORTING:</span></th>
 </tr>
@@ -368,6 +370,8 @@ If a non-eligible interval is configured, the agent will ignore it and keep the 
 <tr><th colspan="2" align="left"><span class="notranslate">ADMIN_CONTACTS:</span></th></tr>
 <tr><td><span class="notranslate">emails: youremail@email.com</span></td>
 <td># your email to receive reports about critical issues, security alerts or system misconfigurations detected on your servers.</td></tr>
+<tr><td><span class="notranslate">enable_icontact_notifications: True</span></td>
+<td># enable/disable delivery of generic (iContact) messages via hosting panel notifications (cPanel iContact / Plesk Notifications). Messages are provided by the Imunify backend (subject + HTML body) and throttled by a per-message period limit. Default value is True. See <a href="/features/panel_notifications/">Panel notifications (iContact)</a>.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">SMTP_BLOCKING:</span></th></tr>
 <tr><td><span class="notranslate">enable: False</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) (default value) SMTP Traffic Management. When enabled, the outgoing SMTP traffic would be blocked according to the settings.</td></tr>
@@ -470,6 +474,28 @@ For string configuration values, such as the administrator's email address, it i
 
 ```
 imunify360-agent config update '{"ADMIN_CONTACTS": {"emails": ["email@domain.com"]}}'
+```
+</div>
+
+To enable or disable panel notifications (iContact messages), use:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"ADMIN_CONTACTS": {"enable_icontact_notifications": true}}'
+```
+
+```
+imunify360-agent config update '{"ADMIN_CONTACTS": {"enable_icontact_notifications": false}}'
+```
+</div>
+
+To disable user-targeted delivery of generic notifications (iContact messages), use:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"CONTROL_PANEL": {"generic_user_notifications": false}}'
 ```
 </div>
 

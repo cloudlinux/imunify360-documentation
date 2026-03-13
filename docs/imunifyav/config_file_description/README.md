@@ -1,4 +1,4 @@
-﻿# Config File Description
+# Config File Description
 
 
 ImunifyAV(+) config file is available on the following location after installation:
@@ -59,7 +59,10 @@ In the config file it is possible to set up ImunifyAV(+) configuration. The foll
 <tr><td><span class="notranslate">emails: youremail@email.com</span></td>
 <td># your email to receive reports about critical issues, security alerts or system misconfigurations detected on your servers.</td></tr>
 <tr><td><span class="notranslate">enable_icontact_notifications: True</span></td>
-<td># receive notifications about malicious activity detected (no more than once in 24h) and when malware scan was not performed for not more than once per week (once a week). Available for cPanel and cPanel-supported OSes. Default value is True.</td></tr>
+<td># enable/disable delivery of generic (iContact) messages via hosting panel notifications (cPanel iContact / Plesk Notifications). Messages are provided by the Imunify backend (subject + HTML body) and throttled by a per-message period limit. Default value is True. See <a href="/features/panel_notifications/">Panel notifications (iContact)</a>.</td></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">CONTROL_PANEL:</span></th></tr>
+<tr><td><span class="notranslate">generic_user_notifications: True</span></td>
+<td># allow sending user-targeted generic notifications (iContact messages) to panel end users when applicable. Default value is True.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">PERMISSIONS:</span></th></tr>
 <tr><td><span class="notranslate">support_form: True</span></td>
 <td># show (<span class="notranslate">True</span>) (the default value) or hide (<span class="notranslate">False</span>) the Support icon in the ImunifyAV(+) UI.</td></tr>
