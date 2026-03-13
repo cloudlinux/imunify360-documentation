@@ -29,6 +29,7 @@
 ## Features
 
 - [Features](https://docs.imunify360.com/features/index.md)
+- [Panel notifications (iContact messages)](https://docs.imunify360.com/features/panel_notifications/index.md)
 
 ## Admin Interface
 
