@@ -51,30 +51,42 @@ The feature is controlled by Imunify configuration keys:
 
 ### Enable/disable in YAML
 
-```yaml
+<div class="notranslate">
+
+```
 ADMIN_CONTACTS:
   enable_icontact_notifications: True
 ```
+</div>
 
 ### Enable/disable via CLI
 
 **Imunify360:**
 
-```bash
+<div class="notranslate">
+
+```
 imunify360-agent config update '{"ADMIN_CONTACTS": {"enable_icontact_notifications": true}}'
 ```
+</div>
 
 Disable:
 
-```bash
+<div class="notranslate">
+
+```
 imunify360-agent config update '{"ADMIN_CONTACTS": {"enable_icontact_notifications": false}}'
 ```
+</div>
 
 **ImunifyAV/AV+:**
 
-```bash
+<div class="notranslate">
+
+```
 imunify-antivirus config update '{"ADMIN_CONTACTS": {"enable_icontact_notifications": true}}'
 ```
+</div>
 
 ### (Optional) Disable user-targeted delivery
 
@@ -82,21 +94,30 @@ If you want these notifications to go **only to the server administrator** and n
 
 **Imunify360 (global):**
 
-```bash
+<div class="notranslate">
+
+```
 imunify360-agent config update '{"CONTROL_PANEL": {"generic_user_notifications": false}}'
 ```
+</div>
 
 **Imunify360 (for a specific user):**
 
-```bash
+<div class="notranslate">
+
+```
 imunify360-agent config update '{"CONTROL_PANEL": {"generic_user_notifications": false}}' --user <username>
 ```
+</div>
 
 **ImunifyAV/AV+:**
 
-```bash
+<div class="notranslate">
+
+```
 imunify-antivirus config update '{"CONTROL_PANEL": {"generic_user_notifications": false}}'
 ```
+</div>
 
 ## Plesk: managing delivery with Plesk Notifications
 
@@ -109,9 +130,12 @@ When Imunify runs under Plesk, it relies on the **Imunify Plesk extension** to d
 
 On a server with the Imunify extension installed, run:
 
-```bash
+<div class="notranslate">
+
+```
 echo '{"message_type":"Generic","params":{"subject":"Test Generic","body_html":"<p>Hello from Imunify</p>"},"user":"client_login"}' | sudo /opt/imunify360/venv/share/imunify360/scripts/send-notifications
 ```
+</div>
 
 **Payload fields:**
 - `message_type`: must be `Generic`
