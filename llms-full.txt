@@ -9796,7 +9796,7 @@ A reason pattern looks like the following:
 |-|-|
 |`<type>`|`SMW` – server malware, `CMW` – client malware|
 |`<detected>`|`SA`- stand-alone (file is completely malicious), `INJ` – injections (malware is injected to some legitimate file)|
-|`<ID>`|a signature ID|
+|`<ID>`|a signature identifier. It can be either a numeric signature ID or `CLOUDAV` for a hybrid-method detections performed by the CloudAV feature.|
 |`<filetype>`|a file type; see [Table 1. File types and their code](/faq_and_known_issues/#table-1-file-types-and-their-codes)|
 |`<mlwcategory>`|a malware category, see [Table 2. Malware categories](/faq_and_known_issues/#table-2-malware-categories)|
 |`<mlwclassification>`|malware classification; it varies based on scenario/actions of a malicious artifact (see [Table 3. Malware classification](/faq_and_known_issues/#table-3-malware-classification))|
