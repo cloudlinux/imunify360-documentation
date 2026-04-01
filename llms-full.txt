@@ -1820,7 +1820,7 @@ This section includes specific settings for each hosting panel that Imunify360 s
 
 <span class="notranslate">Mod_security</span> installation process is specific for different panels:
 
-* Find the official cPanel documentation [here](https://documentation.cpanel.net/display/EA4/Apache+Module%3A+ModSecurity#ApacheModule:ModSecurity-InstallModSecHowtoinstalloruninstallmod_security2)
+* Find the official cPanel documentation [here](https://docs.cpanel.net/ea4/apache/apache-modules/apache-module-modsecurity/)
 
 * Find the official Plesk documentation [here](https://docs.plesk.com/en-US/onyx/administrator-guide/server-administration/web-application-firewall-modsecurity.73383/)
 
