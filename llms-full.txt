@@ -16210,6 +16210,18 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Solid Security – Password, Two Factor Authentication, and Brute Force Protection  | 8.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Website Builder by SeedProd — Theme Builder, Landing Page Builder, Coming Soon Page, Maintenance Mode | 6.0.5+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>King addons for Elementor | 24.12.57+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>TablePress | 2.0.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>The Events Calendar | 5.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Custom Post Type UI | 1.13.5+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>UIWidgets for Google Reviews | 10.9.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Slider, Gallery, and Carousel by MetaSlider | 3.20.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>PixelYourSite - Your smart PIXEL | 8.0.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Ocean Extra | 1.5.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>MetForm | 1.4.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Forminator Forms | 1.13.3+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Fluent Forms | 3.5.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>YITH WooCommerce Wishlist | 3.1.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Enable Media Replace | 3.2.7+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
 
