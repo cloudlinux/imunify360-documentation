@@ -147,7 +147,7 @@ Available options:
 <li><span class="notranslate"><b>notify</b></span> – just display in dashboard</li>
 <li><span class="notranslate"><b>cleanup</b></span> – cleanup malicious file (default)</li></ul></td></tr>
 <tr><td><span class="notranslate">enable_scan_inotify: True</span></td>
-<td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False</span>) real-time scanning for modified files using <a href="https://en.wikipedia.org/wiki/Inotify" target="_blank">inotify</a> library</td></tr>
+<td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False</span>) real-time scanning for modified files. Uses <a href="https://man7.org/linux/man-pages/man7/fanotify.7.html" target="_blank">fanotify</a> as the primary monitoring mechanism (kernel 3.10+) with legacy <a href="https://en.wikipedia.org/wiki/Inotify" target="_blank">inotify</a> fallback. The config option name is kept for backward compatibility.</td></tr>
 <tr><td><span class="notranslate">enable_scan_pure_ftpd: True</span></td>
 <td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False</span>) real-time scanning for files uploaded through PureFTPd</td></tr>
 <tr><td><span class="notranslate">enable_scan_modsec: True</span></td>

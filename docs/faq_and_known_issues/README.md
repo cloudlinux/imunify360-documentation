@@ -371,7 +371,7 @@ grep 'IM360 WAF: Testing the IM360 ModSecurity ruleset' /var/log/imunify360/cons
 
 ### 16. How to check "automatically scan all modified files" works?
 
-To check "automatically scan all modified files" (i.e inotify scanner), upload a malware sample to some account's webroot via SSH and check if it will appear in the <span class="notranslate">_Malicious_</span> tab shortly.
+To check "automatically scan all modified files" (the realtime scanner), upload a malware sample to some account's webroot via SSH and check if it will appear in the <span class="notranslate">_Malicious_</span> tab shortly.
 
 You can get a malware sample file on the [eicar.org](http://www.eicar.org/).
 
@@ -593,7 +593,7 @@ Proactive Defense will prevent <span class="notranslate">`include`/`require`</sp
 There is a separate ignore list for false-positive hits: see [Ignore List](/dashboard/#ignore-list)
 :::
 
-The `watched.txt` file contains additional shell-like glob patterns specifying what file system directories should be monitored by inotify/fanotify realtime scanner.
+The `watched.txt` file contains additional shell-like glob patterns specifying what file system directories should be monitored by the realtime scanner.
 
 Patterns can be absolute:
 
@@ -621,7 +621,7 @@ All patterns listed here have higher priority than stock watched and excluded li
 After making changes to this file, run the `imunify360-agent malware rebuild patterns` command.
 :::
 
-The <span class="notranslate">`ignored.txt`</span> file contains additional regular expression patterns specifying what filesystem paths should not be monitored by inotify/fanotify realtime scanner.
+The <span class="notranslate">`ignored.txt`</span> file contains additional regular expression patterns specifying what filesystem paths should not be monitored by the realtime scanner.
 
 Patterns can be absolute:
 
