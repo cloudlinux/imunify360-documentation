@@ -1640,9 +1640,12 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
   ::: tip Note
   It requires inotify to be installed and may put an additional load on a system.
   :::
-* <span class="notranslate">_Optimize real-time scan_</span> – enables the [File Change API](https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api) and **fanotify** support to reduce the system load while watching for file changes in comparison with inotify watchs.
+* <span class="notranslate">_Optimize real-time scan_</span> – enables the [File Change API](https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api) and **fanotify** support to reduce the system load while watching for file changes in comparison with inotify watches.
     :::tip Note
     File change API can work only with ext4 file system.
+    :::
+    :::tip Note
+    Starting from **imunify-realtime-av 8.0.7**, the realtime scanner automatically filters out file operations from system services (MySQL/MariaDB, PostgreSQL, Redis, etc.) to significantly reduce CPU overhead. No configuration is needed — the system service threshold is auto-detected from the OS configuration.
     :::
 
   |                          |             |              |                     |

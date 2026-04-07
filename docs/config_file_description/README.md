@@ -164,7 +164,9 @@ that were uploaded via http/https. Note that it requires <a href="https://modsec
 <tr><td><span class="notranslate">notify_on_detect: False</span></td>
 <td># notify (<span class="notranslate">True</span>) or not (<span class="notranslate">False</span>) (default value) an admin when malware is detected</td></tr>
 <tr><td><span class="notranslate">optimize_realtime_scan: True</span></td>
-<td># enable (<span class="notranslate">True</span>) (default value) or disable (<span class="notranslate">False</span>) the  <a href="https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api" target="_blank">File Change API</a> and <b>fanotify</b> support to reduce the system load while watching for file changes in comparison with inotify watch. You can find the comparison table <a href="/dashboard/#general-2">here</a></td></tr>
+<td># enable (<span class="notranslate">True</span>) (default value) or disable (<span class="notranslate">False</span>) the  <a href="https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api" target="_blank">File Change API</a> and <b>fanotify</b> support to reduce the system load while watching for file changes in comparison with inotify watch. You can find the comparison table <a href="/dashboard/#general-2">here</a>.
+<br/><br/>
+Starting from <b>imunify-realtime-av 8.0.7</b>, the realtime scanner automatically filters out file operations from system services (MySQL/MariaDB, PostgreSQL, Redis, Apache, etc.) to significantly reduce CPU overhead on busy servers. The system service threshold is auto-detected from the OS configuration — no manual setup is required.</td></tr>
 <tr><td><span class="notranslate">sends_file_for_analysis: True</span></td>
 <td># send (<span class="notranslate">True</span>) (default value) or not (<span class="notranslate">False</span>) malicious and suspicious files to the Imunify team for analysis</td></tr>
 <tr><td><span class="notranslate">i360_clamd: False</span></td>
