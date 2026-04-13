@@ -973,13 +973,18 @@ Starting from PHP 8, the interpreter supports `opcache.jit` option to enable jus
 
 When the <span class="notranslate">Proactive Defense</span> extension (or any other PHP extensions that use the hooks to intercept function calls) is enabled, opcache engine disables `opcache.jit` automatically and reports it into the error log. It does not affect the stability and performance of websites running PHP 8 when both `opcache.jit` and the <span class="notranslate">Proactive Defense</span> module are enabled, but the JIT will be off.
 
-To keep `opcache.jit` forcibly enabled and keep the <span class="notranslate">Proactive Defense</span> module enabled, one needs to add the following config option:
+To keep `opcache.jit` forcibly enabled and keep the <span class="notranslate">Proactive Defense</span> module enabled, set <span class="notranslate">jit_compatible_mode</span> to <span class="notranslate">True</span> under the <span class="notranslate">PROACTIVE_DEFENCE</span> section in the Imunify360 configuration file (merged config), for example:
 
-```
-jit_compatible_mode=on
+```yaml
+PROACTIVE_DEFENCE:
+  jit_compatible_mode: True
 ```
 
-in the `/usr/share/i360-php-opts/module.ini` file.
+The merged config is typically at <span class="notranslate">/etc/sysconfig/imunify360/imunify360-merged.config</span> (or the non-privileged variant when used). See also [Config file description](/config_file_description/) for the full list of <span class="notranslate">PROACTIVE_DEFENCE</span> options.
+
+::: tip Note
+The PHP extension applies <span class="notranslate">jit_compatible_mode</span> from the merged Imunify360 YAML configuration (not from <span class="notranslate">module.ini</span>). Older documentation referred to <span class="notranslate">module.ini</span>; use <span class="notranslate">PROACTIVE_DEFENCE.jit_compatible_mode</span> in the merged config as shown above.
+:::
 
 
 ## Reputation Management

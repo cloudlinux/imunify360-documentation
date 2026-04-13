@@ -267,7 +267,11 @@ to request Anti-bot Challenge again</td></tr>
 <tr><td><span class="notranslate">mode: LOG</span></td>
 <td># available modes:<ul><li><span class="notranslate">KILL</span></li><li><span class="notranslate">DISABLED</span></li><li><span class="notranslate">LOG</span> (default)</li></ul></td></tr>
 <tr><td><span class="notranslate">php_immunity: False</span></td>
-<td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False (default)) PHP Immunity </span> (allows to automatically detect & patch vulnerabilities in software at the Proactive Defense level preventing re-infections through the same vulnerability). By enabling this feature, Blamer will be enabled as well and Proactive Defence switched into the KILL mode.</td></tr>
+<td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span> (default)) <span class="notranslate">PHP Immunity</span> (allows to automatically detect & patch vulnerabilities in software at the Proactive Defense level preventing re-infections through the same vulnerability). By enabling this feature, Blamer will be enabled as well and Proactive Defence switched into the <span class="notranslate">KILL</span> mode.</td></tr>
+<tr><td><span class="notranslate">jit_compatible_mode: True</span></td>
+<td># For PHP 8.0+, if the key is <strong>omitted</strong> or <span class="notranslate">null</span> in the merged config, the extension enables JIT-compatible mode by default. Set to <span class="notranslate">False</span> to disable it explicitly. When enabled, Proactive Defense uses a hooking path compatible with PHP OPcache JIT.</td></tr>
+<tr><td><span class="notranslate">log_whitelisted: False</span></td>
+<td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span> (default)) logging of whitelisted events. When enabled, Proactive Defense will log events even for whitelisted scripts, which can be useful for auditing purposes.</td></tr>
 <tr>
 <th colspan="2" align="left"><span class="notranslate">MALWARE_SCAN_INTENSITY:</span></th>
 </tr>
