@@ -233,7 +233,7 @@ By default, root is considered to be the only admin user.
 
 ### 2.5 Integration with Malware Scanner
 
-To scan files for changes (to detect malware) using inotify, configure which directories to watch and which to ignore in the <span class="notranslate">`integration.conf`</span> file:
+To configure which directories the realtime malware scanner should watch and which to ignore, edit the <span class="notranslate">`integration.conf`</span> file:
 
 * configure <span class="notranslate">`[malware].basedir`</span> – a root directory to watch (recursively)
 * configure <span class="notranslate">`[malware].pattern_to_watch`</span> – only directories that match this ([Python](https://docs.python.org/3/howto/regex.html#regex-howto)) regex in the basedir are actually going to be watched
