@@ -1233,6 +1233,13 @@ The following options are available:
 * <span class="notranslate">_Default action on detect_</span> – the action taken when an attack is detected (Gray list or Black list).
 * <span class="notranslate">_Per-port Max Connections_</span> – allows to set different request limits for specific ports. Click "Manage per-port limits" to open a dialog where you can add, edit, or remove port-specific limits.
 
+:::tip **Note:** Enhanced DoS Protection applies the `default_limit` to all ports unless a custom value is defined in `port_limits`.
+
+When an IP is detected by Enhanced DoS Protection, the resulting graylist or blacklist entry remains active for **300 seconds**.
+
+At this time, the TTL for Enhanced DoS Protection entries is **not configurable**.
+:::
+
 <h4>Per-port Max Connections Dialog</h4>
 
 Click the "Manage per-port limits" button to open the port limits configuration dialog:
