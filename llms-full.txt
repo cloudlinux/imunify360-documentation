@@ -537,7 +537,7 @@ By default, root is considered to be the only admin user.
 
 ### 2.5 Integration with Malware Scanner
 
-To scan files for changes (to detect malware) using inotify, configure which directories to watch and which to ignore in the <span class="notranslate">`integration.conf`</span> file:
+To configure which directories the realtime malware scanner should watch and which to ignore, edit the <span class="notranslate">`integration.conf`</span> file:
 
 * configure <span class="notranslate">`[malware].basedir`</span> – a root directory to watch (recursively)
 * configure <span class="notranslate">`[malware].pattern_to_watch`</span> – only directories that match this ([Python](https://docs.python.org/3/howto/regex.html#regex-howto)) regex in the basedir are actually going to be watched
@@ -4095,7 +4095,7 @@ This is also a real time file scanner for vulnerability and it can:
 
 * scan files uploaded via HTTP/HTTPS
 
-* scan files for changes via [inotify](https://en.wikipedia.org/wiki/Inotify)
+* scan files for changes in real time (using [fanotify](https://man7.org/linux/man-pages/man7/fanotify.7.html) with legacy [inotify](https://en.wikipedia.org/wiki/Inotify) fallback)
 
 * scan on-demand (any folder needed)
 
@@ -5221,13 +5221,16 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
 
 ![](/images/SettingsMalware2.png)
 
-* <span class="notranslate">_Automatically scan all modified files_</span> – enables real-time scanning for modified files using [inotify](https://en.wikipedia.org/wiki/Inotify) library. The Scanner searches for modified files in user’s DocumentRoot directories.
+* <span class="notranslate">_Automatically scan all modified files_</span> – enables real-time scanning for modified files. The scanner uses [fanotify](https://man7.org/linux/man-pages/man7/fanotify.7.html) (kernel 3.10+) as the primary file monitoring mechanism, with a legacy [inotify](https://en.wikipedia.org/wiki/Inotify) fallback for older systems. The Scanner searches for modified files in user’s DocumentRoot directories.
   ::: tip Note
-  It requires inotify to be installed and may put an additional load on a system.
+  Real-time scanning may put additional load on a system. See the _Optimize real-time scan_ option below for ways to reduce this.
   :::
-* <span class="notranslate">_Optimize real-time scan_</span> – enables the [File Change API](https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api) and **fanotify** support to reduce the system load while watching for file changes in comparison with inotify watchs.
+* <span class="notranslate">_Optimize real-time scan_</span> – enables the [File Change API](https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api) and **fanotify** support to reduce the system load while watching for file changes in comparison with inotify watches.
     :::tip Note
     File change API can work only with ext4 file system.
+    :::
+    :::tip Note
+    Starting from **imunify-realtime-av 8.0.7**, the realtime scanner automatically filters out file operations from system services (MySQL/MariaDB, PostgreSQL, Redis, etc.) to significantly reduce CPU overhead. No configuration is needed — the system service threshold is auto-detected from the OS configuration.
     :::
 
   |                          |             |              |                     |
@@ -8538,7 +8541,7 @@ Available options:
 <li><span class="notranslate"><b>notify</b></span> – just display in dashboard</li>
 <li><span class="notranslate"><b>cleanup</b></span> – cleanup malicious file (default)</li></ul></td></tr>
 <tr><td><span class="notranslate">enable_scan_inotify: True</span></td>
-<td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False</span>) real-time scanning for modified files using <a href="https://en.wikipedia.org/wiki/Inotify" target="_blank">inotify</a> library</td></tr>
+<td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False</span>) real-time scanning for modified files. Uses <a href="https://man7.org/linux/man-pages/man7/fanotify.7.html" target="_blank">fanotify</a> as the primary monitoring mechanism (kernel 3.10+) with legacy <a href="https://en.wikipedia.org/wiki/Inotify" target="_blank">inotify</a> fallback. The config option name is kept for backward compatibility.</td></tr>
 <tr><td><span class="notranslate">enable_scan_pure_ftpd: True</span></td>
 <td># enable (<span class="notranslate">True</span> (default)) or disable (<span class="notranslate">False</span>) real-time scanning for files uploaded through PureFTPd</td></tr>
 <tr><td><span class="notranslate">enable_scan_modsec: True</span></td>
@@ -8555,7 +8558,9 @@ that were uploaded via http/https. Note that it requires <a href="https://modsec
 <tr><td><span class="notranslate">notify_on_detect: False</span></td>
 <td># notify (<span class="notranslate">True</span>) or not (<span class="notranslate">False</span>) (default value) an admin when malware is detected</td></tr>
 <tr><td><span class="notranslate">optimize_realtime_scan: True</span></td>
-<td># enable (<span class="notranslate">True</span>) (default value) or disable (<span class="notranslate">False</span>) the  <a href="https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api" target="_blank">File Change API</a> and <b>fanotify</b> support to reduce the system load while watching for file changes in comparison with inotify watch. You can find the comparison table <a href="/dashboard/#general-2">here</a></td></tr>
+<td># enable (<span class="notranslate">True</span>) (default value) or disable (<span class="notranslate">False</span>) the  <a href="https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api" target="_blank">File Change API</a> and <b>fanotify</b> support to reduce the system load while watching for file changes in comparison with inotify watch. You can find the comparison table <a href="/dashboard/#general-2">here</a>.
+<br/><br/>
+Starting from <b>imunify-realtime-av 8.0.7</b>, the realtime scanner automatically filters out file operations from system services (MySQL/MariaDB, PostgreSQL, Redis, Apache, etc.) to significantly reduce CPU overhead on busy servers. The system service threshold is auto-detected from the OS configuration — no manual setup is required.</td></tr>
 <tr><td><span class="notranslate">sends_file_for_analysis: True</span></td>
 <td># send (<span class="notranslate">True</span>) (default value) or not (<span class="notranslate">False</span>) malicious and suspicious files to the Imunify team for analysis</td></tr>
 <tr><td><span class="notranslate">i360_clamd: False</span></td>
@@ -9770,7 +9775,7 @@ grep 'IM360 WAF: Testing the IM360 ModSecurity ruleset' /var/log/imunify360/cons
 
 ### 16. How to check "automatically scan all modified files" works?
 
-To check "automatically scan all modified files" (i.e inotify scanner), upload a malware sample to some account's webroot via SSH and check if it will appear in the <span class="notranslate">_Malicious_</span> tab shortly.
+To check "automatically scan all modified files" (the realtime scanner), upload a malware sample to some account's webroot via SSH and check if it will appear in the <span class="notranslate">_Malicious_</span> tab shortly.
 
 You can get a malware sample file on the [eicar.org](http://www.eicar.org/).
 
@@ -9992,7 +9997,7 @@ Proactive Defense will prevent <span class="notranslate">`include`/`require`</sp
 There is a separate ignore list for false-positive hits: see [Ignore List](/dashboard/#ignore-list)
 :::
 
-The `watched.txt` file contains additional shell-like glob patterns specifying what file system directories should be monitored by inotify/fanotify realtime scanner.
+The `watched.txt` file contains additional shell-like glob patterns specifying what file system directories should be monitored by the realtime scanner.
 
 Patterns can be absolute:
 
@@ -10020,7 +10025,7 @@ All patterns listed here have higher priority than stock watched and excluded li
 After making changes to this file, run the `imunify360-agent malware rebuild patterns` command.
 :::
 
-The <span class="notranslate">`ignored.txt`</span> file contains additional regular expression patterns specifying what filesystem paths should not be monitored by inotify/fanotify realtime scanner.
+The <span class="notranslate">`ignored.txt`</span> file contains additional regular expression patterns specifying what filesystem paths should not be monitored by the realtime scanner.
 
 Patterns can be absolute:
 

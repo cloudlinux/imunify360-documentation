@@ -524,7 +524,7 @@ This is also a real time file scanner for vulnerability and it can:
 
 * scan files uploaded via HTTP/HTTPS
 
-* scan files for changes via [inotify](https://en.wikipedia.org/wiki/Inotify)
+* scan files for changes in real time (using [fanotify](https://man7.org/linux/man-pages/man7/fanotify.7.html) with legacy [inotify](https://en.wikipedia.org/wiki/Inotify) fallback)
 
 * scan on-demand (any folder needed)
 
@@ -1650,13 +1650,16 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
 
 ![](/images/SettingsMalware2.png)
 
-* <span class="notranslate">_Automatically scan all modified files_</span> – enables real-time scanning for modified files using [inotify](https://en.wikipedia.org/wiki/Inotify) library. The Scanner searches for modified files in user’s DocumentRoot directories.
+* <span class="notranslate">_Automatically scan all modified files_</span> – enables real-time scanning for modified files. The scanner uses [fanotify](https://man7.org/linux/man-pages/man7/fanotify.7.html) (kernel 3.10+) as the primary file monitoring mechanism, with a legacy [inotify](https://en.wikipedia.org/wiki/Inotify) fallback for older systems. The Scanner searches for modified files in user’s DocumentRoot directories.
   ::: tip Note
-  It requires inotify to be installed and may put an additional load on a system.
+  Real-time scanning may put additional load on a system. See the _Optimize real-time scan_ option below for ways to reduce this.
   :::
-* <span class="notranslate">_Optimize real-time scan_</span> – enables the [File Change API](https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api) and **fanotify** support to reduce the system load while watching for file changes in comparison with inotify watchs.
+* <span class="notranslate">_Optimize real-time scan_</span> – enables the [File Change API](https://docs.cloudlinux.com/cloudlinux_os_kernel/#file-change-api) and **fanotify** support to reduce the system load while watching for file changes in comparison with inotify watches.
     :::tip Note
     File change API can work only with ext4 file system.
+    :::
+    :::tip Note
+    Starting from **imunify-realtime-av 8.0.7**, the realtime scanner automatically filters out file operations from system services (MySQL/MariaDB, PostgreSQL, Redis, etc.) to significantly reduce CPU overhead. No configuration is needed — the system service threshold is auto-detected from the OS configuration.
     :::
 
   |                          |             |              |                     |
