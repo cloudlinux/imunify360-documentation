@@ -14052,6 +14052,8 @@ Please note that the "Adjust alert" parameter prevents the user from changing th
 
 # Email
 
+> **Audience:** This page is for hosting administrators and end users. Sections are marked accordingly.
+
 ## Overview
 
 Imunify Email is an Imunify360 add-on that protects your servers by filtering outgoing and incoming mail. It integrates directly with Exim MTA on cPanel/WHM servers, using Rspamd as a mail filter.
@@ -14062,16 +14064,16 @@ Imunify Email is an Imunify360 add-on that protects your servers by filtering ou
 
 - **Controls send rates per account, domain, email address, or script**: Set hourly sending limits at the server level, override them for individual senders, and whitelist trusted senders when needed. This three-tier system gives you fine-grained control over outgoing mail traffic.
 
-- **Filters incoming spam** <sup style="background:#e67e22;color:#fff;padding:2px 6px;border-radius:3px;font-size:0.6em;">BETA</sup>: Enable server-wide incoming filtration to automatically route spam to recipients' spam mailboxes. Incoming filtration is an opt-in beta feature that must be explicitly enabled by the server administrator. See [Enabling Incoming Filtration](https://docs.imunify360.com/email/#beta-incoming-emails-filtration) for setup instructions.
+- **Filters incoming spam** <sup style="background:#0d6efd;color:#fff;padding:2px 6px;border-radius:3px;font-size:0.6em;">NEW</sup>: Enable server-wide incoming filtering to automatically route spam to recipients' Junk/Spam folders. Incoming filtering is an opt-in feature that must be explicitly enabled by the server administrator.
 
-### Prerequisites at a glance
+### Prerequisites
 
 Before proceeding with installation, confirm that you meet these requirements:
 
 <table>
   <tr><td><strong>Imunify360</strong></td><td>Must be installed and registered</td></tr> 
   <tr><td><strong>Control panel</strong></td><td>cPanel/WHM</td></tr>
-  <tr><td><strong>OS</strong></td><td>CloudLinux OS 7, 8, 9 · AlmaLinux 8, 9 · CentOS 7, 8</td></tr>
+  <tr><td><strong>OS</strong></td><td>CloudLinux OS 7, 8, 9 · AlmaLinux 8, 9, 10 · CentOS 7, 8</td></tr>
   <tr><td><strong>Architecture</strong></td><td>x86_64</td></tr>
   <tr><td><strong>RAM</strong></td><td>512 MB minimum (usage increases temporarily when scanning large messages)</td></tr>
   <tr><td><strong>Disk</strong></td><td>20 GB minimum (quarantine uses ~100 MB per account by default, adjustable)</td></tr>
@@ -14088,35 +14090,43 @@ Imunify Email has been tested with the following tools and mail gateways:
   <tr><td><strong>ConfigServer Firewall (CSF)</strong></td><td>✔</td></tr>
   <tr><td><strong>MailChannels</strong></td><td>✔ (Imunify Email 0.6+)</td></tr>
   <tr><td><strong>SpamAssassin</strong></td><td>✔ (incoming and outgoing configurations)</td></tr>
-  <tr><td><strong>Smtp2go</strong></td><td>✔</td></tr>
+  <tr><td><strong>SMTP2GO</strong></td><td>✔</td></tr>
 </table>
 
 Imunify Email operates alongside these tools. If your setup includes a tool not listed here, [contact support](https://cloudlinux.zendesk.com/hc/en-us/requests/new?product=im) to confirm compatibility before installing.
 
-### Getting started
+---
+
+## Getting started
+
+> **Audience:** Hosting administrator.
 
 Setting up Imunify Email takes four steps:
 
-1. **Install Imunify360**: To use Imunify Email, you must first install Imunify360. Follow the [Installation Instructions](https://docs.imunify360.com/installation/#installation-instructions) to get started.
-2.  **Enable in CLN**: Turn on Imunify Email for your account, key, or individual server in the [CloudLinux Network](https://cln.cloudlinux.com/console) portal. The add-on installs automatically within 24 hours, or run <code>imunify360-agent update-license</code> to install immediately.
-3. **Verify installation**: Run <code>ie-config status</code> to confirm all services are running, and <code>ie-config version</code> to check the installed version.
+1. **Install Imunify360**: To use Imunify Email, Imunify360 must be installed first. Follow the [Installation Instructions](https://docs.imunify360.com/installation/#installation-instructions) to get started.
+2. **Enable in CLN**: Turn on Imunify Email for your account, key, or individual server in the [CloudLinux Network](https://cln.cloudlinux.com/console) portal. The add-on installs automatically within 24 hours, or run `imunify360-agent update-license` to install immediately.
+3. **Verify installation**: Run `ie-config status` to confirm all services are running, and `ie-config version` to check the installed version.
 4. **Configure limits**: Navigate to WHM → Plugins → Imunify360 → Email → Settings to set your default sending limits. Adjust per-sender overrides in the Activity Monitor tab as needed.
 
-For more information, see [Installation](https://docs.imunify360.com/email/#installation) and [How to Enable Imunify Email](https://docs.imunify360.com/email/#how-to-enable-imunify-email).
+For more information, see [Installation](https://docs.imunify360.com/email/#installation).
+
+---
 
 ## System Requirements
 
-### Supported operating systems
+> **Audience:** Hosting administrator.
+
+### Supported Operating Systems
 
 <table>
   <tr><td><strong>CloudLinux OS</strong></td><td>7, 8, 9</td></tr>
-  <tr><td><strong>AlmaLinux</strong></td><td>8, 9</td></tr>
+  <tr><td><strong>AlmaLinux</strong></td><td>8, 9, 10</td></tr>
   <tr><td><strong>CentOS</strong></td><td>7, 8</td></tr>
 </table>
 
-### Control panel
+### Control Panel
 
-cPanel/WHM is required. Other control panels (Plesk, DirectAdmin, etc.) are not supported yet.
+cPanel/WHM is required. Other control panels (Plesk, DirectAdmin, etc.) are not supported.
 
 ### Software
 
@@ -14130,254 +14140,226 @@ Imunify Email requires an active Imunify360 installation. If you do not have Imu
   <tr><td><strong>Disk</strong></td><td>20 GB</td></tr>
 </table>
 
-:::tip Note
-- RAM usage depends on mail traffic. Imunify Email consumes minimal RAM while idle, but usage increases temporarily when scanning large messages.
-- Disk usage depends on the number of accounts on the server. Each account is allocated 100 MB of quarantine space by default. This limit can be adjusted in the [Settings](https://docs.imunify360.com/email/#quarantine-settings) tab.
-:::
+RAM usage depends on mail traffic. Imunify Email consumes minimal RAM while idle, but usage increases temporarily when scanning large messages. Disk usage depends on the number of accounts on the server: each account is allocated 100 MB of quarantine space by default, adjustable in the Quarantine settings.
 
-## Full Documentation
+---
 
-### Installation
+# Installation
 
-To install Imunify Email, you need to enable the corresponding option in your CLN account. After that the product will be installed automatically
-within 24 hours. To install it immediately you can use one of the following commands as root user:
+> **Audience:** Hosting administrator.
+
+Installing Imunify Email is a two-stage process: you enable it in CLN (the licensing layer), and the on-server installation follows automatically. The sections below cover both stages and the components that get installed.
+
+## Enabling Imunify Email in CLN
+
+Imunify Email must be enabled in CLN before it can run on your servers. You can manage it via the CLN UI or the CLN API. Changes take effect automatically within 24 hours. To apply a change immediately on a specific server, run the following as root:
+
+```bash
+imunify360-agent update-license
 ```
+
+### CLN UI: Enable / Disable Imunify Email
+
+You can manage Imunify Email at three levels: Account, Key, and Server.
+
+#### Account level
+
+Select **"Enable for all servers"** to apply the setting across every Imunify360 server in your account. Enabling activates Imunify Email on all servers; disabling deactivates it. Both changes take effect within 24 hours.
+
+The **"Depends on lower level"** option lets you delegate control to individual keys or licenses rather than managing everything at the account level.
+
+#### Key level
+
+Go to the **Activation Keys** tab and select **Add-ons** for the relevant key. Enabling at this level installs Imunify Email on all servers under that key within 24 hours. Disabling removes it from all servers under that key within 24 hours.
+
+The **"Depends on lower level"** option delegates control to individual servers.
+
+#### Server level
+
+Go to the **Servers** tab and select **Add-ons** for the relevant server. Enabling installs Imunify Email on that server within 24 hours; disabling deactivates it on that server within 24 hours.
+
+### CLN API: Enable / Disable Imunify Email
+
+**Useful references:**
+
+- [CLN API documentation](https://docs.cloudlinux.com/cloudlinux_rest_api.pdf)
+- [CLN API Swagger](https://cln.cloudlinux.com/cln/api/webjars/swagger-ui/index.html#/)
+  In CLN, Imunify Email is a "feature" with **ID 4600**.
+
+The relevant API endpoints are:
+
+<table>
+  <tr><td><code>PATCH /api/v2/features/account</code></td><td>Enable/disable for entire account</td></tr>
+  <tr><td><code>PATCH /api/v2/imunify/keys</code></td><td>Enable/disable for an Imunify360 key</td></tr>
+  <tr><td><code>PATCH /api/v2/imunify/server</code></td><td>Enable/disable for a specific server</td></tr>
+</table>
+ 
+#### Example: Enable Imunify Email on a specific server
+ 
+Step 1 — Generate an API token:
+ 
+```bash
+token=$(login=YOUR_CLN_LOGIN; ts=$(date +"%s"); secret=YOUR_CLN_SECRET; \
+  echo -n $login\|$ts\|$(echo -n $secret$ts | sha1sum) | cut -d " " -f1)
+```
+ 
+Step 2 — Get product type IDs:
+ 
+```bash
+curl -X 'GET' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  'https://cln.cloudlinux.com/api/v2/ip-license/licenses/types?token=YOUR_TOKEN'
+```
+ 
+Step 3 — Enable Imunify Email on the target server:
+ 
+```bash
+curl -X 'PATCH' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  'https://cln.cloudlinux.com/api/v2/imunify/server?token=YOUR_TOKEN' \
+  --data '{"id": "SERVER_ID_HERE", "permissions": {"4600": "ENABLED"}}'
+```
+ 
+For account- or key-level changes, use the corresponding endpoints with the same pattern.
+
+## Activating / Disabling Imunify Email
+
+### Activating Imunify Email
+
+Imunify Email is activated through your CLN account. Once enabled, the product installs automatically within 24 hours. To trigger installation immediately, run one of the following commands as root:
+
+```bash
 /usr/bin/imunify360-agent update-license
 ```
 
-or
+Or use the standalone deployment script:
 
-```
+```bash
 wget https://repo.imunify360.cloudlinux.com/defence360/imunifyemail-deploy.sh
 bash imunifyemail-deploy.sh
 ```
 
-#### Details
+### Disabling Imunify Email
 
-#### Users created
+Disable the corresponding option in CLN. The change takes effect automatically within 24 hours. To apply it immediately:
 
-During installation, the following users will be created:
-
-* _rspamd
-* _imunifyemail
-
-The `_imunifyemail` user will also be added to the `_imunify` group.
-
-#### Components and resources
-
-Imunify Email has the following components:
-
-* **Imunify Rspamd**
-  * acts as an email filter
-  * it is installed in system directories such as /etc/rspamd, /usr/bin, /usr/lib, /usr/share/rspamd, as a part of `imunify-email-rspamd` RPM package and brings `rspamd` service
-* Quarantine (ie-quarantine)
-  * acts as a storage for quarantined emails and as a back-end for the user interface (UI) and CLI
-  * it is installed in the /var/imunifyemail/quarantine directory, as a part of `imunify-email-quarantine` RPM package and brings `ie-quarantine` and `ie-notification` service.
-* CLI (ie-cli)
-  * A command-line interface for managing Quarantine and Activity Monitor that is installed as a part of `imunify-email-cli` RPM package
-* Dec Node (ie-dec-node)
-  * A statistical component that helps to improve the filtering quality
-  * Installed in the /var/imunifyemail/dec-node directory, as a part of `imunify-email-dec-node` RPM package and brings `ie-dec-node` service
-
-All these packages are installed as part of `imunify-email` RPM package.
-
-#### Exim configuration modifications
-
-Imunify Email modifies Exim MTA configuration, adding Rspamd as a filter for email.
-Imunify Email applies this change automatically during installation. If filtering needs to be disabled, see [Disable Imunify Email](/email/#disable-imunify-email). When disabled, Exim configuration will not contain an Rspamd filter. To re-enable Imunify Email, see [Enable Imunify Email](/email/#enable-imunify-email).
-
-The configuration change is compatible with WHM Advanced Editor, you can continue using it for other modifications.
-
-### CLN: Managing Imunify Email 
-
-#### How to Enable Imunify Email
-
-#### Background 
-
-To use Imunify Email, you have to enable it in CLN. You can achieve it in two ways:
-1. via CLN UI
-2. via CLN API
-
-When you enable/disable Imunify Email, the script will automatically run the corresponding action within 24 hours. In order to apply changes on the particular server immediately, please run the following command on behalf of the `root` user: 
-```
-imunify360-agent update-license
-``` 
-
-#### CLN UI: enable/disable Imunify Email
-
-You can manage Imunify Email state on 3 levels: Account, Key, Server. 
-
-#### 1. Account 
-
-To manage permission on an account level choose the “Enable for all servers” option.
-
-![](/images/ie-cln-enabled-for-all-users.png)
-
-When you enable the feature on an account level, the script will install Imunify Email **on all Imunify360 servers in your account** in 24 hours. 
-
-When disabling the feature on an account level, the script will deactivate the Imunify Email **on all Imunify360 servers in your account** in 24 hours. 
-
-There's also a default option called “depends on lower level”. This allows you to control permissions based on each key or license, rather than for the whole account.
-
-#### 2. Key 
-
-To manage permission on a key level go to the “Activation keys” tab and select “add-ons”. 
-
-![](/images/ie-cln-manage-keys.png)
-
-You will see this screen: 
-
-![](/images/ie-cln-permissions-depend.png)
-
-When you enable the feature on all servers in the key, the script will install Imunify Email **on all Imunify360 servers under this key** in 24 hours.  
-
-When disabling the feature on a key level, the script will deactivate the Imunify Email **on all Imunify360 servers under this key** in your account in 24 hours. 
-
-There's also a default option called “depends on lower level”. This allows you to control permissions based on each server.
-
-#### 3. Server
-To manage permission on a server level. Go to the “Servers” tab and select “add-ons”. 
-
-![](/images/ie-cln-permissions-server-level.png)
-
-You will see this pop up: 
-
-![](/images/ie-cln-popup.png)
-
-When you enable the feature, the script will install Imunify Email **on a server** in 24 hours.  
-
-When disabling the feature, the script will deactivate the Imunify Email **on a server** in 24 hours.
-
-#### CLN API: enable/disable Imunify Email
-
-Useful links:
-1. [CLN API documentation](https://docs.cloudlinux.com/cloudlinux_rest_api.pdf) (page 30 is about Imunify Email)
-2. [CLN API swagger file](https://cln.cloudlinux.com/cln/api/webjars/swagger-ui/index.html#/)
-
-Imunify Email state is managed by the next requests: 
-
-1. `PATCH /api/v2/features/account`: to enable/disable Imunify Email for account.
-2. `PATCH /api/v2/imunify/keys`: to enable/disable Imunify Email for Imunify360 key.
-3. `PATCH /api/v2/imunify/server`: to enable/disable Imunify Email for server with Imunify360.
-
-In CLN terms Imunify Email is a "feature" and it has **id=4600**.
-
-Below is a example of how to enable Imunify Email for particular server: 
-
-1. Generate API token:  
-```
-$> token=$(login=YOUR_CLN_LOGIN; ts=$(date +"%s"); secret=YOUR_CLN_SECRET; echo -n $login\|$ts\|$(echo -n $secret$ts| sha1sum) | cut -d " " -f1)
-```
-2. Get product names to product type id mapping: 
-```
-$> curl -X 'GET' -H 'accept: application/json' -H 'Content-Type: application/json' \
-'https://cln.cloudlinux.com/api/v2/ip-license/licenses/types?token=YOUR_TOKEN’ 
-```
-3. Enable Imunify Email using its product type id (from the previous request) on a server using IP license: 
-```
-$> curl -X 'PATCH' -H 'accept: application/json' -H 'Content-Type: application/json' \
-'https://cln.cloudlinux.com/api/v2/imunify/server?token=YOUR_TOKEN' \
---data '{"id": "SERVER_ID_HERE", "permissions": {"4600": "ENABLED"}}' 
-```
-Where "4600" the Imunify Email's feature id.
-
-To enable Imunify Email on account/key level you have to follow almost the same algorithm but use endpoints (1)/(2) (refer to documentation above to get more details).
-
-### **Beta**: Incoming Emails Filtration
-
-:::tip Highlights
-Imunify Email now includes a **beta** feature for incoming email filtration, designed to protect server users from spam emails.
-This feature is currently in beta mode and is free to use.
-  :::
-
-#### Enabling/Disabling Incoming Filtration
-
-To enable the incoming filtration feature, the server administrator needs to run the following command from the console:
-```
-ie-config enable-incoming
-```
-
-To disable the feature, run:
-```
-ie-config disable-incoming
-```
-
-Once enabled, Imunify Email will start filtering incoming emails.
-
-:::warning
-Incoming emails identified as spam are **no longer quarantined** — instead, they are delivered to the recipient’s spam/junk mailbox.
-:::
-
-After enabling the feature, the cPanel UI will include the following changes:
-
- - **Settings Tab**:
-    - A toggle allows disabling the incoming filtration feature for specific cPanel accounts.
-    - A table displays daily incoming email statistics, including counts of spam and ham (non-spam) emails.
- - **Statistics Tab**: A new section shows detailed incoming email statistics over time, including spam and ham counts.
-
-The `ie-cli` utility mirrors the same API used by the UI, allowing administrators to retrieve quarantine and statistics information via the command-line interface.
-Use `--help` to get more info.
-
-### User interface access
-
-In order to access the UI as a hosting administrator, navigate to WHM -> Plugins -> Imunify360 -> Email tab.
-
-Your clients will be able to access the Imunify Email Quarantine under: cPanel -> Security -> Imunify360 -> Email.
-
-### Version and Status
-
-#### Check Imunify Email version
-
-To find out which version of Imunify Email is installed, run the following command as root:
-
-```
-ie-config version
-```
-
-#### Check status
-
-In order to check status of Imunify Email, run the following command as root:
-
-```
-ie-config status
-```
-
-#### Disable Imunify Email
-
-In order to disable Imunify Email, you need to disable the corresponding option in your CLN account.
-Imunify Email will be disabled automatically within 24 hours. To disable it immediately, run following command as root:
-
-```
+```bash
 /usr/bin/imunify360-agent update-license
 ```
 
-It will remove filter configuration and stop Imunify Email services.
+This removes the Rspamd filter configuration from Exim and stops all Imunify Email services.
 
+## What Gets Installed
 
-#### Enable Imunify Email
+### System users
 
-If Imunify Email was installed, but then disabled it can be re-enabled in CLN.
+The following users are created during installation:
 
+- `_rspamd`
+- `_imunifyemail` (also added to the `_imunify` group)
 
-### WHM user interface
+### Components
 
-:::danger Note
-Hosting administrator only.
-:::
+Imunify Email is installed as the `imunify-email` RPM package, which includes the following sub-packages:
 
-Imunify Email scans the outbound emails on the server and allows to identify viral mailings and other viral outbound mail content for all accounts on the server.
+<table>
+  <tr><td><strong>Imunify Email Rspamd</strong></td><td><code>imunify-email-rspamd</code></td><td>Acts as the email filter. Installed to <code>/etc/rspamd</code>, <code>/usr/bin</code>, <code>/usr/lib</code>, <code>/usr/share/rspamd</code>. Runs the <code>rspamd</code> service.</td></tr>
+  <tr><td><strong>Quarantine</strong></td><td><code>imunify-email-quarantine</code></td><td>Stores quarantined emails; serves as the backend for the UI and CLI. Installed to <code>/var/imunifyemail/quarantine</code>. Runs the <code>ie-quarantine</code> and <code>ie-notification</code> services.</td></tr>
+  <tr><td><strong>CLI</strong></td><td><code>imunify-email-cli</code></td><td>Command-line interface for managing the Quarantine and Activity Monitor.</td></tr>
+  <tr><td><strong>Dec Node</strong></td><td><code>imunify-email-dec-node</code></td><td>Statistical component that improves filtering accuracy. Installed to <code>/var/imunifyemail/dec-node</code>. Runs the <code>ie-dec-node</code> service.</td></tr>
+</table>
+ 
+### Exim Configuration
+ 
+During installation, Imunify Email automatically modifies your Exim MTA configuration to route mail through Rspamd. This change is compatible with WHM's Advanced Editor — you can continue using it for other Exim modifications.
 
-Click <span class="notranslate">_Email_</span> in the main menu of the Imunify360 admin interface.
+## Version and Status
 
-![](/images/EmailMain.png)
+### Check the Installed Version
 
-The following tabs are available:
+```bash
+ie-config version
+```
 
-* <span class="notranslate">[Quarantine](/email/#quarantine)</span>
-* <span class="notranslate">[Activity Monitor](/email/#activity-monitor-and-sender-limits)</span>
-* <span class="notranslate">[Settings](/email/#settings)</span>
+### Check Service Status
 
-### Quarantine
+```bash
+ie-config status
+```
+
+## Accessing the User Interface
+
+**Hosting administrators (WHM):**
+WHM → Plugins → Imunify360 → Email
+
+---
+
+# Incoming Email Filtering
+
+> **Audience:** Hosting administrator.
+
+When enabled, Imunify Email scans incoming messages and routes spam directly to recipients' Junk/Spam folders. The detection engine is the same Rspamd-based filter used for outgoing mail.
+
+Incoming filtering is **disabled by default** and must be enabled explicitly.
+
+## Enabling and disabling
+
+Enable from the command line:
+
+```bash
+ie-config enable-incoming
+```
+
+Filtering begins as soon as the feature is enabled.
+
+Disable from the command line:
+
+```bash
+ie-config disable-incoming
+```
+
+## cPanel UI changes
+
+Once enabled, the cPanel-side Imunify Email interface (**cPanel → Security → Imunify360 → Email**) gains the following:
+
+**Settings tab**
+
+- **Toggle Switch** — Disable incoming filtering for this specific cPanel account.
+- **Stats Table** — Daily email counts, categorized by spam and legitimate traffic.
+
+**Statistics tab**
+
+- **Detailed Analytics** — Historical breakdown of incoming email trends over time.
+
+## Managing Incoming Filtering via CLI
+
+The `ie-cli` utility allows administrators to manage incoming filtering and retrieve statistics from the command line.
+
+For the full list of available commands, run:
+
+```bash
+ie-cli --help
+```
+
+Each subcommand also supports `--help` for detailed usage information.
+
+### Recipient Whitelists
+
+The `ie-cli whitelist` command lets administrators manage recipient whitelists (email addresses and domains) that bypass incoming filtering. Use the following subcommands:
+
+<table>
+  <tr><td><code>ie-cli whitelist recipient add</code></td><td>Add an email address or domain to the whitelist</td></tr>
+  <tr><td><code>ie-cli whitelist recipient list</code></td><td>List all whitelisted recipients</td></tr>
+  <tr><td><code>ie-cli whitelist recipient delete</code></td><td>Remove an email address or domain from the whitelist</td></tr>
+</table>
+
+---
+
+# Quarantine
+
+> **Audience:** Hosting administrator.
 
 Go to <span class="notranslate">Imunify360 → Email → Quarantine</span> tab. Here, there are emails that are considered viral or malicious for all accounts on the server. You can decline or confirm the Imunify Email decision and either release and send emails or remove them completely.
 
@@ -14385,109 +14367,96 @@ Go to <span class="notranslate">Imunify360 → Email → Quarantine</span> tab. 
 
 The table has the following columns:
 
-* <span class="notranslate">**Account**</span> — account name
-* <span class="notranslate">**Received Date**</span> — when an email was received by the server for sending
-* <span class="notranslate">**Reasons**</span> — the reason why message has been quarantined
-  * <span class="notranslate">**spam**</span> — means that a message has been classified as a spam
-  * <span class="notranslate">**winexec**</span> — means that a message contains windows executable attachments (you can allow that using ie-cli)
-  * <span class="notranslate">**ratelimit**</span> — means that a message exceeded a limit per hour for one of the Account/Domain/Sender email/Script. You might adjust the limit using the "Activity Monitor" tab.
-* <span class="notranslate">**Sender (From)**</span> — the user who sent the email
-* <span class="notranslate">**Recipients**</span> — recipients (including CC and BCC)
-* <span class="notranslate">**Subject**</span> — a subject from an email
-* <span class="notranslate">**Actions**</span>
-  * <span class="notranslate">**Release & Send**</span> — hosting admin can use multi-select and release & send several emails at once
+- <span class="notranslate">**Account**</span> — account name
+- <span class="notranslate">**Received Date**</span> — when an email was received by the server for sending
+- <span class="notranslate">**Reasons**</span> — the reason why message has been quarantined
+  - <span class="notranslate">**spam**</span> — means that a message has been classified as a spam
+  - <span class="notranslate">**winexec**</span> — means that a message contains windows executable attachments (you can allow that using ie-cli)
+  - <span class="notranslate">**ratelimit**</span> — means that a message exceeded a limit per hour for one of the Account/Domain/Sender email/Script. You might adjust the limit using the "Activity Monitor" tab.
+- <span class="notranslate">**Sender (From)**</span> — the user who sent the email
+- <span class="notranslate">**Recipients**</span> — recipients (including CC and BCC)
+- <span class="notranslate">**Subject**</span> — a subject from an email
+- <span class="notranslate">**Actions**</span>
+  - <span class="notranslate">**Release & Send**</span> — hosting admin can use multi-select and release & send several emails at once
 
-   ![](/images/EmailRelease.png)
-
-  * <span class="notranslate">**Delete**</span> — delete email permanently
+  ![](/images/EmailRelease.png)
+  - <span class="notranslate">**Delete**</span> — delete email permanently
 
     ![](/images/EmailDelete.png)
 
-  * <span class="notranslate">**View Email**</span> — view email content
+  - <span class="notranslate">**View Email**</span> — view email content
 
     ![](/images/EmailView1.png)
-
-    * Body - decoded email content with tags removed
-    * Header - email Headers section
-    * Plain text - headers plus original email body
+    - Body - decoded email content with tags removed
+    - Header - email Headers section
+    - Plain text - headers plus original email body
 
 :::tip Note
 In this release, the notifications are not sent both when deleting or releasing an email. Will be added in the next release.
 :::
 
-### Activity Monitor and Sender limits
+---
+
+# Activity Monitor and Sender limits
+
+> **Audience:** Hosting administrator.
 
 Go to <span class="notranslate">Imunify360 → Email → Activity Monitor</span>. Activity Monitor provides a way to observe, control and regulate the flow of mail. From this tab the messages can be whitelisted or chosen to be explored in the Quarantine tab.
 
 The table lists the following columns:
 
-* **Sender Object** - a set of origination information that can be identified about an email is shown here. The four possible categories are:
-    * WHM account
-    * Domain
-    * PHP Script (able to send an email)
-    * Email address of a user
-* **Ham/Sent out** - quantity of a non-spam emails that were sent out is shown corresponding to a Sender Object in a first column.
-* **Limit** - the number of emails that corresponding Sender Object will be allowed to send out in a space of one hour. This number turns red and a warning sign is displayed as soon as the limit is exceeded.
-* **Whitelisted** - the records in this column only have two states "true" and "false" and show if the whitelisting is **on** or **off** for a particular Sender Object.
-* **Quarantined** - reflects emails from a particular Sender Object and their quantity.
-* **Actions** - several actions to perform on a particular Sender Object are available:
-    * **Go to quarantine** allows to explore a particular Sender Object in a Quarantine tab.
-    * **Update sender limit** allows to enable/disable granular limits for a particular Sender Object that override limits set in the Settings tab.
-    * **Whitelist sender** allows to remove any limit on sending out emails for a particular Sender Object.
-
-![](/images/EmailActivityMonitor.png)
+- **Sender Object** - a set of origination information that can be identified about an email is shown here. The four possible categories are:
+  - WHM account
+  - Domain
+  - PHP Script (able to send an email)
+  - Email address of a user
+- **Ham/Sent out** - quantity of a non-spam emails that were sent out is shown corresponding to a Sender Object in a first column.
+- **Limit** - the number of emails that corresponding Sender Object will be allowed to send out in a space of one hour. This number turns red and a warning sign is displayed as soon as the limit is exceeded.
+- **Whitelisted** - the records in this column only have two states "true" and "false" and show if the whitelisting is **on** or **off** for a particular Sender Object.
+- **Quarantined** - reflects emails from a particular Sender Object and their quantity.
+- **Actions** - several actions to perform on a particular Sender Object are available:
+  - **Go to quarantine** allows to explore a particular Sender Object in a Quarantine tab.
+  - **Update sender limit** allows to enable/disable granular limits for a particular Sender Object that override limits set in the Settings tab.
+  - **Whitelist sender** allows to remove any limit on sending out emails for a particular Sender Object.
 
 The **Timeframe** setting for the records visible in the table can be chosen from the following options under the **Timeframe** button.
 
-![](/images/EmileTimeframeBtn.png)
-
 Records in the table are searchable and the parameters of the search can be narrowed down by using the Account name, Sender address, Domain, and Script filters.
 
-![](/images/EmailAdvSearch.png)
-
-
-#### Sender limits
+## Sender limits
 
 This is the second level of control for sender limits. Limits set for a particular Sender Object here override the limits set on the previous stage.
 
 Go to Imunify360 → Email → Activity Monitor → Actions → Update sender limit. For a particular Sender Object the limit can be switched on and off. The limit value can be set higher or lower than the value in the Setting tab. This setting is aimed at providing a way to set needed exceptions from the general rules.
 
-![](/images/EmailUpdSenderLimit.png)
-
-#### Whitelisting
+## Whitelisting
 
 This is the third level of control for sender limits. Limits set via this control override the limits set at the two the previous stages.
 Go to Imunify360 → Email → Activity Monitor → Actions → Whitelist sender. A particular Sender Object can be whitelisted, which means that the Sender limits will no longer be applied to this Sender Object - so it will be able to send out an unlimited number of messages. Only the **domain** and **email of the user** Sender Objects can be whitelisted, **WHM account** and **PHP script** cannot be whitelisted.
 
-![](/images/EmailWhitelist.png)
-
 To confirm whitelisting for a particular Sender Object click **Yes, add to whitelist**.
 
-![](/images/EmailYesAdd.png)
+---
 
-### Settings
+# Settings
 
-:::danger Note
-Hosting administrator only.
-:::
+> **Audience:** Hosting administrator.
 
 Go to <span class="notranslate">Imunify360 → Email → Settings</span> tab. The settings allow managing the space for quarantine and setting up limits for sending out the messages(set up a rate-limit)
 for all the Sender Objects adopts a 3-tier approach that is aimed to provide granular control over the outgoing messages to the administrator.
 An administrator can increase or decrease the space for the user's quarantine. If all space is consumed, the oldest emails in quarantine will be permanently deleted.
 
-#### Activity Monitor Settings
+## Activity Monitor Settings
 
 This is the first level of control for sender limits. The values set at this level will be default for an entire server and will be applied by default to all Sender Objects.
 Go to Imunify360 → Email →Settings tab. Here, set a limit on the number of emails that can be sent by a particular entity - WHM account, domain, PHP Script, or email address of a user.
 
-* The limit is set for the number of messages within the space of the last 60 minutes.
-* The limits can be applied either to a number of emails or a number of recipients.
-
-![](/images/EmailActivityMonitorDefaultsTab.png)
+- The limit is set for the number of messages within the space of the last 60 minutes.
+- The limits can be applied either to a number of emails or a number of recipients.
 
 Once the values are chosen, press **Save Changes** to apply them.
 
-#### Quarantine Settings
+## Quarantine Settings
 
 :::danger
 You can modify the default settings for storage capacity and release limits for all accounts.
@@ -14497,26 +14466,22 @@ You can modify the default settings for storage capacity and release limits for 
 To revert to the default settings, refer to the CLI section.
 :::
 
-![](/images/EmailQuarantineDefaultsTab.png)
-
 The table has the following columns:
 
-* <span class="notranslate">**Account**</span> — user account name
-* <span class="notranslate">**Storage Capacity MB**</span> — the space for the user's quarantine limit (default is 100 MB)
-* <span class="notranslate">**Used Space MB**</span> — the space used by files in quarantine (slight excess of the limit is possible)
-* <span class="notranslate">**Releases limit**</span> — limit for releases per hour for non-root user
-* <span class="notranslate">**State**</span> — the state of the user's quarantine.
-* <span class="notranslate">**Details**</span> — emails deleted permanently for the last hour
-* <span class="notranslate">**Actions**</span>
-  * <span class="notranslate">**Purge quarantine**</span> — purge all quarantine for an account
+- <span class="notranslate">**Account**</span> — user account name
+- <span class="notranslate">**Storage Capacity MB**</span> — the space for the user's quarantine limit (default is 100 MB)
+- <span class="notranslate">**Used Space MB**</span> — the space used by files in quarantine (slight excess of the limit is possible)
+- <span class="notranslate">**Releases limit**</span> — limit for releases per hour for non-root user
+- <span class="notranslate">**State**</span> — the state of the user's quarantine.
+- <span class="notranslate">**Details**</span> — emails deleted permanently for the last hour
+- <span class="notranslate">**Actions**</span>
+  - <span class="notranslate">**Purge quarantine**</span> — purge all quarantine for an account
 
-    ![](/images/EmailPurge.png)
+  - <span class="notranslate">**Add**</span> — change the limit of the space for the user's (account) quarantine
 
-  * <span class="notranslate">**Add**</span> — change the limit of the space for the user's (account) quarantine
+---
 
-   ![](/images/EmailAdd.png)
-
-### Imunify Email Command-Line Interface
+# Imunify Email Command-Line Interface
 
 The Command-Line Interface (CLI) is designed to simplify usage of Imunify Email and as an enabler for integration with other tools and platforms.
 
@@ -14526,7 +14491,7 @@ Main command for all operations with Imunify Email:
 ie-cli
 ```
 
-#### Basic usage
+## Basic usage
 
 Imunify Email quarantine CLI application
 
@@ -14540,23 +14505,21 @@ Use `--help` key to get list of the available commands and to get help for the p
 
 **Available Commands**:
 
-| | |
-|-|-|
-|`accounts`|interaction with accounts in the quarantine|
-|`am`|interaction with the Activity Monitor, same API as in ActivityMonitor UI|
-|`emails`|interaction with emails in the quarantine|
-|`filter-settings`|toggle the filter settings, without any parameters - returns the current settings|
-|`quarantine-defaults`|interaction with default settings in the Quarantine
-|`version`|print the Imunify Email CLI version|
-|`whitelist`|interaction with the whitelist of authenticated users, senders and recipients|
-
+|                       |                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------- |
+| `accounts`            | interaction with accounts in the quarantine                                       |
+| `am`                  | interaction with the Activity Monitor, same API as in ActivityMonitor UI          |
+| `emails`              | interaction with emails in the quarantine                                         |
+| `filter-settings`     | toggle the filter settings, without any parameters - returns the current settings |
+| `quarantine-defaults` | interaction with default settings in the Quarantine                               |
+| `version`             | print the Imunify Email CLI version                                               |
+| `whitelist`           | interaction with the whitelist of authenticated users, senders and recipients     |
 
 **Flags**:
 
-| | |
-|-|-|
-|`-h`, `--help`|Help for ie-cli|
-
+|                |                 |
+| -------------- | --------------- |
+| `-h`, `--help` | Help for ie-cli |
 
 ### Operations with emails in the quarantine
 
@@ -14646,9 +14609,7 @@ ie-cli emails list -a root –-json
       "email_id": "ef69f707-d547-4b29-b8f0-f5331821c930",
       "size_bytes": 8190,
       "account_name": "mws",
-      "recipients": [
-        "me@somehost.com"
-      ],
+      "recipients": ["me@somehost.com"],
       "subject": "Ge t G:eneric V1agra f:or as 1ow as $2.50 per 50 mg",
       "script_header": {
         "raw": "",
@@ -14660,9 +14621,7 @@ ie-cli emails list -a root –-json
       "email_id": "faf96a73-5be4-481a-9c6c-7ab8fb2e3cf0",
       "size_bytes": 8534,
       "account_name": "mws",
-      "recipients": [
-        "frank@yahooo.com"
-      ],
+      "recipients": ["frank@yahooo.com"],
       "subject": "FWD: Want Pills V|AgR@ % Xan_a_x ^ Valiu|m|  lNmAL",
       "script_header": {
         "raw": "",
@@ -14674,9 +14633,7 @@ ie-cli emails list -a root –-json
       "email_id": "fbc2efd0-1808-4e54-99ce-3082708b28ee",
       "size_bytes": 8971,
       "account_name": "oregdent",
-      "recipients": [
-        "steve@hillcabinet.com"
-      ],
+      "recipients": ["steve@hillcabinet.com"],
       "subject": "FWD:Xanax.x Valium.m Xanax.x Vicodin.n h ogzmwggi",
       "script_header": {
         "raw": "",
@@ -14820,21 +14777,21 @@ Max Count 2
 
 ```json
 {
-   "items":[
-      {
-         "name":"mysite",
-         "limit_bytes":125829120,
-         "used_bytes":810692,
-         "state":"active"
-      },
-      {
-         "name":"dentistcenter",
-         "limit_bytes":104857600,
-         "used_bytes":0,
-         "state":"active"
-      }
-   ],
-   "max_count":2
+  "items": [
+    {
+      "name": "mysite",
+      "limit_bytes": 125829120,
+      "used_bytes": 810692,
+      "state": "active"
+    },
+    {
+      "name": "dentistcenter",
+      "limit_bytes": 104857600,
+      "used_bytes": 0,
+      "state": "active"
+    }
+  ],
+  "max_count": 2
 }
 ```
 
@@ -14865,10 +14822,10 @@ mws        8096          810692      active
 
 ```json
 {
-   "name":"mws",
-   "limit_bytes":8096,
-   "used_bytes":160461,
-   "state":"active"
+  "name": "mws",
+  "limit_bytes": 8096,
+  "used_bytes": 160461,
+  "state": "active"
 }
 ```
 
@@ -14945,10 +14902,12 @@ ie-cli whitelist WHO OPERATION [value1 value2 ... valueN]
 ```
 
 Where `WHO` is one of:
+
 - authuser (only email address)
 - sender (email address or domain name)
 
 `OPERATION` is one of:
+
 - add
 - list
 - remove
@@ -15002,15 +14961,10 @@ No available data
 
 ```json
 {
- 	"success": true,
- 	"emails": [
- 		"1@example5.com",
- 		"pp@ppp.com",
- 		"qq@qq.com",
- 		"me@mydomain.com"
- 	],
- 	"domains": []
- }
+  "success": true,
+  "emails": ["1@example5.com", "pp@ppp.com", "qq@qq.com", "me@mydomain.com"],
+  "domains": []
+}
 ```
 
 #### Whitelist a sender
@@ -15024,6 +14978,7 @@ ie-cli whitelist sender add domain.com some_email@domain.com
 ```
 
 **Output**
+
 ```
 Adding sender(s) to the whitelist:
 1. domain    domain.com
@@ -15060,12 +15015,12 @@ Please run with `--help` flag to get more info
 ie-cli quarantine-defaults --help
 ```
 
-
 #### `list` Command
 
 **Note**: The --json flag is available to output in JSON format.
 
 **Example**
+
 ```
 ie-cli quarantine-defaults list
 ```
@@ -15081,6 +15036,7 @@ releases_limit   5
 #### `set` Command
 
 **Command**
+
 ```
 ie-cli quarantine-defaults set --help
 
@@ -15097,6 +15053,7 @@ Flags:
 ```
 
 **Example**
+
 ```
 ie-cli quarantine-defaults set --releases-limit 50 --storage-capacity 120
 ```
@@ -15115,6 +15072,7 @@ releases_limit   50
 
 To get understanding of Activity Monitor see the next section. `ie-cli` provides and API to get the same information as UI does from the Activity Monitor.
 `ie-cli` allows to
+
 1. get the Activity Monitor statistics
 2. set/remove/update sender limits for the particular account/domain/email/script
 3. get/update server limits that applied by default
@@ -15155,7 +15113,6 @@ In the context of the `"ie-cli am limit set"` command, the flags that can be use
 In order to set a limit, it's essential to know the sender object's id. This id can be obtained from the `ie-cli am stats` subcommand. For guidance on how to obtain the sender object id, please refer to the [`ie-cli am stats` documentation provided below.](#usage-of-stats-subcommand)
 :::
 
-
 **Command**
 
 ```
@@ -15176,7 +15133,6 @@ Flags:
       --limit int        The limit value, 0 means unlimited (default -1)
       --so-type string   supported values: [account domain sender_email script]
 ```
-
 
 The utilization of the limit subcommand varies according to the sender-object types (--so-type);
 
@@ -15282,7 +15238,6 @@ New server settings is:
 }
 ```
 
-
 #### Usage of stats subcommand
 
 The `ie-cli am stats` command provides a consolidated view of sender objects, complete with a variety of filters. This command can be paired with specific flags to refine the results.
@@ -15319,7 +15274,6 @@ Flags:
                               	supported modifiers 's' - seconds, 'm' - minutes, 'h' - hours, 'd' - days, e.g. 1h, 2d
                               	examples: 100s, 5m, 1h, 5d (default "1h")
 ```
-
 
 By using the stats command directly, all sender objects are returned as follows. The `--since` flag can be used to retrieve sender objects within a certain period of time.
 
@@ -15375,7 +15329,6 @@ ie-cli am stats --since 10h
   ]
 }
 ```
-
 
 **Command usage with `--sender-email` for get sender-object id**
 
@@ -15436,19 +15389,74 @@ ie-cli am stats --account-name=domain --since 30d
 }
 ```
 
-### Uninstallation
+---
 
-To remove Imunify Email from your system, you need to disable the corresponding option in your CLN account.
-That will **disable** Imunify Email on the server, but rpm packages still will be presented.
-To remove them as well, execute the following command as root:
+# Uninstallation
 
-**Command**
+> **Audience:** Hosting administrator.
 
-```
+To remove Imunify Email, first disable it in CLN. This deactivates the product on the server. To also remove the RPM packages, run the following as root:
+
+```bash
 yum autoremove imunifyemail
 ```
 
-This command ensures the removal of all associated components related to Imunify Email from your system.
+This removes Imunify Email and all its associated components from the system.
+
+---
+
+# For End Users
+
+> **Audience:** End users (cPanel account holders).
+
+## How to Access Imunify Email
+
+Log in to your cPanel account and navigate to:
+
+**Security → Imunify360 → Email**
+
+## Email Quarantine
+
+When Imunify Email detects that an outgoing email from your account is spam or malicious, it places it in quarantine instead of sending it. You can review quarantined emails in the **Email** tab.
+
+### What You'll See
+
+For each quarantined email, you can see:
+
+- **Received Date** — When the email was queued for sending.
+- **Reason** — Why it was quarantined (spam, contains a potentially dangerous file attachment, or rate limit exceeded).
+- **Sender and Recipients**
+- **Subject Line**
+
+### Actions You Can Take
+
+- **Release and Send** — Sends the email to its intended recipients.
+- **Delete** — Permanently removes the email from quarantine.
+- **View Email** — Displays the email body, headers, and raw content to verify it before releasing.
+
+> **Important:** Non-root users can release up to 5 emails per hour by default. Your hosting provider may adjust this limit.
+
+### Quarantine Storage
+
+Your quarantine has a storage limit. When the limit is reached, the oldest quarantined emails are automatically deleted to make room for new ones.
+
+## Sending Limits
+
+Your hosting provider may set limits on how many emails you can send per hour. These limits help prevent abuse and protect the server's email reputation.
+
+If you exceed your sending limit, additional emails will be quarantined with the reason `ratelimit`. Contact your hosting provider to request an adjustment.
+
+## Incoming Filtering
+
+If your hosting provider has enabled incoming email filtering, incoming spam will be automatically delivered to your Junk/Spam folder.
+
+Your hosting provider can disable this feature if needed.
+
+## Need Help?
+
+If you are experiencing issues with email delivery or believe emails are being incorrectly quarantined, contact your hosting provider. They have access to the full administration tools and can adjust rate limits, whitelist your account or domain, and review server-wide email activity.
+
+--
 
 
 ## Imunify Patch
