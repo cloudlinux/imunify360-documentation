@@ -69,6 +69,7 @@ Available commands:
 |[<span class="notranslate">`check-domains`</span>](/command_line_interface/#check-domains)|Send domain list check|
 |[<span class="notranslate">`check modsec directives`</span>](/command_line_interface/#check-modsec-directives)|Allows to check whether the global ModSecurity<br>directives have values recommended by Imunify360|
 |[<span class="notranslate">`clean`</span>](/command_line_interface/#clean)|Clean the incidents|
+|[<span class="notranslate">`completions`</span>](/command_line_interface/#completions)|Generate shell auto-completion scripts (bash/zsh/fish)|
 |[<span class="notranslate">`config`</span>](/command_line_interface/#config)|Allows to update and show configuration file via CLI|
 |[<span class="notranslate">`doctor`</span>](/command_line_interface/#doctor)|Collect info about system and send it to the Imunify support team|
 |[<span class="notranslate">`eula`</span>](/command_line_interface/#eula)|Allows to show and accept the end-user license agreement to automate installation|
@@ -463,6 +464,71 @@ The following command deletes all incidents that are older than 5 days from toda
 ```
 # imunify360-agent clean --days 5 --limit 5000
 2521
+```
+
+</div>
+
+## Completions
+
+Prints a shell auto-completion script for <span class="notranslate">`imunify360-agent`</span> to stdout. Once installed, it enables tab-completion for all subcommands and flags.
+
+Supported shells: <span class="notranslate">`bash`</span>, <span class="notranslate">`zsh`</span>, <span class="notranslate">`fish`</span>.
+
+:::tip Note
+The command runs locally and does not require the Imunify360 agent service to be running.
+:::
+
+**Usage:**
+
+<div class="notranslate">
+
+```
+imunify360-agent completions <shell>
+```
+
+</div>
+
+<span class="notranslate">`shell`</span> is a positional argument and can be:
+
+| | |
+|-|-|
+|<span class="notranslate">`bash`</span>|Generate completion script for Bash|
+|<span class="notranslate">`zsh`</span>|Generate completion script for Zsh|
+|<span class="notranslate">`fish`</span>|Generate completion script for Fish|
+
+**Installation examples:**
+
+1. Install for <span class="notranslate">Bash</span> (system-wide):
+
+<div class="notranslate">
+
+```
+imunify360-agent completions bash | sudo tee /etc/bash_completion.d/imunify360-agent > /dev/null
+```
+
+</div>
+
+   Start a new shell session afterwards for completions to take effect.
+
+2. Install for <span class="notranslate">Zsh</span> (per-user):
+
+<div class="notranslate">
+
+```
+mkdir -p ~/.zsh/completions
+imunify360-agent completions zsh > ~/.zsh/completions/_imunify360-agent
+```
+
+</div>
+
+   Ensure <span class="notranslate">`~/.zsh/completions`</span> is on your <span class="notranslate">`fpath`</span> and <span class="notranslate">`compinit`</span> is loaded in your <span class="notranslate">`~/.zshrc`</span>.
+
+3. Install for <span class="notranslate">Fish</span> (per-user):
+
+<div class="notranslate">
+
+```
+imunify360-agent completions fish > ~/.config/fish/completions/imunify360-agent.fish
 ```
 
 </div>
