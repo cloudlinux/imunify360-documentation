@@ -52,7 +52,7 @@ ImunifyAV provides malware scanning features for cPanel, Plesk and DirectAdmin c
 
 * <span class="notranslate">CentOS/RHEL</span> 7, 8, 9
 * <span class="notranslate">CloudLinux</span> OS 7, 8, 9
-* <span class="notranslate">Ubuntu</span> 16.04 (LTS only), 18.04, 20.04 (LTS), 22.04 (cPanel, Plesk, DirectAdmin, and standalone), and 24.04
+* <span class="notranslate">Ubuntu</span> 16.04 (LTS only), 18.04, 20.04 (LTS), 22.04 (cPanel, Plesk, DirectAdmin, and standalone), 24.04, and 26.04 (standalone only)
 * <span class="notranslate">Debian</span> 9 (up to Imunify v6.11 (including)), 10 (requires buster-backports), 11, 12 and 13 (Plesk, DirectAdmin, and Stand-alone)
 * <span class="notranslate">AlmaLinux</span> 8, 9, 10
 * <span class="notranslate">Rocky Linux</span> 8, 9 (cPanel, Plesk, and standalone)
@@ -229,6 +229,30 @@ To upgrade ImunifyAV **beta** on Ubuntu 20.04, run the following command:
 
 ```
 echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/20.04/ focal main'  > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify-antivirus
+```
+
+To upgrade ImunifyAV **beta** on Ubuntu 22.04, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/22.04/ jammy main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify-antivirus
+```
+
+To upgrade ImunifyAV **beta** on Ubuntu 24.04, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/24.04/ noble main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify-antivirus
+```
+
+To upgrade ImunifyAV **beta** on Ubuntu 26.04, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/26.04/ resolute main' > /etc/apt/sources.list.d/imunify360-testing.list
 apt-get update
 apt-get install --only-upgrade imunify-antivirus
 ```

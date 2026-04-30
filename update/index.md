@@ -50,6 +50,30 @@ apt-get update
 apt-get install --only-upgrade imunify360-firewall
 ```
 
+To upgrade Imunify360 on Ubuntu 22.04, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/22.04/ jammy main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify360-firewall
+```
+
+To upgrade Imunify360 on Ubuntu 24.04, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/24.04/ noble main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify360-firewall
+```
+
+To upgrade Imunify360 on Ubuntu 26.04, run the following command:
+
+```
+echo 'deb https://repo.imunify360.cloudlinux.com/imunify360/ubuntu-testing/26.04/ resolute main' > /etc/apt/sources.list.d/imunify360-testing.list
+apt-get update
+apt-get install --only-upgrade imunify360-firewall
+```
+
 To upgrade Imunify360 on Debian 9 (supported up to Imunify v6.11 (including)), run the following command:
 
 ```

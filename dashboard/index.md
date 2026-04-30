@@ -1679,6 +1679,8 @@ Read [CXS integration](/ids_integration/#cxs-integration) documentation carefull
   | Ubuntu 18.04 / Debian 10 |      ✓      |      ✓       |          x          |
   | Ubuntu 20.04             |      ✓      |      ✓       |          x          |
   | Ubuntu 22.04             |      ✓      |      ✓       |          x          |
+  | Ubuntu 24.04             |      ✓      |      ✓       |          x          |
+  | Ubuntu 26.04             |      ✓      |      ✓       |          x          |
   | Debian 11                |      ✓      |      ✓       |          x          |
   | Debian 12                |      ✓      |      ✓       |          x          |
   | Debian 13                |      ✓      |      ✓       |          x          |
