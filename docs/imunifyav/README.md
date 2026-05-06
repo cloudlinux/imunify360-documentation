@@ -138,7 +138,11 @@ Where `YOUR_KEY` is your activation key or IPL in case of IP-based license.
 
 ### SELinux support
 
-If SELinux (Security-Enhanced Linux) is enabled on your server, you should install the Imunify360 SELinux policy module. You can check SELinux status by `sestatus` command. Policy is shipped with Imunify360 package and is located in the <span class="notranslate">`/var/imunify360/imunify-antivirus.te`</span>
+:::tip Note
+If you installed ImunifyAV using `imav-deploy.sh` (including via the Plesk extension or the cPanel EasyApache flow), the SELinux policy module is applied automatically — you can skip this section.
+:::
+
+If you installed the RPM package directly (e.g. `yum install imunify-antivirus`) on a server with SELinux enabled, you need to install the ImunifyAV SELinux policy module manually. You can check SELinux status by `sestatus` command. Policy is shipped with the ImunifyAV package and is located in the <span class="notranslate">`/var/imunify360/imunify-antivirus.te`</span>
 
 To apply it, run the following commands:
 

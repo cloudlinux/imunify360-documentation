@@ -129,7 +129,11 @@ imunify360-agent register IPL
 
 ### SELinux support
 
-If SELinux (Security-Enhanced Linux) is enabled on your server, you should install the Imunify360 SELinux policy module. You can check SELinux status by `sestatus` command. Policy is shipped with Imunify360 package and is located in the <span class="notranslate">`/opt/imunify360/venv/share/imunify360/imunify360.te`</span>
+:::tip Note
+If you installed Imunify360 using `i360deploy.sh` (including via the Plesk extension or the cPanel EasyApache flow), the SELinux policy module is applied automatically — you can skip this section.
+:::
+
+If you installed the RPM package directly (e.g. `yum install imunify360-firewall`) on a server with SELinux enabled, you need to install the Imunify360 SELinux policy module manually. You can check SELinux status by `sestatus` command. Policy is shipped with Imunify360 package and is located in the <span class="notranslate">`/opt/imunify360/venv/share/imunify360/imunify360.te`</span>
 
 To apply it, run the following commands:
 
