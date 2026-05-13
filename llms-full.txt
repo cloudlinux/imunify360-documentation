@@ -14444,9 +14444,9 @@ Disable from the command line:
 ie-config disable-incoming
 ```
 
-## cPanel UI changes
+## WHM UI changes
 
-Once enabled, the cPanel-side Imunify Email interface (**cPanel → Security → Imunify360 → Email**) gains the following:
+Once enabled, the WHM-side Imunify Email interface (**WHM → Security → Imunify360 → Email**) gains the following:
 
 **Settings tab**
 
