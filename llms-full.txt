@@ -9106,7 +9106,10 @@ Ubuntu 16.04, 18.04, 20.04, and 22* systems:
 apt-get update
 apt-get install --only-upgrade imunify360-firewall
 ```
-release-upgrade will require manually edit Imunify repositories before enabling them.
+
+:::tip Note
+If you have upgraded the underlying OS (for example, Ubuntu 22.04 → 24.04), the Imunify repository `.list` files still point at the previous OS version and `apt-get update` will fail. Run the deploy script with `--post-os-upgrade` to refresh the repositories — see [Host OS upgrade](#host-os-upgrade) below.
+:::
 
 Debian 9 (supported up to Imunify v6.11 (including)), 10, and 11 systems:
 
@@ -9114,6 +9117,44 @@ Debian 9 (supported up to Imunify v6.11 (including)), 10, and 11 systems:
 apt-get update
 apt-get install --only-upgrade imunify360-firewall
 ```
+
+## Host OS upgrade
+
+When you upgrade the underlying operating system (for example, Ubuntu 22.04 → 24.04) on a server where Imunify360 or ImunifyAV is installed, the APT repository `.list` files keep pointing at the **previous** OS version. As a result `apt-get update` will either return 404 errors or pull packages built for the old OS, and the daily update cron will silently install the wrong packages.
+
+This applies only to **Debian/Ubuntu** systems. RPM-based systems (CentOS / CloudLinux / AlmaLinux) are unaffected because `yum`/`dnf` resolve the OS version dynamically.
+
+To recover after a host OS upgrade, run the deploy script with the `--post-os-upgrade` flag.
+
+For Imunify360:
+
+<div class="notranslate">
+
+```
+bash i360deploy.sh --post-os-upgrade -y
+```
+</div>
+
+For ImunifyAV:
+
+<div class="notranslate">
+
+```
+bash imav-deploy.sh --post-os-upgrade -y
+```
+</div>
+
+The flag requires deploy script version **2.152** or later. It performs the following steps automatically:
+
+1. Reinstalls `imunify-release` for the OS currently reported by `/etc/os-release`, which rewrites the repository `.list` files to the new OS version.
+2. Handles the GPG key `.dpkg-dist` edge case introduced by Ubuntu 24.04 and later.
+3. Re-enables the beta/testing repository if it was active before the upgrade.
+4. Runs `apt-get update` and reinstalls the product package to pick up binaries built for the new OS.
+5. Restarts the Imunify service so that the in-memory cache of `/etc/os-release` is refreshed.
+
+:::tip Note
+Run `--post-os-upgrade` only **after** the host OS upgrade has completed and the new OS has booted. The flag is intended for recovery; it cannot be combined with `--uninstall`. On RPM-based systems the flag exits early with an informational message.
+:::
 
 
 ## Localization
