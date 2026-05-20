@@ -4775,7 +4775,7 @@ Although DoS protection works on the TCP level, it is not the same as http reque
 :::
 
 :::tip Note
-Imunify360 DoS protection is automatically disabled if CSF is active - a warning is shown in Imunify360 UI in that case
+Imunify360 DoS protection and Enhanced DoS Protection features are automatically disabled if CSF is active - a warning is shown in Imunify360 UI in that case
 :::
 	
 ![](/images/DosProtection.png)
