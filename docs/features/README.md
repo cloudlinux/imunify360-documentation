@@ -565,6 +565,18 @@ If you are using cPanel/EasyApache3, Imunify360 will not automatically deploy _m
 :::
 :::tip Note
 For cPanel/EasyApache 4, Plesk, DirectAdmin and LiteSpeed _mod_remoteip_ will be automatically installed and configured.
+::: 
+
+:::tip Note
+When using Nginx with multiple proxy layers (e.g., a CDN in front of WebShield), you may need to enable the `real_ip_recursive` directive so that Nginx correctly identifies the real client IP by walking the full `X-Forwarded-For` chain:
+
+```
+real_ip_header X-Forwarded-For;
+set_real_ip_from ;
+real_ip_recursive on;
+```
+
+Without `real_ip_recursive on`, Nginx uses the last IP in the `X-Forwarded-For` header as the real client IP, which may still be a CDN or intermediate proxy address. With it enabled, Nginx skips all IPs matching `set_real_ip_from` entries and returns the first non-trusted IP — the actual visitor's IP.
 :::
 	
 #### Supported CDN providers:
