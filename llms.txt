@@ -108,7 +108,7 @@
 
 ## WordPress Plugin
 
-- [Imunify Security WordPress Plugin](https://docs.imunify360.com/wordpress_plugin/index.md)
+- [Imunify Security Plugin for WordPress](https://docs.imunify360.com/wordpress_plugin/index.md)
 
 ---
 
