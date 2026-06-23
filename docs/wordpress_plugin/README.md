@@ -1,8 +1,8 @@
-# Imunify Security WordPress Plugin
+# Imunify Security Plugin for WordPress
 
 ## Overview
 
-The **Imunify Security WordPress plugin** is available to all Imunify customers (ImunifyAV, ImunifyAV+, and Imunify360). It provides WordPress administrators with a modern interface, real-time malware and security status, and a seamless upgrade path from AV to 360. The plugin is designed to enhance your website's security and user experience directly from the WordPress dashboard.
+The **Imunify Security plugin for WordPress** is available to all Imunify customers (ImunifyAV, ImunifyAV+, and Imunify360). It provides WordPress administrators with a modern interface, real-time malware and security status, and a seamless upgrade path from AV to 360. The plugin is designed to enhance your website's security and user experience directly from the WordPress dashboard.
 
 ## Prerequisites
 
@@ -22,6 +22,7 @@ The plugin is not available in the WordPress plugin repository. To install:
 5. The plugin will be installed in the background to all active WordPress installations on the server.
 
 ![](/images/wordpress-plugin/panel-settings.png)
+
 *Plugin installation settings in the control panel*
 
 ## Features
