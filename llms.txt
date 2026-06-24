@@ -102,7 +102,7 @@
 - [Frequently Asked Question](https://docs.imunify360.com/patchman/frequently_asked_questions/index.md)
 - [Portal](https://docs.imunify360.com/patchman/portal/index.md)
 - [Policies](https://docs.imunify360.com/patchman/policies/index.md)
-- [Agent (patchman-client)](https://docs.imunify360.com/patchman/agent/index.md)
+- [Agent](https://docs.imunify360.com/patchman/agent/index.md)
 - [Platform Integrations](https://docs.imunify360.com/patchman/platform_integrations/index.md)
 - [Migrating to new agent](https://docs.imunify360.com/patchman/imunify/index.md)
 

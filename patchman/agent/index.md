@@ -1,6 +1,46 @@
-# Agent (patchman-client) 
+# Agent
 
 [[TOC]]
+
+## Installation (Recommended)
+
+The `imunify-patchman` agent is delivered as part of Imunify. Follow the installation instructions below to enable Patchman support.
+
+### Installing imunify-antivirus with Patchman support
+
+1. Find a license key on the [server add page](https://portal.patchman.co/servers/add/). It is displayed under the `During installation, enter the following license key:` section.
+
+2. Install or update `imunify-antivirus`
+   1. If imunify-antivirus is not yet installed on a server:
+    ```
+    wget https://repo.imunify360.cloudlinux.com/defence360/imav-deploy.sh -O imav-deploy.sh
+    bash imav-deploy.sh 
+    ```
+    2. If it is already installed, check if the version of imunify-antivirus is at least `8.5.6`
+    ```
+    imunify-antivirus version
+    8.5.6 
+    ```
+    If it's lower, then update imunify-antivirus using your system package manager.
+
+3. Install the Patchman extension
+```
+imunify-antivirus patchman install
+```
+
+4. Configure the license key (obtained in the first step)
+```
+imunify-antivirus patchman register '<regkey>'
+```
+
+5. Enable the Patchman extension
+```
+imunify-antivirus config update '{"PATCHMAN": {"enable": true}}'
+```
+
+6. Add the server in the Patchman portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/)
+
+* * *
 
 ## Where can I find the software changelog?
 
@@ -17,7 +57,7 @@ In addition to the above, the changelog for each software update is also availab
 Use the RPM package management utility with the following command:
 
 ```
-rpm -q --changelog patchman-client
+rpm -q --changelog imunify-patchman
 ```
 
 ### Debian / Ubuntu
@@ -136,17 +176,25 @@ Upon release of the multithreading feature, the 'Absolute' setting will be used 
 
 * * *
 
-## How do automatic agent updates work?
+* * *
+
+## Legacy Reference: patchman-client (Older Agent)
+
+:::warning
+**Deprecated Documentation** — This section covers the older `patchman-client` agent delivered from the standalone Patchman repository. It is kept for reference only. For new installations, use the `imunify-patchman` sections above. Customers on older versions of patchman-client can continue using it, but should plan to migrate to `imunify-patchman` (version 1.0.9+) for the latest features and updates.
+:::
+
+### How automatic agent updates work (patchman-client)
 
 :::tip 
-If you have installed the package for [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it), automatic updates will also apply to that package. If you don’t have it installed yet, you need to manually install it first - Patchman can’t automatically perform this installation for you, for security reasons. 
+If you have installed the package for [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it), automatic updates will also apply to that package. If you don't have it installed yet, you need to manually install it first - Patchman can't automatically perform this installation for you, for security reasons. 
 :::
 
 The Patchman agent is capable of performing unattended automated updates. This saves you time and effort whenever we release a new version, and ensures that all your servers are always running the latest version with both the newest features and the latest bugfixes.
 
-### Configuring automatic updates
+#### Configuring automatic updates
 
-#### Disabling automatic updates
+##### Disabling automatic updates
 
 Automatic updates are switched on by default, and are available for agents with version 1.7.0-1 and higher.
 
@@ -154,9 +202,9 @@ If you do not wish to benefit from automatic updates, you can opt out through an
 
 ![](/images/auto-update.png)
 
-#### Repository name modifications
+##### Repository name modifications
 
-By default we assume the repository is named "patchman", as will be the case if you use our installation script to install the repository on your system. If you decided to rename the repository definition, you can configure the alternative repository name by adding the following data to the file /etc/patchman/patchman.ini (create it if it does not yet exist):
+By default we assume the repository is named "patchman", as will be the case if you use our installation script to install the repository on your system. If you decided to rename the repository definition, you can configure the alternative repository name by adding the following data to the file /etc/patchman/patchman.ini (create it if it does not yet exist):
 
 ```
 [updates]
@@ -171,7 +219,7 @@ service patchman reload
 
 Our update process will use the new repository name where appropriate.
 
-### Under the hood: steps in automatic updating
+#### Under the hood: steps in automatic updating
 
 As a system administrator you may want to know how the updates are performed. In particular, you may be interested to know what checks we perform to ensure successful updates, what rollback procedures are involved if an update fails, and how the validity of each update is verified. This section lists all the steps the agent takes including some background information regarding the how and why for each step.
 
@@ -181,9 +229,9 @@ When building the updating procedure, our goal was to simulate the steps and che
 In the steps below, wherever actions are performed for the patchman-client package, they are repeated for the patchman-client-realtime package if (and only if) you have that installed. 
 :::
 
-#### CentOS/CloudLinux
+##### CentOS/CloudLinux
 
-1. Clean the cached metadata for the patchman repository to ensure issuing an install command will result in new metadata being downloaded from our repository
+1. Clean the cached metadata for the patchman repository to ensure issuing an install command will result in new metadata being downloaded from our repository
     1. On CentOS 6 and 7:
         ```
         yum clean all --disablerepo="*" --enablerepo="patchman"
@@ -192,7 +240,7 @@ In the steps below, wherever actions are performed for the patchman-client packa
         ```
         dnf clean all --disablerepo="*" --enablerepo="patchman"
         ```
-2. Download the most recent version of the patchman-client package into the cache directory (and parse the associated filename). If no new version is available, stop the update procedure.
+2. Download the most recent version of the patchman-client package into the cache directory (and parse the associated filename). If no new version is available, stop the update procedure.
     1. On CentOS 6 and 7:
         ```
         yum install -y --downloadonly --downloaddir=<patchman tmp dir> patchman-client
@@ -209,7 +257,7 @@ In the steps below, wherever actions are performed for the patchman-client packa
 5. Parse the output from the rpm command to check whether the update succeeded.
 6. If the update is successful, the agent will restart itself after completion of the update procedure, ensuring the server is running the newly installed version afterwards.
 
-#### Debian/Ubuntu
+##### Debian/Ubuntu
 
 1. Read the filename that contains our repository definition and the path to the cache directory. This means parsing Dir, Dir::Etc, Dir::Etc::sourceparts, Dir::Cache and Dir::Cache::archives from:
     ```
@@ -228,26 +276,24 @@ In the steps below, wherever actions are performed for the patchman-client packa
     apt-get -d install patchman-client
     ```
 5. Determine the filename of the downloaded package using the cache directory and the filename from step 4.
-6. Install the downloaded package using dpkg. Since dpkg is not able to download any potentially missing dependencies, this step will automatically fail if any unforeseen dependency problems arise.
+6. Install the downloaded package using dpkg. Since dpkg is not able to download any potentially missing dependencies, this step will automatically fail if any unforeseen dependency problems arise.
     ```
     dpkg -i /var/cache/apt/archives/patchman-client_1.2.3-1.deb
     ```
-7. Parse the output from the dpkg command to check whether the update succeeded.
+7. Parse the output from the dpkg command to check whether the update succeeded.
 8. If the update is successful, the agent will restart itself after completion of the update procedure, ensuring the server is running the newly installed version afterwards.
 
 :::tip 
 In step 3, we used `apt-cache madison patchman-client` until version 1.14.0-1. 
 :::
 
-* * *
-
-## Updating the Patchman agent
+### Updating the patchman-client agent (Legacy)
 
 :::tip 
-We strongly suggest using the auto-update feature, as described in [this article](https://patchman.atlassian.net/wiki/spaces/PT/pages/113410280). Relying on auto-update decreases maintenance and ensures you will always automatically use the most up-to-date version of the Patchman software. 
+We strongly suggest using the auto-update feature, as described above. Relying on auto-update decreases maintenance and ensures you will always automatically use the most up-to-date version of the Patchman software. 
 :::
 
-The Patchman agent, running on the servers you add to the Portal, is updated regularly to resolve bugs and introduce new features. Updating the Patchman agent only requires you to update the package using your package manager. 
+The Patchman agent, running on the servers you add to the Portal, is updated regularly to resolve bugs and introduce new features. Updating the Patchman agent only requires you to update the package using your package manager. 
 
 We recommend adding the updating of the Patchman agent to your regular update schedule. However, if you need to manually update the agent, you can use the following commands:
 
@@ -270,7 +316,7 @@ apt-get update
 apt-get install patchman-client
 ```
 
-After updating the agent, the service should restart automatically and you should see the new version number appear in the Portal (under Servers). 
+After updating the agent, the service should restart automatically and you should see the new version number appear in the Portal (under Servers). 
 
 On rare occasions customers reported that the agent refuses to stop, in that case a manual restart is required.
 
@@ -280,17 +326,15 @@ service patchman restart
 
 If the restart fails, there is probably a long-running task that prevents the agent from restarting immediately. The logfiles in /var/log/patchman/ will point out that the shutdown signal was received by the process, and will be processed as soon as possible. If the process hasn't restarted after 10 minutes, please contact [support@patchman.co](mailto:support@patchman.co) and send along the logfiles for further inspection.
 
-Although we strive to maximize compatibility, we may occassionally drop support for outdated agent versions. Your agent will then not be able to connect to the Portal, meaning that new detections will not be reported and existing detections can't be resolved.
+Although we strive to maximize compatibility, we may occassionally drop support for outdated agent versions. Your agent will then not be able to connect to the Portal, meaning that new detections will not be reported and existing detections can't be resolved.
 
-* * * 
-
-## Uninstalling the Patchman agent
+### Uninstalling patchman-client (Legacy)
 
 Patchman is installed on your system using the standard package manager. This means that you can easily uninstall the software using this package manager.
 
-### CentOS / CloudLinux
+#### CentOS / CloudLinux
 
-Use the yum package management utility with the following command:
+Use the yum package management utility with the following command:
 
 ```
 yum remove patchman-client
@@ -302,7 +346,7 @@ or
 dnf remove patchman-client
 ```
 
-### Debian / Ubuntu
+#### Debian / Ubuntu
 
 Use the apt package management utility with the following command:
 
@@ -310,44 +354,8 @@ Use the apt package management utility with the following command:
 apt-get remove patchman-client
 ```
 
-### Cancelling the server license
+#### Cancelling the server license
 
-Make sure to cancel the server license in the Patchman Portal. We strongly suggest you do this **_after_** the removal of the software from your system, because if the software is still running it may automatically request a new license on your account (according to the standard installation procedure).
+Make sure to cancel the server license in the Patchman Portal. We strongly suggest you do this **_after_** the removal of the software from your system, because if the software is still running it may automatically request a new license on your account (according to the standard installation procedure).
 
 In the Patchman Portal, go to the server configuration page under Servers. If your plan requires advance notice for cancelling servers, click the red Cancel button to cancel your license and deactivate it per the renewal date. Otherwise, click the red Delete button to immediately remove the server license from your account. This will make sure you are no longer billed for this server.
-
-* * * 
-
-### Installing imunify-antivirus with Patchman support
-
-1. Find a license key on the [server add page](https://portal.patchman.co/servers/add/). It is displayed under the `During installation, enter the following license key:` section.
-
-2. Install or update `imunify-antivirus`
-   1. If imunify-antivirus is not yet installed on a server:
-    ```
-    wget https://repo.imunify360.cloudlinux.com/defence360/imav-deploy.sh -O imav-deploy.sh
-    bash imav-deploy.sh 
-    ```
-    2. If it is already installed, check if the version of imunify-antivirus is at least `8.5.6`
-    ```
-    imunify-antivirus version
-    8.5.6 
-    ```
-    If it's lower, then update imunify-antivirus using your system package manager.
-
-3. Install the Patchman extension
-```
-imunify-antivirus patchman install
-```
-
-4. Configure the license key (obtained in the first step)
-```
-imunify-antivirus patchman register '<regkey>'
-```
-
-5. Enable the Patchman extension
-```
-imunify-antivirus config update '{"PATCHMAN": {"enable": true}}'
-```
-
-6. Add the server in the Patchman portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/)
