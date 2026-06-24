@@ -146,8 +146,8 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Fluent Forms | 3.5.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>YITH WooCommerce Wishlist | 3.1.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Enable Media Replace | 3.2.7+ | COVERAGE, COVERAGE+CLEAN | all |
-| Joomla! Plugin:  <br>Akeeba Backup |     |     | all |
-| Joomla! Plugin:  <br>Joomla Content Editor (JCE) |     |     | all |
+| Joomla! Plugin:  <br>Akeeba Backup |     | COVERAGE, COVERAGE+CLEAN | all |
+| Joomla! Plugin:  <br>Joomla Content Editor (JCE) | 2.9.37+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
 
 | **Library** | **Version(s)** | **Bundle / Plan (for patching)** | **Version detection (all plans)** |
 | --- | --- | --- | --- |
