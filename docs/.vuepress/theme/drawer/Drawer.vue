@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="drawer" :class="{'is-open': isOpenDrawer}">
+    <div class="drawer" :class="{'is-open': isOpenDrawer, 'drawer--animated': animationsReady}">
       <div class="drawer-header">
         <div class="drawer-header__wrapper">
           <h2 class="drawer-header__paragraph">How can we help you?</h2>
@@ -30,7 +30,7 @@
 <script setup>
 import { withBase } from "@vuepress/client";
 import Footer from "../footer/Footer.vue";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import DrawerSearchResult from "./DrawerSearchResult.vue";
 
 const props = defineProps({
@@ -66,6 +66,16 @@ const onCloseDrawer = () => {
   emit('closeDrawer');
 }
 
+// The drawer starts hidden (translateY(-100%)). Enabling the slide transition
+// only after the first paint prevents the close animation from flashing on
+// initial page load — it then fires only on genuine open/close toggles.
+const animationsReady = ref(false);
+onMounted(() => {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    animationsReady.value = true;
+  }));
+});
+
 watch(() => props.isOpenDrawer, () => {
   document.body.classList.toggle('disable-scroll', props.isOpenDrawer);
 });
@@ -89,7 +99,12 @@ watch(() => props.isOpenDrawer, () => {
   background: $drawerHeaderBgColor
   opacity: 0;
   transform: translateY(-100%);
-  transition: 0.4s ease;
+
+  // Transition is intentionally NOT set here so the initial hidden state is
+  // applied instantly (no flash on first load). It is enabled via
+  // .drawer--animated once the component has mounted.
+  &.drawer--animated
+    transition: 0.4s ease
 
   &-header
     padding 1.25rem $layout-horizontal-padding
