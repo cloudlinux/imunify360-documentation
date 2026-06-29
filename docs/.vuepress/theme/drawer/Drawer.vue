@@ -17,7 +17,7 @@
             <div class="drawer-main__breadcrumb">
               <!-- Optional breadcrumb can stay here -->
             </div>
-            <DrawerSearchResult :modelValue="modelValue" :data="drawerArticleResult"/>
+            <DrawerSearchResult :modelValue="modelValue" :data="drawerArticleResult" @closeDrawer="onCloseDrawer"/>
           </div>
         </div>
         <Footer v-if="isOpenDrawer && isMobileWidth" class="drawer-footer__mobile"/>

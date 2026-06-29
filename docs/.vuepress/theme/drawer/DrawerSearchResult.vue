@@ -61,7 +61,14 @@ const props = defineProps({
 const { MAX_VISIBLE_RESULT } = inject("themeConfig");
 const isShowAllResult = ref(false);
 
+const emit = defineEmits(["closeDrawer"]);
+
 const gotTo = (url) => {
+  // Always close the search drawer on click. When the target resolves to the
+  // page we are already on (same pathname, only the #hash differs) the browser
+  // does NOT reload, so the drawer would otherwise stay open over the page and
+  // the result would look unclickable (STAR-71).
+  emit("closeDrawer");
   const parsedCurrentUrl = new URL(window.location.href);
   if (parsedCurrentUrl.pathname + parsedCurrentUrl.hash === url) {
     window.location.reload();
