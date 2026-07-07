@@ -2635,6 +2635,99 @@ imunify360-agent version [--json]
 
 </div>
 
+## WebShield feature availability
+
+:::danger Unstable — do not use in automation
+The commands and output described in this section are **debugging / introspection aids only**. Their names, flags, and output format are **unstable and may change at any time without notice**. **Do not rely on them in scripts, monitoring, or any other automation.**
+:::
+
+The WebShield protection features available on a server depend on its environment. Use the <span class="notranslate">`imunify360-wsctl filters`</span> command to find out which features (filters / checks) are available on the current installation.
+
+Two features are covered:
+
+* **GreyList / Anti-bot Challenge (Verdict)** — IP-based access control (blacklist / graylist / splash screen) served from kernel ipsets via an <span class="notranslate">`IPSET lookup`</span>. Available on **all** WebShield installations.
+* **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. Available on **Coraza** installations and on **cPanel + Apache** installations running **any** of our Apache modules (<span class="notranslate">mod_wafcl</span> or <span class="notranslate">mod_access_checker</span>).
+
+**Usage:**
+
+<div class="notranslate">
+
+```
+imunify360-wsctl filters [--json]
+```
+
+</div>
+
+By default the command prints a table listing each filter and whether it is available on this installation:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl filters
+FILTER   CHECK         AVAILABLE
+verdict  IPSET lookup  yes
+uam      UAM           yes
+```
+
+</div>
+
+**Feature availability by environment:**
+
+| Environment | GreyList / Anti-bot (<span class="notranslate">`verdict`</span>) | Under Attack Mode (<span class="notranslate">`uam`</span>) |
+|-|-|-|
+| cPanel + Apache (any OS, any of our Apache modules) | yes | yes |
+| CloudWays Lightning (nginx + Coraza) | yes | yes |
+| Cloudways Hybrid (Apache + <span class="notranslate">mod_wafcl</span>) | yes | yes |
+| ea-nginx + Coraza module | yes | yes |
+| Plesk (any configuration) | yes | no |
+| Standalone nginx + <span class="notranslate">access_checker</span> | yes | no |
+| WebShield (OpenResty reverse proxy) | yes | no |
+
+Under Attack Mode is reported as available when **either** the <span class="notranslate">Coraza</span> WAF engine is active, **or** the server is a cPanel + Apache host with one of our Apache modules loaded. On panels where Coraza is never enabled (for example Plesk), only the GreyList / Anti-bot Challenge (IPSET lookup) is available.
+
+**Examples:**
+
+1. List the available checks on this server:
+
+<div class="notranslate">
+
+   ```
+   imunify360-wsctl filters
+   FILTER   CHECK         AVAILABLE
+   verdict  IPSET lookup  yes
+   uam      UAM           no
+   ```
+
+</div>
+
+   In this example only the GreyList / Anti-bot Challenge (<span class="notranslate">`verdict`</span>) is available; Under Attack Mode (<span class="notranslate">`uam`</span>) is not.
+
+2. Get the feature map as JSON (for one-off inspection — not for automation):
+
+<div class="notranslate">
+
+   ```
+   imunify360-wsctl filters --json
+   {
+     "filters": [
+       {
+         "name": "verdict",
+         "check": "IPSET lookup",
+         "description": "Blacklist/Graylist splash screen based on IPSET lookup",
+         "available": true
+       },
+       {
+         "name": "uam",
+         "check": "UAM",
+         "description": "Under Attack Mode challenge for the server administrator",
+         "available": true
+       }
+     ]
+   }
+   ```
+
+</div>
+
 ## Whitelisted crawlers
 
 
