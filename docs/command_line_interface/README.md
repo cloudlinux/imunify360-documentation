@@ -2637,10 +2637,6 @@ imunify360-agent version [--json]
 
 ## WebShield feature availability
 
-:::danger Unstable — do not use in automation
-The commands and output described in this section are **debugging / introspection aids only**. Their names, flags, and output format are **unstable and may change at any time without notice**. **Do not rely on them in scripts, monitoring, or any other automation.**
-:::
-
 The WebShield protection features available on a server depend on its environment. Use the <span class="notranslate">`imunify360-wsctl filters`</span> command to find out which features (filters / checks) are available on the current installation.
 
 Two features are covered:
