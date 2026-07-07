@@ -2642,7 +2642,7 @@ The WebShield protection features available on a server depend on its environmen
 Two features are covered:
 
 * **GreyList / Anti-bot Challenge (Verdict)** — IP-based access control (blacklist / graylist / splash screen) served from kernel ipsets via an <span class="notranslate">`IPSET lookup`</span>. Available on **all** WebShield installations.
-* **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. Available on **Coraza** installations and on **cPanel + Apache** installations running **any** of our Apache modules (<span class="notranslate">mod_wafcl</span> or <span class="notranslate">mod_access_checker</span>).
+* **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. Available wherever the WebShield web-server module is active — that is, the **nginx** and **apache** integration modes. It is **not** available in standalone / reverse-proxy mode (where WebShield handles the traffic itself), so it does not apply on panels such as Plesk or on the OpenResty reverse proxy.
 
 **Usage:**
 
@@ -2679,7 +2679,7 @@ uam      UAM           yes
 | Standalone nginx + <span class="notranslate">access_checker</span> | yes | no |
 | WebShield (OpenResty reverse proxy) | yes | no |
 
-Under Attack Mode is reported as available when **either** the <span class="notranslate">Coraza</span> WAF engine is active, **or** the server is a cPanel + Apache host with one of our Apache modules loaded. On panels where Coraza is never enabled (for example Plesk), only the GreyList / Anti-bot Challenge (IPSET lookup) is available.
+Under Attack Mode is reported as available whenever the WebShield module is loaded — i.e. the server runs in the **nginx** or **apache** integration mode. In standalone / reverse-proxy mode WebShield inspects traffic itself without loading a web-server module, so only the GreyList / Anti-bot Challenge (IPSET lookup) is available there (for example on Plesk or the OpenResty reverse proxy).
 
 **Examples:**
 
@@ -2698,7 +2698,7 @@ Under Attack Mode is reported as available when **either** the <span class="notr
 
    In this example only the GreyList / Anti-bot Challenge (<span class="notranslate">`verdict`</span>) is available; Under Attack Mode (<span class="notranslate">`uam`</span>) is not.
 
-2. Get the feature map as JSON (for one-off inspection — not for automation):
+2. Get the feature map as JSON:
 
 <div class="notranslate">
 
