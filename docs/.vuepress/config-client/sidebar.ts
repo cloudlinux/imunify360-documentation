@@ -52,7 +52,8 @@ export default {
                 collapsable: false,
                 children: [
                     "/features/",
-                    "/features/panel_notifications/"
+                    "/features/panel_notifications/",
+                    "/features/under_attack_mode/"
                 ]
             },
         ],
