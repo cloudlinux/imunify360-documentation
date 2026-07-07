@@ -2695,3 +2695,130 @@ imunify360-agent whitelisted-crawlers [command]
 
    </div>
 
+## WordPress plugin
+
+This command manages the <span class="notranslate">Imunify Security</span> WordPress plugin and its Web Application Firewall (WAF). It is available in both <span class="notranslate">Imunify360</span> (using <span class="notranslate">`imunify360-agent`</span>) and <span class="notranslate">ImunifyAV/AV+</span> (using <span class="notranslate">`imunify-antivirus`</span>).
+
+**Usage:**
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin [command] [subcommand] [--option] <value>
+```
+
+</div>
+
+### Enable or disable the WAF for accounts
+
+Use <span class="notranslate">`waf set`</span> to enable or disable the WordPress WAF for hosting accounts in bulk. The plugin must be installed first (see <span class="notranslate">`security_plugin_enabled`</span> below); otherwise the command reports <span class="notranslate">_WordPress Security Plugin is disabled. Enable it before changing WAF settings._</span>
+
+| | |
+|-|-|
+|<span class="notranslate">`--status`</span>|<span class="notranslate">`enabled`</span> or <span class="notranslate">`disabled`</span>.|
+|<span class="notranslate">`--all-users`</span>|apply to all hosting accounts.|
+|<span class="notranslate">`--users`</span>|apply to a space-separated list of accounts. Use either <span class="notranslate">`--all-users`</span> or <span class="notranslate">`--users`</span>, not both.|
+
+**Examples**
+
+1. Enable the WAF for all hosting accounts:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf set --status enabled --all-users
+```
+
+</div>
+
+2. Disable the WAF for specific accounts:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf set --status disabled --users user1 user2
+```
+
+</div>
+
+The command reports how many accounts succeeded, were skipped (for example, when a name is not a hosting user), or failed.
+
+To change the WAF for a single account, you can also update its configuration directly:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update --user user1 '{"WORDPRESS":{"waf_enabled": false}}'
+```
+
+</div>
+
+Server-wide options — installing the plugin, the server-wide WAF switch, and the default for new accounts — are set without a user:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"security_plugin_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
+```
+
+</div>
+
+### Manage individual WAF rules
+
+Use the <span class="notranslate">`rules`</span> subcommand to disable or re-enable a specific WAF rule — for example, one that interferes with legitimate traffic. The rule identifier is the one shown for the incident (typically a CVE ID).
+
+| | |
+|-|-|
+|<span class="notranslate">`disable`</span>|disable a rule, for all domains or for specific ones.|
+|<span class="notranslate">`enable`</span>|re-enable a previously disabled rule.|
+|<span class="notranslate">`list-disabled`</span>|list the currently disabled rules.|
+
+| | |
+|-|-|
+|<span class="notranslate">`--rule`</span>|the rule identifier (for example, <span class="notranslate">`CVE-2025-001`</span>).|
+|<span class="notranslate">`--domains`</span>|optional space-separated list of domains. If omitted, the rule is disabled or enabled for all domains.|
+
+**Examples**
+
+1. Disable a rule for all domains:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules disable --rule CVE-2025-001
+```
+
+</div>
+
+2. Disable a rule for specific domains only:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules disable --rule CVE-2025-001 --domains example.com blog.example.com
+```
+
+</div>
+
+3. Re-enable a rule:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules enable --rule CVE-2025-001
+```
+
+</div>
+
+4. List disabled rules:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules list-disabled
+```
+
+</div>
+

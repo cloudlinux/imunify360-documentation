@@ -5167,8 +5167,6 @@ The WordPress plugin installation is currently allowed only if _Settings > Malwa
 
 Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites.
 
-![](/images/wordpress-plugin/panel-settings.png)
-
 You can also enable it via CLI with the following command:
 
 <div class="notranslate">
@@ -5177,6 +5175,30 @@ You can also enable it via CLI with the following command:
 imunify360-agent config update '{"WORDPRESS":{"security_plugin_enabled": true}}'
 ```
 </div>
+
+Once the plugin is installed, the **WordPress WAF** provides virtual patching against known vulnerabilities in WordPress plugins, themes, and core. For what it protects against and how end users review incidents, see <span class="notranslate">[Web Application Firewall](/wordpress_plugin/#web-application-firewall-virtual-patching)</span>.
+
+Tick the <span class="notranslate">_Enable WordPress WAF_</span> checkbox to turn the WAF on for WordPress sites on this server. When it is disabled, WAF rules are removed from all sites and the <span class="notranslate">_CMS WAF_</span> tab is hidden. This option can also be set per hosting account.
+
+Tick the <span class="notranslate">_Enable WAF for new accounts by default_</span> checkbox to automatically enable the WAF for newly created hosting accounts.
+
+<img src="/images/wordpress-plugin/waf-panel-settings.png" alt="WordPress plugin settings in the control panel: Install WordPress plugin, Enable WordPress WAF, and Enable WAF for new accounts by default" width="520">
+
+:::tip Note
+The WAF is enabled by default for hosting accounts that already existed when it was first rolled out. Newly created accounts follow the <span class="notranslate">_Enable WAF for new accounts by default_</span> setting. A hosting-account owner may disable the WAF for their own account unless it is locked server-wide by the administrator.
+:::
+
+You can also control the WAF via CLI:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"waf_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
+```
+</div>
+
+For per-account and bulk control, see <span class="notranslate">[WordPress plugin CLI commands](/command_line_interface/#wordpress-plugin)</span>.
 
 #### Error Reporting
  
@@ -8471,6 +8493,133 @@ imunify360-agent whitelisted-crawlers [command]
 
    </div>
 
+## WordPress plugin
+
+This command manages the <span class="notranslate">Imunify Security</span> WordPress plugin and its Web Application Firewall (WAF). It is available in both <span class="notranslate">Imunify360</span> (using <span class="notranslate">`imunify360-agent`</span>) and <span class="notranslate">ImunifyAV/AV+</span> (using <span class="notranslate">`imunify-antivirus`</span>).
+
+**Usage:**
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin [command] [subcommand] [--option] <value>
+```
+
+</div>
+
+### Enable or disable the WAF for accounts
+
+Use <span class="notranslate">`waf set`</span> to enable or disable the WordPress WAF for hosting accounts in bulk. The plugin must be installed first (see <span class="notranslate">`security_plugin_enabled`</span> below); otherwise the command reports <span class="notranslate">_WordPress Security Plugin is disabled. Enable it before changing WAF settings._</span>
+
+| | |
+|-|-|
+|<span class="notranslate">`--status`</span>|<span class="notranslate">`enabled`</span> or <span class="notranslate">`disabled`</span>.|
+|<span class="notranslate">`--all-users`</span>|apply to all hosting accounts.|
+|<span class="notranslate">`--users`</span>|apply to a space-separated list of accounts. Use either <span class="notranslate">`--all-users`</span> or <span class="notranslate">`--users`</span>, not both.|
+
+**Examples**
+
+1. Enable the WAF for all hosting accounts:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf set --status enabled --all-users
+```
+
+</div>
+
+2. Disable the WAF for specific accounts:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf set --status disabled --users user1 user2
+```
+
+</div>
+
+The command reports how many accounts succeeded, were skipped (for example, when a name is not a hosting user), or failed.
+
+To change the WAF for a single account, you can also update its configuration directly:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update --user user1 '{"WORDPRESS":{"waf_enabled": false}}'
+```
+
+</div>
+
+Server-wide options — installing the plugin, the server-wide WAF switch, and the default for new accounts — are set without a user:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"security_plugin_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
+```
+
+</div>
+
+### Manage individual WAF rules
+
+Use the <span class="notranslate">`rules`</span> subcommand to disable or re-enable a specific WAF rule — for example, one that interferes with legitimate traffic. The rule identifier is the one shown for the incident (typically a CVE ID).
+
+| | |
+|-|-|
+|<span class="notranslate">`disable`</span>|disable a rule, for all domains or for specific ones.|
+|<span class="notranslate">`enable`</span>|re-enable a previously disabled rule.|
+|<span class="notranslate">`list-disabled`</span>|list the currently disabled rules.|
+
+| | |
+|-|-|
+|<span class="notranslate">`--rule`</span>|the rule identifier (for example, <span class="notranslate">`CVE-2025-001`</span>).|
+|<span class="notranslate">`--domains`</span>|optional space-separated list of domains. If omitted, the rule is disabled or enabled for all domains.|
+
+**Examples**
+
+1. Disable a rule for all domains:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules disable --rule CVE-2025-001
+```
+
+</div>
+
+2. Disable a rule for specific domains only:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules disable --rule CVE-2025-001 --domains example.com blog.example.com
+```
+
+</div>
+
+3. Re-enable a rule:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules enable --rule CVE-2025-001
+```
+
+</div>
+
+4. List disabled rules:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin rules list-disabled
+```
+
+</div>
+
 
 ## Config File Description
 
@@ -8898,6 +9047,13 @@ If a non-eligible interval is configured, the agent will ignore it and keep the 
 <tr><th colspan="2" align="left"><span class="notranslate">MALWARE_DATABASE_SCAN:</span></th></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.</td></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">WORDPRESS:</span></th></tr>
+<tr><td><span class="notranslate">security_plugin_enabled: False</span></td>
+<td># installs the <span class="notranslate">Imunify Security</span> WordPress plugin on all WordPress sites. This is the master switch for the WordPress plugin and its WordPress WAF. Default is <span class="notranslate">False</span>.</td></tr>
+<tr><td><span class="notranslate">waf_enabled: True</span></td>
+<td># enables the WordPress WAF (virtual patching) for WordPress sites on the server. When set to <span class="notranslate">False</span>, WAF rules are removed from all sites. Can also be set per hosting account. Default is <span class="notranslate">True</span>.</td></tr>
+<tr><td><span class="notranslate">waf_default: False</span></td>
+<td># whether the WordPress WAF is enabled automatically for newly created hosting accounts. Default is <span class="notranslate">False</span>.</td></tr>
 </tbody>
 </table>
 
@@ -18520,6 +18676,8 @@ If you have questions or need assistance with the migration process, please cont
 
 # Imunify Security Plugin for WordPress
 
+[[toc]]
+
 ## Overview
 
 The **Imunify Security plugin for WordPress** is available to all Imunify customers (ImunifyAV, ImunifyAV+, and Imunify360). It provides WordPress administrators with a modern interface, real-time malware and security status, and a seamless upgrade path from AV to 360. The plugin is designed to enhance your website's security and user experience directly from the WordPress dashboard.
@@ -18530,6 +18688,10 @@ The **Imunify Security plugin for WordPress** is available to all Imunify custom
 * **PHP Version**: 5.6 or higher
 * **Imunify360**: 8.4.1 or higher
 * **ImunifyAV/AV+**: 8.6.0 or higher
+
+::: tip Note
+The <span class="notranslate">Web Application Firewall</span> (virtual patching) described below requires the <span class="notranslate">Imunify Security</span> WordPress plugin (<span class="notranslate">`imunify-wp-security`</span>) <span class="notranslate">`wp-3.0.1-2`</span> or later, together with a supported Imunify agent — <span class="notranslate">ImunifyAV/AV+</span> (<span class="notranslate">`imunify-antivirus`</span>) <span class="notranslate">`av-8.7.1-2`</span> or later, or <span class="notranslate">Imunify360</span> (<span class="notranslate">`imunify360-firewall`</span>) <span class="notranslate">`8.12.5-3`</span> or later.
+:::
 
 ## Installation
 
@@ -18553,6 +18715,7 @@ The plugin adds a dashboard widget that helps administrators keep track of their
 
 - Real-time security status
 - Proactive Defense status
+- Web Application Firewall status and recent WAF incidents (see <span class="notranslate">[Web Application Firewall](/wordpress_plugin/#web-application-firewall-virtual-patching)</span>)
 - Timestamps for last and next scheduled scans
 - Detailed list of detected and cleaned malware (file path, signature, detection or clean-up time)
 
@@ -18595,3 +18758,109 @@ ImunifyAV users are shown a limited interface and prompted to upgrade to Imunify
 
 ![](/images/wordpress-plugin/upgrade-page.png)
 *Upgrade prompt encouraging users to switch to Imunify360 for more features.*
+
+## Web Application Firewall (Virtual Patching)
+
+The <span class="notranslate">Imunify Security</span> plugin includes a **Web Application Firewall (WAF)** that provides *virtual patching* for WordPress. It protects your sites against known vulnerabilities (CVEs) in WordPress plugins, themes, and core — **without modifying any of your site's files**. When a plugin or theme you use has a known security flaw, the WAF blocks attempts to exploit it, giving you time to apply the real update.
+
+::: tip Note
+This WordPress WAF is a separate layer from the server-side <span class="notranslate">[WAF (ModSecurity)](/dashboard/#waf-settings)</span> and from <span class="notranslate">[WordPress Account Brute-force Protection](/dashboard/#wordpress-account-brute-force-protection)</span>. It runs inside the WordPress plugin and focuses on blocking exploit attempts against vulnerable plugins and themes. In the Imunify control panel it is presented on the <span class="notranslate">_CMS WAF_</span> tab.
+:::
+
+### How it works
+
+The Imunify agent regularly delivers an up-to-date set of virtual patches to each protected WordPress site. On every request, the plugin checks whether the request matches a rule for a component (plugin, theme, or core) that is actually installed on the site, and acts before the vulnerable code can run:
+
+* In <span class="notranslate">Imunify360</span>, matching requests are **blocked** with an <span class="notranslate">HTTP 403</span> response.
+* In <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, matching requests are **logged only** — see [Protection modes](#protection-modes-enabled-vs-monitoring).
+
+Every match is recorded as an *incident*. Because rules are matched only against the versions actually installed, protection adapts automatically as you install, update, or remove plugins and themes.
+
+### Protection modes: Enabled vs Monitoring
+
+The WAF works in one of two modes depending on your Imunify product. There is no manual switch — the mode follows the product:
+
+| Product | Mode | Status shown | Behavior |
+|---|---|---|---|
+| <span class="notranslate">Imunify360</span> | Active protection | <span class="notranslate">_Enabled_</span> | Exploit attempts are blocked (<span class="notranslate">HTTP 403</span>). |
+| <span class="notranslate">ImunifyAV</span> / <span class="notranslate">ImunifyAV+</span> | Monitoring | <span class="notranslate">_Monitoring_</span> | Exploit attempts are logged but **not** blocked. |
+
+In monitoring mode, the widget shows the message *"Attacks are logged but not blocked. Upgrade to Imunify360 to enable full WAF protection."* with an <span class="notranslate">_Upgrade now_</span> link.
+
+### In the WordPress dashboard widget
+
+The <span class="notranslate">Imunify Security</span> dashboard widget includes a <span class="notranslate">_Web Application Firewall_</span> row showing the current status (<span class="notranslate">_Enabled_</span> or <span class="notranslate">_Monitoring_</span>) and the number of recent incidents. Below it, a <span class="notranslate">_Latest incidents (7 days)_</span> table lists the most recent detections, together with the current ruleset version:
+
+* <span class="notranslate">_Date_</span> — when the incident occurred
+* <span class="notranslate">_Component_</span> — the vulnerable plugin, theme, or core
+* <span class="notranslate">_CVE_</span> — the vulnerability the rule addresses
+* <span class="notranslate">_Severity_</span> — severity of the rule
+* <span class="notranslate">_Count_</span> — how many times it was triggered
+
+Use <span class="notranslate">_Show more results_</span> to open the full incident list on the <span class="notranslate">_CMS WAF_</span> tab.
+
+<img src="/images/wordpress-plugin/waf-widget-enabled.png" alt="Web Application Firewall row showing Enabled" width="420">
+
+*The Web Application Firewall row in the dashboard widget, showing <span class="notranslate">_Enabled_</span> with no recent detections (Imunify360).*
+
+<img src="/images/wordpress-plugin/waf-widget-enabled-has-incidents.png" alt="Web Application Firewall row showing a recent-incident count" width="420">
+
+*When there are recent detections, the row shows the incident count (here, 34); expand it to see the <span class="notranslate">_Latest incidents (7 days)_</span> list.*
+
+<img src="/images/wordpress-plugin/waf-widget-monitoring.png" alt="Web Application Firewall row showing Monitoring" width="420">
+
+*In ImunifyAV and ImunifyAV+, the WAF runs in Monitoring mode with a prompt to upgrade.*
+
+### Managing WAF incidents
+
+The <span class="notranslate">_CMS WAF_</span> tab in the Imunify control panel is where you review WAF activity and manage rules.
+
+::: tip Note
+The <span class="notranslate">_CMS WAF_</span> tab appears only when the WordPress WAF is enabled and the account has at least one WordPress site.
+:::
+
+#### Incidents
+
+The <span class="notranslate">_Incidents_</span> sub-tab lists every request the WAF acted on:
+
+| Column | Description |
+|---|---|
+| <span class="notranslate">_Date_</span> | When the incident occurred (newest first by default). |
+| <span class="notranslate">_Domain_</span> | The WordPress site that was targeted. |
+| <span class="notranslate">_IP_</span> | Source IP address. Click it to filter the list by that IP. |
+| <span class="notranslate">_Country_</span> | Country the IP resolves to. |
+| <span class="notranslate">_Count_</span> | How many times the incident repeated. |
+| <span class="notranslate">_Severity_</span> | Severity of the matched rule (0–3 low, 4–6 medium, 7–10 high). |
+| <span class="notranslate">_Rule_</span> | The rule that matched. When it references a CVE, it links to the CVE record. |
+
+You can filter incidents by date range and domain, or search by rule, description, or IP. Click a row to expand it and see the <span class="notranslate">_Sensor_</span>, <span class="notranslate">_Rule_</span>, <span class="notranslate">_Abuser_</span> (source IP), and <span class="notranslate">_Domain_</span> details.
+
+![](/images/wordpress-plugin/cms-waf-incidents.png)
+*The Incidents sub-tab on the CMS WAF tab.*
+
+#### Disabling a rule
+
+If a WAF rule interferes with legitimate traffic, you can disable it. On the <span class="notranslate">_Incidents_</span> sub-tab, click <span class="notranslate">_Disable rule_</span> for the incident and confirm in the dialog:
+
+* By default, the rule is disabled for **all** of your domains.
+* If you manage more than one WordPress site, you can instead pick specific domains from the <span class="notranslate">_Select domains_</span> list.
+
+Click <span class="notranslate">_Yes, disable_</span> to confirm. The change may take a few minutes to take effect across your sites.
+
+<img src="/images/wordpress-plugin/cms-waf-disable-rule-modal.png" alt="Disable rule confirmation modal" width="520">
+
+*Disabling a WAF rule for all domains or for selected domains.*
+
+#### Disabled Rules
+
+The <span class="notranslate">_Disabled Rules_</span> sub-tab lists the rules you have turned off, showing the affected <span class="notranslate">_Component_</span>, <span class="notranslate">_Version_</span>, <span class="notranslate">_Rule_</span>, and <span class="notranslate">_Domains_</span>. To turn a rule back on, click <span class="notranslate">_Enable_</span> and confirm.
+
+![](/images/wordpress-plugin/cms-waf-disabled-rules.png)
+*Re-enabling a previously disabled rule.*
+
+### Enabling or disabling the WAF
+
+The WordPress WAF requires the <span class="notranslate">Imunify Security</span> plugin to be installed, and is controlled from <span class="notranslate">_Settings_ | _General_ | _WordPress plugin_</span> in the Imunify control panel:
+
+* **Server administrators** enable or disable the WAF server-wide, and can choose whether it is on by default for new hosting accounts. See <span class="notranslate">[WordPress plugin settings](/dashboard/#wordpress-plugin)</span> and the <span class="notranslate">[command-line reference](/command_line_interface/#wordpress-plugin)</span>.
+* **Hosting-account owners** can turn the WAF off for their own account, unless the administrator has locked it server-wide (shown as *This value is set by server administrator*).
