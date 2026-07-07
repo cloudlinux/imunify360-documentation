@@ -1580,8 +1580,6 @@ The WordPress plugin installation is currently allowed only if _Settings > Malwa
 
 Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites.
 
-![](/images/wordpress-plugin/panel-settings.png)
-
 You can also enable it via CLI with the following command:
 
 <div class="notranslate">
@@ -1590,6 +1588,30 @@ You can also enable it via CLI with the following command:
 imunify360-agent config update '{"WORDPRESS":{"security_plugin_enabled": true}}'
 ```
 </div>
+
+Once the plugin is installed, the **WordPress WAF** provides virtual patching against known vulnerabilities in WordPress plugins, themes, and core. For what it protects against and how end users review incidents, see <span class="notranslate">[Web Application Firewall](/wordpress_plugin/#web-application-firewall-virtual-patching)</span>.
+
+Tick the <span class="notranslate">_Enable WordPress WAF_</span> checkbox to turn the WAF on for WordPress sites on this server. When it is disabled, WAF rules are removed from all sites and the <span class="notranslate">_CMS WAF_</span> tab is hidden. This option can also be set per hosting account.
+
+Tick the <span class="notranslate">_Enable WAF for new accounts by default_</span> checkbox to automatically enable the WAF for newly created hosting accounts.
+
+<img src="/images/wordpress-plugin/waf-panel-settings.png" alt="WordPress plugin settings in the control panel: Install WordPress plugin, Enable WordPress WAF, and Enable WAF for new accounts by default" width="520">
+
+:::tip Note
+The WAF is enabled by default for hosting accounts that already existed when it was first rolled out. Newly created accounts follow the <span class="notranslate">_Enable WAF for new accounts by default_</span> setting. A hosting-account owner may disable the WAF for their own account unless it is locked server-wide by the administrator.
+:::
+
+You can also control the WAF via CLI:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"waf_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
+```
+</div>
+
+For per-account and bulk control, see <span class="notranslate">[WordPress plugin CLI commands](/command_line_interface/#wordpress-plugin)</span>.
 
 #### Error Reporting
  
