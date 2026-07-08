@@ -420,6 +420,13 @@ If a non-eligible interval is configured, the agent will ignore it and keep the 
 <tr><th colspan="2" align="left"><span class="notranslate">MALWARE_DATABASE_SCAN:</span></th></tr>
 <tr><td><span class="notranslate">enable: True</span></td>
 <td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.</td></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">WORDPRESS:</span></th></tr>
+<tr><td><span class="notranslate">security_plugin_enabled: False</span></td>
+<td># installs the <span class="notranslate">Imunify Security</span> WordPress plugin on all WordPress sites. This is the master switch for the WordPress plugin and its WordPress WAF. Default is <span class="notranslate">False</span>.</td></tr>
+<tr><td><span class="notranslate">waf_enabled: True</span></td>
+<td># enables the WordPress WAF (virtual patching) for WordPress sites on the server. When set to <span class="notranslate">False</span>, WAF rules are removed from all sites. Can also be set per hosting account. Default is <span class="notranslate">True</span>.</td></tr>
+<tr><td><span class="notranslate">waf_default: False</span></td>
+<td># whether the WordPress WAF is enabled automatically for newly created hosting accounts. Default is <span class="notranslate">False</span>.</td></tr>
 </tbody>
 </table>
 
