@@ -373,6 +373,33 @@ If a non-eligible interval is configured, the agent will ignore it and keep the 
 <tr><th colspan="2" align="left"><span class="notranslate">OSSEC:</span></th></tr>
 <tr><td><span class="notranslate">active_response: False</span></td>
 <td># block (<span class="notranslate">True</span>) access to a specific server port being attacked. The ports include FTP (21), SSH (any port) and SMTP (25, 465, 587). The default value is <span class="notranslate">False</span>.</td></tr>
+<tr>
+<td colspan="2">
+
+<span class="notranslate">Active Response</span> is an ossec-driven (IDS) feature of Imunify360 which has been re-engineered to make it capable of blocking access to a specific server port being attacked.
+
+The purpose of the feature is significantly reducing false positive rate while increasing its capabilities to detect and block aggressive brute force requests.
+
+In order to activate <span class="notranslate">Active Response, </span>the following lines should be added into <span class="notranslate">_/etc/sysconfig/imunify360/imunify360.config_</span>:
+<div class="notranslate">
+
+```
+OSSEC:
+  active_response: True
+```
+
+</div>
+and then restart Imunify360 service:
+<div class="notranslate">
+
+```
+systemctl restart imunify360
+```
+
+</div>
+
+</td>
+</tr>
 <tr><th colspan="2" align="left"><span class="notranslate">ADMIN_CONTACTS:</span></th></tr>
 <tr><td><span class="notranslate">emails: youremail@email.com</span></td>
 <td># your email to receive reports about critical issues, security alerts or system misconfigurations detected on your servers.</td></tr>
@@ -422,35 +449,17 @@ If a non-eligible interval is configured, the agent will ignore it and keep the 
 <td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">WORDPRESS:</span></th></tr>
 <tr><td><span class="notranslate">security_plugin_enabled: False</span></td>
-<td># installs the <span class="notranslate">Imunify Security</span> WordPress plugin on all WordPress sites. This is the master switch for the WordPress plugin and its WordPress WAF. Default is <span class="notranslate">False</span>.</td></tr>
+<td># installs the <span class="notranslate">Imunify Security</span> WordPress plugin on all WordPress sites. This is the master switch for the WordPress plugin, its WordPress WAF, and AI Bot Management. Default is <span class="notranslate">False</span>.</td></tr>
 <tr><td><span class="notranslate">waf_enabled: True</span></td>
 <td># enables the WordPress WAF (virtual patching) for WordPress sites on the server. When set to <span class="notranslate">False</span>, WAF rules are removed from all sites. Can also be set per hosting account. Default is <span class="notranslate">True</span>.</td></tr>
 <tr><td><span class="notranslate">waf_default: False</span></td>
 <td># whether the WordPress WAF is enabled automatically for newly created hosting accounts. Default is <span class="notranslate">False</span>.</td></tr>
+<tr><td><span class="notranslate">ai_bot_protection: False</span></td>
+<td># enables AI Bot Management (bot classification and per-category rate limiting) for WordPress sites on the server. Can also be set per hosting account; a site owner may override it from the WordPress dashboard. Default is <span class="notranslate">False</span>.</td></tr>
+<tr><td><span class="notranslate">ai_bot_protection_preset: balanced</span></td>
+<td># the default AI Bot Management preset applied to sites that have not chosen their own. One of <span class="notranslate">balanced</span>, <span class="notranslate">strict</span>, or <span class="notranslate">monitor</span>. Default is <span class="notranslate">balanced</span>.</td></tr>
 </tbody>
 </table>
-
-<span class="notranslate">Active Response</span> is an ossec-driven (IDS) feature of Imunify360 which has been re-engineered to make it capable of blocking access to a specific server port being attacked.
-
-The purpose of the feature is significantly reducing false positive rate while increasing its capabilities to detect and block aggressive brute force requests.
-
-In order to activate <span class="notranslate">Active Response, </span>the following lines should be added into <span class="notranslate">_/etc/sysconfig/imunify360/imunify360.config_</span>:
-<div class="notranslate">
-
-```
-OSSEC:
-  active_response: True
-```
-
-</div>
-and then restart Imunify360 service:
-<div class="notranslate">
-
-```
-systemctl restart imunify360
-```
-
-</div>
 
 #### How to apply changes from CLI
 
