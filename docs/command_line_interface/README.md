@@ -2642,7 +2642,7 @@ The WebShield protection features available on a server depend on its environmen
 Two features are covered:
 
 * **GreyList / Anti-bot Challenge (Verdict)** — IP-based access control (blacklist / graylist / splash screen) served from kernel ipsets via an <span class="notranslate">`IPSET lookup`</span>. Available on **all** WebShield installations.
-* **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. Available wherever the WebShield web-server module is active — that is, the **nginx** and **apache** integration modes. It is **not** available in standalone / reverse-proxy mode (where WebShield handles the traffic itself), so it does not apply on panels such as Plesk or on the OpenResty reverse proxy.
+* **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. It is available whenever any of our dynamic modules (for **nginx** or **apache**) are loaded into the web server. It is **not** available when WebShield inspects the traffic itself as a reverse proxy (for example on Plesk), where only the GreyList / Anti-bot Challenge applies.
 
 **Usage:**
 
@@ -2666,20 +2666,6 @@ uam      UAM           yes
 ```
 
 </div>
-
-**Feature availability by environment:**
-
-| Environment | GreyList / Anti-bot (<span class="notranslate">`verdict`</span>) | Under Attack Mode (<span class="notranslate">`uam`</span>) |
-|-|-|-|
-| cPanel + Apache (any OS, any of our Apache modules) | yes | yes |
-| CloudWays Lightning (nginx + Coraza) | yes | yes |
-| Cloudways Hybrid (Apache + <span class="notranslate">mod_wafcl</span>) | yes | yes |
-| ea-nginx + Coraza module | yes | yes |
-| Plesk (any configuration) | yes | no |
-| Standalone nginx + <span class="notranslate">access_checker</span> | yes | no |
-| WebShield (OpenResty reverse proxy) | yes | no |
-
-Under Attack Mode is reported as available whenever the WebShield module is loaded — i.e. the server runs in the **nginx** or **apache** integration mode. In standalone / reverse-proxy mode WebShield inspects traffic itself without loading a web-server module, so only the GreyList / Anti-bot Challenge (IPSET lookup) is available there (for example on Plesk or the OpenResty reverse proxy).
 
 **Examples:**
 
