@@ -2660,9 +2660,9 @@ By default the command prints a table listing each filter and whether it is avai
 
 ```
 imunify360-wsctl filters
-FILTER   AVAILABLE     DESCRIPTION
-verdict  yes           IPSET lookup
-uam      yes           Under Attack Mode
+FILTER   AVAILABLE  DESCRIPTION
+verdict  yes        IPSET lookup
+uam      yes        Under Attack Mode
 ```
 
 </div>
@@ -2675,9 +2675,9 @@ uam      yes           Under Attack Mode
 
    ```
    imunify360-wsctl filters
-   FILTER   AVAILABLE     DESCRIPTION
-   verdict  yes           IPSET lookup
-   uam      no            Under Attack Mode
+   FILTER   AVAILABLE  DESCRIPTION
+   verdict  yes        IPSET lookup
+   uam      no         Under Attack Mode
    ```
 
 </div>
