@@ -2822,3 +2822,40 @@ imunify360-agent wordpress-plugin rules list-disabled
 
 </div>
 
+### AI Bot Management
+
+<span class="notranslate">AI Bot Management</span> (bot classification and per-category rate limiting) is controlled through configuration keys rather than a dedicated subcommand. The plugin must be installed first (see <span class="notranslate">`security_plugin_enabled`</span>). Site owners can also manage it from the WordPress dashboard — see <span class="notranslate">[AI Bot Management](/wordpress_plugin/#ai-bot-management)</span>.
+
+Enable or disable it server-wide:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection": true}}'
+imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection": false}}'
+```
+
+</div>
+
+Enable it for a single hosting account:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update --user user1 '{"WORDPRESS":{"ai_bot_protection": true}}'
+```
+
+</div>
+
+Set the default preset applied to sites that have not chosen their own — one of <span class="notranslate">`balanced`</span>, <span class="notranslate">`strict`</span>, or <span class="notranslate">`monitor`</span>:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection_preset": "strict"}}'
+```
+
+</div>
+
+A site owner can override the server default from the WordPress dashboard, and a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both.
+
