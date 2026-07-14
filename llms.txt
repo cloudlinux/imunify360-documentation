@@ -30,6 +30,7 @@
 
 - [Features](https://docs.imunify360.com/features/index.md)
 - [Panel notifications (iContact messages)](https://docs.imunify360.com/features/panel_notifications/index.md)
+- [Under Attack Mode (UAM)](https://docs.imunify360.com/features/under_attack_mode/index.md)
 
 ## Admin Interface
 
