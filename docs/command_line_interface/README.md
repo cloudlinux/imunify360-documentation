@@ -2635,6 +2635,79 @@ imunify360-agent version [--json]
 
 </div>
 
+## WebShield feature availability
+
+The WebShield protection features available on a server depend on its environment. Use the <span class="notranslate">`imunify360-wsctl filters`</span> command to find out which features (filters / checks) are available on the current installation.
+
+Two features are covered:
+
+* **GreyList / Anti-bot Challenge (Verdict)** — IP-based access control (blacklist / graylist / splash screen) served from kernel ipsets via an <span class="notranslate">`IPSET lookup`</span>. Available on **all** WebShield installations.
+* **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. It is available whenever any of our dynamic modules (for **nginx** or **apache**) are loaded into the web server. It is **not** available when WebShield inspects the traffic itself as a reverse proxy (for example on Plesk), where only the GreyList / Anti-bot Challenge applies.
+
+**Usage:**
+
+<div class="notranslate">
+
+```
+imunify360-wsctl filters [--json]
+```
+
+</div>
+
+By default the command prints a table listing each filter and whether it is available on this installation:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl filters
+FILTER   AVAILABLE  DESCRIPTION
+verdict  yes        IPSET lookup
+uam      yes        Under Attack Mode
+```
+
+</div>
+
+**Examples:**
+
+1. List the available checks on this server:
+
+<div class="notranslate">
+
+   ```
+   imunify360-wsctl filters
+   FILTER   AVAILABLE  DESCRIPTION
+   verdict  yes        IPSET lookup
+   uam      no         Under Attack Mode
+   ```
+
+</div>
+
+   In this example only the GreyList / Anti-bot Challenge (<span class="notranslate">`verdict`</span>) is available; Under Attack Mode (<span class="notranslate">`uam`</span>) is not.
+
+2. Get the feature map as JSON:
+
+<div class="notranslate">
+
+   ```
+   imunify360-wsctl filters --json
+   {
+     "filters": [
+       {
+         "name": "verdict",
+         "available": true,
+         "description": "IPSET lookup"
+       },
+       {
+         "name": "uam",
+         "available": true,
+         "description": "Under Attack Mode"
+       }
+     ]
+   }
+   ```
+
+</div>
+
 ## Whitelisted crawlers
 
 
