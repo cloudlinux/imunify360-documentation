@@ -518,6 +518,10 @@ service imunify360-webshield restart
 ```
 </div>
 
+:::tip Under Attack Mode
+WebShield can also put specific domains behind a mandatory JavaScript challenge while they are being attacked. See [Under Attack Mode (UAM)](/features/under_attack_mode/).
+:::
+
 
 ### Greylist and Anti-Bot Challenge
 
