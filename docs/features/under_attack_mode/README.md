@@ -28,7 +28,7 @@ UAM is not available on every environment WebShield supports. Before relying on 
 
 ## Prerequisites
 
-- WebShield installed and running in an environment where UAM is available (see the note above).
+- WebShield version >= 1.44.2 installed and running in an environment where UAM is available (see the note above).
 - Root access to the server. UAM is managed with the <span class="notranslate">`imunify360-wsctl uam`</span> command, which must be run as `root`.
 
 ## Enabling and disabling UAM
