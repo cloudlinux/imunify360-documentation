@@ -6,7 +6,7 @@
 
 **Under Attack Mode (UAM)** is a WebShield feature that lets a server administrator put one or more **domains** (optionally scoped to specific URL paths) "under attack". While a domain is under attack, every matching HTTP request is first served a lightweight **JavaScript splash challenge** instead of being passed straight to the site:
 
-- Regular browsers solve the challenge transparently and receive a short-lived cookie; subsequent requests carrying a valid cookie flow through normally.
+- Regular browsers solve the challenge transparently and receive a clearance cookie (its lifetime is configurable per rule); subsequent requests carrying a valid cookie flow through normally.
 - Simple bots that cannot run the challenge never reach the application.
 
 UAM is a **server-wide administrator feature**. It is distinct from the per-IP GreyList / Anti-bot Challenge: UAM decisions are keyed on the request's `(domain, path)` and are configured explicitly by the administrator, rather than being driven by the state of an IP list.
@@ -21,14 +21,14 @@ UAM is not available on every environment WebShield supports. Before relying on 
 
 ## How it works
 
-- A domain is placed under attack by creating a **UAM rule**. A rule is a `(domain, optional path-set)` tuple.
+- A domain is placed under attack by creating a **UAM rule**. A rule pairs a `domain` (optionally narrowed to a path-set) with the clearance-cookie lifetime to grant once a visitor solves the challenge.
 - When a request matches an **active** rule, WebShield returns the JS splash challenge and does not forward the request to the backend until the visitor passes.
 - UAM is **fail-open**: if the feature is disabled, the request has no `Host`, the rule store cannot be read, or no active rule matches, the request simply proceeds through the normal WebShield flow. UAM never blocks a request outright — it only inserts a challenge.
 - The feature is gated behind a single on/off toggle that is **off by default**, and all UAM state is stored on the server itself.
 
 ## Prerequisites
 
-- WebShield version >= 1.44.2 installed and running in an environment where UAM is available (see the note above).
+- WebShield version >= 1.45.0 installed and running in an environment where UAM is available (see the note above). The core rule commands and the service toggle have been available since 1.44.2; the per-rule challenge-cookie lifetime, rule ownership, the visibility toggle, and the <span class="notranslate">`uam test`</span> command described below were added in 1.45.0.
 - Root access to the server. UAM is managed with the <span class="notranslate">`imunify360-wsctl uam`</span> command, which must be run as `root`.
 
 ## Enabling and disabling UAM
@@ -47,52 +47,85 @@ imunify360-wsctl uam settings service disable     # turn UAM off
 
 Disabling the feature stops all challenges immediately; your rules are preserved and take effect again when you re-enable it.
 
-## Managing rules
+## Controlling visibility to hosting users
 
-A rule is created from a small JSON payload. Only `domain` is required; `label` (a free-text note) and `paths` (path scoping) are optional. A new rule is active as soon as it is created.
+By default UAM is an administrator-only feature. You can optionally expose it to unprivileged (hosting) users so that they can manage UAM rules for their own domains from the Imunify Web UI. This is controlled by a separate **visibility** toggle that is independent of the service on/off toggle above — turning visibility on does not enable UAM, and disabling UAM does not reset it. The visibility toggle is **off by default**.
+
+:::tip Note
+The UAM Web UI is available only on **WHM/cPanel** servers.
+:::
 
 <div class="notranslate">
 
 ```
-# Put a whole domain under attack:
-imunify360-wsctl uam add '{"domain":"shop.example.com","label":"Black Friday"}'
-
-# Scope the rule to specific paths (see "Path scoping" below):
-imunify360-wsctl uam add '{"domain":"shop.example.com","paths":{"mode":"include","matchers":[{"value":"/checkout","condition":"prefix"}]}}'
+imunify360-wsctl uam settings visibility            # show the current {allowed_for_users} state
+imunify360-wsctl uam settings visibility enable      # let hosting users see and manage UAM in the Web UI
+imunify360-wsctl uam settings visibility disable     # hide UAM from hosting users (default)
 ```
 
 </div>
 
-List the current rules (a table by default, `--json` for raw output, `--domain` to filter by exact domain):
+Only the administrator can change this setting.
+
+## Managing rules
+
+A rule is created from a small JSON payload. The fields are:
+
+| Field | Required | Description |
+|-|-|-|
+|<span class="notranslate">`domain`</span>|yes|Exact hostname to put under attack (up to 253 characters).|
+|<span class="notranslate">`cookie_ttl`</span>|yes|How long a visitor's clearance cookie stays valid after they solve the challenge, before they are challenged again. A Go-style duration string using the units <span class="notranslate">`s`</span>, <span class="notranslate">`m`</span>, <span class="notranslate">`h`</span> (compound values such as <span class="notranslate">`1h30m`</span> are allowed), between **10 seconds and 3 days**.|
+|<span class="notranslate">`label`</span>|no|Free-text note (up to 128 characters).|
+|<span class="notranslate">`paths`</span>|no|Path-scoping block (see [Path scoping](#path-scoping) below). Omit it to cover the whole domain.|
+
+A new rule is active as soon as it is created.
+
+<div class="notranslate">
+
+```
+# Put a whole domain under attack; re-challenge visitors after 1 hour:
+imunify360-wsctl uam add '{"domain":"shop.example.com","cookie_ttl":"1h","label":"Black Friday"}'
+
+# Scope the rule to specific paths (see "Path scoping" below):
+imunify360-wsctl uam add '{"domain":"shop.example.com","cookie_ttl":"30m","paths":{"mode":"include","matchers":[{"value":"/checkout","condition":"prefix"}]}}'
+```
+
+</div>
+
+List the current rules (a table by default, `--json` for raw output, `--domain` to filter by exact domain, `--owner` to filter by rule owner):
 
 <div class="notranslate">
 
 ```
 imunify360-wsctl uam list
 imunify360-wsctl uam list --domain shop.example.com --json
+imunify360-wsctl uam list --owner alice           # only rules owned by user "alice"
 ```
 
 </div>
 
-The table shows `ID  ACTIVE  DOMAIN  LABEL`. The `ID` is a positive integer assigned by WebShield when the rule is created; you use it to edit or delete the rule.
+The table shows `ID  OWNER  ACTIVE  DOMAIN  COOKIE_TTL  LABEL`. The `ID` is a positive integer assigned by WebShield when the rule is created; you use it to edit or delete the rule.
 
 <div class="notranslate">
 
 ```
 imunify360-wsctl uam list
-ID  ACTIVE  DOMAIN            LABEL
-7   yes     shop.example.com  Black Friday
+ID  OWNER  ACTIVE  DOMAIN            COOKIE_TTL  LABEL
+7   admin  true    shop.example.com  1h          Black Friday
 ```
 
 </div>
 
-Edit a rule with a partial JSON payload — only `active`, `label`, and `paths` can be changed. Temporarily pausing a rule is done by setting `active` to `false`:
+Each rule has an **owner**. Rules created with the <span class="notranslate">`imunify360-wsctl uam`</span> command (which runs as `root`) are owned by <span class="notranslate">`admin`</span>; hosting users can create rules for the domains they own from the Imunify Web UI, and those rules are owned by that user. The administrator sees and can manage every rule regardless of owner — use <span class="notranslate">`--owner`</span> to narrow the list to a single user.
+
+Edit a rule with a partial JSON payload — only `active`, `cookie_ttl`, `label`, and `paths` can be changed. Temporarily pausing a rule is done by setting `active` to `false`:
 
 <div class="notranslate">
 
 ```
-imunify360-wsctl uam edit 7 '{"active":false}'      # pause the rule (keep it for later)
-imunify360-wsctl uam edit 7 '{"label":"BF sale"}'   # rename
+imunify360-wsctl uam edit 7 '{"active":false}'       # pause the rule (keep it for later)
+imunify360-wsctl uam edit 7 '{"cookie_ttl":"2h"}'    # change the clearance-cookie lifetime
+imunify360-wsctl uam edit 7 '{"label":"BF sale"}'    # rename
 imunify360-wsctl uam edit 7 '{"paths":null}'         # clear paths -> back to whole-domain
 ```
 
@@ -129,6 +162,52 @@ imunify360-wsctl uam add '{"domain":"shop.example.com","paths":{"mode":"exclude"
 
 </div>
 
+## Testing which rule matches a URL
+
+<span class="notranslate">`uam test`</span> checks whether a given URL would be challenged, using the **exact same matching as live traffic**. It is the quickest way to verify a rule's path scoping without generating real requests.
+
+<div class="notranslate">
+
+```
+imunify360-wsctl uam test example.com/path          # scheme optional; host required
+imunify360-wsctl uam test https://shop.example.com/api?x=1
+```
+
+</div>
+
+The scheme is optional, the host is required, and both the path and the query string are significant (only a trailing `#fragment` is ignored, and an empty path is treated as `/`). When a rule matches, the command prints that rule as JSON; otherwise it prints <span class="notranslate">`No matching rule`</span>:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl uam test shop.example.com/checkout
+[
+  {
+    "id": 7,
+    "owner": "admin",
+    "active": true,
+    "label": "Black Friday",
+    "domain": "shop.example.com",
+    "cookie_ttl": "1h",
+    "paths": {
+      "mode": "include",
+      "matchers": [
+        {
+          "value": "/checkout",
+          "condition": "prefix"
+        }
+      ]
+    }
+  }
+]
+```
+
+</div>
+
+:::tip Note
+<span class="notranslate">`uam test`</span> only reports a match while UAM is enabled; if the service is disabled it returns a <span class="notranslate">`service_disabled`</span> error.
+:::
+
 ## Monitoring challenges
 
 Each challenge served for a rule is counted. Use `counters` to see which rules are actively challenging traffic, busiest first:
@@ -138,6 +217,7 @@ Each challenge served for a rule is counted. Use `counters` to see which rules a
 ```
 imunify360-wsctl uam counters                       # all rules with hits today, busiest first
 imunify360-wsctl uam counters --since 24h           # a rolling window instead of "today"
+imunify360-wsctl uam counters --owner alice         # only rules owned by user "alice"
 imunify360-wsctl uam counters shop.example.com      # filter by exact domain
 imunify360-wsctl uam counters 7                      # filter by rule id
 ```
@@ -151,7 +231,7 @@ The single optional argument is auto-detected: a positive integer is treated as 
 ```
 imunify360-wsctl uam counters
 ID  ACTIVE  DOMAIN            HITS  LABEL
-7   yes     shop.example.com  1523  Black Friday
+7   true    shop.example.com  1523  Black Friday
 ```
 
 </div>
