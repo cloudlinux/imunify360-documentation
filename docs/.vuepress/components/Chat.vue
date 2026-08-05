@@ -87,7 +87,7 @@ export default {
       iframeUrl: "https://chatbot.cloudlinux.com/docs/imunify360",
       windowWidth: 0, // Changed from window.innerWidth to avoid SSR error
       showTooltip: true,
-      tooltipDismissDuration: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
+      tooltipDismissDuration: 3 * 24 * 60 * 60 * 1000, // 3 days in milliseconds
       dynamicBottom: 20, // Default bottom position
       stopFromBottom: 110, // Stop 100px from page bottom
     };
