@@ -3607,6 +3607,10 @@ Turn UAM on for a specific domain when it is the target of an automated flood (f
 UAM is not available on every environment WebShield supports. Before relying on it, check whether the current server supports UAM by running <span class="notranslate">`imunify360-wsctl filters`</span> and confirming the <span class="notranslate">`uam`</span> filter is listed as available — see [WebShield feature availability](/command_line_interface/#webshield-feature-availability). Where UAM is unavailable, only the GreyList / Anti-bot Challenge applies.
 :::
 
+:::warning Compatibility: Supported Setup 
+cPanel + Apache or Nginx (module loaded) only.
+:::
+
 ## How it works
 
 - A domain is placed under attack by creating a **UAM rule**. A rule pairs a `domain` (optionally narrowed to a path-set) with the clearance-cookie lifetime to grant once a visitor solves the challenge.
