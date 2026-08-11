@@ -53,7 +53,8 @@ export default {
                 children: [
                     "/features/",
                     "/features/panel_notifications/",
-                    "/features/under_attack_mode/"
+                    "/features/under_attack_mode/",
+                    "/features/l7_rate_limiter/"
                 ]
             },
         ],
