@@ -2639,10 +2639,11 @@ imunify360-agent version [--json]
 
 The WebShield protection features available on a server depend on its environment. Use the <span class="notranslate">`imunify360-wsctl filters`</span> command to find out which features (filters / checks) are available on the current installation.
 
-Two features are covered:
+Three features are covered:
 
 * **GreyList / Anti-bot Challenge (Verdict)** — IP-based access control (blacklist / graylist / splash screen) served from kernel ipsets via an <span class="notranslate">`IPSET lookup`</span>. Available on **all** WebShield installations.
 * **Under Attack Mode (UAM)** — a server-admin tool that challenges every visitor to a protected domain with a JavaScript splash screen. It is available whenever any of our dynamic modules (for **nginx** or **apache**) are loaded into the web server. It is **not** available when WebShield inspects the traffic itself as a reverse proxy (for example on Plesk), where only the GreyList / Anti-bot Challenge applies.
+* **L7 Rate Limiter** (<span class="notranslate">`l7prot`</span>, WebShield >= 1.46.0) — a server-admin tool that limits how many requests a single client may send within a time window (see [L7 Rate Limiter](/features/l7_rate_limiter/)). It is available in the same environments as Under Attack Mode: whenever any of our dynamic modules are loaded into the web server.
 
 **Usage:**
 
@@ -2663,6 +2664,7 @@ imunify360-wsctl filters
 FILTER   AVAILABLE  DESCRIPTION
 verdict  yes        IPSET lookup
 uam      yes        Under Attack Mode
+l7prot   yes        L7 rate limiter
 ```
 
 </div>
@@ -2678,11 +2680,12 @@ uam      yes        Under Attack Mode
    FILTER   AVAILABLE  DESCRIPTION
    verdict  yes        IPSET lookup
    uam      no         Under Attack Mode
+   l7prot   no         L7 rate limiter
    ```
 
 </div>
 
-   In this example only the GreyList / Anti-bot Challenge (<span class="notranslate">`verdict`</span>) is available; Under Attack Mode (<span class="notranslate">`uam`</span>) is not.
+   In this example only the GreyList / Anti-bot Challenge (<span class="notranslate">`verdict`</span>) is available; Under Attack Mode (<span class="notranslate">`uam`</span>) and the L7 Rate Limiter (<span class="notranslate">`l7prot`</span>) are not.
 
 2. Get the feature map as JSON:
 
@@ -2701,6 +2704,11 @@ uam      yes        Under Attack Mode
          "name": "uam",
          "available": true,
          "description": "Under Attack Mode"
+       },
+       {
+         "name": "l7prot",
+         "available": true,
+         "description": "L7 rate limiter"
        }
      ]
    }

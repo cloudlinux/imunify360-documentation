@@ -31,6 +31,7 @@
 - [Features](https://docs.imunify360.com/features/index.md)
 - [Panel notifications (iContact messages)](https://docs.imunify360.com/features/panel_notifications/index.md)
 - [Under Attack Mode (UAM)](https://docs.imunify360.com/features/under_attack_mode/index.md)
+- [L7 Rate Limiter](https://docs.imunify360.com/features/l7_rate_limiter/index.md)
 
 ## Admin Interface
 

@@ -522,6 +522,10 @@ service imunify360-webshield restart
 WebShield can also put specific domains behind a mandatory JavaScript challenge while they are being attacked. See [Under Attack Mode (UAM)](/features/under_attack_mode/).
 :::
 
+:::tip L7 Rate Limiter
+WebShield can also limit how many requests a single client may send within a time window and challenge, deny, or allow the clients that exceed it. See [L7 Rate Limiter](/features/l7_rate_limiter/).
+:::
+
 
 ### Greylist and Anti-Bot Challenge
 
