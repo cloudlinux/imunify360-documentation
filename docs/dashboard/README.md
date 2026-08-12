@@ -1574,11 +1574,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 #### WordPress plugin
 
-:::warning
-The WordPress plugin installation is currently allowed only if _Settings > Malware > General > Default action on detect_ is set to _Cleanup_. Other installation options will be introduced in the future release.
-:::
-
-Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites.
+Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites. For requirements, rollout, and these settings in one place, see the <span class="notranslate">[Hosting Provider Guide](/wordpress_plugin/hosting_providers/)</span>.
 
 You can also enable it via CLI with the following command:
 

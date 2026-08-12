@@ -111,7 +111,7 @@ export default [
     },
     {
         title: "WordPress Plugin",
-        description: "Documentation for Imunify Security plugin for WordPress available in Imunify360.",
+        description: "Imunify Security plugin for WordPress: a guide for WordPress site owners, and a guide for hosting providers.",
         link: "/wordpress_plugin/",
     }
 ]

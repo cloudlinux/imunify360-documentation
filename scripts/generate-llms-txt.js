@@ -65,6 +65,17 @@ const getMarkdownTitle = async (filePath) => {
   if (lines[0] === "---") {
     const endIndex = lines.findIndex((line, i) => i > 0 && line === "---");
     if (endIndex !== -1) {
+      // A frontmatter title is the full page title; the first heading may be a
+      // shorter in-page one.
+      const titleLine = lines
+        .slice(1, endIndex)
+        .find((line) => /^title:\s*/.test(line));
+      if (titleLine) {
+        return titleLine
+          .replace(/^title:\s*/, "")
+          .trim()
+          .replace(/^['"]|['"]$/g, "");
+      }
       startIndex = endIndex + 1;
     }
   }
@@ -134,7 +145,11 @@ const buildLlmsTxt = async () => {
     const heading = doc.title;
     const docRoute = normalizeRouteKey(doc.link);
     const sidebarEntry = normalizedSidebar.get(docRoute) || [];
-    const sidebarRoutes = sidebarEntry.flatMap((entry) => entry.children || []);
+    // A sidebar child is either a route string, or a ["route", "Sidebar label"]
+    // pair used to give the sidebar a shorter label than the page title.
+    const sidebarRoutes = sidebarEntry
+      .flatMap((entry) => entry.children || [])
+      .map((child) => (Array.isArray(child) ? child[0] : child));
 
     const orderedRoutes = sidebarRoutes;
 

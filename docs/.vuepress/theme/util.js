@@ -259,9 +259,12 @@ function ensureEndingSlash(path) {
 
 function resolveItem(item, pages, base, isNested) {
     if (typeof item === 'string') return resolvePage(pages, item, base)
-    else if (Array.isArray(item)) return Object.assign(resolvePage(pages, item[0], base), {
-        title: item[1]
-    })
+    else if (Array.isArray(item)) {
+        // Pages are loaded asynchronously, so a page may not be resolvable yet.
+        // Return null in that case, like the string branch above does.
+        const page = resolvePage(pages, item[0], base)
+        return page ? Object.assign(page, {title: item[1]}) : null
+    }
     else {
         if (isNested) console.error(
             '[vuepress] Nested sidebar groups are not supported. ' +
