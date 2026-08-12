@@ -6336,7 +6336,7 @@ Available commands:
 |-|-|
 |[<span class="notranslate">`3rdparty`</span>](/command_line_interface/#_3rdparty)|Make Imunify360 the primary IDS|
 |[<span class="notranslate">`backup-systems`</span>](/command_line_interface/#backup-systems)|Allows to manage backup systems integrated to Imunify360|
-|[<span class="notranslate">`blocked-port`</span>](/command_line_interface/#blocked-ports)|Return/Edit list of blocked ports|
+|[<span class="notranslate">`blocked-port`</span>](/command_line_interface/#blocked-ports)|Manages port entries|
 |[<span class="notranslate">`blocked-port-ip`</span>](/command_line_interface/#blocked-port-ip)|Allows to change the list of IPs that are excluded (allowed) for a certain blocked port|
 |[<span class="notranslate">`checkdb`</span>](/command_line_interface/#checkdb)|Check database integrity|
 |[<span class="notranslate">`check-domains`</span>](/command_line_interface/#check-domains)|Send domain list check|
@@ -6567,7 +6567,7 @@ Some comment  2   [{'comment': None, 'ip': '111.111.111.111'}, {'comment': None,
 
 ## Blocked Port IP
 
-This command blocks traffic for the specified IP addresses on a given port. Use it when you want to restrict access to a port only for certain IPs, rather than blocking the port for everyone, as done by [`blocked-port`](/command_line_interface/#blocked-ports).
+This command blocks traffic for the specified IP addresses on a given port. Use it when you want to manage the IP exceptions on an already-blocked port in the [main section](/command_line_interface/#blocked-ports).
 
 **Usage:**
 
@@ -6595,7 +6595,7 @@ imunify360-agent blocked-port-ip [command] <value> [--option]
 | | |
 |-----|-|
 |<span class="notranslate">`--comment`</span>|allows to add comment to the IP|
-|<span class="notranslate">`--ip`</span>|one or more IP addresses to block on the given port (comma-separated list supported)|
+|<span class="notranslate">`--ips`</span>|one or more IP addresses to block on the given port (space-separated list supported)|
 
 **Example:**
 
