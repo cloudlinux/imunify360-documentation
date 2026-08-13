@@ -218,7 +218,7 @@ See <span class="notranslate">[Turning it on or off](/wordpress_plugin/#turning-
 
 | Setting | Controlled by you | Site owner can override |
 |---|---|---|
-| Plugin installed (<span class="notranslate">`security_plugin_enabled`</span>) | Server-wide | No |
+| Plugin installed (<span class="notranslate">`security_plugin_enabled`</span>) | Server-wide | A site owner can delete the plugin from their site manually. It does not come back — see <span class="notranslate">[When a site owner removes the plugin](#when-a-site-owner-removes-the-plugin)</span>. |
 | Web Application Firewall | Server-wide and per hosting account | The hosting account owner can turn it off for their own account, unless you have locked it server-wide. The setting then shows *This value is set by server administrator*. |
 | AI Bot Management | Server-wide only | Yes — the WordPress administrator turns it on or off for their own site from the widget. Setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides both. |
 | AI Bot Management preset | You set the server default | Yes — from the widget, or by setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file. |
