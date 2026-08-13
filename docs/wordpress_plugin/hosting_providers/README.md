@@ -224,6 +224,8 @@ See <span class="notranslate">[Turning it on or off](/wordpress_plugin/#turning-
 | AI Bot Management preset | You set the server default | Yes — from the widget, or by <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span>. |
 | Individual WAF rules | You can disable rules server-side | A site owner can disable a rule for their own site from the <span class="notranslate">Imunify Security</span> page in WordPress. |
 
+To keep these cases out of your support queue, point site owners at <span class="notranslate">[Something is not working. What can I do?](/wordpress_plugin/#something-is-not-working-what-can-i-do)</span> in the Site Owner Guide. It walks them through the problems they can solve themselves — blocked traffic, a WAF false positive, and Bot Protection refusing a tool they use.
+
 ## Reference
 
 * <span class="notranslate">[WordPress plugin settings in the admin interface](/dashboard/#wordpress-plugin)</span>

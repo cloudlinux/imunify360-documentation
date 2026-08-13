@@ -25,10 +25,10 @@ Your hosting provider installed the plugin for you, as part of the security serv
 
 ### What it protects you from
 
-* **Malware.** The Imunify scanner on the server checks your files, and the plugin shows you what was detected and cleaned.
-* **Proactive Defense.** Blocks malicious PHP code at the moment it tries to run.
-* **Web Application Firewall (virtual patching).** Blocks attempts to exploit known vulnerabilities in the plugins, themes, and WordPress core you use, without changing any of your files. See <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span>.
-* **AI Bot Management.** Limits aggressive crawlers, scrapers, and AI bots, while leaving real visitors untouched. See <span class="notranslate">[AI Bot Management](#ai-bot-management)</span>.
+* **Malware.** Infected files, injected code, and backdoors. The Imunify scanner on the server checks your files, and the plugin shows you what was detected and cleaned.
+* **Zero-day attacks and dangerous code execution.** Attacks that use undisclosed vulnerabilities, and backdoors that are already on the site, run PHP code that no scanner has a signature for yet. <span class="notranslate">Proactive Defense</span> stops that code at the moment it tries to run.
+* **Exploits of known vulnerabilities** in the plugins, themes, and WordPress core you use — including the time between a vulnerability becoming public and you installing the update. The Web Application Firewall (virtual patching) blocks the attempt without changing any of your files. See <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span>.
+* **Aggressive crawlers, scrapers, and AI bots** that slow your site down, use up its resources, and copy its content. <span class="notranslate">AI Bot Management</span> limits them while leaving real visitors untouched. See <span class="notranslate">[AI Bot Management](#ai-bot-management)</span>.
 
 Which of these are available depends on the Imunify product your hosting provider runs. <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> users see a smaller set of features than <span class="notranslate">Imunify360</span> users.
 
@@ -310,7 +310,7 @@ Imunify Security does not replace a general-purpose security plugin, and it does
 
 ### Does the plugin work on a WordPress multisite network?
 
-Multisite is only partly supported today, and it has not been fully tested. Some features may not behave as described on a multisite network. If you run multisite, check with your hosting provider before you rely on the plugin there.
+Multisite is only partly supported today, and it has not been fully tested. Some features may not behave as described on a multisite network, so do not rely on the plugin as your only protection there.
 
 ### Where do I manage the settings?
 
@@ -318,7 +318,7 @@ It depends on the setting:
 
 * In the **WordPress dashboard**, the <span class="notranslate">Imunify Security</span> widget shows the security status, and lets WordPress administrators change <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> for the site.
 * On the **<span class="notranslate">Imunify Security</span> page** in the WordPress admin menu, you review WAF incidents and disable individual rules for your site. See <span class="notranslate">[Managing WAF incidents](#managing-waf-incidents)</span>.
-* Some settings are controlled by your hosting provider only. If a control is missing, or you cannot change it, contact them.
+* Some settings are controlled on the server and cannot be changed from WordPress. If a control is missing or locked, see <span class="notranslate">[Why do I not see the Web Application Firewall or Bot Protection in the widget?](#why-do-i-not-see-the-web-application-firewall-or-bot-protection-in-the-widget)</span>.
 
 ### What information does the plugin send?
 
@@ -344,7 +344,7 @@ Two protections can refuse a request:
 
 Open the <span class="notranslate">Imunify Security</span> page in the WordPress admin menu, go to the <span class="notranslate">_Incidents_</span> tab, find the incident, and click <span class="notranslate">_Disable rule_</span>. The rule is turned off for your site — there is no list of domains to choose from, because the page only covers the site you are in. The change may take a few minutes to take effect.
 
-If the rule keeps blocking traffic after that, ask your hosting provider.
+If the traffic is still blocked, wait a few minutes and clear any page or object cache your site uses, then try again — the old response may still be cached. If it keeps being blocked after that, ask your hosting provider.
 
 ### Bot Protection blocks something I need. How do I stop it?
 
@@ -361,12 +361,24 @@ If the <span class="notranslate">_Bot Protection_</span> row is missing, see the
 
 ### Why do I not see the Web Application Firewall or Bot Protection in the widget?
 
-Your hosting provider turns these features on for the server, and they need recent versions of both the plugin and the Imunify software. If a row is missing from the widget, ask your provider whether the feature is enabled for your account.
+A row is missing when the feature is not running for your site. There are two reasons for that:
+
+* **The software is older than the feature.** Both features need recent versions of the plugin and of the Imunify software on the server. See <span class="notranslate">[Requirements](/wordpress_plugin/hosting_providers/#requirements)</span> for the exact versions.
+* **The feature is turned off** for the server or for your hosting account.
+
+Both are set on the server, so only your hosting provider can change them.
 
 ### The widget says my site cannot reach itself. What does it mean?
 
 WordPress needs to be able to open its own address over HTTP to run scheduled tasks. When it cannot, scheduled tasks — including automatic updates of the bot data — may not run. This is usually caused by a local DNS or firewall setting on the server. Report it to your hosting provider, then click <span class="notranslate">_Re-check_</span>.
 
-### Who do I contact for help?
+### Something is not working. What can I do?
 
-**Contact your hosting provider first.** The plugin is part of the security service they run, so they can check the server side, enable or disable features for your account, and escalate to Imunify if needed.
+Most of what site owners run into can be fixed from the WordPress dashboard, without any help:
+
+* A visitor got an error page — see <span class="notranslate">[A visitor to my site got an error page](#a-visitor-to-my-site-got-an-error-page-what-happened)</span>.
+* A WAF rule blocks legitimate traffic — you can disable that single rule for your site. See <span class="notranslate">[A WAF rule blocks legitimate traffic](#a-waf-rule-blocks-legitimate-traffic-how-do-i-stop-it)</span>.
+* Bot Protection blocks a tool you use — you can switch to a softer preset, or turn it off for your site. See <span class="notranslate">[Bot Protection blocks something I need](#bot-protection-blocks-something-i-need-how-do-i-stop-it)</span>.
+* A feature is missing from the widget — see <span class="notranslate">[Why do I not see the Web Application Firewall or Bot Protection in the widget?](#why-do-i-not-see-the-web-application-firewall-or-bot-protection-in-the-widget)</span>.
+
+A few things are set on the server, and only your hosting provider can change them: enabling a feature for your hosting account, restoring the plugin after you delete it, and anything about malware found outside your WordPress files.
