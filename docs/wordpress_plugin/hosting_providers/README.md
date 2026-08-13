@@ -210,7 +210,7 @@ While the feature is off server-wide, the <span class="notranslate">_Bot Protect
 AI Bot Management is a server-wide setting. Unlike the WAF, it cannot be enabled or disabled for a single hosting account. Once it is on for the server, control belongs to the site:
 
 * the WordPress administrator turns it on or off for their own site, and picks a preset, from the <span class="notranslate">_Bot Protection_</span> row of the dashboard widget;
-* a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides the widget.
+* setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> or <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides the widget.
 
 See <span class="notranslate">[Turning it on or off](/wordpress_plugin/#turning-it-on-or-off)</span>.
 
@@ -220,8 +220,8 @@ See <span class="notranslate">[Turning it on or off](/wordpress_plugin/#turning-
 |---|---|---|
 | Plugin installed (<span class="notranslate">`security_plugin_enabled`</span>) | Server-wide | No |
 | Web Application Firewall | Server-wide and per hosting account | The hosting account owner can turn it off for their own account, unless you have locked it server-wide. The setting then shows *This value is set by server administrator*. |
-| AI Bot Management | Server-wide only | Yes — the WordPress administrator turns it on or off for their own site from the widget. A <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both. |
-| AI Bot Management preset | You set the server default | Yes — from the widget, or by <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span>. |
+| AI Bot Management | Server-wide only | Yes — the WordPress administrator turns it on or off for their own site from the widget. Setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides both. |
+| AI Bot Management preset | You set the server default | Yes — from the widget, or by setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file. |
 | Individual WAF rules | You can disable rules server-side | A site owner can disable a rule for their own site from the <span class="notranslate">Imunify Security</span> page in WordPress. |
 
 Site owners can solve most common problems themselves. The Site Owner Guide covers them in <span class="notranslate">[Something is not working. What can I do?](/wordpress_plugin/#something-is-not-working-what-can-i-do)</span> — blocked traffic, a WAF false positive, and Bot Protection refusing a tool they use. You can link to it from your own help pages.
