@@ -5636,11 +5636,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 
 #### WordPress plugin
 
-:::warning
-The WordPress plugin installation is currently allowed only if _Settings > Malware > General > Default action on detect_ is set to _Cleanup_. Other installation options will be introduced in the future release.
-:::
-
-Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites.
+Tick the <span class="notranslate">_Install WordPress plugin_</span> checkbox to install the Imunify Security WP plugin on all WordPress sites. For requirements, rollout, and these settings in one place, see the <span class="notranslate">[Hosting Provider Guide](/wordpress_plugin/hosting_providers/)</span>.
 
 You can also enable it via CLI with the following command:
 
@@ -9053,6 +9049,8 @@ imunify360-agent whitelisted-crawlers [command]
 
 This command manages the <span class="notranslate">Imunify Security</span> WordPress plugin and its Web Application Firewall (WAF). It is available in both <span class="notranslate">Imunify360</span> (using <span class="notranslate">`imunify360-agent`</span>) and <span class="notranslate">ImunifyAV/AV+</span> (using <span class="notranslate">`imunify-antivirus`</span>).
 
+For requirements, installation, and what site owners can change, see the <span class="notranslate">[Hosting Provider Guide](/wordpress_plugin/hosting_providers/)</span>.
+
 **Usage:**
 
 <div class="notranslate">
@@ -9119,6 +9117,50 @@ imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
 
 </div>
 
+### Check the WAF status of accounts
+
+Use <span class="notranslate">`waf status`</span> to report the effective WAF status of every hosting account, and where that status comes from — the server-wide default, or a per-account override.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only this hosting account.|
+|<span class="notranslate">`--status`</span>|show only accounts whose effective status is <span class="notranslate">`enabled`</span> or <span class="notranslate">`disabled`</span>.|
+|<span class="notranslate">`--source`</span>|show only accounts whose status comes from the <span class="notranslate">`default`</span> or from a per-account <span class="notranslate">`override`</span>.|
+|<span class="notranslate">`--limit`</span>|maximum number of accounts to return. The server caps this at 500.|
+|<span class="notranslate">`--offset`</span>|number of accounts to skip. Default is <span class="notranslate">`0`</span>.|
+
+**Examples**
+
+1. Report the status of all accounts:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status
+```
+
+</div>
+
+2. List the accounts where the WAF is currently off, as JSON:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status --status disabled --json
+```
+
+</div>
+
+3. Report the status of one account:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status --user alice
+```
+
+</div>
+
 ### Manage individual WAF rules
 
 Use the <span class="notranslate">`rules`</span> subcommand to disable or re-enable a specific WAF rule — for example, one that interferes with legitimate traffic. The rule identifier is the one shown for the incident (typically a CVE ID).
@@ -9176,6 +9218,98 @@ imunify360-agent wordpress-plugin rules list-disabled
 
 </div>
 
+### List WordPress sites
+
+Use <span class="notranslate">`list-sites`</span> to list the WordPress sites where the <span class="notranslate">Imunify Security</span> plugin is installed. This is the quickest way to check the result of a rollout across a server.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only the sites of this hosting account.|
+|<span class="notranslate">`--limit`</span>|maximum number of sites to return. Default is <span class="notranslate">`50`</span>.|
+|<span class="notranslate">`--offset`</span>|number of sites to skip. Default is <span class="notranslate">`0`</span>.|
+
+**Examples**
+
+1. List the first 50 sites with the plugin installed:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites
+```
+
+</div>
+
+2. List the sites of one hosting account:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites --user alice
+```
+
+</div>
+
+3. Page through a longer list:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites --limit 100 --offset 100
+```
+
+</div>
+
+### List WAF incidents
+
+Use <span class="notranslate">`list-incidents`</span> to list the requests the WordPress WAF acted on. The same incidents are shown to site owners in the WordPress admin area — see <span class="notranslate">[Managing WAF incidents](/wordpress_plugin/#managing-waf-incidents)</span>.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only incidents of this hosting account.|
+|<span class="notranslate">`--by-domain`</span>|show only incidents for this domain.|
+|<span class="notranslate">`--site-search`</span>|show only incidents for sites whose path matches this value.|
+|<span class="notranslate">`--by-abuser-ip`</span>|show only incidents from this source IP address.|
+|<span class="notranslate">`--by-country-code`</span>|show only incidents from this country.|
+|<span class="notranslate">`--search`</span>|search by IP address, name, or description.|
+|<span class="notranslate">`--since`</span>|show incidents at or after this Unix timestamp.|
+|<span class="notranslate">`--to`</span>|show incidents at or before this Unix timestamp.|
+|<span class="notranslate">`--order-by`</span>|fields to sort by, each followed by <span class="notranslate">`+`</span> (ascending) or <span class="notranslate">`-`</span> (descending). Supported fields: <span class="notranslate">`timestamp`</span>, <span class="notranslate">`severity`</span>, <span class="notranslate">`domain`</span>, <span class="notranslate">`abuser`</span>.|
+|<span class="notranslate">`--limit`</span>|maximum number of incidents to return. Default is <span class="notranslate">`50`</span>.|
+|<span class="notranslate">`--offset`</span>|number of incidents to skip. Default is <span class="notranslate">`0`</span>.|
+
+**Examples**
+
+1. List the most recent incidents:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-incidents
+```
+
+</div>
+
+2. List the incidents of one domain, most severe first:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-incidents --by-domain example.com --order-by severity-
+```
+
+</div>
+
+3. List the incidents caused by one IP address:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-incidents --by-abuser-ip 203.0.113.10
+```
+
+</div>
+
 ### AI Bot Management
 
 <span class="notranslate">AI Bot Management</span> (bot classification and per-category rate limiting) is controlled through configuration keys rather than a dedicated subcommand. The plugin must be installed first (see <span class="notranslate">`security_plugin_enabled`</span>). Site owners can also manage it from the WordPress dashboard — see <span class="notranslate">[AI Bot Management](/wordpress_plugin/#ai-bot-management)</span>.
@@ -9191,15 +9325,7 @@ imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection": false}}'
 
 </div>
 
-Enable it for a single hosting account:
-
-<div class="notranslate">
-
-```
-imunify360-agent config update --user user1 '{"WORDPRESS":{"ai_bot_protection": true}}'
-```
-
-</div>
+This is a server-wide setting. Unlike <span class="notranslate">`waf_enabled`</span>, it cannot be set for a single hosting account — once it is on for the server, a site owner controls it for their own site from the WordPress dashboard.
 
 Set the default preset applied to sites that have not chosen their own — one of <span class="notranslate">`balanced`</span>, <span class="notranslate">`strict`</span>, or <span class="notranslate">`monitor`</span>:
 
@@ -9669,13 +9795,13 @@ systemctl restart imunify360
 <td># enable (<span class="notranslate">True</span>) the Malware Database Scanner - a database antivirus with automated malware detection and clean-up of web applications. Requires MariaDB/MySQL DB management system version 5.5. Recommended version is 5.6+. Note, that only WordPress, Joomla, and Magento databases are supported now.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">WORDPRESS:</span></th></tr>
 <tr><td><span class="notranslate">security_plugin_enabled: False</span></td>
-<td># installs the <span class="notranslate">Imunify Security</span> WordPress plugin on all WordPress sites. This is the master switch for the WordPress plugin, its WordPress WAF, and AI Bot Management. Default is <span class="notranslate">False</span>.</td></tr>
+<td># installs the <span class="notranslate">Imunify Security</span> WordPress plugin on all WordPress sites. This is the master switch for the WordPress plugin, its WordPress WAF, and AI Bot Management. Default is <span class="notranslate">False</span>. See the <a href="/wordpress_plugin/hosting_providers/">Hosting Provider Guide</a>.</td></tr>
 <tr><td><span class="notranslate">waf_enabled: True</span></td>
 <td># enables the WordPress WAF (virtual patching) for WordPress sites on the server. When set to <span class="notranslate">False</span>, WAF rules are removed from all sites. Can also be set per hosting account. Default is <span class="notranslate">True</span>.</td></tr>
 <tr><td><span class="notranslate">waf_default: False</span></td>
 <td># whether the WordPress WAF is enabled automatically for newly created hosting accounts. Default is <span class="notranslate">False</span>.</td></tr>
 <tr><td><span class="notranslate">ai_bot_protection: False</span></td>
-<td># enables AI Bot Management (bot classification and per-category rate limiting) for WordPress sites on the server. Can also be set per hosting account; a site owner may override it from the WordPress dashboard. Default is <span class="notranslate">False</span>.</td></tr>
+<td># enables AI Bot Management (bot classification and per-category rate limiting) for WordPress sites on the server. This is a server-wide setting only; a site owner may override it for their own site from the WordPress dashboard. Default is <span class="notranslate">False</span>.</td></tr>
 <tr><td><span class="notranslate">ai_bot_protection_preset: balanced</span></td>
 <td># the default AI Bot Management preset applied to sites that have not chosen their own. One of <span class="notranslate">balanced</span>, <span class="notranslate">strict</span>, or <span class="notranslate">monitor</span>. Default is <span class="notranslate">balanced</span>.</td></tr>
 </tbody>
@@ -19275,36 +19401,36 @@ If you have questions or need assistance with the migration process, please cont
 
 ## WordPress Plugin
 
-### Imunify Security Plugin for WordPress
+### Imunify Security Plugin for WordPress: Site Owner Guide
 
-# Imunify Security Plugin for WordPress
+# Site Owner Guide
 
 [[toc]]
 
-## Overview
+::: tip Are you a hosting provider or server administrator?
+This page is written for **WordPress site owners**. It explains what the plugin does, what you see in your WordPress dashboard, and what you can change yourself.
 
-The **Imunify Security plugin for WordPress** is available to all Imunify customers (ImunifyAV, ImunifyAV+, and Imunify360). It provides WordPress administrators with a modern interface, real-time malware and security status, and a seamless upgrade path from AV to 360. The plugin is designed to enhance your website's security and user experience directly from the WordPress dashboard.
+If you run the server, see the <span class="notranslate">[Hosting Provider Guide](/wordpress_plugin/hosting_providers/)</span> for requirements, installation, and server-wide settings.
+:::
 
-## Prerequisites
+## What the plugin does
 
-* **WordPress Version**: 5.0.0 or higher
-* **PHP Version**: 5.6 or higher
-* **Imunify360**: 8.4.1 or higher
-* **ImunifyAV/AV+**: 8.6.0 or higher
+The **Imunify Security plugin for WordPress** shows the security status of your website directly in the WordPress dashboard. It reports what the Imunify security software on your hosting server found and cleaned, and it adds two protection layers that run inside WordPress itself.
 
-## Installation
+You do not need to buy, download, or configure anything. The plugin works together with the Imunify product your hosting provider already runs on the server (<span class="notranslate">ImunifyAV</span>, <span class="notranslate">ImunifyAV+</span>, or <span class="notranslate">Imunify360</span>).
 
-The plugin is not available in the WordPress plugin repository. To install:
+### Why the plugin is on your site
 
-1. Navigate to Imunify settings in your hosting control panel (e.g., cPanel).
-2. Open the `General` tab.
-3. Scroll to the `WordPress Plugin` section.
-4. Tick the `Install WordPress plugin` checkbox and click `Save changes`.
-5. The plugin will be installed in the background to all active WordPress installations on the server.
+Your hosting provider installed the plugin for you, as part of the security service included with your hosting plan. This is why it appears in your plugin list without you installing it, and why you cannot find it in the WordPress.org plugin directory — it is delivered by the hosting server, not from the public repository.
 
-![](/images/wordpress-plugin/panel-settings.png)
+### What it protects you from
 
-*Plugin installation settings in the control panel*
+* **Malware.** Infected files, injected code, and backdoors. The Imunify scanner on the server checks your files, and the plugin shows you what was detected and cleaned.
+* **Zero-day attacks and dangerous code execution.** Attacks that use undisclosed vulnerabilities, and backdoors that are already on the site, run PHP code that no scanner has a signature for yet. <span class="notranslate">Proactive Defense</span> stops that code at the moment it tries to run.
+* **Exploits of known vulnerabilities** in the plugins, themes, and WordPress core you use — including the time between a vulnerability becoming public and you installing the update. The Web Application Firewall (virtual patching) blocks the attempt without changing any of your files. See <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span>.
+* **Aggressive crawlers, scrapers, and AI bots** that slow your site down, use up its resources, and copy its content. <span class="notranslate">AI Bot Management</span> limits them while leaving real visitors untouched. See <span class="notranslate">[AI Bot Management](#ai-bot-management)</span>.
+
+Which of these are available depends on the Imunify product your hosting provider runs. <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> users see a smaller set of features than <span class="notranslate">Imunify360</span> users.
 
 ## Features
 
@@ -19314,8 +19440,8 @@ The plugin adds a dashboard widget that helps administrators keep track of their
 
 - Real-time security status
 - Proactive Defense status
-- Web Application Firewall status and recent WAF incidents (see <span class="notranslate">[Web Application Firewall](/wordpress_plugin/#web-application-firewall-virtual-patching)</span>)
-- Bot Protection status and recent bot activity (see <span class="notranslate">[AI Bot Management](/wordpress_plugin/#ai-bot-management)</span>)
+- Web Application Firewall status and recent WAF incidents (see <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span>)
+- Bot Protection status and recent bot activity (see <span class="notranslate">[AI Bot Management](#ai-bot-management)</span>)
 - Timestamps for last and next scheduled scans
 - Detailed list of detected and cleaned malware (file path, signature, detection or clean-up time)
 
@@ -19364,9 +19490,9 @@ ImunifyAV users are shown a limited interface and prompted to upgrade to Imunify
 The <span class="notranslate">Imunify Security</span> plugin includes a **Web Application Firewall (WAF)** that provides *virtual patching* for WordPress. It protects your sites against known vulnerabilities (CVEs) in WordPress plugins, themes, and core — **without modifying any of your site's files**. When a plugin or theme you use has a known security flaw, the WAF blocks attempts to exploit it, giving you time to apply the real update.
 
 ::: tip Note
-The <span class="notranslate">Web Application Firewall</span> (virtual patching) described below requires the <span class="notranslate">Imunify Security</span> WordPress plugin (<span class="notranslate">`imunify-wp-security`</span>) <span class="notranslate">`wp-3.0.1-2`</span> or later, together with a supported Imunify agent — <span class="notranslate">ImunifyAV/AV+</span> (<span class="notranslate">`imunify-antivirus`</span>) <span class="notranslate">`av-8.7.1-2`</span> or later, or <span class="notranslate">Imunify360</span> (<span class="notranslate">`imunify360-firewall`</span>) <span class="notranslate">`8.12.5-3`</span> or later.
-
 This WordPress WAF is a separate layer from the server-side <span class="notranslate">[WAF (ModSecurity)](/dashboard/#waf-settings)</span> and from <span class="notranslate">[WordPress Account Brute-force Protection](/dashboard/#wordpress-account-brute-force-protection)</span>. It runs inside the WordPress plugin and focuses on blocking exploit attempts against vulnerable plugins and themes. In the Imunify control panel it is presented on the <span class="notranslate">_CMS WAF_</span> tab.
+
+The feature needs a recent version of the plugin and of the Imunify software on the server. Your hosting provider manages both — see <span class="notranslate">[Requirements](/wordpress_plugin/hosting_providers/#requirements)</span>.
 :::
 
 ### How it works
@@ -19415,64 +19541,53 @@ Use <span class="notranslate">_Show more results_</span> to open the full incide
 
 ### Managing WAF incidents
 
-The <span class="notranslate">_CMS WAF_</span> tab in the Imunify control panel is where you review WAF activity and manage rules.
-
-::: tip Note
-The <span class="notranslate">_CMS WAF_</span> tab appears only when the WordPress WAF is enabled and the account has at least one WordPress site.
-:::
+Open the <span class="notranslate">Imunify Security</span> page from the WordPress admin menu to review WAF activity and manage rules. Everything on this page applies to the site you are currently in.
 
 #### Incidents
 
-The <span class="notranslate">_Incidents_</span> sub-tab lists every request the WAF acted on:
+The <span class="notranslate">_Incidents_</span> tab lists every request the WAF acted on:
 
 | Column | Description |
 |---|---|
 | <span class="notranslate">_Date_</span> | When the incident occurred (newest first by default). |
-| <span class="notranslate">_Domain_</span> | The WordPress site that was targeted. |
 | <span class="notranslate">_IP_</span> | Source IP address. Click it to filter the list by that IP. |
 | <span class="notranslate">_Country_</span> | Country the IP resolves to. |
 | <span class="notranslate">_Count_</span> | How many times the incident repeated. |
 | <span class="notranslate">_Severity_</span> | Severity of the matched rule (0–3 low, 4–6 medium, 7–10 high). |
 | <span class="notranslate">_Rule_</span> | The rule that matched. When it references a CVE, it links to the CVE record. |
 
-You can filter incidents by date range and domain, or search by rule, description, or IP. Click a row to expand it and see the <span class="notranslate">_Sensor_</span>, <span class="notranslate">_Rule_</span>, <span class="notranslate">_Abuser_</span> (source IP), and <span class="notranslate">_Domain_</span> details.
+You can filter incidents by date range, or search by rule, description, or IP. Click a row to expand it and see the <span class="notranslate">_Sensor_</span>, <span class="notranslate">_Rule_</span>, and <span class="notranslate">_Abuser_</span> (source IP) details.
 
 ![](/images/wordpress-plugin/cms-waf-incidents.png)
-*The Incidents sub-tab on the CMS WAF tab.*
+*The Incidents tab.*
 
 #### Disabling a rule
 
-If a WAF rule interferes with legitimate traffic, you can disable it. On the <span class="notranslate">_Incidents_</span> sub-tab, click <span class="notranslate">_Disable rule_</span> for the incident and confirm in the dialog:
-
-* By default, the rule is disabled for **all** of your domains.
-* If you manage more than one WordPress site, you can instead pick specific domains from the <span class="notranslate">_Select domains_</span> list.
-
-Click <span class="notranslate">_Yes, disable_</span> to confirm. The change may take a few minutes to take effect across your sites.
+If a WAF rule interferes with legitimate traffic, you can disable it. On the <span class="notranslate">_Incidents_</span> tab, click <span class="notranslate">_Disable rule_</span> for the incident, then click <span class="notranslate">_Yes, disable_</span> to confirm. The rule is turned off for your site. The change may take a few minutes to take effect.
 
 <img src="/images/wordpress-plugin/cms-waf-disable-rule-modal.png" alt="Disable rule confirmation modal" width="520">
 
-*Disabling a WAF rule for all domains or for selected domains.*
+*Confirming that a WAF rule should be disabled.*
 
 #### Disabled Rules
 
-The <span class="notranslate">_Disabled Rules_</span> sub-tab lists the rules you have turned off, showing the affected <span class="notranslate">_Component_</span>, <span class="notranslate">_Version_</span>, <span class="notranslate">_Rule_</span>, and <span class="notranslate">_Domains_</span>. To turn a rule back on, click <span class="notranslate">_Enable_</span> and confirm.
+The <span class="notranslate">_Disabled Rules_</span> tab lists the rules you have turned off, showing the affected <span class="notranslate">_Component_</span>, <span class="notranslate">_Version_</span>, and <span class="notranslate">_Rule_</span>. To turn a rule back on, click <span class="notranslate">_Enable_</span> and confirm.
 
 ![](/images/wordpress-plugin/cms-waf-disabled-rules.png)
 *Re-enabling a previously disabled rule.*
 
-### Enabling or disabling the WAF
+### Turning the WAF on or off
 
-The WordPress WAF requires the <span class="notranslate">Imunify Security</span> plugin to be installed, and is controlled from <span class="notranslate">_Settings_ | _General_ | _WordPress plugin_</span> in the Imunify control panel:
-
-* **Server administrators** enable or disable the WAF server-wide, and can choose whether it is on by default for new hosting accounts. See <span class="notranslate">[WordPress plugin settings](/dashboard/#wordpress-plugin)</span> and the <span class="notranslate">[command-line reference](/command_line_interface/#wordpress-plugin)</span>.
-* **Hosting-account owners** can turn the WAF off for their own account, unless the administrator has locked it server-wide (shown as *This value is set by server administrator*).
+Your hosting provider decides whether the WAF runs on the server, and can turn it on or off for individual hosting accounts. If you need it changed for your site, contact your provider. See <span class="notranslate">[Web Application Firewall](/wordpress_plugin/hosting_providers/#web-application-firewall)</span> in the hosting provider guide.
 
 ## AI Bot Management
 
 <span class="notranslate">Imunify Security</span> includes **AI Bot Management** — a layer that identifies automated traffic (search-engine crawlers, AI/LLM crawlers, scrapers, and malicious bots) *before WordPress finishes loading* and applies a per-minute request limit to each kind of bot, while leaving real visitors untouched. It protects sites from aggressive crawling and bot-driven resource abuse — increasingly from the wave of AI training and scraping crawlers — without slowing down legitimate users.
 
 ::: tip Note
-AI Bot Management requires the <span class="notranslate">Imunify Security</span> WordPress plugin (<span class="notranslate">`imunify-wp-security`</span>) <span class="notranslate">`wp-4.0.2-2`</span> or later, together with a supported Imunify agent — <span class="notranslate">ImunifyAV/AV+</span> (<span class="notranslate">`imunify-antivirus`</span>) <span class="notranslate">`av-8.8.3-6`</span> or later, or <span class="notranslate">Imunify360</span> (<span class="notranslate">`imunify360-firewall`</span>) <span class="notranslate">`8.13.6-6`</span> or later. It is a separate layer from the server-side <span class="notranslate">[WAF (ModSecurity)](/dashboard/#waf-settings)</span>, from <span class="notranslate">[WordPress Account Brute-force Protection](/dashboard/#wordpress-account-brute-force-protection)</span>, and from the plugin's own <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span>. In the WordPress dashboard it appears as <span class="notranslate">_Bot Protection_</span>.
+AI Bot Management is a separate layer from the server-side <span class="notranslate">[WAF (ModSecurity)](/dashboard/#waf-settings)</span>, from <span class="notranslate">[WordPress Account Brute-force Protection](/dashboard/#wordpress-account-brute-force-protection)</span>, and from the plugin's own <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span>. In the WordPress dashboard it appears as <span class="notranslate">_Bot Protection_</span>.
+
+The feature needs a recent version of the plugin and of the Imunify software on the server. Your hosting provider manages both — see <span class="notranslate">[Requirements](/wordpress_plugin/hosting_providers/#requirements)</span>.
 :::
 
 ### How it works
@@ -19539,7 +19654,7 @@ If your site cannot reach itself over HTTP, the pane shows a <span class="notran
 
 AI Bot Management is controlled at three levels:
 
-1. **Hosting provider (server-wide).** The provider enables the feature and sets the default preset. When it is off at the server level, the <span class="notranslate">_Bot Protection_</span> row does not appear. Providers control it from the command line — see the <span class="notranslate">[configuration file reference](/config_file_description/)</span> (<span class="notranslate">`ai_bot_protection`</span>, <span class="notranslate">`ai_bot_protection_preset`</span>) and the <span class="notranslate">[command-line reference](/command_line_interface/#wordpress-plugin)</span>.
+1. **Hosting provider (server-wide).** The provider enables the feature and sets the default preset. When it is off at the server level, the <span class="notranslate">_Bot Protection_</span> row does not appear. See <span class="notranslate">[AI Bot Management](/wordpress_plugin/hosting_providers/#ai-bot-management)</span> in the hosting provider guide.
 2. **Site owner (WordPress admin).** Once the provider has enabled it, the WordPress administrator turns it on or off for their own site and chooses the preset from the <span class="notranslate">_Bot Protection_</span> widget.
 3. **`wp-config.php` (advanced).** Definitions in <span class="notranslate">`wp-config.php`</span> override the widget:
 
@@ -19556,3 +19671,346 @@ define( 'IMUNIFY_AI_BOT_PROTECTION_PRESET', 'strict' );
 </div>
 
 When AI Bot Management is disabled in <span class="notranslate">`wp-config.php`</span>, the widget shows <span class="notranslate">_Disabled in wp-config.php_</span> and the controls are locked.
+
+## Frequently asked questions
+
+### Why did the Imunify Security plugin appear on my site? I did not install it
+
+Your hosting provider installed it for you. The Imunify security software on the server adds the plugin to the WordPress sites it protects, so you get the security information of your site inside the WordPress dashboard. It is part of your hosting plan, not something you bought or downloaded.
+
+### Why is the plugin not in the WordPress.org plugin directory?
+
+The plugin only works together with the Imunify software running on the hosting server, so it is delivered by that software instead of the public directory. This is also why it is updated automatically, without an update notice in WordPress.
+
+### Do I have to pay extra for the plugin?
+
+No. It is included in the Imunify security service your hosting provider already runs. Some features depend on which Imunify product your provider uses — see <span class="notranslate">[Protection modes](#protection-modes-enabled-vs-monitoring)</span>.
+
+### Can I deactivate or delete the plugin? Will it come back?
+
+Yes, you can deactivate or delete it like any other WordPress plugin.
+
+Deleting it also removes the data it stored for your site. A job on the server does this clean-up once a day, so it can take up to 24 hours. The same job records that you removed the plugin, so the server does not install it again by itself.
+
+If you want the plugin back later, ask your hosting provider — they can restore it for your site.
+
+Deactivating or deleting the plugin turns off the protection it provides inside WordPress — the <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span> and <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> stop working for your site. Malware scanning on the server continues, but you no longer see the results in your WordPress dashboard.
+
+### Does the plugin slow down my website?
+
+The plugin is built to keep the work inside WordPress small:
+
+* Malware scanning runs on the server, not inside WordPress.
+* The Web Application Firewall only loads rules for the plugins, themes, and WordPress version you actually have installed.
+* The bot check runs before the rest of WordPress loads. It costs very little compared to building the page for that visitor, so every request it blocks saves your site far more work than the check itself uses.
+
+### Do I still need my other security plugin?
+
+Imunify Security does not replace a general-purpose security plugin, and it does not require you to remove one. It adds protection layers that run on the hosting server and inside WordPress. If you run another security plugin, both may report the same event, so check both before you decide something is wrong.
+
+### Does the plugin work on a WordPress multisite network?
+
+Multisite is only partly supported today, and it has not been fully tested. Some features may not behave as described on a multisite network, so do not rely on the plugin as your only protection there.
+
+### Where do I manage the settings?
+
+It depends on the setting:
+
+* In the **WordPress dashboard**, the <span class="notranslate">Imunify Security</span> widget shows the security status, and lets WordPress administrators change <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> for the site.
+* On the **<span class="notranslate">Imunify Security</span> page** in the WordPress admin menu, you review WAF incidents and disable individual rules for your site. See <span class="notranslate">[Managing WAF incidents](#managing-waf-incidents)</span>.
+* Some settings are controlled on the server and cannot be changed from WordPress. If a control is missing or locked, see <span class="notranslate">[Why do I not see the Web Application Firewall or Bot Protection in the widget?](#why-do-i-not-see-the-web-application-firewall-or-bot-protection-in-the-widget)</span>.
+
+### What information does the plugin send?
+
+The plugin reads the security information of your site from the Imunify software running on the same server, over a local connection that does not leave the machine. It does not send your site's files, database, or page content anywhere.
+
+To keep protection current, it downloads updated data, such as the list of known crawlers used by <span class="notranslate">[AI Bot Management](#ai-bot-management)</span>.
+
+Imunify also collects security information from your site to improve protection:
+
+* **WAF incidents** — the exploit attempts the <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span> acted on. A record includes the rule that matched, the IP address the request came from, and partial details of the request.
+* **Traffic classification summary** — once a day, how much traffic fell into each bot category, together with the 50 most active IP addresses per category. This data is used only to make the classification more accurate and to identify sources that abuse sites.
+
+If your hosting provider has enabled error reporting, technical error reports may also be sent to Imunify.
+
+### A visitor to my site got an error page. What happened?
+
+Two protections can refuse a request:
+
+* <span class="notranslate">HTTP 429 (Too Many Requests)</span> — AI Bot Management refused a request from an automated client that went over its per-minute limit. Real visitors are never rate-limited.
+* <span class="notranslate">HTTP 403 (Forbidden)</span> — either the Web Application Firewall matched the request against a known vulnerability in a plugin, theme, or WordPress core, or AI Bot Management blocked a client that kept sending requests after it was already refused with <span class="notranslate">HTTP 429</span>. See <span class="notranslate">[Managing WAF incidents](#managing-waf-incidents)</span> to check what the WAF blocked and why.
+
+### A WAF rule blocks legitimate traffic. How do I stop it?
+
+Open the <span class="notranslate">Imunify Security</span> page in the WordPress admin menu, go to the <span class="notranslate">_Incidents_</span> tab, find the incident, and click <span class="notranslate">_Disable rule_</span>. The rule is turned off for your site — there is no list of domains to choose from, because the page only covers the site you are in. The change may take a few minutes to take effect.
+
+If the traffic is still blocked, wait a few minutes and clear any page or object cache your site uses, then try again — the old response may still be cached. If it keeps being blocked after that, ask your hosting provider.
+
+### Bot Protection blocks something I need. How do I stop it?
+
+Real visitors are never rate-limited, but a tool that calls your site — an uptime monitor, a backup or SEO service, or a plugin that fetches pages — is an automated client, so it can be refused with <span class="notranslate">HTTP 429</span>.
+
+Open the <span class="notranslate">_Bot Protection_</span> row in the <span class="notranslate">Imunify Security</span> dashboard widget and choose one of these:
+
+* **Switch to a softer preset.** Click <span class="notranslate">_change_</span>, pick a preset, and click <span class="notranslate">_Save_</span>. <span class="notranslate">_Monitor only_</span> still classifies traffic but does not block or limit anything, which is the quickest way to confirm that Bot Protection is the cause.
+* **Turn protection off for this site.** The row has a switch that disables Bot Protection for your site only. You can turn it back on at any time.
+
+See <span class="notranslate">[Turning it on or off](#turning-it-on-or-off)</span> for the <span class="notranslate">`wp-config.php`</span> settings that override the widget, and <span class="notranslate">[Protection presets](#protection-presets)</span> for what each preset allows.
+
+If the <span class="notranslate">_Bot Protection_</span> row is missing, see the next question. If the controls are locked, the feature is set in <span class="notranslate">`wp-config.php`</span> — see <span class="notranslate">[Turning it on or off](#turning-it-on-or-off)</span>.
+
+### Why do I not see the Web Application Firewall or Bot Protection in the widget?
+
+A row is missing when the feature is not running for your site. There are two reasons for that:
+
+* **The software is older than the feature.** Both features need recent versions of the plugin and of the Imunify software on the server. See <span class="notranslate">[Requirements](/wordpress_plugin/hosting_providers/#requirements)</span> for the exact versions.
+* **The feature is turned off** for the server or for your hosting account.
+
+Both are set on the server, so only your hosting provider can change them.
+
+### The widget says my site cannot reach itself. What does it mean?
+
+WordPress needs to be able to open its own address over HTTP to run scheduled tasks. When it cannot, scheduled tasks — including automatic updates of the bot data — may not run. This is usually caused by a local DNS or firewall setting on the server. Report it to your hosting provider, then click <span class="notranslate">_Re-check_</span>.
+
+### Something is not working. What can I do?
+
+Most of what site owners run into can be fixed from the WordPress dashboard, without any help:
+
+* A visitor got an error page — see <span class="notranslate">[A visitor to my site got an error page](#a-visitor-to-my-site-got-an-error-page-what-happened)</span>.
+* A WAF rule blocks legitimate traffic — you can disable that single rule for your site. See <span class="notranslate">[A WAF rule blocks legitimate traffic](#a-waf-rule-blocks-legitimate-traffic-how-do-i-stop-it)</span>.
+* Bot Protection blocks a tool you use — you can switch to a softer preset, or turn it off for your site. See <span class="notranslate">[Bot Protection blocks something I need](#bot-protection-blocks-something-i-need-how-do-i-stop-it)</span>.
+* A feature is missing from the widget — see <span class="notranslate">[Why do I not see the Web Application Firewall or Bot Protection in the widget?](#why-do-i-not-see-the-web-application-firewall-or-bot-protection-in-the-widget)</span>.
+
+A few things are set on the server, and only your hosting provider can change them: enabling a feature for your hosting account, restoring the plugin after you delete it, and anything about malware found outside your WordPress files.
+
+### Imunify Security Plugin for WordPress: Hosting Provider Guide
+
+# Hosting Provider Guide
+
+[[toc]]
+
+::: tip Are you a WordPress site owner?
+This page is written for **hosting providers and server administrators**. It covers requirements, installation on your servers, and the settings you control.
+
+If you manage a WordPress site and want to know what the plugin does and what you can change in the WordPress dashboard, see the <span class="notranslate">[Site Owner Guide](/wordpress_plugin/)</span>.
+:::
+
+## Overview
+
+The **Imunify Security plugin for WordPress** brings the protection your Imunify product already provides into the WordPress dashboard of every site on your servers. It is available to all Imunify customers (<span class="notranslate">ImunifyAV</span>, <span class="notranslate">ImunifyAV+</span>, and <span class="notranslate">Imunify360</span>).
+
+For your customers, the plugin:
+
+* shows the security status of their site, including malware detected and cleaned;
+* adds a **Web Application Firewall (virtual patching)** that blocks attempts to exploit known vulnerabilities in plugins, themes, and WordPress core;
+* adds **AI Bot Management**, which rate-limits crawlers, scrapers, and AI bots;
+* gives <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> users an upgrade path to <span class="notranslate">Imunify360</span>.
+
+The plugin is not published in the WordPress.org plugin directory. It is delivered and updated by the Imunify agent on the server.
+
+For what your customers see and can change themselves, send them to the <span class="notranslate">[Site Owner Guide](/wordpress_plugin/)</span>.
+
+## Requirements
+
+**On each WordPress site:**
+
+* **WordPress version**: 5.0.0 or higher
+* **PHP version**: 5.6 or higher
+
+**On the server:**
+
+* <span class="notranslate">Imunify360</span> <span class="notranslate">`8.4.1`</span> or higher, or
+* <span class="notranslate">ImunifyAV</span>/<span class="notranslate">AV+</span> <span class="notranslate">`8.6.0`</span> or higher
+
+Individual features need newer versions of both the plugin and the Imunify agent:
+
+| Feature | Plugin (<span class="notranslate">`imunify-wp-security`</span>) | <span class="notranslate">Imunify360</span> (<span class="notranslate">`imunify360-firewall`</span>) | <span class="notranslate">ImunifyAV</span>/<span class="notranslate">AV+</span> (<span class="notranslate">`imunify-antivirus`</span>) |
+|---|---|---|---|
+| Base plugin (dashboard widget, plugin page) | — | <span class="notranslate">`8.4.1`</span> | <span class="notranslate">`8.6.0`</span> |
+| <span class="notranslate">[Web Application Firewall](#web-application-firewall)</span> | <span class="notranslate">`wp-3.0.1-2`</span> | <span class="notranslate">`8.12.5-3`</span> | <span class="notranslate">`av-8.7.1-2`</span> |
+| <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> | <span class="notranslate">`wp-4.0.2-2`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
+
+The plugin is updated by the Imunify agent, so keeping the agent current is enough.
+
+::: warning
+WordPress multisite networks are only partly supported and have not been fully tested. Some features may not behave as documented on multisite.
+:::
+
+## Installing the plugin
+
+Installation is a single server-wide switch. Once it is on, the plugin is installed in the background on every active WordPress installation on the server, and new WordPress sites are picked up by the daily job that scans for them.
+
+### From the control panel
+
+1. Navigate to Imunify settings in your hosting control panel (e.g., cPanel).
+2. Open the `General` tab.
+3. Scroll to the `WordPress Plugin` section.
+4. Tick the `Install WordPress plugin` checkbox and click `Save changes`.
+
+![](/images/wordpress-plugin/panel-settings.png)
+
+*Plugin installation settings in the control panel*
+
+### From the command line
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"security_plugin_enabled": true}}'
+```
+
+</div>
+
+On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, use <span class="notranslate">`imunify-antivirus`</span> instead of <span class="notranslate">`imunify360-agent`</span>.
+
+<span class="notranslate">`security_plugin_enabled`</span> is the master switch for the plugin, its Web Application Firewall, and AI Bot Management. Setting it to <span class="notranslate">`false`</span> removes the plugin from the sites again.
+
+See also <span class="notranslate">[WordPress plugin settings in the admin interface](/dashboard/#wordpress-plugin)</span>.
+
+### Checking the result
+
+After a rollout, list the WordPress sites where the plugin is installed:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites
+```
+
+</div>
+
+To check whether the WAF is on for each hosting account, and whether that comes from the server default or a per-account override:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status
+```
+
+</div>
+
+Both commands accept filters and paging — see the <span class="notranslate">[command-line reference](/command_line_interface/#wordpress-plugin)</span>.
+
+### When a site owner removes the plugin
+
+A site owner can delete the plugin from their WordPress site like any other plugin. A daily job then records the site as removed by the user, cleans up the data kept for it, and stops managing it. The server does **not** install the plugin on that site again, and turning <span class="notranslate">`security_plugin_enabled`</span> off and on again does not bring it back.
+
+To put the plugin back on such a site, contact Imunify support for the steps. A command for this is planned for a future release.
+
+## Web Application Firewall
+
+The WordPress WAF provides virtual patching against known vulnerabilities (CVEs) in WordPress plugins, themes, and core, without modifying site files. In <span class="notranslate">Imunify360</span> matching requests are blocked with <span class="notranslate">HTTP 403</span>; in <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> they are logged only.
+
+For how the WAF works and how site owners review incidents and disable individual rules, see <span class="notranslate">[Web Application Firewall (Virtual Patching)](/wordpress_plugin/#web-application-firewall-virtual-patching)</span>.
+
+::: tip Note
+This WordPress WAF is a separate layer from the server-side <span class="notranslate">[WAF (ModSecurity)](/dashboard/#waf-settings)</span> and from <span class="notranslate">[WordPress Account Brute-force Protection](/dashboard/#wordpress-account-brute-force-protection)</span>.
+:::
+
+### Server-wide settings
+
+In the control panel, the WAF is controlled from <span class="notranslate">_Settings_ | _General_ | _WordPress plugin_</span>:
+
+* <span class="notranslate">_Enable WordPress WAF_</span> — turns the WAF on for WordPress sites on this server. When it is disabled, WAF rules are removed from all sites, and site owners no longer see the WAF views in WordPress.
+* <span class="notranslate">_Enable WAF for new accounts by default_</span> — automatically enables the WAF for newly created hosting accounts.
+
+<img src="/images/wordpress-plugin/waf-panel-settings.png" alt="WordPress plugin settings in the control panel: Install WordPress plugin, Enable WordPress WAF, and Enable WAF for new accounts by default" width="520">
+
+The same settings from the command line:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"waf_enabled": true}}'
+imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
+```
+
+</div>
+
+::: tip Note
+The WAF is enabled by default for hosting accounts that already existed when it was first rolled out. Newly created accounts follow the <span class="notranslate">_Enable WAF for new accounts by default_</span> setting.
+:::
+
+### Per-account settings
+
+Change the WAF for hosting accounts in bulk:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf set --status enabled --all-users
+imunify360-agent wordpress-plugin waf set --status disabled --users user1 user2
+```
+
+</div>
+
+Or for a single account:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update --user user1 '{"WORDPRESS":{"waf_enabled": false}}'
+```
+
+</div>
+
+For all options, and for enabling or disabling individual WAF rules server-side, see the <span class="notranslate">[WordPress plugin CLI commands](/command_line_interface/#wordpress-plugin)</span>.
+
+## AI Bot Management
+
+AI Bot Management classifies incoming traffic (verified search engines, verified AI crawlers, unknown automated clients, unverified bots, malicious bots, and humans) before WordPress finishes loading, and applies a per-minute request limit to each non-human category. Human visitors are never rate-limited, and the check is fail-open.
+
+For the categories, the preset limits, and what site owners see, see <span class="notranslate">[AI Bot Management](/wordpress_plugin/#ai-bot-management)</span>.
+
+### Server-wide settings
+
+AI Bot Management is controlled through configuration keys rather than the control panel. Enable or disable it server-wide:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection": true}}'
+imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection": false}}'
+```
+
+</div>
+
+Set the default preset applied to sites that have not chosen their own — one of <span class="notranslate">`balanced`</span>, <span class="notranslate">`strict`</span>, or <span class="notranslate">`monitor`</span>:
+
+<div class="notranslate">
+
+```
+imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection_preset": "strict"}}'
+```
+
+</div>
+
+While the feature is off server-wide, the <span class="notranslate">_Bot Protection_</span> row does not appear in the WordPress dashboard widget.
+
+### Per-site control
+
+AI Bot Management is a server-wide setting. Unlike the WAF, it cannot be enabled or disabled for a single hosting account. Once it is on for the server, control belongs to the site:
+
+* the WordPress administrator turns it on or off for their own site, and picks a preset, from the <span class="notranslate">_Bot Protection_</span> row of the dashboard widget;
+* setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> or <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides the widget.
+
+See <span class="notranslate">[Turning it on or off](/wordpress_plugin/#turning-it-on-or-off)</span>.
+
+## What site owners can change
+
+| Setting | Controlled by you | Site owner can override |
+|---|---|---|
+| Plugin installed (<span class="notranslate">`security_plugin_enabled`</span>) | Server-wide | A site owner can delete the plugin from their site manually. It does not come back — see <span class="notranslate">[When a site owner removes the plugin](#when-a-site-owner-removes-the-plugin)</span>. |
+| Web Application Firewall | Server-wide and per hosting account | The hosting account owner can turn it off for their own account, unless you have locked it server-wide. The setting then shows *This value is set by server administrator*. |
+| AI Bot Management | Server-wide only | Yes — the WordPress administrator turns it on or off for their own site from the widget. Setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides both. |
+| AI Bot Management preset | You set the server default | Yes — from the widget, or by setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file. |
+| Individual WAF rules | You can disable rules server-side | A site owner can disable a rule for their own site from the <span class="notranslate">Imunify Security</span> page in WordPress. |
+
+Site owners can solve most common problems themselves. The Site Owner Guide covers them in <span class="notranslate">[Something is not working. What can I do?](/wordpress_plugin/#something-is-not-working-what-can-i-do)</span> — blocked traffic, a WAF false positive, and Bot Protection refusing a tool they use. You can link to it from your own help pages.
+
+## Reference
+
+* <span class="notranslate">[WordPress plugin settings in the admin interface](/dashboard/#wordpress-plugin)</span>
+* <span class="notranslate">[WordPress plugin CLI commands](/command_line_interface/#wordpress-plugin)</span>
+* <span class="notranslate">[Configuration file: WORDPRESS section](/config_file_description/)</span>
+* <span class="notranslate">[Site Owner Guide](/wordpress_plugin/)</span>
