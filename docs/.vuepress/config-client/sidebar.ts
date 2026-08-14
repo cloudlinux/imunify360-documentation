@@ -190,7 +190,8 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/wordpress_plugin/"
+                    ["/wordpress_plugin/", "Site Owner Guide"],
+                    ["/wordpress_plugin/hosting_providers/", "Hosting Provider Guide"]
                 ]
             }
         ],

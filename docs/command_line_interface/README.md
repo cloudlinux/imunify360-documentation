@@ -2780,6 +2780,8 @@ imunify360-agent whitelisted-crawlers [command]
 
 This command manages the <span class="notranslate">Imunify Security</span> WordPress plugin and its Web Application Firewall (WAF). It is available in both <span class="notranslate">Imunify360</span> (using <span class="notranslate">`imunify360-agent`</span>) and <span class="notranslate">ImunifyAV/AV+</span> (using <span class="notranslate">`imunify-antivirus`</span>).
 
+For requirements, installation, and what site owners can change, see the <span class="notranslate">[Hosting Provider Guide](/wordpress_plugin/hosting_providers/)</span>.
+
 **Usage:**
 
 <div class="notranslate">
@@ -2846,6 +2848,50 @@ imunify360-agent config update '{"WORDPRESS":{"waf_default": true}}'
 
 </div>
 
+### Check the WAF status of accounts
+
+Use <span class="notranslate">`waf status`</span> to report the effective WAF status of every hosting account, and where that status comes from — the server-wide default, or a per-account override.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only this hosting account.|
+|<span class="notranslate">`--status`</span>|show only accounts whose effective status is <span class="notranslate">`enabled`</span> or <span class="notranslate">`disabled`</span>.|
+|<span class="notranslate">`--source`</span>|show only accounts whose status comes from the <span class="notranslate">`default`</span> or from a per-account <span class="notranslate">`override`</span>.|
+|<span class="notranslate">`--limit`</span>|maximum number of accounts to return. The server caps this at 500.|
+|<span class="notranslate">`--offset`</span>|number of accounts to skip. Default is <span class="notranslate">`0`</span>.|
+
+**Examples**
+
+1. Report the status of all accounts:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status
+```
+
+</div>
+
+2. List the accounts where the WAF is currently off, as JSON:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status --status disabled --json
+```
+
+</div>
+
+3. Report the status of one account:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin waf status --user alice
+```
+
+</div>
+
 ### Manage individual WAF rules
 
 Use the <span class="notranslate">`rules`</span> subcommand to disable or re-enable a specific WAF rule — for example, one that interferes with legitimate traffic. The rule identifier is the one shown for the incident (typically a CVE ID).
@@ -2903,6 +2949,98 @@ imunify360-agent wordpress-plugin rules list-disabled
 
 </div>
 
+### List WordPress sites
+
+Use <span class="notranslate">`list-sites`</span> to list the WordPress sites where the <span class="notranslate">Imunify Security</span> plugin is installed. This is the quickest way to check the result of a rollout across a server.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only the sites of this hosting account.|
+|<span class="notranslate">`--limit`</span>|maximum number of sites to return. Default is <span class="notranslate">`50`</span>.|
+|<span class="notranslate">`--offset`</span>|number of sites to skip. Default is <span class="notranslate">`0`</span>.|
+
+**Examples**
+
+1. List the first 50 sites with the plugin installed:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites
+```
+
+</div>
+
+2. List the sites of one hosting account:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites --user alice
+```
+
+</div>
+
+3. Page through a longer list:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-sites --limit 100 --offset 100
+```
+
+</div>
+
+### List WAF incidents
+
+Use <span class="notranslate">`list-incidents`</span> to list the requests the WordPress WAF acted on. The same incidents are shown to site owners in the WordPress admin area — see <span class="notranslate">[Managing WAF incidents](/wordpress_plugin/#managing-waf-incidents)</span>.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only incidents of this hosting account.|
+|<span class="notranslate">`--by-domain`</span>|show only incidents for this domain.|
+|<span class="notranslate">`--site-search`</span>|show only incidents for sites whose path matches this value.|
+|<span class="notranslate">`--by-abuser-ip`</span>|show only incidents from this source IP address.|
+|<span class="notranslate">`--by-country-code`</span>|show only incidents from this country.|
+|<span class="notranslate">`--search`</span>|search by IP address, name, or description.|
+|<span class="notranslate">`--since`</span>|show incidents at or after this Unix timestamp.|
+|<span class="notranslate">`--to`</span>|show incidents at or before this Unix timestamp.|
+|<span class="notranslate">`--order-by`</span>|fields to sort by, each followed by <span class="notranslate">`+`</span> (ascending) or <span class="notranslate">`-`</span> (descending). Supported fields: <span class="notranslate">`timestamp`</span>, <span class="notranslate">`severity`</span>, <span class="notranslate">`domain`</span>, <span class="notranslate">`abuser`</span>.|
+|<span class="notranslate">`--limit`</span>|maximum number of incidents to return. Default is <span class="notranslate">`50`</span>.|
+|<span class="notranslate">`--offset`</span>|number of incidents to skip. Default is <span class="notranslate">`0`</span>.|
+
+**Examples**
+
+1. List the most recent incidents:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-incidents
+```
+
+</div>
+
+2. List the incidents of one domain, most severe first:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-incidents --by-domain example.com --order-by severity-
+```
+
+</div>
+
+3. List the incidents caused by one IP address:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-incidents --by-abuser-ip 203.0.113.10
+```
+
+</div>
+
 ### AI Bot Management
 
 <span class="notranslate">AI Bot Management</span> (bot classification and per-category rate limiting) is controlled through configuration keys rather than a dedicated subcommand. The plugin must be installed first (see <span class="notranslate">`security_plugin_enabled`</span>). Site owners can also manage it from the WordPress dashboard — see <span class="notranslate">[AI Bot Management](/wordpress_plugin/#ai-bot-management)</span>.
@@ -2918,15 +3056,7 @@ imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection": false}}'
 
 </div>
 
-Enable it for a single hosting account:
-
-<div class="notranslate">
-
-```
-imunify360-agent config update --user user1 '{"WORDPRESS":{"ai_bot_protection": true}}'
-```
-
-</div>
+This is a server-wide setting. Unlike <span class="notranslate">`waf_enabled`</span>, it cannot be set for a single hosting account — once it is on for the server, a site owner controls it for their own site from the WordPress dashboard.
 
 Set the default preset applied to sites that have not chosen their own — one of <span class="notranslate">`balanced`</span>, <span class="notranslate">`strict`</span>, or <span class="notranslate">`monitor`</span>:
 
