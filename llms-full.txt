@@ -3862,7 +3862,7 @@ imunify360-wsctl l7prot service disable    # turn rate limiting off
 Disabling the feature stops all rate limiting immediately; your rules, default settings, and request counters are preserved and take effect again when you re-enable it.
 
 :::warning Note
-Enabling the service immediately puts the [default settings](#default-settings) in effect for **all** traffic: any client that exceeds the default rate — initially 300 requests per minute — is served the JavaScript challenge. Review the defaults before enabling the feature on a production server.
+Enabling the service immediately puts the [default settings](#default-settings) in effect for **all** traffic: any client that exceeds the default rate — initially 300 requests per minute — is served the JavaScript challenge.
 :::
 
 ## Default settings
