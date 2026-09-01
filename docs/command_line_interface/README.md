@@ -294,7 +294,7 @@ Some comment  2   [{'comment': None, 'ip': '111.111.111.111'}, {'comment': None,
 
 ## Blocked Port IP
 
-This command blocks traffic for the specified IP addresses on a given port. Use it when you want to manage the IP exceptions on an already-blocked port in the [main section](/command_line_interface/#blocked-ports).
+This command manages the IP exceptions on an already-blocked port in the [main section](/command_line_interface/#blocked-ports).
 
 **Usage:**
 
