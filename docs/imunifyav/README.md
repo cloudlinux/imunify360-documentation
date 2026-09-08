@@ -1274,7 +1274,7 @@ def im_hook(dict_param):
 <span class="notranslate">ImunifyAV/AV+</span> can notify you in two independent ways, and they are
 configured in different places:
 
-* **Event notifications** — script hooks that the server runs when a scan starts, finishes or finds malware. Configured on the <span class="notranslate">_Settings → Notifications_</span> tab or via the [CLI](/cli/#notifications-config). **Off by default.**
+* **Event notifications** — script hooks that the server runs when a scan starts, finishes or finds malware. Configured on the <span class="notranslate">_Settings → Notifications_</span> tab or via the [CLI](/cli/#notifications-config). **Off by default**, except the malware hook Imunify enables on Plesk.
 * **Panel notifications** — security digests generated in the Imunify cloud and delivered through cPanel iContact or the Plesk Notification Center. Configured in the <span class="notranslate">_Panel notifications_</span> row of the same tab, or via <span class="notranslate">`DASHBOARD.notifications`</span>. **On by default.** See [Panel notifications (iContact)](/features/panel_notifications/).
 
 ![](/images/notifications-settings-av-plesk.png)

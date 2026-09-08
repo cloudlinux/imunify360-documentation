@@ -1611,8 +1611,15 @@ Allows administrators to do the following:
 * execute custom scripts on events execution
 
 The settings are stored in <span class="notranslate">_/etc/sysconfig/imunify360/hooks.yaml_</span>.
-**Every event is disabled by default**, and the file does not exist until something is configured,
-so an absent file is the normal state of a fresh installation. The same settings are available in
+**Every event is disabled by default**, and on every panel except Plesk the file does not exist
+until something is configured, so an absent file is the normal state of a fresh installation. On
+Plesk the agent creates the file and enables a <span class="notranslate">SCRIPT</span> target on
+<span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span>,
+<span class="notranslate">USER_SCAN_MALWARE_FOUND</span> and
+<span class="notranslate">REALTIME_MALWARE_FOUND</span> for the Imunify extension's
+<span class="notranslate">_send-notifications_</span> script — see
+[Plesk: managing delivery with Plesk Notifications](/features/panel_notifications/#plesk-managing-delivery-with-plesk-notifications).
+The same settings are available in
 the UI — see [Notifications](/features/#notifications) for what each event means, when it fires
 and how the messages are delivered.
 
