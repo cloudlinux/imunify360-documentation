@@ -574,6 +574,26 @@ The required ID can be obtained from the <span class="notranslate">`malware mali
 
 Allows administrators to execute custom scripts on events execution.
 
+The settings are stored in <span class="notranslate">_/etc/sysconfig/imunify360/hooks.yaml_</span>.
+**Every event is disabled by default**, and the file does not exist until something is configured,
+so an absent file is the normal state of a fresh installation.
+
+::::tip Note
+In <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> the
+only available target is <span class="notranslate">**SCRIPT**</span>. There is no
+<span class="notranslate">ADMIN</span> (email) target and no
+<span class="notranslate">`admin`</span> section, so this command cannot be used to send email —
+the <span class="notranslate">`admin_emails`</span>,
+<span class="notranslate">`default_emails`</span> and
+<span class="notranslate">`notify_from_email`</span> options documented for Imunify360 do not exist
+here. To have Imunify send email on these products, either send it from your own script hook, or use
+[panel notifications](/features/panel_notifications/), which deliver email through cPanel or Plesk.
+
+The real-time scanning and <span class="notranslate">Proactive Defense</span> events
+(<span class="notranslate">REALTIME_MALWARE_FOUND</span>,
+<span class="notranslate">SCRIPT_BLOCKED</span>) are Imunify360 features and are not available
+either.
+::::
 
 **Usage:**
 
@@ -659,6 +679,36 @@ Rules:
 * <span class="notranslate">CUSTOM_SCAN_FINISHED</span> – occurs immediately after on-demand (manual) scanning has finished, regardless the malware has found or not.
 * <span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span> – occurs when the on-demand scanning process has finished and malware found.
 
+::::tip Note
+The event name says which *scan type* produced the event, not who started the scan. A scheduled
+background scan (<span class="notranslate">`MALWARE_SCAN_SCHEDULE`</span>) reports itself as a
+**user scan** and therefore triggers <span class="notranslate">`USER_SCAN_*`</span>, while
+<span class="notranslate">`CUSTOM_SCAN_*`</span> covers on-demand scans started from the admin UI or
+with <span class="notranslate">`malware scan`</span>.
+::::
+
+**SCRIPT**:
+
+* <span class="notranslate">scripts</span> – the full path to the script(s) or any other Linux executable to be launched on event occurrence. Paths must be absolute, and the script must have the executable bit (+x) on. A line-separated list of scripts is supported.
+* <span class="notranslate">enabled</span> – run (<span class="notranslate">`True`</span>) the script upon event occurrence.
+
+:::warning Note
+Script hooks run as the unprivileged <span class="notranslate">`_imunify`</span> user, which must be
+able both to execute the file and to traverse every directory on the way to it. A script placed under
+<span class="notranslate">_/root_</span> will never run — the notifier logs
+<span class="notranslate">`fork/exec …: permission denied`</span> and the event is dropped silently.
+Put the script somewhere readable and grant the group access:
+
+<div class="notranslate">
+
+```
+mkdir -p /opt/imunify-hooks
+mv /root/my-handler.sh /opt/imunify-hooks/
+chown root:_imunify /opt/imunify-hooks /opt/imunify-hooks/my-handler.sh
+chmod 750 /opt/imunify-hooks /opt/imunify-hooks/my-handler.sh
+```
+</div>
+:::
 
 **Examples**:
 

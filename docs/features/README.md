@@ -304,80 +304,277 @@ Disable (default):
 
 ## Notifications
 
+Imunify sends three different kinds of messages, and each one is configured in a
+different place. Most reports of "I enabled notifications but nothing arrives" turn out to
+be about a different channel than the one that was configured, so start by identifying
+which of the three you need:
+
+<table>
+<thead>
+<tr><th align="left">Channel</th><th align="left">What it reports</th><th align="left">Where you configure it</th><th align="left">Enabled by default</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><b>Event notifications</b><br>(emails and script hooks)</td>
+<td>Scan and <span class="notranslate">Proactive Defense</span> events that happen on this server, sent by the server itself</td>
+<td><span class="notranslate"><i>Settings → Notifications</i></span>, or <a href="/command_line_interface/#notifications-config"><span class="notranslate"><code>notifications-config</code></span></a></td>
+<td><b>No</b> — every event is off until you turn it on</td>
+</tr>
+<tr>
+<td><b>Panel notifications</b><br>(iContact messages)</td>
+<td>Security recommendations and digests generated in the Imunify cloud and delivered through the hosting panel</td>
+<td><span class="notranslate"><i>Settings → Notifications → Panel notifications</i></span>, <span class="notranslate"><code>ADMIN_CONTACTS.enable_icontact_notifications</code></span>, <span class="notranslate"><code>DASHBOARD.notifications</code></span></td>
+<td><b>Yes</b> — all message types are on</td>
+</tr>
+<tr>
+<td><b>Admin contacts</b></td>
+<td>Critical issues, license and configuration problems, sent by the Imunify cloud</td>
+<td><span class="notranslate"><i>Settings → General</i></span>, <span class="notranslate"><code>ADMIN_CONTACTS.emails</code></span></td>
+<td>Yes, once an address is set</td>
+</tr>
+</tbody>
+</table>
+
+This section describes **event notifications**. Panel notifications have their own page:
+[Panel notifications (iContact)](/features/panel_notifications/).
+
+### Configuring event notifications
+
+Go to <span class="notranslate">_Settings_</span> and choose the <span class="notranslate">_Notifications_</span> tab.
+
+![](/images/notifications-settings-i360.png)
+
+* <span class="notranslate">**Default admin emails**</span>: the default list of emails used for all enabled admin email notifications. Plain addresses only — the keyword `default` is not accepted here.
+* <span class="notranslate">**From**</span>: the sender address of all emails sent by the notification subsystem.
+* <span class="notranslate">**Panel notifications**</span>: opens the [Panel email notifications](/features/panel_notifications/#choosing-which-message-types-to-receive) dialog. This row belongs to the second channel from the table above and is shown only on cPanel and Plesk.
+
+Every event is collapsed into its own row. Expand a row to configure its targets, then
+click <span class="notranslate">_Save changes_</span> at the bottom of the page — nothing is
+applied until you do.
+
+The settings are stored in <span class="notranslate">_/etc/sysconfig/imunify360/hooks.yaml_</span>.
+The file does not exist on a fresh installation and is created the first time you save the form
+(or run <span class="notranslate">`notifications-config update`</span>). An absent file means "no
+event notifications configured", which is the default state.
+
+### Which events exist, and what can they do
+
+An event can have up to two targets: <span class="notranslate">**ADMIN**</span> (an email) and
+<span class="notranslate">**SCRIPT**</span> (your own executable). The two are independent — you can
+enable either, both, or neither.
+
+<table>
+<thead>
+<tr><th align="left">Event</th><th align="left">Occurs when</th><th align="left">Imunify360</th><th align="left">ImunifyAV / AV+</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="notranslate">REALTIME_MALWARE_FOUND</span></td><td>malware is detected during real-time scanning (file upload, ModSecurity, FTP)</td><td>email, script<br><i>aggregated</i></td><td>—</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_MALWARE_FOUND</span></td><td>a user or scheduled background scan has finished and malware was found</td><td>email, script</td><td>script</td></tr>
+<tr><td><span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span></td><td>an on-demand (manual) scan has finished and malware was found</td><td>email, script</td><td>script</td></tr>
+<tr><td><span class="notranslate">SCRIPT_BLOCKED</span></td><td><span class="notranslate">Proactive Defense</span> has blocked a malicious script</td><td>email, script<br><i>aggregated</i></td><td>—</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_STARTED</span></td><td>a user or scheduled background scan has started</td><td>script</td><td>script</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_FINISHED</span></td><td>a user or scheduled background scan has finished, whether or not malware was found</td><td>script</td><td>script</td></tr>
+<tr><td><span class="notranslate">CUSTOM_SCAN_STARTED</span></td><td>an on-demand (manual) scan has started</td><td>script</td><td>script</td></tr>
+<tr><td><span class="notranslate">CUSTOM_SCAN_FINISHED</span></td><td>an on-demand (manual) scan has finished, whether or not malware was found</td><td>script</td><td>script</td></tr>
+</tbody>
+</table>
+
 ::::tip Note
-This section describes Imunify event notifications (emails/scripts) configured in Imunify UI and via `notifications-config`. For panel notifications (iContact messages) delivered via cPanel iContact or Plesk Notifications, see [Panel notifications (iContact)](/features/panel_notifications/).
+In <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> the
+<span class="notranslate">**ADMIN**</span> email target does not exist at all: the four events
+above are script-only, and there are no <span class="notranslate">_Default admin emails_</span> or
+<span class="notranslate">_From_</span> fields on the page. The real-time and
+<span class="notranslate">Proactive Defense</span> events are Imunify360-only features and are not
+listed either.
+
+![](/images/notifications-settings-av-plesk.png)
+
+If you need an email on an <span class="notranslate">ImunifyAV/AV+</span> server, either send it
+from your own script hook, or use [panel notifications](/features/panel_notifications/), which do
+deliver email on both products.
 ::::
 
-Starting from version 4.10, an administrator is able to configure email addresses to submit reports and execute custom scripts. Go to <span class="notranslate">_Settings_</span> and choose <span class="notranslate">_Notifications_</span> tab.
+#### Which scan produces which event
 
-![](/images/notifications.png)
+The <span class="notranslate">`USER_SCAN_*`</span> and <span class="notranslate">`CUSTOM_SCAN_*`</span>
+names do not map to "started by a user" versus "started by the admin" — they map to the internal
+scan type:
 
-* <span class="notranslate">**Default admin emails**</span>: specify the default list of emails used for all enabled admin email notifications. 
-* <span class="notranslate">**From**</span>: specify a sender of all emails sent by the Hooks. 
+<table>
+<thead>
+<tr><th align="left">How the scan was started</th><th align="left">Scan type</th><th align="left">Event family</th></tr>
+</thead>
+<tbody>
+<tr><td>Scheduled background scan (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE</code></span>)</td><td><span class="notranslate"><code>background</code></span></td><td><span class="notranslate"><code>USER_SCAN_*</code></span></td></tr>
+<tr><td>An end user scanning their own account from the Imunify UI</td><td><span class="notranslate"><code>user</code></span></td><td><span class="notranslate"><code>USER_SCAN_*</code></span></td></tr>
+<tr><td><span class="notranslate"><i>Start scanning</i></span> in the admin UI, or <span class="notranslate"><code>imunify360-agent malware scan</code></span></td><td><span class="notranslate"><code>on-demand</code></span></td><td><span class="notranslate"><code>CUSTOM_SCAN_*</code></span></td></tr>
+<tr><td>Rescan requested by the cloud, or a rescan of a file modified after the previous scan</td><td><span class="notranslate"><code>rescan</code></span>, <span class="notranslate"><code>rescan-outdated</code></span></td><td><span class="notranslate"><code>CUSTOM_SCAN_MALWARE_FOUND</code></span> only</td></tr>
+<tr><td>Real-time scanning of an uploaded file</td><td><span class="notranslate"><code>realtime</code></span></td><td><span class="notranslate"><code>REALTIME_MALWARE_FOUND</code></span></td></tr>
+</tbody>
+</table>
 
-The following events are available.
+So a **scheduled nightly scan reports itself as a "user scan"**: to be notified about it, enable
+<span class="notranslate">USER_SCAN_MALWARE_FOUND</span>, not
+<span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span>. Rescans emit only the malware-found
+event — they produce no "started" or "finished" event.
 
-#### Real-Time scan: malware detected
+### Event fields
 
-Occurs when malware is detected during the real-time scanning.
+An expanded event shows the fields of both targets — the email one first, the script one below:
 
-![](/images/RealTimeScanDetected.png)
+![](/images/notifications-event-fields.png)
 
-* <span class="notranslate">**Enable email notifications for admin**</span>: move the slider to <span class="notranslate">ON</span> to notify the administrator and a custom user list via email upon event occurrence. To notify the administrator on the default admin email, tick the <span class="notranslate">_Default admin emails_</span> checkbox. 
-* <span class="notranslate">**Notify every (mins)**</span>: set a notification interval in minutes. The data for all events that happened within the interval will be accumulated and sent altogether.
-* <span class="notranslate">**Admin emails**</span>: tick the <span class="notranslate">_Default admin emails_</span> and/or specify your emails for notifications.
-* <span class="notranslate">**Enable script execution**</span>: move the slide to <span class="notranslate">ON</span> to run a script (event handler) upon event occurrence. 
-* <span class="notranslate">**Notify every (sec)**</span>: set a notification interval in seconds. The data for all events that happened within the interval will be accumulated and sent altogether. 
-* <span class="notranslate">**Run a script**</span>: specify the full path to the script(s) or any other Linux executable to be launched on event occurrence. Make sure that the script has an executable bit (+x) on. A line-separated list of scripts is supported. 
+* <span class="notranslate">**Enable email notifications for admin**</span>: send an email when the event occurs. It goes to the addresses listed below and, when the <span class="notranslate">_Default admin emails_</span> checkbox is on, to the default list as well.
+* <span class="notranslate">**Notify every (mins)**</span>: aggregation interval. All events that happen within the interval are accumulated and sent in one message. Only <span class="notranslate">REALTIME_MALWARE_FOUND</span> and <span class="notranslate">SCRIPT_BLOCKED</span> have this field; the other events are sent as they happen.
+* <span class="notranslate">**Admin emails**</span>: the custom list of addresses for this event. Tick <span class="notranslate">_Default admin emails_</span> to add the default list as well.
+* <span class="notranslate">**Enable script execution**</span>: run an executable when the event occurs.
+* <span class="notranslate">**Notify every (sec)**</span>: the same aggregation interval for the script target.
+* <span class="notranslate">**Run a script**</span>: full path to the script (or any Linux executable) to launch. One path per line; several scripts are allowed.
 
-#### User scan: started
+:::warning Note
+The interval shown in the UI is minutes for the email target and seconds for the script target,
+but in <span class="notranslate">_hooks.yaml_</span> and in the
+<span class="notranslate">`notifications-config`</span> CLI the
+<span class="notranslate">`period`</span> value is **always in seconds** for both targets. The UI
+converts it for display. Aggregated events are dispatched by a cron job whose interval is the
+smallest configured period rounded to whole minutes, so a period below 60 seconds behaves like one
+minute, and a message can arrive up to one interval later than the event itself.
+:::
 
-Occurs immediately after the user scanning has started.
+### Malware notifications and cleanup
 
-![](/images/UserScanStarted.png)
+A malware-found notification is built from the infected files that the finished scan recorded, and
+that list has two exclusions worth knowing about, because both of them produce a scan that
+*reports* malware without an accompanying notification.
 
+**Files already being cleaned are excluded.** Files whose cleanup has already started or completed
+(<span class="notranslate">`cleanup_pending`</span>,
+<span class="notranslate">`cleanup_started`</span>, <span class="notranslate">`cleanup_done`</span>,
+<span class="notranslate">`cleanup_removed`</span>) are not counted when the event is assembled. In
+practice this rarely suppresses anything, because with
+<span class="notranslate">`MALWARE_SCANNING.default_action: cleanup`</span> the cleanup is queued
+*after* the scan has finished: the notification fires first and lists the files, and the cleanup
+follows a few seconds later. It does matter when a scan finishes while an earlier cleanup of the
+same files is still running — for example a rescan overlapping a cleanup — in which case those
+files are silently left out.
 
-#### Custom scan: started
+**Files eliminated by the default action are never recorded at all.** When
+<span class="notranslate">`MALWARE_SCANNING.try_restore_from_backup_first`</span> is enabled and a
+clean copy of the file is restored from a backup, the infected file is not stored as a malware hit.
+The scan summary still counts it in <span class="notranslate">`total_malicious`</span>, but there is
+no hit behind that number, so **no malware-found event is generated and no email is sent**. The same
+applies to any file the default action removes outright.
 
-![](/images/CustomScanStarted.png)
+If you want to be notified about every detection regardless of what happens to the file afterwards,
+enable the script target for <span class="notranslate">USER_SCAN_FINISHED</span> and
+<span class="notranslate">CUSTOM_SCAN_FINISHED</span> as well: those events fire on every scan and
+carry the scan summary, including
+<span class="notranslate">`total_malicious`</span>.
 
-Occurs immediately after on-demand (manual) scanning has started.
+### How messages are delivered
 
+**Email.** The <span class="notranslate">`imunify-notifier`</span> service renders the message from
+a template and submits it to the local MTA — first over SMTP to
+<span class="notranslate">`localhost:25`</span>, falling back to
+<span class="notranslate">`/usr/sbin/sendmail -t -oi`</span> if that fails. Imunify's
+responsibility ends there; whether the message is then delivered, queued or bounced is up to your
+MTA, and its log is the place to look. Templates live in
+<span class="notranslate">_/usr/share/imunify-notifier/templates/&lt;event&gt;/_</span> and can be
+overridden per event — see
+[Adding custom email template](/command_line_interface/#adding-custom-email-template).
 
-#### User scan: finished
+**Scripts.** Script hooks run as the unprivileged
+<span class="notranslate">`_imunify`</span> user and receive the event as a single JSON object on
+standard input. The payload always contains
+<span class="notranslate">`event_id`</span> plus the fields of that event; for scan events this
+includes <span class="notranslate">`scan_id`</span>, <span class="notranslate">`path`</span>,
+<span class="notranslate">`type`</span>, <span class="notranslate">`started`</span>,
+<span class="notranslate">`completed`</span>, <span class="notranslate">`total_resources`</span>,
+<span class="notranslate">`total_malicious`</span> and, for the malware-found and finished events,
+<span class="notranslate">`malicious_files`</span>. Reference scripts are linked from
+[Example of scripts to create custom notifications](/command_line_interface/#example-of-scripts-to-create-custom-notifications).
 
-Occurs immediately after the user scanning has finished, regardless the malware has found or not.
+:::warning Note
+Because the script runs as <span class="notranslate">`_imunify`</span>, that user must be able to
+both traverse the directory and execute the file. A script placed under
+<span class="notranslate">_/root_</span> will never run — the notifier logs
+<span class="notranslate">`fork/exec …: permission denied`</span> and the event is dropped
+silently. Put your scripts somewhere readable, for example:
 
-![](/images/UserScanFinished.png)
+<div class="notranslate">
 
-#### Custom scan: finished
+```
+mkdir -p /opt/imunify-hooks
+mv /root/my-handler.sh /opt/imunify-hooks/
+chown root:_imunify /opt/imunify-hooks /opt/imunify-hooks/my-handler.sh
+chmod 750 /opt/imunify-hooks /opt/imunify-hooks/my-handler.sh
+```
+</div>
+:::
 
-![](/images/CustomScanFinished.png)
+**The notifier service.** <span class="notranslate">`imunify-notifier`</span> is socket-activated
+and exits after one minute without work, so a normal, healthy state looks like this:
 
-Occurs immediately after on-demand (manual) scanning has finished, regardless the malware has found or not.
+<div class="notranslate">
 
+```
+# systemctl is-active imunify-notifier.socket imunify-notifier.service
+active
+inactive
+```
+</div>
 
-#### Custom scan: malware detected
+<span class="notranslate">`imunify-notifier.socket`</span> must be
+<span class="notranslate">`active (listening)`</span>;
+<span class="notranslate">`imunify-notifier.service`</span> being
+<span class="notranslate">`inactive`</span> between events is expected and is not a fault. Its log
+is in the journal:
 
-Occurs when the on-demand scanning process has finished and malware found.
+<div class="notranslate">
 
-![](/images/CustomScanDetected.png)
+```
+journalctl -u imunify-notifier --since "1 hour ago"
+```
+</div>
 
+### Troubleshooting
 
-#### User scan: malware detected
+<table>
+<thead>
+<tr><th align="left">Symptom</th><th align="left">What to check</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>No notifications at all, for any event</td>
+<td>Event notifications are off by default. Run <span class="notranslate"><code>imunify360-agent notifications-config show</code></span> and confirm that the target you expect has <span class="notranslate"><code>"enabled": true</code></span>. If <span class="notranslate"><i>/etc/sysconfig/imunify360/hooks.yaml</i></span> does not exist, nothing has been configured yet.</td>
+</tr>
+<tr>
+<td>Malware was found and cleaned, but no email arrived</td>
+<td>See <a href="#malware-notifications-and-cleanup">Malware notifications and cleanup</a>. Check whether <span class="notranslate"><code>MALWARE_SCANNING.try_restore_from_backup_first</code></span> is enabled, and whether the scan was a background scan (which needs <span class="notranslate">USER_SCAN_MALWARE_FOUND</span>, not <span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span>).</td>
+</tr>
+<tr>
+<td>No email on an ImunifyAV/AV+ server</td>
+<td>There is no email target on those products. Use a script hook or <a href="/features/panel_notifications/">panel notifications</a>.</td>
+</tr>
+<tr>
+<td><span class="notranslate"><code>value does not match regex '^.+@(.+\.)+.+'</code></span> when adding an address</td>
+<td>The address must contain a dot in the domain part. <span class="notranslate"><code>root@localhost</code></span> is rejected; <span class="notranslate"><code>root@localhost.localdomain</code></span> is accepted.</td>
+</tr>
+<tr>
+<td>The script never runs</td>
+<td>Look for <span class="notranslate"><code>fork/exec …: permission denied</code></span> in <span class="notranslate"><code>journalctl -u imunify-notifier</code></span>, and check the ownership and permissions as described above.</td>
+</tr>
+<tr>
+<td>The email is generated but never arrives</td>
+<td>Check your MTA log (<span class="notranslate"><i>/var/log/maillog</i></span>, <span class="notranslate"><i>/var/log/exim_mainlog</i></span>). A line handing the message to <span class="notranslate"><code>/usr/sbin/sendmail</code></span> means the notifier did its part.</td>
+</tr>
+<tr>
+<td><span class="notranslate"><code>error while getting scan info: scan not found</code></span> in the notifier journal after every scheduled scan</td>
+<td>Expected on Imunify360 with <span class="notranslate"><code>MALWARE_DATABASE_SCAN.enable: True</code></span>. Each background run also enqueues a database scan, and the notifier can only enrich file scans, so it logs this once per user per run. File-scan notifications are unaffected.</td>
+</tr>
+</tbody>
+</table>
 
-Occurs when the malware scanning process of a user account has finished and malware found.
-
-![](/images/UserScanDetected.png)
-
-
-#### Script blocked
-
-Occurs when the Proactive Defense has blocked malicious script.
-
-![](/images/ScriptBlocked.png)
-
-Click <span class="notranslate">_Save changes_</span> at the bottom to apply all changes.
 
 
 ## Malware Database Scanner (MDS)
