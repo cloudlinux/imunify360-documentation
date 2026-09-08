@@ -114,3 +114,50 @@ imunify360-agent config update '{"PERMISSIONS": {"user_ignore_list": false}}'
 
 :::
 
+
+## WebShield
+
+The <span class="notranslate">WebShield</span> tab holds the WebShield protection features you can manage for your own domains. Currently it contains one such feature, <span class="notranslate">Under Attack Mode</span>.
+
+### Under Attack Mode
+
+<span class="notranslate">**Under Attack Mode (UAM)**</span> lets you put your own domains "under attack": while a domain is under attack, every visitor first gets a JavaScript splash page and only reaches the site after their browser solves it. Regular browsers solve it transparently and are then trusted for the lifetime of the clearance cookie; simple bots never get through.
+
+Turn it on for a domain when it is the target of an automated flood — a scripted login or checkout abuse, for example — and turn it off once the flood is over.
+
+![](/images/uam_user_overview.png)
+
+:::tip Note
+This tab appears only if <span class="notranslate">Under Attack Mode</span> is supported by the server, the server administrator has enabled it, and they have allowed end users to manage their own rules. If you do not see the tab, or you see a notice saying that the service is disabled, ask your hosting provider.
+:::
+
+You only see and manage the rules you created, for the domains of your own account. Rules created by the server administrator are not shown here, but they still apply to your domains.
+
+#### Adding a rule
+
+Click <span class="notranslate">**ADD**</span> and fill in the form.
+
+![](/images/uam_user_add_rule.png)
+
+| Field | Description |
+|-|-|
+|<span class="notranslate">Domain</span>|The domain to put under attack. Pick one of your domains from the list, or enter its wildcard — <span class="notranslate">`*.example.com`</span> covers the subdomains only, <span class="notranslate">`.example.com`</span> covers the domain and its subdomains.|
+|<span class="notranslate">Clearance cookie lifetime</span>|How long a visitor is trusted after solving the splash page, before being asked again. The default is <span class="notranslate">`1h`</span>; a shorter lifetime is stricter, a longer one is more comfortable for real visitors.|
+|<span class="notranslate">Label</span>|An optional note to remind you why the rule exists.|
+|<span class="notranslate">Paths</span>|<span class="notranslate">**Entire domain**</span> challenges every request. <span class="notranslate">**Only the listed paths**</span> challenges just the URLs you list — useful when only the login or the checkout page is being hit. <span class="notranslate">**All paths except the listed ones**</span> challenges everything else, which is a way to keep an API or a webhook endpoint reachable.|
+
+The path conditions and the way they treat query strings are described in <span class="notranslate">[Scoping a rule to paths](/dashboard/#scoping-a-rule-to-paths)</span>.
+
+#### Checking and managing rules
+
+* <span class="notranslate">**Test URL against the rules**</span> tells you whether a given URL would be challenged, without waiting for real traffic.
+* <span class="notranslate">Hits for</span> shows how many challenges the rule has served over the selected period, so you can see whether it is doing any work.
+* The <span class="notranslate">**Active**</span> switch pauses a rule and resumes it later — better than deleting a rule you will need again during the next flood.
+* <span class="notranslate">**Edit**</span> changes the cookie lifetime, the label and the paths of an existing rule. The domain cannot be changed; create a new rule instead.
+* <span class="notranslate">**Remove**</span> deletes the rule.
+
+:::warning Legitimate automation needs to be whitelisted
+Anything that cannot run JavaScript is stopped while the rule is active — including your own integrations, monitoring and cron jobs that call the site over HTTP. Ask your hosting provider to whitelist the IP addresses they come from; whitelisted IP addresses are not challenged.
+:::
+
+For the technical details of how the challenge is enforced, see <span class="notranslate">[Under Attack Mode (UAM)](/features/under_attack_mode/)</span>.
