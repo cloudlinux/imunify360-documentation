@@ -575,8 +575,12 @@ The required ID can be obtained from the <span class="notranslate">`malware mali
 Allows administrators to execute custom scripts on events execution.
 
 The settings are stored in <span class="notranslate">_/etc/sysconfig/imunify360/hooks.yaml_</span>.
-**Every event is disabled by default**, and the file does not exist until something is configured,
-so an absent file is the normal state of a fresh installation.
+**Every event is disabled by default**, and on every panel except Plesk the file does not exist
+until something is configured, so an absent file is the normal state of a fresh installation. On
+Plesk the agent creates the file and enables a <span class="notranslate">SCRIPT</span> target on the
+malware-found events for the Imunify extension's
+<span class="notranslate">_send-notifications_</span> script — see
+[Plesk: managing delivery with Plesk Notifications](/features/panel_notifications/#plesk-managing-delivery-with-plesk-notifications).
 
 ::::tip Note
 In <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> the

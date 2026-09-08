@@ -305,9 +305,8 @@ Disable (default):
 ## Notifications
 
 Imunify sends three different kinds of messages, and each one is configured in a
-different place. Most reports of "I enabled notifications but nothing arrives" turn out to
-be about a different channel than the one that was configured, so start by identifying
-which of the three you need:
+different place. When a notification you expected does not arrive, first check which of the
+three channels it belongs to:
 
 <table>
 <thead>
@@ -318,7 +317,7 @@ which of the three you need:
 <td><b>Event notifications</b><br>(emails and script hooks)</td>
 <td>Scan and <span class="notranslate">Proactive Defense</span> events that happen on this server, sent by the server itself</td>
 <td><span class="notranslate"><i>Settings → Notifications</i></span>, or <a href="/command_line_interface/#notifications-config"><span class="notranslate"><code>notifications-config</code></span></a></td>
-<td><b>No</b> — every event is off until you turn it on</td>
+<td><b>No</b> — off until you turn a target on; the one exception is the malware hook the agent installs on Plesk (see below)</td>
 </tr>
 <tr>
 <td><b>Panel notifications</b><br>(iContact messages)</td>
@@ -353,9 +352,17 @@ click <span class="notranslate">_Save changes_</span> at the bottom of the page 
 applied until you do.
 
 The settings are stored in <span class="notranslate">_/etc/sysconfig/imunify360/hooks.yaml_</span>.
-The file does not exist on a fresh installation and is created the first time you save the form
-(or run <span class="notranslate">`notifications-config update`</span>). An absent file means "no
-event notifications configured", which is the default state.
+On every panel except Plesk the file does not exist until you save the form (or run
+<span class="notranslate">`notifications-config update`</span>) for the first time; an absent file
+means "no event notifications configured", which is the default state. **On Plesk the agent creates
+the file itself** and enables a <span class="notranslate">SCRIPT</span> target on
+<span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span>,
+<span class="notranslate">USER_SCAN_MALWARE_FOUND</span> and
+<span class="notranslate">REALTIME_MALWARE_FOUND</span>, pointing at the Imunify extension's
+<span class="notranslate">_send-notifications_</span> script, so that malware notifications reach
+Plesk administrators and customers through Plesk Notifications — see
+[Plesk: managing delivery with Plesk Notifications](/features/panel_notifications/#plesk-managing-delivery-with-plesk-notifications).
+Everything else stays off until you turn it on.
 
 ### Which events exist, and what can they do
 
@@ -381,7 +388,7 @@ enable either, both, or neither.
 
 ::::tip Note
 In <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> the
-<span class="notranslate">**ADMIN**</span> email target does not exist at all: the four events
+<span class="notranslate">**ADMIN**</span> email target does not exist at all: the six events
 above are script-only, and there are no <span class="notranslate">_Default admin emails_</span> or
 <span class="notranslate">_From_</span> fields on the page. The real-time and
 <span class="notranslate">Proactive Defense</span> events are Imunify360-only features and are not
@@ -436,9 +443,14 @@ The interval shown in the UI is minutes for the email target and seconds for the
 but in <span class="notranslate">_hooks.yaml_</span> and in the
 <span class="notranslate">`notifications-config`</span> CLI the
 <span class="notranslate">`period`</span> value is **always in seconds** for both targets. The UI
-converts it for display. Aggregated events are dispatched by a cron job whose interval is the
-smallest configured period rounded to whole minutes, so a period below 60 seconds behaves like one
-minute, and a message can arrive up to one interval later than the event itself.
+converts it for display.
+
+The two aggregated events are not sent the moment they happen. A cron job runs at the smallest
+configured period rounded to whole minutes (one minute at least) and deliberately collects only
+events **older than five minutes**, so that a burst of detections is reported once and in full.
+With a one-minute period the first message about a real-time detection therefore arrives five to
+six minutes after the event; with longer periods, correspondingly later. All other events are
+dispatched immediately.
 :::
 
 ### Malware notifications and cleanup
@@ -450,13 +462,13 @@ that list has two exclusions worth knowing about, because both of them produce a
 **Files already being cleaned are excluded.** Files whose cleanup has already started or completed
 (<span class="notranslate">`cleanup_pending`</span>,
 <span class="notranslate">`cleanup_started`</span>, <span class="notranslate">`cleanup_done`</span>,
-<span class="notranslate">`cleanup_removed`</span>) are not counted when the event is assembled. In
-practice this rarely suppresses anything, because with
+<span class="notranslate">`cleanup_removed`</span>) are not counted when the event is assembled. With
 <span class="notranslate">`MALWARE_SCANNING.default_action: cleanup`</span> the cleanup is queued
-*after* the scan has finished: the notification fires first and lists the files, and the cleanup
-follows a few seconds later. It does matter when a scan finishes while an earlier cleanup of the
-same files is still running — for example a rescan overlapping a cleanup — in which case those
-files are silently left out.
+*after* the scan has finished, so the event is assembled before any file changes state: the
+notification fires and lists the files, and the cleanup follows a few seconds later. The exclusion
+applies when a scan finishes while an earlier cleanup of the same files is still running — for
+example a rescan overlapping a cleanup — in which case those files are left out of the
+notification.
 
 **Files eliminated by the default action are never recorded at all.** When
 <span class="notranslate">`MALWARE_SCANNING.try_restore_from_backup_first`</span> is enabled and a
@@ -485,13 +497,24 @@ overridden per event — see
 
 **Scripts.** Script hooks run as the unprivileged
 <span class="notranslate">`_imunify`</span> user and receive the event as a single JSON object on
-standard input. The payload always contains
-<span class="notranslate">`event_id`</span> plus the fields of that event; for scan events this
-includes <span class="notranslate">`scan_id`</span>, <span class="notranslate">`path`</span>,
-<span class="notranslate">`type`</span>, <span class="notranslate">`started`</span>,
-<span class="notranslate">`completed`</span>, <span class="notranslate">`total_resources`</span>,
-<span class="notranslate">`total_malicious`</span> and, for the malware-found and finished events,
-<span class="notranslate">`malicious_files`</span>. Reference scripts are linked from
+standard input. Every payload carries <span class="notranslate">`event_id`</span>; the rest
+depends on the event, because the notifier enriches most events from the agent database before
+running the script:
+
+<table>
+<thead>
+<tr><th align="left">Event</th><th align="left">Payload fields besides <code>event_id</code></th></tr>
+</thead>
+<tbody>
+<tr><td><span class="notranslate">CUSTOM_SCAN_STARTED</span></td><td><code>scan_id</code>, <code>path</code>, <code>started</code> — no enrichment</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_STARTED</span></td><td>the above plus the scan record: <code>type</code>, <code>resource_type</code>, <code>initiator</code>, <code>total_resources</code>, <code>total_malicious</code>, <code>completed</code>, <code>error</code> (the totals are still 0 at this point)</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_FINISHED</span>, <span class="notranslate">CUSTOM_SCAN_FINISHED</span>, <span class="notranslate">USER_SCAN_MALWARE_FOUND</span>, <span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span></td><td>the scan record as above plus <code>malicious_files</code>, the list of infected paths</td></tr>
+<tr><td><span class="notranslate">REALTIME_MALWARE_FOUND</span></td><td><code>period_started</code>, <code>period_finished</code>, <code>malicious_total</code>, <code>malicious_files</code> for the aggregated period</td></tr>
+<tr><td><span class="notranslate">SCRIPT_BLOCKED</span></td><td><code>period_started</code>, <code>period_finished</code>, <code>events_total</code>, <code>blocked_scripts</code> (objects with a <code>path</code>) for the aggregated period</td></tr>
+</tbody>
+</table>
+
+Reference scripts that parse these payloads are linked from
 [Example of scripts to create custom notifications](/command_line_interface/#example-of-scripts-to-create-custom-notifications).
 
 :::warning Note

@@ -421,7 +421,7 @@ systemctl restart imunify360
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;outdated_wp_core: True</span></td>
 <td># an installed WordPress core version is outdated.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;scan_not_scheduled: True</span></td>
-<td># no scheduled malware scan is configured (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is <span class="notranslate"><code>none</code></span>).</td></tr>
+<td># no scheduled malware scan is configured (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is <span class="notranslate"><code>none</code></span>) and no user or background scan has run in the last 30 days.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">SMTP_BLOCKING:</span></th></tr>
 <tr><td><span class="notranslate">enable: False</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) (default value) SMTP Traffic Management. When enabled, the outgoing SMTP traffic would be blocked according to the settings.</td></tr>
