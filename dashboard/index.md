@@ -25,6 +25,8 @@ It allows to access:
 
 * <span class="notranslate">[Firewall](/dashboard/#firewall)</span> – a dashboard of <span class="notranslate">Black List, White List</span> and <span class="notranslate">Gray List</span>, and <span class="notranslate">Blocked Ports</span> with the ability to manage them.
 
+* <span class="notranslate">[WebShield](/dashboard/#webshield)</span> – manages <span class="notranslate">Under Attack Mode</span>: puts a domain behind a JavaScript splash challenge while it is under attack.
+
 * <span class="notranslate">[Malware Scanner](/dashboard/#malware-scanner)</span> – real-time file scanner.
 
 * <span class="notranslate">[Proactive Defense](/dashboard/#proactive-defense)</span> – a unique Imunify360 feature that can prevent malicious activity through PHP scripts
@@ -509,6 +511,156 @@ Exact ports and port-ranges to be allowed can be configured by the following fie
 * FIREWALL.TCP_OUT_IPv6
 * FIREWALL.UDP_IN_IPv6
 * FIREWALL.UDP_OUT_IPv6
+
+## WebShield
+
+The <span class="notranslate">WebShield</span> tab holds the WebShield protection features that the server administrator configures per domain rather than per IP address. Currently it contains one such feature, <span class="notranslate">Under Attack Mode</span>.
+
+:::warning The tab is shown only where the feature is available
+WebShield inspects requests inside the web server, so the features on this tab need the WebShield module loaded there. On environments where that module is not loaded — LiteSpeed-based cPanel setups, for example — the <span class="notranslate">WebShield</span> tab is not displayed at all, and opening its URL directly redirects back to the dashboard. The same applies to the end user interface.
+
+If the tab is missing on a server where you expect it, check which WebShield features are available:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl filters
+FILTER   AVAILABLE  DESCRIPTION
+verdict  yes        IPSET lookup
+uam      no         Under Attack Mode
+l7prot   no         L7 rate limiter
+```
+
+</div>
+
+Where <span class="notranslate">`uam`</span> is not available, only the GreyList / Anti-bot Challenge applies. See <span class="notranslate">[WebShield feature availability](/command_line_interface/#webshield-feature-availability)</span> for the full list.
+:::
+
+:::tip Note
+The <span class="notranslate">WebShield</span> tab is available in the cPanel integration only.
+
+On servers whose Imunify360 agent is older than the interface, availability cannot be probed and the tab is displayed anyway. If you see it but <span class="notranslate">`imunify360-wsctl filters`</span> reports <span class="notranslate">`uam  no`</span>, rules can still be created but visitors are never challenged — update the agent.
+:::
+
+### Under Attack Mode
+
+<span class="notranslate">**Under Attack Mode (UAM)**</span> puts a domain behind a mandatory JavaScript splash challenge while it is being attacked. Regular browsers solve the challenge transparently and receive a clearance cookie, so they are challenged only once per cookie lifetime; simple bots that cannot run the challenge never reach the site.
+
+Unlike the <span class="notranslate">[GreyList / Anti-bot Challenge](/features/#greylist-and-anti-bot-challenge)</span>, which reacts to the reputation of an individual IP address, UAM is configured explicitly and applies to **every** visitor of the domain (and, optionally, only of some URL paths) it covers.
+
+The concept, the enforcement details and the equivalent <span class="notranslate">`imunify360-wsctl uam`</span> commands are described in <span class="notranslate">[Under Attack Mode (UAM)](/features/under_attack_mode/)</span>. This section only covers the user interface.
+
+![](/images/uam_admin_overview.png)
+
+#### Service settings
+
+Two switches at the top of the tab control the service as a whole:
+
+* <span class="notranslate">**Enable the service**</span> – turns UAM on or off for the whole server. UAM is off by default. Turning it off stops all challenges immediately; the rules are preserved and take effect again when the service is enabled.
+* <span class="notranslate">**Show the service to end users**</span> – lets unprivileged users manage their own rules for their own domains from the <span class="notranslate">[end user interface](/user_interface/#under-attack-mode)</span>. Off by default.
+
+While the service is off, the rules table is replaced with a notice:
+
+![](/images/uam_admin_service_disabled.png)
+
+The same switches are available from the command line:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl uam settings service enable
+imunify360-wsctl uam settings visibility enable
+```
+
+</div>
+
+#### Testing a URL against the rules
+
+<span class="notranslate">**Test URL against the rules**</span> checks whether a given URL would be challenged, using the same matching as live traffic. It is the quickest way to verify path scoping without generating real requests.
+
+Enter a host with an optional path and query string (the scheme may be omitted) and click <span class="notranslate">**TEST**</span>. When a rule matches, its ID and domain are reported and the matching row is highlighted in the table below; otherwise the verdict is <span class="notranslate">_No rule matches — visitors are not challenged_</span>.
+
+![](/images/uam_admin_test_url.png)
+
+:::tip Note
+The query string is significant — see <span class="notranslate">[Path scoping](/features/under_attack_mode/#path-scoping)</span>.
+:::
+
+#### The rules table
+
+| Column | Description |
+|-|-|
+|<span class="notranslate">ID</span>|The rule identifier assigned by WebShield. It is the ID used by the <span class="notranslate">`imunify360-wsctl uam`</span> commands.|
+|<span class="notranslate">Active</span>|Pauses or resumes the rule without deleting it. Inactive rules are skipped when matching.|
+|<span class="notranslate">Owner</span>|<span class="notranslate">`admin`</span> for rules created by the server administrator, or the user name for a rule created by an end user.|
+|<span class="notranslate">Domain</span>|The domain the rule covers. A wildcard is shown as it was entered, for example <span class="notranslate">`*.example.com`</span>.|
+|<span class="notranslate">Cookie TTL</span>|How long a visitor's clearance cookie stays valid after they solve the challenge, before they are challenged again.|
+|<span class="notranslate">Hits for</span>|The number of challenges served for the rule within the selected period: <span class="notranslate">Today</span> (default), <span class="notranslate">Last hour</span>, <span class="notranslate">Last 4 hours</span>, <span class="notranslate">Last 24 hours</span>, <span class="notranslate">Last 4 days</span> or <span class="notranslate">Last 7 days</span>. Counts are retained for 7 days.|
+|<span class="notranslate">Label</span>|The optional free-text note stored with the rule.|
+|<span class="notranslate">Actions</span>|<span class="notranslate">Edit</span> and <span class="notranslate">Remove</span> for own rules, <span class="notranslate">View</span> for the rules of end users.|
+
+Rules are matched from top to bottom and the first matching rule is applied, in the same way as iptables/nftables rules.
+
+Use <span class="notranslate">**Filter by**</span> to narrow the list down by <span class="notranslate">Domain</span> or by <span class="notranslate">Owner</span>.
+
+#### Adding a rule
+
+Click <span class="notranslate">**ADD**</span> and fill in the form.
+
+![](/images/uam_admin_add_rule.png)
+
+| Field | Description |
+|-|-|
+|<span class="notranslate">Domain</span>|The domain to put under attack. Pick one of the server's domains from the list, or enter its wildcard — <span class="notranslate">`*.example.com`</span> covers the subdomains only, <span class="notranslate">`.example.com`</span> covers the domain and its subdomains. The domain of an existing rule cannot be changed.|
+|<span class="notranslate">Clearance cookie lifetime</span>|How long a visitor is trusted after solving the challenge. Choose one of the presets, or <span class="notranslate">Custom…</span> and enter a number followed by a unit — <span class="notranslate">`s`</span>, <span class="notranslate">`m`</span>, <span class="notranslate">`h`</span> or <span class="notranslate">`d`</span> — such as <span class="notranslate">`90m`</span> or <span class="notranslate">`6h`</span>, between 10 seconds and 3 days. The default is <span class="notranslate">`1h`</span>.|
+|<span class="notranslate">Label</span>|An optional note, up to 128 characters, shown in the rules table.|
+|<span class="notranslate">Paths</span>|Which URLs of the domain the rule covers — see [Scoping a rule to paths](#scoping-a-rule-to-paths) below.|
+
+![](/images/uam_admin_cookie_ttl.png)
+
+#### Scoping a rule to paths
+
+By default a rule covers the whole domain. Choose one of the other two modes to challenge only some URLs:
+
+* <span class="notranslate">**Entire domain**</span> – every request to the domain is challenged.
+* <span class="notranslate">**Only the listed paths**</span> – a request is challenged only if it matches one of the paths below.
+* <span class="notranslate">**All paths except the listed ones**</span> – the listed paths are let through, everything else on the domain is challenged.
+
+Add up to 32 paths with <span class="notranslate">**ADD PATH**</span>. Each path has a value and a condition, and the rule matches if **any** of them matches.
+
+![](/images/uam_admin_paths.png)
+
+![](/images/uam_admin_path_conditions.png)
+
+| Condition | Matches when the request URI |
+|-|-|
+|<span class="notranslate">equals</span>|is exactly the value|
+|<span class="notranslate">starts with</span>|begins with the value|
+|<span class="notranslate">ends with</span>|ends with the value|
+|<span class="notranslate">contains</span>|contains the value anywhere|
+|<span class="notranslate">matches wildcard</span>|matches the value as a wildcard pattern, where <span class="notranslate">`*`</span> stands for any number of characters, including <span class="notranslate">`/`</span>|
+|<span class="notranslate">query contains</span>|has a query string containing the value|
+|<span class="notranslate">query matches regex</span>|has a query string matching the value as a regular expression|
+
+:::warning The query string is part of what is matched
+The path conditions are applied to the whole request URI, query string included. An <span class="notranslate">`equals`</span> path for <span class="notranslate">`/wp-login.php`</span> therefore does not match <span class="notranslate">`/wp-login.php?redirect_to=/wp-admin/`</span>. Use <span class="notranslate">`starts with`</span> when the URL may carry a query string, and check the result with <span class="notranslate">**Test URL against the rules**</span>.
+:::
+
+#### Editing, pausing and removing rules
+
+* <span class="notranslate">**Edit**</span> (the pencil) opens the same form for an existing rule. Everything except the domain can be changed.
+* The <span class="notranslate">**Active**</span> switch pauses a rule and resumes it later, which is preferable to deleting a rule you are going to need again.
+* <span class="notranslate">**Remove**</span> (the bin) deletes the rule after a confirmation.
+
+#### Rules created by end users
+
+When <span class="notranslate">**Show the service to end users**</span> is on, end users can create rules for their own domains, and those rules appear in the administrator's table with the user name in the <span class="notranslate">Owner</span> column.
+
+A rule that belongs to an end user can only be inspected, not changed: its <span class="notranslate">Active</span> switch is disabled and the only action available is <span class="notranslate">**View**</span>, which opens the rule read-only.
+
+![](/images/uam_admin_rule_details.png)
+
+To manage such a rule anyway, use the command line as <span class="notranslate">`root`</span> — see <span class="notranslate">[Managing rules](/features/under_attack_mode/#managing-rules)</span>.
 
 ## Malware Scanner
 
@@ -1080,7 +1232,7 @@ Go to <span class="notranslate">_Imunify360 → Settings → General_</span>. Th
 * <span class="notranslate">[3-rd Party Integration](/dashboard/#_3-rd-party-integration)</span>
 * <span class="notranslate">[Auto White List](/dashboard/#auto-white-list)</span>
 * <span class="notranslate">[Incidents Logging](/dashboard/#incidents-logging)</span>
-* <span class="notranslate">[WebShield](/dashboard/#webshield)</span>
+* <span class="notranslate">[WebShield settings](/dashboard/#webshield-settings)</span>
 * <span class="notranslate">[Anti-bot protection](/dashboard/#anti-bot-protection)</span>
 * <span class="notranslate">[OSSEC](/dashboard/#ossec)</span>
 * <span class="notranslate">[PAM](/dashboard/#pam)</span>
@@ -1446,9 +1598,13 @@ Autocleanup configuration allows to keep the <span class="notranslate">Incidents
 	
 Click <span class="notranslate">_Save changes_</span> button on the bottom of the section to save changes.
 	
-#### WebShield
+#### WebShield settings
 
 ![](/images/webshield.png)
+
+:::tip Note
+The options below configure the IP-based side of WebShield — the <span class="notranslate">GreyList</span> and the <span class="notranslate">Anti-bot Challenge</span>. They do not control <span class="notranslate">Under Attack Mode</span>, which has its own switch on the <span class="notranslate">[WebShield](/dashboard/#under-attack-mode)</span> tab and keeps working when <span class="notranslate">_Enable WebShield_</span> is off.
+:::
 
 * <span class="notranslate">_Enable WebShield_</span>. When the option is off, disable WebShield, GreyList, and Anti-bot Challenge. A disabled state is recommended for servers with a small amount of RAM. A disabled option along with enabled "Minimized WAF Ruleset" will switch Imunify360 to the "Low Resource Usage" mode.  
 * <span class="notranslate">_Detect IPs behind CDN_</span> feature allows to recognize and block IPs with suspicious activity behind supported CDN providers.
