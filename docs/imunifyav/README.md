@@ -1269,23 +1269,42 @@ def im_hook(dict_param):
 ```
 </div>
 
-### Notifications
+## Notifications
 
-Starting from version 5.1, ImunifyAV/AV+ provides a completely new Hooks system configuration. Hooks can be configured via the separate UI “Notifications” tab in the Settings, or via the command-line interface (CLI).
+<span class="notranslate">ImunifyAV/AV+</span> can notify you in two independent ways, and they are
+configured in different places:
 
-![](/images/SettingsNotificationsAV.png)
+* **Event notifications** — script hooks that the server runs when a scan starts, finishes or finds malware. Configured on the <span class="notranslate">_Settings → Notifications_</span> tab or via the [CLI](/cli/#notifications-config). **Off by default**, except the malware hook Imunify enables on Plesk.
+* **Panel notifications** — security digests generated in the Imunify cloud and delivered through cPanel iContact or the Plesk Notification Center. Configured in the <span class="notranslate">_Panel notifications_</span> row of the same tab, or via <span class="notranslate">`DASHBOARD.notifications`</span>. **On by default.** See [Panel notifications (iContact)](/features/panel_notifications/).
 
-The administrator can configure to execute custom scripts (“hook handler”). Also, hooks support a new set of events and notification types:
+![](/images/notifications-settings-av-plesk.png)
 
-* Events occurring in each type of scan (real-time scan, user account scan, custom folder scan)
-* Events occurring at different stages of malware scanning process: upon scanning start, finish, when malware is found
+Event notifications support the following events:
 
-Each hook can be configured from the UI and the [CLI](/cli/). Each hook type has the enable/disable toggle and event handler script.
+<table>
+<thead>
+<tr><th align="left">Event</th><th align="left">Occurs when</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="notranslate">USER_SCAN_STARTED</span></td><td>a user or scheduled background scan has started</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_FINISHED</span></td><td>a user or scheduled background scan has finished, whether or not malware was found</td></tr>
+<tr><td><span class="notranslate">USER_SCAN_MALWARE_FOUND</span></td><td>a user or scheduled background scan has finished and malware was found</td></tr>
+<tr><td><span class="notranslate">CUSTOM_SCAN_STARTED</span></td><td>an on-demand (manual) scan has started</td></tr>
+<tr><td><span class="notranslate">CUSTOM_SCAN_FINISHED</span></td><td>an on-demand (manual) scan has finished, whether or not malware was found</td></tr>
+<tr><td><span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span></td><td>an on-demand (manual) scan has finished and malware was found</td></tr>
+</tbody>
+</table>
+
+A scheduled background scan reports itself as a **user scan**, so it triggers the
+<span class="notranslate">`USER_SCAN_*`</span> events, not
+<span class="notranslate">`CUSTOM_SCAN_*`</span>.
+
+Each event has an enable/disable toggle and a list of handler scripts.
 
 :::tip Notes
 * The hook script field accepts a fully qualified path
-* The hook script requires “execution” (+x) permissions to be set to work
-* Email notifications available in Imunify360
+* The hook script requires "execution" (+x) permissions to be set to work, and must be readable and executable by the <span class="notranslate">`_imunify`</span> user — a script under <span class="notranslate">_/root_</span> will never run
+* There is no email target on <span class="notranslate">ImunifyAV/AV+</span>: email notifications for these events are an Imunify360 feature. Use a script hook, or [panel notifications](/features/panel_notifications/), which do send email on both products
 :::
 
 

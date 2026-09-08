@@ -60,6 +60,23 @@ In the config file it is possible to set up ImunifyAV(+) configuration. The foll
 <td># your email to receive reports about critical issues, security alerts or system misconfigurations detected on your servers.</td></tr>
 <tr><td><span class="notranslate">enable_icontact_notifications: True</span></td>
 <td># enable/disable delivery of generic (iContact) messages via hosting panel notifications (cPanel iContact / Plesk Notifications). Messages are provided by the Imunify backend (subject + HTML body) and throttled by a per-message period limit. Default value is True. See <a href="/features/panel_notifications/">Panel notifications (iContact)</a>.</td></tr>
+<tr><th colspan="2" align="left"><span class="notranslate">DASHBOARD:</span></th></tr>
+<tr><td colspan="2"># <span class="notranslate"><code>notifications</code></span> holds one switch per <a href="/features/panel_notifications/#message-types">panel notification message type</a>. Every switch defaults to <span class="notranslate">True</span>; setting one to <span class="notranslate">False</span> stops the Imunify cloud from generating that message type for this server. These switches are also available in the UI as <span class="notranslate"><i>Settings → Notifications → Panel notifications</i></span>.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;notifications:</span></td><td></td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;malware_found: True</span></td>
+<td># a user or background scan found malicious files. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;malware_detected: True</span></td>
+<td># the <span class="notranslate">Malware Database Scanner</span> detected malware in a database.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;malicious_redirect_detected: True</span></td>
+<td># a malicious redirect was detected on a website.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;aibolit_vulnerable: True</span></td>
+<td># a vulnerable script was detected.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;insecure_wp_core: True</span></td>
+<td># an installed WordPress core has known vulnerabilities.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;outdated_wp_core: True</span></td>
+<td># an installed WordPress core version is outdated.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;scan_not_scheduled: True</span></td>
+<td># no scheduled malware scan is configured (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is <span class="notranslate"><code>none</code></span>) and no user or background scan has run in the last 30 days.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">CONTROL_PANEL:</span></th></tr>
 <tr><td><span class="notranslate">generic_user_notifications: True</span></td>
 <td># allow sending user-targeted generic notifications (iContact messages) to panel end users when applicable. Default value is True.</td></tr>

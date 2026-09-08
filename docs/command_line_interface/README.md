@@ -1610,6 +1610,25 @@ Allows administrators to do the following:
 * configure email addresses to submit reports on events execution
 * execute custom scripts on events execution
 
+The settings are stored in <span class="notranslate">_/etc/sysconfig/imunify360/hooks.yaml_</span>.
+**Every event is disabled by default**, and on every panel except Plesk the file does not exist
+until something is configured, so an absent file is the normal state of a fresh installation. On
+Plesk the agent creates the file and enables a <span class="notranslate">SCRIPT</span> target on
+<span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span>,
+<span class="notranslate">USER_SCAN_MALWARE_FOUND</span> and
+<span class="notranslate">REALTIME_MALWARE_FOUND</span> for the Imunify extension's
+<span class="notranslate">_send-notifications_</span> script — see
+[Plesk: managing delivery with Plesk Notifications](/features/panel_notifications/#plesk-managing-delivery-with-plesk-notifications).
+The same settings are available in
+the UI — see [Notifications](/features/#notifications) for what each event means, when it fires
+and how the messages are delivered.
+
+::::tip Note
+These are *event* notifications, sent by the server itself. They are not the same thing as the
+security digests that the hosting panel delivers — those are configured separately, see
+[Panel notifications (iContact)](/features/panel_notifications/).
+::::
+
 **Usage:**
 
 <div class="notranslate">
@@ -1728,10 +1747,20 @@ Rules:
 * <span class="notranslate">CUSTOM_SCAN_MALWARE_FOUND</span> – occurs when the on-demand scanning process has finished and malware found.
 
 
+::::tip Note
+The event name says which *scan type* produced the event, not who started the scan. A scheduled
+background scan (<span class="notranslate">`MALWARE_SCAN_SCHEDULE`</span>) reports itself as a
+**user scan**, so it triggers <span class="notranslate">`USER_SCAN_*`</span>, while
+<span class="notranslate">`CUSTOM_SCAN_*`</span> covers on-demand scans started from the admin UI or
+with <span class="notranslate">`malware scan`</span>. See
+[Which scan produces which event](/features/#which-scan-produces-which-event).
+::::
+
 Admin:
 
-* <span class="notranslate">default_emails</span> – specify the default list of emails used for all enabled admin email notifications.
+* <span class="notranslate">default_emails</span> – specify the default list of emails used for all enabled admin email notifications. Only plain addresses are accepted here; the keyword <span class="notranslate">`default`</span> is not.
 * <span class="notranslate">notify_from_email</span> – specify a sender of all emails sent by the Hooks.
+* <span class="notranslate">locale</span> – the language of the admin emails, for example <span class="notranslate">`en`</span> or <span class="notranslate">`ru`</span>. When it is not set, the template default is used. A locale is available only if the corresponding file exists in the template directory of the event (see [Adding custom email template](/command_line_interface/#adding-custom-email-template)).
 
 Let's review all options for a specific event on the <span class="notranslate">REALTIME_MALWARE_FOUND</span> example:
 
@@ -1761,9 +1790,17 @@ Let's review all options for a specific event on the <span class="notranslate">R
 
 <span class="notranslate">**ADMIN**</span>:
 
-* <span class="notranslate">period</span> – set a notification interval in minutes. The data for all events that happened within the interval will be accumulated and sent altogether.
+* <span class="notranslate">period</span> – set a notification interval in seconds. The data for all events that happened within the interval will be accumulated and sent altogether.
 * <span class="notranslate">admin_emails</span> – set `default` to use the default administrator emails and/or specify your emails for notifications.
 * <span class="notranslate">enabled</span> – notify (`True`) the administrator and a custom user list via email upon event occurrence.
+
+:::warning Note
+* <span class="notranslate">`period`</span> is in **seconds** for both targets. The UI labels the admin interval <span class="notranslate">_Notify every (mins)_</span> and converts the value for display, but the config and the CLI always use seconds. Aggregated events are dispatched by a cron job whose interval is the smallest configured period rounded to whole minutes, so a period below 60 seconds behaves like one minute.
+* Only <span class="notranslate">REALTIME_MALWARE_FOUND</span> and <span class="notranslate">SCRIPT_BLOCKED</span> accept <span class="notranslate">`period`</span>. The other events are sent as they occur and have no interval.
+* Email addresses are validated against <span class="notranslate">`^.+@(.+\.)+.+`</span>, so the domain part must contain a dot: <span class="notranslate">`root@localhost`</span> is rejected, <span class="notranslate">`root@localhost.localdomain`</span> is accepted.
+* Script paths must be absolute, and the script must be executable by the <span class="notranslate">`_imunify`</span> user — which also has to be able to traverse every directory on the way to it. A script under <span class="notranslate">_/root_</span> will never run.
+* <span class="notranslate">`update`</span> merges the JSON you pass into the current configuration, so you only need to send the keys you want to change.
+:::
 
 **Examples**:
 

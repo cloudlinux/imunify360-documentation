@@ -1217,9 +1217,10 @@ The following tabs are available:
 * <span class="notranslate">[General](/dashboard/#general)</span>
 * <span class="notranslate">[Malware](/dashboard/#malware)</span>
 * <span class="notranslate">[Backups](/dashboard/#backups)</span>
-* <span class="notranslate">[Disables Rules](/dashboard/#disabled-rules)</span>
+* <span class="notranslate">[Disabled Rules](/dashboard/#disabled-rules)</span>
+* <span class="notranslate">[Features Management](/dashboard/#features-management)</span>
 * <span class="notranslate">[Attributions](/dashboard/#attributions)</span>
-* <span class="notranslate">[Notifications](/features/#notifications)</span>
+* <span class="notranslate">[Notifications](/dashboard/#notifications)</span>
 
 ### General
 
@@ -2234,3 +2235,16 @@ It is possible to enable the Service Status checker for Imunify360. Perform the 
 If succeeded, the status of the Imunify360 service will be displayed at the Service Status section of Server Status.
 
 ![](/images/service_status.jpg)
+
+### Notifications
+
+Click <span class="notranslate">_Settings_</span> and choose the <span class="notranslate">_Notifications_</span>
+tab to configure who is told about scan and <span class="notranslate">Proactive Defense</span> events on
+this server, and which security emails the hosting panel delivers.
+
+![](/images/notifications-settings-i360.png)
+
+The tab controls two separate things:
+
+* <span class="notranslate">**Event notifications**</span> — an email and/or a script hook per event, fired by the server itself. Every event is disabled by default, except the malware hook the agent enables on Plesk. See [Notifications](/features/#notifications) for the event reference, the delivery mechanics and troubleshooting, or [`notifications-config`](/command_line_interface/#notifications-config) to configure the same settings from the command line.
+* <span class="notranslate">**Panel notifications**</span> — the security digests that the Imunify cloud generates and the hosting panel delivers. The <span class="notranslate">_Manage panel notifications_</span> button opens a dialog with a switch per message type; all of them are enabled by default. See [Panel notifications (iContact)](/features/panel_notifications/). The row is shown only on cPanel and Plesk.
