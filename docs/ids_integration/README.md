@@ -730,6 +730,10 @@ If there is no Imunify360 ruleset installed, run <span class="notranslate">` imu
 
 ![](/images/ModSecVendors.png)
 
+::: tip Note
+If the Imunify360 vendor is missing from the list and <span class="notranslate">`imunify360-agent install-vendors`</span> does not bring it back, check whether the server runs the [Coraza WAF engine](/ids_integration/#coraza-waf-engine-cl-coraza) — there the WAF rules are managed by Imunify360 and are not registered as a cPanel vendor.
+:::
+
 * Enable rules auto-update. Otherwise, you won't get important updates of ModSecurity ruleset in time
     * For Apache run the following command:
     
@@ -764,6 +768,66 @@ Since version 92, cPanel is adding experimental support of ModSecurity 3.x and s
 * HackerTrap
 * uploaded files scanning
 * simple password redirect
+
+#### Coraza WAF engine (cl-coraza)
+
+On some servers Imunify360 evaluates its WAF ruleset with <span class="notranslate">Coraza</span> — a <span class="notranslate">ModSecurity</span>-compatible rule engine built into <span class="notranslate">WebShield</span> — instead of Apache <span class="notranslate">mod_security</span>. The ruleset, the detection logic and the WAF events are the same; only the component that runs the rules is different.
+
+The reason for the change is that <span class="notranslate">Coraza</span> applies updates without restarting the web server. With Apache <span class="notranslate">mod_security</span>, every change of the ruleset, of a protected domain or of an IP list needs an Apache restart. <span class="notranslate">Coraza</span> keeps the rules inside <span class="notranslate">WebShield</span>, so such changes take effect immediately while Apache keeps serving requests.
+
+**When the engine is enabled**
+
+<span class="notranslate">Coraza</span> is not a setting a server administrator switches on. It is enabled by CloudLinux via *feature flags* — the mechanism we use to roll new features out gradually, server by server — and is currently used in the following cases:
+
+* **cPanel + Apache** — the server has been enrolled by CloudLinux into the <span class="notranslate">Coraza</span> rollout. Apache and cPanel must be present, and the server must not run <span class="notranslate">LiteSpeed (LSWS)</span>.
+* **nginx-based servers with a generic panel** — <span class="notranslate">nginx</span> serves the traffic and there is no Apache <span class="notranslate">mod_security</span> to run the rules, so <span class="notranslate">Coraza</span> is the only engine available there.
+* **nginx in front of Apache, with a generic panel** — enabled by a feature flag as well.
+
+All other environments — <span class="notranslate">Plesk</span>, <span class="notranslate">DirectAdmin</span>, stand-alone servers, and <span class="notranslate">LiteSpeed</span>-based cPanel servers — keep using <span class="notranslate">mod_security</span>.
+
+**How to check which engine is active**
+
+Run as root:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl status
+```
+
+</div>
+
+and look at the <span class="notranslate">`platform.active_engine`</span> field:
+
+* <span class="notranslate">`cl-coraza`</span> — the <span class="notranslate">Coraza</span> engine handles the WAF rules;
+* <span class="notranslate">`modsec`</span> — Apache <span class="notranslate">mod_security</span> handles the WAF rules.
+
+**What changes on the server**
+
+* The Imunify360 ruleset is no longer registered as a cPanel <span class="notranslate">ModSecurity</span> vendor, so <span class="notranslate">`imunify360-full-apache`</span> disappears from the <span class="notranslate">WHM → ModSecurity Vendors</span> list. This is expected — the rules are managed by Imunify360 itself and stored in <span class="notranslate">`/var/imunify360/modsec/coraza/`</span>.
+* Rules, protected domains and IP lists are updated without an Apache restart.
+* The Imunify360 UI, WAF events and rule management work as before.
+
+**Configuration and log files**
+
+<span class="notranslate">Coraza</span> keeps its ruleset, configuration and logs outside the Apache tree, so the paths differ significantly from an Apache <span class="notranslate">mod_security</span> installation:
+
+| Purpose | Apache <span class="notranslate">mod_security</span> | <span class="notranslate">Coraza (cl-coraza)</span> |
+|-|-|-|
+|Imunify360 WAF ruleset|<span class="notranslate">`/etc/apache2/conf.d/modsec_vendor_configs/imunify360-full-apache/`</span>|<span class="notranslate">`/var/imunify360/modsec/coraza/`</span>|
+|Engine configuration|<span class="notranslate">`/etc/apache2/conf.d/modsec2.conf`</span> (managed by cPanel)|<span class="notranslate">`/etc/imunify360-wafd/modsecurity.conf`</span>|
+|Custom rules and overrides|<span class="notranslate">`/etc/apache2/conf.d/modsec/modsec2.user.conf`</span>|<span class="notranslate">`/etc/imunify360-wafd/modsecurity.d/`</span> (<span class="notranslate">`*.conf`</span> and <span class="notranslate">`*.custom`</span> files)|
+|WAF audit log|<span class="notranslate">`modsec_audit.log`</span> in the Apache log directory, usually <span class="notranslate">`/etc/apache2/logs/modsec_audit.log`</span>|<span class="notranslate">`/var/log/imunify360/modsec_audit.log`</span>|
+|Engine debug log|Apache error log|<span class="notranslate">`/var/log/imunify360/wafd-coraza.log`</span>|
+|Service log|—|<span class="notranslate">`/var/log/imunify360/imunify360-wafd.log`</span>|
+
+::: tip Note
+The rules and the configuration files above are managed by Imunify360 and are rewritten on every update. To add your own rules or exceptions, put a separate file into <span class="notranslate">`/etc/imunify360-wafd/modsecurity.d/`</span> — it is loaded after the Imunify360 ruleset and is not overwritten.
+:::
+
+::: tip Note
+If you have any questions about the <span class="notranslate">cl-coraza</span> engine on your server, feel free to [contact our support team](https://cloudlinux.zendesk.com/hc/requests/new).
+:::
 
 ### Plesk
 
