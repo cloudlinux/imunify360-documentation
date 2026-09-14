@@ -49,8 +49,11 @@ Two consequences follow from this design and account for most support questions:
 
 ## Message types
 
-The dialog lets you switch off seven message types individually. Each one is generated
-independently and has its own cooldown.
+Seven message types have a switch of their own. Six of them are addressed to
+<span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> servers
+and are never generated for an Imunify360 server; the only type that applies to every product is
+<span class="notranslate">**Vulnerable scanner version**</span>. Each type is generated independently
+and has its own cooldown.
 
 <table>
 <thead>
@@ -64,34 +67,34 @@ independently and has its own cooldown.
 <td><b>ImunifyAV / ImunifyAV+ only</b>; agent 6.7 or later</td>
 </tr>
 <tr>
-<td>Malware detected in databases</td><td><span class="notranslate"><code>malware_detected</code></span></td>
-<td>the <a href="/features/#malware-database-scanner-mds">Malware Database Scanner</a> detected malware in a database</td>
-<td>24 hours</td><td>all products</td>
+<td>Malware detected on websites</td><td><span class="notranslate"><code>malware_detected</code></span></td>
+<td>the website URL scan found malware on one of the sites hosted on the server</td>
+<td>24 hours</td><td><b>ImunifyAV / ImunifyAV+ only</b></td>
 </tr>
 <tr>
 <td>Malicious redirect detected</td><td><span class="notranslate"><code>malicious_redirect_detected</code></span></td>
 <td>a malicious redirect was detected on a website</td>
-<td>24 hours</td><td>all products</td>
+<td>24 hours</td><td><b>ImunifyAV / ImunifyAV+ only</b></td>
 </tr>
 <tr>
-<td>Vulnerable script detected</td><td><span class="notranslate"><code>aibolit_vulnerable</code></span></td>
-<td>the scanner detected a vulnerable script</td>
-<td>24 hours</td><td>all products</td>
+<td>Vulnerable scanner version</td><td><span class="notranslate"><code>aibolit_vulnerable</code></span></td>
+<td>the installed AI-Bolit scanner component is older than 32.7.4 and has a known vulnerability; updating Imunify brings the fixed version</td>
+<td>24 hours</td><td>all products, Imunify360 included</td>
 </tr>
 <tr>
 <td>Insecure WordPress version</td><td><span class="notranslate"><code>insecure_wp_core</code></span></td>
 <td>an installed WordPress core has known vulnerabilities</td>
-<td>7 days</td><td>all products</td>
+<td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b></td>
 </tr>
 <tr>
 <td>Outdated WordPress version</td><td><span class="notranslate"><code>outdated_wp_core</code></span></td>
 <td>an installed WordPress core version is outdated</td>
-<td>7 days</td><td>all products</td>
+<td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b></td>
 </tr>
 <tr>
 <td>Malware scan is not scheduled</td><td><span class="notranslate"><code>scan_not_scheduled</code></span></td>
 <td><span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is set to <span class="notranslate"><code>none</code></span> <b>and</b> no user or background scan has run in the last 30 days</td>
-<td>7 days</td><td>all products; agent 6.7 or later</td>
+<td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b>; agent 6.7 or later</td>
 </tr>
 </tbody>
 </table>
@@ -104,10 +107,11 @@ switch alone — turning all seven types off is **not** the same as turning pane
 ::::
 
 :::warning Important
-<span class="notranslate">**Malware found**</span> is an upgrade prompt addressed to
-<span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>
-administrators, and it is **never generated for an Imunify360 server** — Imunify360 already includes
-everything the message recommends.
+The six <span class="notranslate">ImunifyAV / ImunifyAV+</span> types are **never generated for an
+Imunify360 server**, whatever their switches say. <span class="notranslate">**Malware found**</span>
+in particular is an upgrade prompt addressed to <span class="notranslate">ImunifyAV</span> and
+<span class="notranslate">ImunifyAV+</span> administrators — Imunify360 already includes everything
+the message recommends.
 
 If you run Imunify360 and want an email whenever a scan finds malware, that is what
 [event notifications](/features/#notifications) are for: enable the
@@ -121,7 +125,10 @@ If you run Imunify360 and want an email whenever a scan finds malware, that is w
 
 Go to <span class="notranslate">_Settings → Notifications_</span> and click
 <span class="notranslate">_Manage panel notifications_</span> in the
-<span class="notranslate">_Panel notifications_</span> row.
+<span class="notranslate">_Panel notifications_</span> row. The dialog lists only the message types
+your product can receive, so it looks different on the two products.
+
+### On ImunifyAV / ImunifyAV+
 
 ![](/images/panel-email-notifications-dialog.png)
 
@@ -130,6 +137,23 @@ Go to <span class="notranslate">_Settings → Notifications_</span> and click
 
 ![](/images/panel-email-notifications-dialog-off.png)
 
+### On Imunify360
+
+![](/images/panel-email-notifications-dialog-i360.png)
+
+On Imunify360 the dialog offers the master switch and a single type,
+<span class="notranslate">**Vulnerable scanner version**</span>. The other six messages are addressed
+to <span class="notranslate">ImunifyAV / ImunifyAV+</span> servers and are never generated for
+Imunify360, so their switches are not shown. The master switch is still the control that matters
+here: it governs every message that has no switch of its own — the outdated agent version warning,
+PCI compliance notices, the compromised accounts report and the like. Turning it off silences all of
+them; turning <span class="notranslate">**Vulnerable scanner version**</span> off silences that one
+message only.
+
+The hidden types are not dropped from the configuration:
+<span class="notranslate">`DASHBOARD.notifications`</span> keeps all seven keys on every product, and
+the dialog saves the six it does not show unchanged.
+
 Click <span class="notranslate">_Apply_</span> to save. The dialog writes both
 <span class="notranslate">`ADMIN_CONTACTS.enable_icontact_notifications`</span> (the master switch)
 and <span class="notranslate">`DASHBOARD.notifications`</span> (the individual types) in a single
@@ -137,7 +161,9 @@ configuration update.
 
 ::::tip Note
 The dialog ships with Imunify UI **8.13.1**; the configuration keys behind it come with
-imunify-antivirus **8.8.2** (the antivirus component is part of both products). The
+imunify-antivirus **8.8.2** (the antivirus component is part of both products). Imunify UI 8.13.1
+itself still lists all seven types on both products; the product-specific list described above
+appears in the releases that follow it. The
 <span class="notranslate">_Panel notifications_</span> row appears only when both conditions hold:
 the control panel is cPanel/WHM or Plesk, **and** the agent reports a
 <span class="notranslate">`DASHBOARD.notifications`</span> section in its configuration. If the row
@@ -163,7 +189,7 @@ Panel notifications are controlled by three keys in
 </thead>
 <tbody>
 <tr><td><span class="notranslate"><code>ADMIN_CONTACTS.enable_icontact_notifications</code></span></td><td><span class="notranslate"><code>True</code></span></td><td>master switch for delivering generic messages through the panel</td></tr>
-<tr><td><span class="notranslate"><code>DASHBOARD.notifications.&lt;type&gt;</code></span></td><td><span class="notranslate"><code>True</code></span></td><td>whether the cloud generates this message type for this server</td></tr>
+<tr><td><span class="notranslate"><code>DASHBOARD.notifications.&lt;type&gt;</code></span></td><td><span class="notranslate"><code>True</code></span></td><td>whether the cloud generates this message type for this server; a type outside the product's scope is never generated, whatever the value</td></tr>
 <tr><td><span class="notranslate"><code>CONTROL_PANEL.generic_user_notifications</code></span></td><td><span class="notranslate"><code>True</code></span></td><td>whether user-targeted messages may be delivered to panel end users</td></tr>
 </tbody>
 </table>
@@ -198,22 +224,22 @@ imunify360-agent config update '{"ADMIN_CONTACTS": {"enable_icontact_notificatio
 ```
 </div>
 
-Turn off individual message types and keep the rest:
+Turn off the one type Imunify360 receives and keep the rest of the channel:
 
 <div class="notranslate">
 
 ```
-imunify360-agent config update '{"DASHBOARD": {"notifications": {"outdated_wp_core": false, "insecure_wp_core": false}}}'
+imunify360-agent config update '{"DASHBOARD": {"notifications": {"aibolit_vulnerable": false}}}'
 ```
 </div>
 
 The same commands on **ImunifyAV/AV+** use the <span class="notranslate">`imunify-antivirus`</span>
-binary:
+binary; there all seven types apply, so any of them can be switched off:
 
 <div class="notranslate">
 
 ```
-imunify-antivirus config update '{"DASHBOARD": {"notifications": {"scan_not_scheduled": false}}}'
+imunify-antivirus config update '{"DASHBOARD": {"notifications": {"outdated_wp_core": false, "insecure_wp_core": false}}}'
 ```
 </div>
 

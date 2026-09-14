@@ -413,17 +413,17 @@ systemctl restart imunify360
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;malware_found: True</span></td>
 <td># a user or background scan found malicious files. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;malware_detected: True</span></td>
-<td># the <a href="/features/#malware-database-scanner-mds">Malware Database Scanner</a> detected malware in a database.</td></tr>
+<td># the website URL scan found malware on one of the sites hosted on the server. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;malicious_redirect_detected: True</span></td>
-<td># a malicious redirect was detected on a website.</td></tr>
+<td># a malicious redirect was detected on a website. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;aibolit_vulnerable: True</span></td>
-<td># a vulnerable script was detected.</td></tr>
+<td># the installed AI-Bolit scanner component is older than 32.7.4 and has a known vulnerability. The only type generated for every product, Imunify360 included.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;insecure_wp_core: True</span></td>
-<td># an installed WordPress core has known vulnerabilities.</td></tr>
+<td># an installed WordPress core has known vulnerabilities. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;outdated_wp_core: True</span></td>
-<td># an installed WordPress core version is outdated.</td></tr>
+<td># an installed WordPress core version is outdated. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;scan_not_scheduled: True</span></td>
-<td># no scheduled malware scan is configured (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is <span class="notranslate"><code>none</code></span>) and no user or background scan has run in the last 30 days.</td></tr>
+<td># no scheduled malware scan is configured (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is <span class="notranslate"><code>none</code></span>) and no user or background scan has run in the last 30 days. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">SMTP_BLOCKING:</span></th></tr>
 <tr><td><span class="notranslate">enable: False</span></td>
 <td># enable (<span class="notranslate">True</span>) or disable (<span class="notranslate">False</span>) (default value) SMTP Traffic Management. When enabled, the outgoing SMTP traffic would be blocked according to the settings.</td></tr>
