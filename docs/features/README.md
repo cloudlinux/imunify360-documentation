@@ -433,7 +433,7 @@ An expanded event shows the fields of both targets — the email one first, the 
 
 * <span class="notranslate">**Enable email notifications for admin**</span>: send an email when the event occurs. It goes to the addresses listed below and, when the <span class="notranslate">_Default admin emails_</span> checkbox is on, to the default list as well.
 * <span class="notranslate">**Notify every (mins)**</span>: aggregation interval. All events that happen within the interval are accumulated and sent in one message. Only <span class="notranslate">REALTIME_MALWARE_FOUND</span> and <span class="notranslate">SCRIPT_BLOCKED</span> have this field; the other events are sent as they happen.
-* <span class="notranslate">**Admin emails**</span>: the custom list of addresses for this event. Tick <span class="notranslate">_Default admin emails_</span> to add the default list as well.
+* <span class="notranslate">**Admin emails**</span>: the custom list of addresses for this event. Tick <span class="notranslate">_Default admin emails_</span> to add the default list as well. **Leaving this list empty falls back to the default addresses**, whether or not the checkbox is ticked — an empty list means "use the defaults", not "send to nobody". The checkbox only decides whether the defaults are *added to* a non-empty custom list.
 * <span class="notranslate">**Enable script execution**</span>: run an executable when the event occurs.
 * <span class="notranslate">**Notify every (sec)**</span>: the same aggregation interval for the script target.
 * <span class="notranslate">**Run a script**</span>: full path to the script (or any Linux executable) to launch. One path per line; several scripts are allowed.

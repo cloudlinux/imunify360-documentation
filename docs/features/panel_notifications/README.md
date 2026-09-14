@@ -52,8 +52,8 @@ Two consequences follow from this design and account for most support questions:
 Seven message types have a switch of their own. Six of them are addressed to
 <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> servers
 and are never generated for an Imunify360 server; the only type that applies to every product is
-<span class="notranslate">**Vulnerable scanner version**</span>. Each type is generated independently
-and has its own cooldown.
+<span class="notranslate">**Vulnerable scanner version**</span>. Each type has its own cooldown, and all but
+one pair are generated independently — the two WordPress types are mutually exclusive, see below.
 
 <table>
 <thead>
@@ -83,12 +83,12 @@ and has its own cooldown.
 </tr>
 <tr>
 <td>Insecure WordPress version</td><td><span class="notranslate"><code>insecure_wp_core</code></span></td>
-<td>an installed WordPress core has known vulnerabilities</td>
+<td>an installed WordPress core has known vulnerabilities. Takes precedence over <span class="notranslate"><code>outdated_wp_core</code></span> for the same server</td>
 <td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b></td>
 </tr>
 <tr>
 <td>Outdated WordPress version</td><td><span class="notranslate"><code>outdated_wp_core</code></span></td>
-<td>an installed WordPress core version is outdated</td>
+<td>an installed WordPress core version is outdated <b>and</b> the server does not already qualify for the insecure-version message</td>
 <td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b></td>
 </tr>
 <tr>
@@ -98,6 +98,16 @@ and has its own cooldown.
 </tr>
 </tbody>
 </table>
+
+::::tip The two WordPress types never arrive together
+When a server qualifies for <span class="notranslate">**Insecure WordPress version**</span>, the
+cloud drops <span class="notranslate">**Outdated WordPress version**</span> for that server in the
+same run, even though both switches are on. A vulnerable core is also an old core, and the insecure
+message already tells the administrator to update, so sending both would be redundant. One insecure
+installation is enough to suppress the outdated message for the **whole server**, not just for that
+one site. Switch <span class="notranslate">`insecure_wp_core`</span> off and the outdated message is
+generated as usual.
+::::
 
 ::::tip Note
 These seven are not the only messages that arrive through this channel. The Imunify cloud also
@@ -408,4 +418,6 @@ message is handed to iContact, which applies the *Contact Manager* settings.
 uploaded telemetry, on the cloud's schedule. If the condition behind a type is present and the
 type is on, expect the message within the next daily poll; if it does not come, the usual reasons
 are the type's cooldown, the product scope in the table above, or telemetry that has not been
-uploaded yet.
+uploaded yet. A missing <span class="notranslate">**Outdated WordPress version**</span> message has
+one more possible cause: the server also qualifies for
+<span class="notranslate">**Insecure WordPress version**</span>, which suppresses it.

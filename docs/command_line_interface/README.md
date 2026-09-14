@@ -1791,7 +1791,7 @@ Let's review all options for a specific event on the <span class="notranslate">R
 <span class="notranslate">**ADMIN**</span>:
 
 * <span class="notranslate">period</span> – set a notification interval in seconds. The data for all events that happened within the interval will be accumulated and sent altogether.
-* <span class="notranslate">admin_emails</span> – set `default` to use the default administrator emails and/or specify your emails for notifications.
+* <span class="notranslate">admin_emails</span> – set `default` to use the default administrator emails and/or specify your emails for notifications. An **empty** list also falls back to <span class="notranslate">`admin.default_emails`</span>: the keyword matters only when the list already holds addresses of its own. To send an event to a custom list *instead of* the defaults, list the addresses without the keyword; there is no value that suppresses the defaults on an otherwise empty list.
 * <span class="notranslate">enabled</span> – notify (`True`) the administrator and a custom user list via email upon event occurrence.
 
 :::warning Note
