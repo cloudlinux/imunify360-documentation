@@ -190,6 +190,8 @@ Scanner's behaviour is based on other scan optimizations, therefore it is better
 <td># enable (<span class="notranslate">True</span>) blocking malicious file uploads via cPanel File Manager. The default value is <span class="notranslate">False</span>. The type of operations processed are: edits and saves</td></tr>
 <tr><td><span class="notranslate">crontabs: True</span></td>
 <td># enable (<span class="notranslate">True</span>) scan of the system and user crontab files for malicious jobs. The default value is <span class="notranslate">True</span>.</td></tr>
+<tr><td><span class="notranslate">prioritize_user_on_demand_scans: False</span></td>
+<td># place a scan started by an end user right after the currently running scan instead of at the end of the queue. Disabled (<span class="notranslate">False</span>) by default. While a long background scan pass is in progress, a user-initiated scan otherwise waits behind every remaining per-user background scan. Scans started by several end users keep the order they were submitted in. Note that any scan queued behind the first background scan is overtaken, not only background ones, and that the background pass advances by one entry between user-initiated scans, so on a server with many users a full pass can take noticeably longer.</td></tr>
 <tr><td><span class="notranslate">db_timeout: 15</span></td>
 <td># set the maximum time in seconds for connecting to or reading from a database during a scan/clean/restore operation.</td></tr>
 <tr>
