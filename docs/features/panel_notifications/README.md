@@ -172,8 +172,8 @@ configuration update.
 ::::tip Note
 The dialog ships with Imunify UI **8.13.1**; the configuration keys behind it come with
 imunify-antivirus **8.8.2** (the antivirus component is part of both products). Imunify UI 8.13.1
-itself still lists all seven types on both products; the product-specific list described above
-appears in the releases that follow it. The
+lists all seven types on both products; the product-specific list described above ships with Imunify
+UI **8.13.2**. The
 <span class="notranslate">_Panel notifications_</span> row appears only when both conditions hold:
 the control panel is cPanel/WHM or Plesk, **and** the agent reports a
 <span class="notranslate">`DASHBOARD.notifications`</span> section in its configuration. If the row
