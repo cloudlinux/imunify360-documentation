@@ -45,6 +45,24 @@
 * <span class="notranslate">LiteSpeed</span>
 * <span class="notranslate">Nginx</span> (fully supported in the [<span class="notranslate">Standalone mode</span>](/control_panel_integration/#introduction))
 
+**ModSecurity Lua support (DirectAdmin)**
+
+Lua scripting support in ModSecurity is **not required** for Imunify360. Imunify360 is designed and tested to run with a ModSecurity build that does not include Lua.
+
+On DirectAdmin, when ModSecurity was built without Lua, <span class="notranslate">`apachectl -t`</span> reports warnings such as:
+
+<div class="notranslate">
+
+```
+Ignoring SecRuleScript "trap.lua" directive (...): No Lua scripting support.
+```
+
+</div>
+
+followed by <span class="notranslate">`Syntax OK`</span>. These warnings are **expected** on a Lua-less build and do not indicate reduced protection: the affected rules are non-blocking, and upload scanning automatically falls back to the equivalent Python-based scanner that ships with every Imunify360 package. The same Lua-less configuration is what Imunify360 runs on <span class="notranslate">LiteSpeed</span> and <span class="notranslate">Coraza</span>, where Lua is unavailable by design.
+
+Installing the Lua development package before ModSecurity is built (<span class="notranslate">`lua-devel`</span> on <span class="notranslate">CentOS/RHEL</span>, <span class="notranslate">CloudLinux</span> OS, <span class="notranslate">AlmaLinux</span> and <span class="notranslate">Rocky Linux</span>; <span class="notranslate">`liblua5.x-dev`</span> on <span class="notranslate">Debian</span>/<span class="notranslate">Ubuntu</span>) is optional — it silences the warnings but does not add protection. Note that <span class="notranslate">`lua-devel`</span> is not in the default repositories on every supported release: it's in <span class="notranslate">PowerTools</span> on EL8 and <span class="notranslate">CRB</span> on EL9/EL10.
+
 
 ## Installation Instructions
 
