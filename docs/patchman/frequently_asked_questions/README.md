@@ -799,6 +799,26 @@ The worst case scenario that the vulnerability allows is triggering an automatic
 
 ### Drupal
 
+#### [SA-CORE-2026-013] Third-party libraries
+
+**Vulnerability details**  
+Drupal core uses the third-party CKEditor library for WYSIWYG editing. A Cross-Site Scripting (XSS) vulnerability has been discovered in the CKEditor 5 engine, caused by a prototype pollution issue in the `es-toolkit` library used in the CKEditor 5 codebase. The vulnerability is triggered when the editor processes incoming `style` attribute values, allowing an attacker who can create or edit content to execute unauthorized JavaScript targeting other users with access to the WYSIWYG CKEditor. Drupal included these fixes in [SA-CORE-2026-013](https://www.drupal.org/sa-core-2026-013).
+
+CKEditor released 48.5.1 (and above) and 47.7.4 (LTS) containing the following security fix:
+
+* [https://github.com/ckeditor/ckeditor5/security/advisories/GHSA-rh54-vffm-5fvp](https://github.com/ckeditor/ckeditor5/security/advisories/GHSA-rh54-vffm-5fvp)
+
+**Affected versions**  
+Drupal 11.4.0 - 11.4.6  
+Drupal 11.0.0 - 11.3.16  
+Drupal 10.5.0 - 10.6.16
+
+**Fix complications**  
+This doesn’t concern a Drupal core vulnerability. If we would patch this vulnerability, we would also affect projects other than Drupal. We want to avoid that because we can’t guarantee that those other projects will be compatible with our changes to the code.
+
+**Mitigating factors**  
+Exploitation requires an attacker with content create/edit rights; it targets other users — including site administrators — who have access to the WYSIWYG CKEditor.
+
 #### [SA-CORE-2022-011] Third-party libraries
 
 **Vulnerability details**  
