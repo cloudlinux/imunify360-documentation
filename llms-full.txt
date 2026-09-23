@@ -6599,12 +6599,11 @@ Imunify360 provides customers with the ability to integrate with backup provider
 The following integrated with Imunify360 backup providers are available:
 * Hosting panel Backup (cPanel, Plesk, or DirectAdmin)
 
-:::warning Warning
-**JetBackup**: The Imunify360 integration is implemented on the JetBackup side. JetBackup server backup application is not available right now because of the rework. 
+:::tip Note
+**JetBackup**: Imunify360 does not use JetBackup as a backup provider. JetBackup is not available in the backup provider list on this page, and Imunify360 does not restore files from JetBackup backups.
+
+JetBackup 5 provides its own integration with Imunify360, which is configured and supported on the JetBackup side. When Imunify360 detects malware, JetBackup can restore the infected file from the most recent backup and/or lock the last backup of the affected account. For details, see the [JetBackup documentation](https://docs.jetbackup.com/v5.4/adminpanel/security.html#imunify360).
 :::
-
-
-<!-- Imunify360 is integrated with the JetBackup server backup application. Anyone using JetBackup with WHM or cPanel can elect to use Imunify360. You can find more details [here](https://blog.imunify360.com/imunify360-now-integrated-with-jetbackup). -->
 
 **Requirements**
 
