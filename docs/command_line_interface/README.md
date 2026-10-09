@@ -3028,6 +3028,86 @@ imunify360-agent wordpress-plugin list-sites --limit 100 --offset 100
 
 </div>
 
+### List sites where the plugin was removed
+
+Use <span class="notranslate">`list-removed-sites`</span> to list the WordPress sites where the site owner deleted the <span class="notranslate">Imunify Security</span> plugin. The server does not install the plugin on these sites again. To bring it back, use <span class="notranslate">[`restore-site`](#restore-the-plugin-on-a-site)</span>.
+
+Only root can run this command. It needs <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only the sites of this hosting account.|
+|<span class="notranslate">`--limit`</span>|maximum number of sites to return. Default is <span class="notranslate">`50`</span>.|
+|<span class="notranslate">`--offset`</span>|number of sites to skip. Default is <span class="notranslate">`0`</span>.|
+
+For each site, the command shows its <span class="notranslate">`DOCROOT`</span>, <span class="notranslate">`DOMAIN`</span>, <span class="notranslate">`UID`</span>, and <span class="notranslate">`MANUALLY_DELETED_AT`</span> (when the removal was recorded, as a Unix timestamp). The most recently removed sites come first.
+
+**Examples**
+
+1. List all sites where the plugin was removed:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-removed-sites
+```
+
+</div>
+
+2. List the removed sites of one hosting account, as JSON:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-removed-sites --user alice --json
+```
+
+</div>
+
+### Restore the plugin on a site
+
+Use <span class="notranslate">`restore-site`</span> to undo the removal record of a site, so that the server installs the <span class="notranslate">Imunify Security</span> plugin on it again. Find the document root with <span class="notranslate">[`list-removed-sites`](#list-sites-where-the-plugin-was-removed)</span>.
+
+Only root can run this command. It needs <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later.
+
+| | |
+|-|-|
+|<span class="notranslate">`--docroot`</span>|required. The document root of the WordPress site, as shown by <span class="notranslate">`list-removed-sites`</span>.|
+|<span class="notranslate">`--install`</span>|install the plugin on this site right away. Without it, the plugin is installed on the next regular installation run.|
+
+The command prints the restored site, followed by one of these messages:
+
+* <span class="notranslate">_Restored; plugin installation scheduled for this site._</span> — with <span class="notranslate">`--install`</span>.
+* <span class="notranslate">_Restored; the plugin will be installed on the next install-and-update run._</span> — without <span class="notranslate">`--install`</span>.
+
+The command fails with a warning when:
+
+* the document root is not a known WordPress site (<span class="notranslate">_Site '…' not found_</span>);
+* the plugin was not removed from that site (<span class="notranslate">_Site '…' is not marked as manually removed_</span>);
+* you use <span class="notranslate">`--install`</span> while the plugin is turned off server-wide (<span class="notranslate">_WordPress Security Plugin is disabled. Enable it before installing on a restored site._</span>).
+
+**Examples**
+
+1. Restore a site and install the plugin right away:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin restore-site --docroot /home/alice/public_html --install
+```
+
+</div>
+
+2. Restore a site and let the next regular run install the plugin:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin restore-site --docroot /home/alice/public_html
+```
+
+</div>
+
 ### List WAF incidents
 
 Use <span class="notranslate">`list-incidents`</span> to list the requests the WordPress WAF acted on. The same incidents are shown to site owners in the WordPress admin area — see <span class="notranslate">[Managing WAF incidents](/wordpress_plugin/#managing-waf-incidents)</span>.
@@ -3106,4 +3186,6 @@ imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection_preset": "stric
 </div>
 
 A site owner can override the server default from the WordPress dashboard, and a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both.
+
+On <span class="notranslate">Imunify360</span>, IP addresses on the <span class="notranslate">[Whitelist](#whitelist)</span> are never rate-limited or blocked by AI Bot Management. See <span class="notranslate">[Exempting IP addresses with the whitelist](/wordpress_plugin/hosting_providers/#exempting-ip-addresses-with-the-whitelist)</span>.
 
