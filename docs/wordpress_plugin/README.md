@@ -263,6 +263,10 @@ The active **preset** decides the per-minute limits. <span class="notranslate">_
 * <span class="notranslate">_Strict_</span> — tighter limits for sites under heavy bot pressure.
 * <span class="notranslate">_Monitor only_</span> — classifies traffic but does not block or limit anything. Useful for trying the feature out before enforcing it.
 
+::: tip ImunifyAV and ImunifyAV+
+On servers with <span class="notranslate">ImunifyAV</span> or <span class="notranslate">ImunifyAV+</span>, AI Bot Management always uses <span class="notranslate">_Monitor only_</span>. It classifies and reports traffic, but does not limit or block anything. The preset cannot be changed in the widget or in <span class="notranslate">`wp-config.php`</span>, and the widget shows an upgrade link instead. Blocking and rate limiting need <span class="notranslate">Imunify360</span>.
+:::
+
 ### In the WordPress dashboard widget
 
 Once your hosting provider has enabled AI Bot Management, the <span class="notranslate">Imunify Security</span> dashboard widget shows a <span class="notranslate">_Bot Protection_</span> row with the current status, the active preset, and the number of requests blocked in the last 24 hours.

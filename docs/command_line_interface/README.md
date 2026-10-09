@@ -3185,7 +3185,7 @@ imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection_preset": "stric
 
 </div>
 
-A site owner can override the server default from the WordPress dashboard, and a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both.
+A site owner can override the server default from the WordPress dashboard, and a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both. On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, the preset is always <span class="notranslate">`monitor`</span>, whatever is set here.
 
 On <span class="notranslate">Imunify360</span>, IP addresses on the <span class="notranslate">[Whitelist](#whitelist)</span> are never rate-limited or blocked by AI Bot Management. See <span class="notranslate">[Exempting IP addresses with the whitelist](/wordpress_plugin/hosting_providers/#exempting-ip-addresses-with-the-whitelist)</span>.
 
