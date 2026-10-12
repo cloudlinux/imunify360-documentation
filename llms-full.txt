@@ -5176,12 +5176,12 @@ Exact ports and port-ranges to be allowed can be configured by the following fie
 
 ## WebShield
 
-The <span class="notranslate">WebShield</span> tab holds the WebShield protection features that the server administrator configures per domain rather than per IP address. Currently it contains one such feature, <span class="notranslate">Under Attack Mode</span>.
+The <span class="notranslate">WebShield</span> tab holds the WebShield protection features that the server administrator configures with rules rather than with the IP lists: <span class="notranslate">[Under Attack Mode](#under-attack-mode)</span> and <span class="notranslate">[Rate Limiting](#rate-limiting)</span>.
 
-:::warning The tab is shown only where the feature is available
-WebShield inspects requests inside the web server, so the features on this tab need the WebShield module loaded there. On environments where that module is not loaded — LiteSpeed-based cPanel setups, for example — the <span class="notranslate">WebShield</span> tab is not displayed at all, and opening its URL directly redirects back to the dashboard. The same applies to the end user interface.
+:::warning The features need the WebShield module
+WebShield inspects requests inside the web server, so the features on this tab need WebShield running in module mode, with its module loaded into the web server. This is the default on cPanel with Apache. On environments where the module is not loaded — LiteSpeed-based cPanel setups, a server switched to the proxy mode (<span class="notranslate">`WEBSHIELD.mode: proxy`</span>), or a <span class="notranslate">ModSecurity</span> server where <span class="notranslate">_Enable WebShield_</span> is off (see <span class="notranslate">[WebShield settings](#webshield-settings)</span>) — the <span class="notranslate">WebShield</span> tab is not displayed to the administrator at all, and opening its URL directly redirects back to the dashboard. The end user interface does not check this: there, each sub-tab depends only on its <span class="notranslate">**Show the service to end users**</span> switch, so end users can still open it and add rules, but their rules are not applied.
 
-If the tab is missing on a server where you expect it, check which WebShield features are available:
+Each feature has its own sub-tab, shown only where that feature is available. If a sub-tab is missing on a server where you expect it, check which WebShield features are available:
 
 <div class="notranslate">
 
@@ -5195,13 +5195,13 @@ l7prot   no         L7 rate limiter
 
 </div>
 
-Where <span class="notranslate">`uam`</span> is not available, only the GreyList / Anti-bot Challenge applies. See <span class="notranslate">[WebShield feature availability](/command_line_interface/#webshield-feature-availability)</span> for the full list.
+<span class="notranslate">`uam`</span> stands for <span class="notranslate">Under Attack Mode</span> and <span class="notranslate">`l7prot`</span> for <span class="notranslate">Rate Limiting</span>. Where neither is available, only the GreyList / Anti-bot Challenge applies. See <span class="notranslate">[WebShield feature availability](/command_line_interface/#webshield-feature-availability)</span> for the full list.
 :::
 
 :::tip Note
 The <span class="notranslate">WebShield</span> tab is available in the cPanel integration only.
 
-On servers whose Imunify360 agent is older than the interface, availability cannot be probed and the tab is displayed anyway. If you see it but <span class="notranslate">`imunify360-wsctl filters`</span> reports <span class="notranslate">`uam  no`</span>, rules can still be created but visitors are never challenged — update the agent.
+On servers whose Imunify360 agent is older than the interface, availability cannot be probed and the <span class="notranslate">Under Attack Mode</span> sub-tab is displayed anyway. If you see it but <span class="notranslate">`imunify360-wsctl filters`</span> reports <span class="notranslate">`uam  no`</span>, rules can still be created but visitors are never challenged — update the agent.
 :::
 
 ### Under Attack Mode
@@ -5275,7 +5275,7 @@ Click <span class="notranslate">**ADD**</span> and fill in the form.
 |-|-|
 |<span class="notranslate">Domain</span>|The domain to put under attack. Pick one of the server's domains from the list, or enter its wildcard — <span class="notranslate">`*.example.com`</span> covers the subdomains only, <span class="notranslate">`.example.com`</span> covers the domain and its subdomains. The domain of an existing rule cannot be changed.|
 |<span class="notranslate">Clearance cookie lifetime</span>|How long a visitor is trusted after solving the challenge. Choose one of the presets, or <span class="notranslate">Custom…</span> and enter a number followed by a unit — <span class="notranslate">`s`</span>, <span class="notranslate">`m`</span>, <span class="notranslate">`h`</span> or <span class="notranslate">`d`</span> — such as <span class="notranslate">`90m`</span> or <span class="notranslate">`6h`</span>, between 10 seconds and 3 days. The default is <span class="notranslate">`1h`</span>.|
-|<span class="notranslate">Label</span>|An optional note, up to 128 characters, shown in the rules table.|
+|<span class="notranslate">Label</span>|An optional note shown in the rules table, up to 128 bytes in UTF-8: 128 ASCII characters, fewer with accented letters or other scripts.|
 |<span class="notranslate">Paths</span>|Which URLs of the domain the rule covers — see [Scoping a rule to paths](#scoping-a-rule-to-paths) below.|
 
 ![](/images/uam_admin_cookie_ttl.png)
@@ -5322,7 +5322,133 @@ A rule that belongs to an end user can only be inspected, not changed: its <span
 
 ![](/images/uam_admin_rule_details.png)
 
-To manage such a rule anyway, use the command line as <span class="notranslate">`root`</span> — see <span class="notranslate">[Managing rules](/features/under_attack_mode/#managing-rules)</span>.
+Only the owner can change or remove such a rule; the <span class="notranslate">`imunify360-wsctl uam`</span> commands refuse it as well.
+
+### Rate Limiting
+
+<span class="notranslate">**Rate Limiting**</span> caps how many requests a visitor may send to a domain within a time frame. Visitors who stay within the limit are not affected; the requests above it are challenged, blocked or let through, depending on the action you choose.
+
+Unlike <span class="notranslate">[Under Attack Mode](#under-attack-mode)</span>, which challenges every visitor of a domain, Rate Limiting acts only on the visitors that send too many requests, and its rules can target traffic by source IP address as well as by domain. It is checked first, before Under Attack Mode and the other WebShield checks. Requests are counted for each visitor IP address separately.
+
+The equivalent <span class="notranslate">`imunify360-wsctl l7prot`</span> commands are described in <span class="notranslate">[L7 Rate Limiter](/features/l7_rate_limiter/)</span>.
+
+![](/images/rate_limiting_admin_overview.png)
+
+#### Turning Rate Limiting on
+
+Two switches at the top of the tab control the service as a whole:
+
+* <span class="notranslate">**Enable the service**</span> – turns Rate Limiting on or off for the whole server. It is off by default. Once it is on, the [default settings](#rate-limiting-default-settings) apply to all traffic that no rule matches. Turning it off stops all rate limiting immediately; the rules, the default settings and the request counters are kept.
+* <span class="notranslate">**Show the service to end users**</span> – lets unprivileged users manage their own rules for their own domains from the <span class="notranslate">[end user interface](/user_interface/#rate-limiting)</span>. Off by default.
+
+While the service is off, the test and the rules table are replaced with a notice. The default settings can still be changed.
+
+![](/images/rate_limiting_admin_service_disabled.png)
+
+The same switches are available from the command line:
+
+<div class="notranslate">
+
+```
+imunify360-wsctl l7prot service enable
+imunify360-wsctl l7prot visibility enable
+```
+
+</div>
+
+:::warning Resource usage
+Rate Limiting keeps a request counter for every visitor IP address that a rule or the default settings apply to. Under regular traffic this takes little memory, but a flood from a large number of different IP addresses can grow the <span class="notranslate">`imunify360-wafd`</span> service to 1–2 GB of RAM and its counters file in <span class="notranslate">`/var/cache/imunify360/wafd/`</span> to about 2 GB. Make sure the server has that headroom before you enable the service.
+:::
+
+#### Rate Limiting default settings
+
+<span class="notranslate">**Default settings**</span> is the catch-all limit. It applies to every request that no rule matches, and supplies the value of every rule field left at its default. End users see these settings but cannot change them.
+
+Click <span class="notranslate">**CHANGE**</span> to edit them.
+
+<img src="/images/rate_limiting_admin_defaults.png" alt="The Change default settings dialog" width="544">
+
+| Field | Description |
+|-|-|
+|<span class="notranslate">Limit</span>|How many requests a visitor may send within the time frame. A number, optionally followed by <span class="notranslate">`k`</span> (thousands) or <span class="notranslate">`m`</span> (millions), such as <span class="notranslate">`300`</span> or <span class="notranslate">`10k`</span>. <span class="notranslate">`0`</span> applies the action to every request.|
+|<span class="notranslate">Time frame</span>|The period the requests are counted over: a number followed by <span class="notranslate">`s`</span>, <span class="notranslate">`m`</span> or <span class="notranslate">`h`</span>, from <span class="notranslate">`10s`</span> to <span class="notranslate">`12h`</span>, such as <span class="notranslate">`30s`</span>, <span class="notranslate">`5m`</span> or <span class="notranslate">`1h`</span>. With the <span class="notranslate">Splash</span> action, it is also how long a visitor who solved the challenge is let through.|
+|<span class="notranslate">Action</span>|What happens to the requests above the limit — see [Rate Limiting actions](#rate-limiting-actions).|
+|<span class="notranslate">Log events</span>|When on, every request over a limit is written to <span class="notranslate">`/var/log/imunify360/wafd-access.log`</span> with the ID and label of the rule that matched.|
+
+The initial default settings are 300 requests per minute, the <span class="notranslate">Splash</span> action, and event logging on.
+
+#### Rate Limiting actions
+
+| Action | What happens to the requests above the limit |
+|-|-|
+|<span class="notranslate">Continue</span>|Nothing — the request goes through the remaining WebShield checks as usual. With <span class="notranslate">Log events</span> on, this is a monitor-only mode.|
+|<span class="notranslate">Allow</span>|The request is let through, skipping the remaining WebShield checks: Under Attack Mode, the Anti-bot Challenge and, where WebShield applies the WAF rules with the <span class="notranslate">[Coraza engine](/ids_integration/#coraza-waf-engine-cl-coraza)</span>, those rules. <span class="notranslate">ModSecurity</span>, which runs in the web server, still checks the request. With a limit of <span class="notranslate">`0`</span>, the rule lets all matching traffic past WebShield — for example, your own monitoring.|
+|<span class="notranslate">Deny</span>|The request is rejected with an HTTP 403 error.|
+|<span class="notranslate">Splash</span>|The visitor gets a JavaScript splash challenge. Regular browsers solve it transparently and are then let through for the rule's time frame; simple bots that cannot run it never reach the site.|
+
+#### Testing a request against the rules
+
+<span class="notranslate">**Test a request against the rules**</span> shows which rule governs the traffic from a given source IP address to a given domain, using the same matching as live traffic. The test does not count toward any limit.
+
+Enter the source IPv4 or IPv6 address and the domain, and click <span class="notranslate">**TEST**</span>. A network is accepted too, but only the address before the <span class="notranslate">`/`</span> is tested, not the whole network: <span class="notranslate">`192.0.2.0/24`</span> is tested as <span class="notranslate">`192.0.2.0`</span>. A path may be added to the domain, but it is ignored: the rules match on the IP address and the domain only. When a rule matches, its ID and label are reported and its row is highlighted in the table below; otherwise the verdict is <span class="notranslate">_No rule matches — the default settings apply_</span>.
+
+![](/images/rate_limiting_admin_test_request.png)
+
+#### The Rate Limiting rules table
+
+| Column | Description |
+|-|-|
+|<span class="notranslate">ID</span>|The rule identifier assigned by WebShield. It is the ID used by the <span class="notranslate">`imunify360-wsctl l7prot`</span> commands.|
+|<span class="notranslate">Active</span>|Pauses or resumes the rule without deleting it. Inactive rules are skipped when matching.|
+|<span class="notranslate">Owner</span>|<span class="notranslate">`admin`</span> for rules created by the server administrator, or the user name for a rule created by an end user.|
+|<span class="notranslate">Domains</span>|The domains the rule covers, or <span class="notranslate">`—`</span> when it covers any domain.|
+|<span class="notranslate">IPs</span>|The source IP addresses and networks the rule covers, or <span class="notranslate">`—`</span> when it covers any visitor.|
+|<span class="notranslate">Limit</span>, <span class="notranslate">Time frame</span>, <span class="notranslate">Action</span>|The rate the rule allows and what it does above it. Values in italics are inherited from the default settings, and change when the default settings do.|
+|<span class="notranslate">Label</span>|The optional free-text note stored with the rule.|
+|<span class="notranslate">Actions</span>|<span class="notranslate">Edit</span> and <span class="notranslate">Remove</span> for own rules, <span class="notranslate">View</span> for the rules of end users.|
+
+Rules are matched from top to bottom and the first matching rule is applied: the server administrator's rules first, then the rules of end users, each group in the order the rules were created. Rules cannot be reordered, so add a narrow rule before a broader one that also covers its traffic — otherwise the broader rule catches that traffic first. Use [Testing a request against the rules](#testing-a-request-against-the-rules) to check.
+
+Use <span class="notranslate">**Filter by**</span> to narrow the list down by <span class="notranslate">Domain</span>, <span class="notranslate">IP</span> or <span class="notranslate">Owner</span>. The domain and IP filters match the values exactly as they are entered in the rules.
+
+#### Adding a Rate Limiting rule
+
+Click <span class="notranslate">**ADD**</span> and fill in the form. A new rule takes effect immediately.
+
+<img src="/images/rate_limiting_admin_add_rule.png" alt="The Add rule dialog of the administrator" width="544">
+
+| Field | Description |
+|-|-|
+|<span class="notranslate">Domains</span>|The domains the rule covers, up to 32; add more with <span class="notranslate">**ADD DOMAIN**</span>. Pick one of the server's domains from the list, or enter its wildcard — <span class="notranslate">`*.example.com`</span> covers the subdomains only, <span class="notranslate">`.example.com`</span> covers the domain and its subdomains. A rule for all domains is not accepted; for a server-wide limit, use the default settings or a rule by IP address only.|
+|<span class="notranslate">IP addresses</span>|The source IPv4 or IPv6 addresses and networks the rule covers, separated by commas — for example, <span class="notranslate">`203.0.113.7, 10.0.0.0/24, 2001:db8::/32`</span>.|
+|<span class="notranslate">Limit</span>, <span class="notranslate">Time frame</span>, <span class="notranslate">Action</span>|As in the [default settings](#rate-limiting-default-settings). Leave a field at <span class="notranslate">_Default: …_</span> to inherit the value of the default settings.|
+|<span class="notranslate">Label</span>|An optional note shown in the rules table, up to 128 bytes in UTF-8: 128 ASCII characters, fewer with accented letters or other scripts.|
+
+A rule needs at least one domain or IP address, and what it covers depends on which of the two it has:
+
+| The rule has | It covers |
+|-|-|
+|Domains only|Every visitor of the listed domains.|
+|IP addresses only|The listed IP addresses and networks on any domain of the server.|
+|Both|The listed IP addresses and networks, only when they request the listed domains.|
+
+Either way, each visitor IP address is counted separately, and all domains of one rule share the visitor's count: with <span class="notranslate">`*.example.com`</span>, a visitor's requests to <span class="notranslate">`a.example.com`</span> and to <span class="notranslate">`b.example.com`</span> add up against the same limit.
+
+#### Editing, pausing and removing Rate Limiting rules
+
+* <span class="notranslate">**Edit**</span> (the pencil) opens the same form for an existing rule. Every field can be changed, the domains included. Editing a rule does not reset the visitors' request counts.
+* The <span class="notranslate">**Active**</span> switch pauses a rule and resumes it later.
+* <span class="notranslate">**Remove**</span> (the bin) deletes the rule after a confirmation.
+
+#### Rate Limiting rules created by end users
+
+When <span class="notranslate">**Show the service to end users**</span> is on, end users can create rules for their own domains, and those rules appear in the administrator's table with the user name in the <span class="notranslate">Owner</span> column. The administrator's rules are always matched before them.
+
+A rule that belongs to an end user can only be inspected, not changed: its <span class="notranslate">Active</span> switch is disabled and the only action available is <span class="notranslate">**View**</span>, which opens the rule read-only. Only the owner can change or remove it; the <span class="notranslate">`imunify360-wsctl l7prot`</span> commands refuse it as well.
+
+<img src="/images/rate_limiting_admin_rule_details.png" alt="The read-only Rule details dialog for a rule of an end user" width="544">
+
+Turning <span class="notranslate">**Show the service to end users**</span> off hides the tab from end users, but the rules they have created keep applying.
 
 ## Malware Scanner
 
@@ -6266,7 +6392,7 @@ Click <span class="notranslate">_Save changes_</span> button on the bottom of th
 ![](/images/webshield.png)
 
 :::tip Note
-The options below configure the IP-based side of WebShield — the <span class="notranslate">GreyList</span> and the <span class="notranslate">Anti-bot Challenge</span>. They do not control <span class="notranslate">Under Attack Mode</span>, which has its own switch on the <span class="notranslate">[WebShield](/dashboard/#under-attack-mode)</span> tab and keeps working when <span class="notranslate">_Enable WebShield_</span> is off.
+The options below configure the IP-based side of WebShield — the <span class="notranslate">GreyList</span> and the <span class="notranslate">Anti-bot Challenge</span>. <span class="notranslate">Under Attack Mode</span> and <span class="notranslate">Rate Limiting</span> have their own switches on the <span class="notranslate">[WebShield](/dashboard/#webshield)</span> tab. On servers that use <span class="notranslate">ModSecurity</span>, the default WAF engine (see <span class="notranslate">[how to check which engine is active](/ids_integration/#coraza-waf-engine-cl-coraza)</span>), they also need WebShield to be enabled: turning <span class="notranslate">_Enable WebShield_</span> off unloads the WebShield module from the web server, so the rules of both features are kept but no longer applied, and the <span class="notranslate">WebShield</span> tab disappears once the page is reloaded.
 :::
 
 * <span class="notranslate">_Enable WebShield_</span>. When the option is off, disable WebShield, GreyList, and Anti-bot Challenge. A disabled state is recommended for servers with a small amount of RAM. A disabled option along with enabled "Minimized WAF Ruleset" will switch Imunify360 to the "Low Resource Usage" mode.  
@@ -7034,7 +7160,7 @@ imunify360-agent config update '{"PERMISSIONS": {"user_ignore_list": false}}'
 
 ## WebShield
 
-The <span class="notranslate">WebShield</span> tab holds the WebShield protection features you can manage for your own domains. Currently it contains one such feature, <span class="notranslate">Under Attack Mode</span>.
+The <span class="notranslate">WebShield</span> tab holds the WebShield protection features you can manage for your own domains: <span class="notranslate">[Under Attack Mode](#under-attack-mode)</span> and <span class="notranslate">[Rate Limiting](#rate-limiting)</span>. Each of them appears only if your hosting provider has made it available to you.
 
 ### Under Attack Mode
 
@@ -7045,7 +7171,7 @@ Turn it on for a domain when it is the target of an automated flood — a script
 ![](/images/uam_user_overview.png)
 
 :::tip Note
-This tab appears only if <span class="notranslate">Under Attack Mode</span> is supported by the server, the server administrator has enabled it, and they have allowed end users to manage their own rules. If you do not see the tab, or you see a notice saying that the service is disabled, ask your hosting provider.
+This tab appears once the server administrator has allowed end users to manage their own rules. Whether the rules are applied also depends on how the server is set up. If you do not see the tab, see a notice saying that the service is disabled, or your rules seem to have no effect, ask your hosting provider.
 :::
 
 You only see and manage the rules you created, for the domains of your own account. Rules created by the server administrator are not shown here, but they still apply to your domains.
@@ -7078,6 +7204,52 @@ Anything that cannot run JavaScript is stopped while the rule is active — incl
 :::
 
 For the technical details of how the challenge is enforced, see <span class="notranslate">[Under Attack Mode (UAM)](/features/under_attack_mode/)</span>.
+
+### Rate Limiting
+
+<span class="notranslate">**Rate Limiting**</span> caps how many requests a visitor may send to your domain within a time frame. Visitors who stay within the limit are not affected; the requests above it are challenged with a splash page, blocked, or let through — whichever action you choose.
+
+Use it against scrapers and floods that send far more requests than a person browsing the site would. Unlike <span class="notranslate">Under Attack Mode</span>, it leaves regular visitors alone, so it can stay on all the time.
+
+![](/images/rate_limiting_user_overview.png)
+
+:::tip Note
+This tab appears once the server administrator has allowed end users to manage their own rules. Whether the rules are applied also depends on how the server is set up. If you do not see the tab, see a notice saying that the service is disabled, or your rules seem to have no effect, ask your hosting provider.
+:::
+
+You only see and manage the rules you created, for the domains of your own account. <span class="notranslate">**Default settings**</span> shows the limit that applies to requests no rule matches, and to the fields of your rules left at their default; only the server administrator can change it. Rules created by the server administrator are not shown here, but they still apply to your domains, and they are always checked before yours.
+
+#### Adding a Rate Limiting rule
+
+Click <span class="notranslate">**ADD**</span> and fill in the form. A new rule takes effect immediately.
+
+<img src="/images/rate_limiting_user_add_rule.png" alt="The Add rule dialog of an end user" width="544">
+
+| Field | Description |
+|-|-|
+|<span class="notranslate">Domains</span>|The domains the rule covers. Pick one of your domains from the list, or enter its wildcard — <span class="notranslate">`*.example.com`</span> covers the subdomains only, <span class="notranslate">`.example.com`</span> covers the domain and its subdomains. Add more with <span class="notranslate">**ADD DOMAIN**</span>. Every rule needs at least one of your domains.|
+|<span class="notranslate">IP addresses</span>|Optional. Limits the rule to visitors from these IP addresses or networks, separated by commas — for example, your payment gateway or your monitoring service. Leave it empty to cover every visitor.|
+|<span class="notranslate">Limit</span>|How many requests one visitor may send within the time frame, such as <span class="notranslate">`300`</span> or <span class="notranslate">`10k`</span>. <span class="notranslate">`0`</span> applies the action to every request.|
+|<span class="notranslate">Time frame</span>|The period the requests are counted over, from <span class="notranslate">`10s`</span> to <span class="notranslate">`12h`</span>, such as <span class="notranslate">`30s`</span>, <span class="notranslate">`5m`</span> or <span class="notranslate">`1h`</span>.|
+|<span class="notranslate">Action</span>|What happens to the requests above the limit: <span class="notranslate">**Continue**</span> lets them through as if there were no limit, <span class="notranslate">**Allow**</span> lets them through and skips the other WebShield checks, <span class="notranslate">**Deny**</span> blocks them with an HTTP 403 error, <span class="notranslate">**Splash**</span> shows a JavaScript splash page that browsers pass and simple bots do not.|
+|<span class="notranslate">Label</span>|An optional note to remind you why the rule exists.|
+
+Leave <span class="notranslate">Limit</span>, <span class="notranslate">Time frame</span> or <span class="notranslate">Action</span> at <span class="notranslate">_Default: …_</span> to use the value of the default settings. The actions and the default settings are described in more detail in <span class="notranslate">[Rate Limiting](/dashboard/#rate-limiting-actions)</span>.
+
+:::warning The first matching rule wins
+Your rules are checked in the order you created them, and the first one that matches a request is applied. A rule cannot be moved, so add a narrow rule — say, one that lets your payment gateway's IP address through — before a broad rule for the whole domain; otherwise the broad rule catches that traffic first. To fix the order, remove the broad rule and add it again.
+:::
+
+#### Checking and managing Rate Limiting rules
+
+* <span class="notranslate">**Test a request against the rules**</span> tells you which of your rules matches the traffic from a given IP address to a given domain, without waiting for real traffic. It checks your own rules only: an administrator rule that covers the same traffic takes precedence but is not reported.
+* The <span class="notranslate">**Active**</span> switch pauses a rule and resumes it later.
+* <span class="notranslate">**Edit**</span> changes any field of an existing rule, the domains included.
+* <span class="notranslate">**Remove**</span> deletes the rule.
+
+:::tip Note
+Requests from your own integrations, monitoring and cron jobs that call the site over HTTP count like any other visitor's. If they send many requests, add a rule for their IP addresses with the <span class="notranslate">Allow</span> action, before your broader rules.
+:::
 
 
 ## Command-Line Interface (CLI)
