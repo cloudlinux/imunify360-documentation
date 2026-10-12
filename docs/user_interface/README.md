@@ -117,7 +117,7 @@ imunify360-agent config update '{"PERMISSIONS": {"user_ignore_list": false}}'
 
 ## WebShield
 
-The <span class="notranslate">WebShield</span> tab holds the WebShield protection features you can manage for your own domains. Currently it contains one such feature, <span class="notranslate">Under Attack Mode</span>.
+The <span class="notranslate">WebShield</span> tab holds the WebShield protection features you can manage for your own domains: <span class="notranslate">[Under Attack Mode](#under-attack-mode)</span> and <span class="notranslate">[Rate Limiting](#rate-limiting)</span>. Each of them appears only if your hosting provider has made it available to you.
 
 ### Under Attack Mode
 
@@ -128,7 +128,7 @@ Turn it on for a domain when it is the target of an automated flood — a script
 ![](/images/uam_user_overview.png)
 
 :::tip Note
-This tab appears only if <span class="notranslate">Under Attack Mode</span> is supported by the server, the server administrator has enabled it, and they have allowed end users to manage their own rules. If you do not see the tab, or you see a notice saying that the service is disabled, ask your hosting provider.
+This tab appears once the server administrator has allowed end users to manage their own rules. Whether the rules are applied also depends on how the server is set up. If you do not see the tab, see a notice saying that the service is disabled, or your rules seem to have no effect, ask your hosting provider.
 :::
 
 You only see and manage the rules you created, for the domains of your own account. Rules created by the server administrator are not shown here, but they still apply to your domains.
@@ -161,3 +161,49 @@ Anything that cannot run JavaScript is stopped while the rule is active — incl
 :::
 
 For the technical details of how the challenge is enforced, see <span class="notranslate">[Under Attack Mode (UAM)](/features/under_attack_mode/)</span>.
+
+### Rate Limiting
+
+<span class="notranslate">**Rate Limiting**</span> caps how many requests a visitor may send to your domain within a time frame. Visitors who stay within the limit are not affected; the requests above it are challenged with a splash page, blocked, or let through — whichever action you choose.
+
+Use it against scrapers and floods that send far more requests than a person browsing the site would. Unlike <span class="notranslate">Under Attack Mode</span>, it leaves regular visitors alone, so it can stay on all the time.
+
+![](/images/rate_limiting_user_overview.png)
+
+:::tip Note
+This tab appears once the server administrator has allowed end users to manage their own rules. Whether the rules are applied also depends on how the server is set up. If you do not see the tab, see a notice saying that the service is disabled, or your rules seem to have no effect, ask your hosting provider.
+:::
+
+You only see and manage the rules you created, for the domains of your own account. <span class="notranslate">**Default settings**</span> shows the limit that applies to requests no rule matches, and to the fields of your rules left at their default; only the server administrator can change it. Rules created by the server administrator are not shown here, but they still apply to your domains, and they are always checked before yours.
+
+#### Adding a Rate Limiting rule
+
+Click <span class="notranslate">**ADD**</span> and fill in the form. A new rule takes effect immediately.
+
+<img src="/images/rate_limiting_user_add_rule.png" alt="The Add rule dialog of an end user" width="544">
+
+| Field | Description |
+|-|-|
+|<span class="notranslate">Domains</span>|The domains the rule covers. Pick one of your domains from the list, or enter its wildcard — <span class="notranslate">`*.example.com`</span> covers the subdomains only, <span class="notranslate">`.example.com`</span> covers the domain and its subdomains. Add more with <span class="notranslate">**ADD DOMAIN**</span>. Every rule needs at least one of your domains.|
+|<span class="notranslate">IP addresses</span>|Optional. Limits the rule to visitors from these IP addresses or networks, separated by commas — for example, your payment gateway or your monitoring service. Leave it empty to cover every visitor.|
+|<span class="notranslate">Limit</span>|How many requests one visitor may send within the time frame, such as <span class="notranslate">`300`</span> or <span class="notranslate">`10k`</span>. <span class="notranslate">`0`</span> applies the action to every request.|
+|<span class="notranslate">Time frame</span>|The period the requests are counted over, from <span class="notranslate">`10s`</span> to <span class="notranslate">`12h`</span>, such as <span class="notranslate">`30s`</span>, <span class="notranslate">`5m`</span> or <span class="notranslate">`1h`</span>.|
+|<span class="notranslate">Action</span>|What happens to the requests above the limit: <span class="notranslate">**Continue**</span> lets them through as if there were no limit, <span class="notranslate">**Allow**</span> lets them through and skips the other WebShield checks, <span class="notranslate">**Deny**</span> blocks them with an HTTP 403 error, <span class="notranslate">**Splash**</span> shows a JavaScript splash page that browsers pass and simple bots do not.|
+|<span class="notranslate">Label</span>|An optional note to remind you why the rule exists.|
+
+Leave <span class="notranslate">Limit</span>, <span class="notranslate">Time frame</span> or <span class="notranslate">Action</span> at <span class="notranslate">_Default: …_</span> to use the value of the default settings. The actions and the default settings are described in more detail in <span class="notranslate">[Rate Limiting](/dashboard/#rate-limiting-actions)</span>.
+
+:::warning The first matching rule wins
+Your rules are checked in the order you created them, and the first one that matches a request is applied. A rule cannot be moved, so add a narrow rule — say, one that lets your payment gateway's IP address through — before a broad rule for the whole domain; otherwise the broad rule catches that traffic first. To fix the order, remove the broad rule and add it again.
+:::
+
+#### Checking and managing Rate Limiting rules
+
+* <span class="notranslate">**Test a request against the rules**</span> tells you which of your rules matches the traffic from a given IP address to a given domain, without waiting for real traffic. It checks your own rules only: an administrator rule that covers the same traffic takes precedence but is not reported.
+* The <span class="notranslate">**Active**</span> switch pauses a rule and resumes it later.
+* <span class="notranslate">**Edit**</span> changes any field of an existing rule, the domains included.
+* <span class="notranslate">**Remove**</span> deletes the rule.
+
+:::tip Note
+Requests from your own integrations, monitoring and cron jobs that call the site over HTTP count like any other visitor's. If they send many requests, add a rule for their IP addresses with the <span class="notranslate">Allow</span> action, before your broader rules.
+:::
