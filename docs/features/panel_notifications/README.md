@@ -49,11 +49,11 @@ Two consequences follow from this design and account for most support questions:
 
 ## Message types
 
-Seven message types have a switch of their own. Six of them are addressed to
+Eight message types have a switch of their own. Seven of them are addressed to
 <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span> servers
 and are never generated for an Imunify360 server; the only type that applies to every product is
 <span class="notranslate">**Vulnerable scanner version**</span>. Each type has its own cooldown, and all but
-one pair are generated independently — the two WordPress types are mutually exclusive, see below.
+one pair are generated independently — the two WordPress core types are mutually exclusive, see below.
 
 <table>
 <thead>
@@ -96,10 +96,15 @@ one pair are generated independently — the two WordPress types are mutually ex
 <td><span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is set to <span class="notranslate"><code>none</code></span> <b>and</b> no user or background scan has run in the last 30 days</td>
 <td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b>; agent 6.7 or later</td>
 </tr>
+<tr>
+<td>Outdated or vulnerable WordPress plugins and themes</td><td><span class="notranslate"><code>wordpress_themes_and_plugins</code></span></td>
+<td>an installed WordPress plugin or theme has a newer version available, or has known vulnerabilities. The message lists up to five of them with their paths, and says how many more were found</td>
+<td>7 days</td><td><b>ImunifyAV / ImunifyAV+ only</b>; see the note on versions below</td>
+</tr>
 </tbody>
 </table>
 
-::::tip The two WordPress types never arrive together
+::::tip The two WordPress core types never arrive together
 When a server qualifies for <span class="notranslate">**Insecure WordPress version**</span>, the
 cloud drops <span class="notranslate">**Outdated WordPress version**</span> for that server in the
 same run, even though both switches are on. A vulnerable core is also an old core, and the insecure
@@ -107,17 +112,21 @@ message already tells the administrator to update, so sending both would be redu
 installation is enough to suppress the outdated message for the **whole server**, not just for that
 one site. Switch <span class="notranslate">`insecure_wp_core`</span> off and the outdated message is
 generated as usual.
+
+<span class="notranslate">**Outdated or vulnerable WordPress plugins and themes**</span> is not part
+of this pair: it covers plugins and themes rather than the core, and is generated independently of
+both core types.
 ::::
 
 ::::tip Note
-These seven are not the only messages that arrive through this channel. The Imunify cloud also
+These eight are not the only messages that arrive through this channel. The Imunify cloud also
 sends, for example, a warning when the agent version is outdated, PCI compliance notices, or a
 report about compromised accounts. Those have no individual switch and are governed by the master
-switch alone — turning all seven types off is **not** the same as turning panel notifications off.
+switch alone — turning all eight types off is **not** the same as turning panel notifications off.
 ::::
 
 :::warning Important
-The six <span class="notranslate">ImunifyAV / ImunifyAV+</span> types are **never generated for an
+The seven <span class="notranslate">ImunifyAV / ImunifyAV+</span> types are **never generated for an
 Imunify360 server**, whatever their switches say. <span class="notranslate">**Malware found**</span>
 in particular is an upgrade prompt addressed to <span class="notranslate">ImunifyAV</span> and
 <span class="notranslate">ImunifyAV+</span> administrators — Imunify360 already includes everything
@@ -143,7 +152,7 @@ your product can receive, so it looks different on the two products.
 ![](/images/panel-email-notifications-dialog.png)
 
 * <span class="notranslate">**Enable panel notifications**</span> is the master switch. Turning it off stops all panel notifications at once and greys out the individual types, which keep their own values.
-* Each of the seven types below has its own toggle. All of them are **on** by default.
+* Each of the eight types has its own toggle. All of them are **on** by default.
 
 ![](/images/panel-email-notifications-dialog-off.png)
 
@@ -152,7 +161,7 @@ your product can receive, so it looks different on the two products.
 ![](/images/panel-email-notifications-dialog-i360.png)
 
 On Imunify360 the dialog offers the master switch and a single type,
-<span class="notranslate">**Vulnerable scanner version**</span>. The other six messages are addressed
+<span class="notranslate">**Vulnerable scanner version**</span>. The other seven messages are addressed
 to <span class="notranslate">ImunifyAV / ImunifyAV+</span> servers and are never generated for
 Imunify360, so their switches are not shown. The master switch is still the control that matters
 here: it governs every message that has no switch of its own — the outdated agent version warning,
@@ -161,8 +170,8 @@ them; turning <span class="notranslate">**Vulnerable scanner version**</span> of
 message only.
 
 The hidden types are not dropped from the configuration:
-<span class="notranslate">`DASHBOARD.notifications`</span> keeps all seven keys on every product, and
-the dialog saves the six it does not show unchanged.
+<span class="notranslate">`DASHBOARD.notifications`</span> keeps the same keys on every product, and
+the dialog saves the ones it does not show unchanged.
 
 Click <span class="notranslate">_Apply_</span> to save. The dialog writes both
 <span class="notranslate">`ADMIN_CONTACTS.enable_icontact_notifications`</span> (the master switch)
@@ -185,6 +194,12 @@ is missing on a cPanel or Plesk server, check both versions; the agent side can 
 imunify360-agent config show | grep -A8 DASHBOARD
 ```
 </div>
+
+<span class="notranslate">**Outdated or vulnerable WordPress plugins and themes**</span> is newer: its
+configuration key comes with imunify-antivirus **8.9.2** and its switch with Imunify UI **8.13.3**.
+The dialog offers a switch only for the types the agent reports in
+<span class="notranslate">`DASHBOARD.notifications`</span>, so with an older agent it keeps listing
+the other seven and leaves this type out of what it saves.
 ::::
 
 ## Configuration keys
@@ -220,6 +235,7 @@ DASHBOARD:
     insecure_wp_core: True
     outdated_wp_core: True
     scan_not_scheduled: True
+    wordpress_themes_and_plugins: True
 ```
 </div>
 
@@ -244,7 +260,7 @@ imunify360-agent config update '{"DASHBOARD": {"notifications": {"aibolit_vulner
 </div>
 
 The same commands on **ImunifyAV/AV+** use the <span class="notranslate">`imunify-antivirus`</span>
-binary; there all seven types apply, so any of them can be switched off:
+binary; there all eight types apply, so any of them can be switched off:
 
 <div class="notranslate">
 

@@ -79,6 +79,8 @@ In the config file it is possible to set up ImunifyAV(+) configuration. The foll
 <td># an installed WordPress core version is outdated. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;scan_not_scheduled: True</span></td>
 <td># no scheduled malware scan is configured (<span class="notranslate"><code>MALWARE_SCAN_SCHEDULE.interval</code></span> is <span class="notranslate"><code>none</code></span>) and no user or background scan has run in the last 30 days. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
+<tr><td><span class="notranslate">&nbsp;&nbsp;&nbsp;&nbsp;wordpress_themes_and_plugins: True</span></td>
+<td># an installed WordPress plugin or theme has a newer version available, or has known vulnerabilities. Generated for <span class="notranslate">ImunifyAV/AV+</span> servers only.</td></tr>
 <tr><th colspan="2" align="left"><span class="notranslate">CONTROL_PANEL:</span></th></tr>
 <tr><td><span class="notranslate">generic_user_notifications: True</span></td>
 <td># allow sending user-targeted generic notifications (iContact messages) to panel end users when applicable. Default value is True.</td></tr>
