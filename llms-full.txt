@@ -3532,6 +3532,98 @@ All results can be saved in a temporary file before handler invocation and then 
     </div>
 
 
+#### malware-hit-removed
+
+::: tip Note
+The malware-hit-removed event is available starting from imunify-core 8.14.3 and imunify-antivirus 8.9.4. Both packages must be of these versions or later.
+:::
+
+The event is generated when a malware hit (a record about a malicious file or database) is removed from the agent's <span class="notranslate">Malicious List</span>. Together with the malware-detected event, it allows an external system to keep its own copy of the <span class="notranslate">Malicious List</span> up to date.
+
+* subtype ( removed-from-list | not-detected | not-exist | ignored | restored-from-backup | expired )
+
+  * **removed-from-list** - hits were removed from the list with the <span class="notranslate">`imunify360-agent malware malicious remove-from-list`</span> command (or the same action in the UI or API)
+  * **not-detected** - a rescan of the same file or database no longer detects malware. Only the paths that the rescan did not find again are reported
+  * **not-exist** - the file (or, for a database hit, the application directory) no longer exists
+  * **ignored** - hits were removed because their files were moved to the <span class="notranslate">Ignore List</span> (<span class="notranslate">`imunify360-agent malware malicious move-to-ignore`</span>)
+  * **restored-from-backup** - hits were removed because their files were restored from a backup
+  * **expired** - hits were removed by retention: cleaned hits after the cleanup storage keep period (<span class="notranslate">`MALWARE_CLEANUP.keep_original_files_days`</span>), and all hits of scans older than 30 days. The `status` of a hit shows whether an expired hit was still found (`found`) or already cleaned
+
+  * params[] (the same for all subtypes)
+    * total_hits / int / number of removed hits in the temporary file
+    * tmp_filename / string / path to a temporary file with a list of the removed hits. The list is in the same format as for the malware-detected event. For database hits, `resource_type` is `db`, `file` is the application directory, and `app_name` and `db_name` identify the database
+
+    <div class="notranslate">
+
+    ```
+    {
+        "total_hits": 2,
+        "tmp_filename": "/var/imunify360/tmp/malware_hit_removed_from_list_liwk6svv.json"
+    }
+    ```
+
+    ```
+    [
+        {
+          "id": 1,
+          "username": "user1",
+          "file": "/home/user1/public_html/wp-content/uploads/shell.php",
+          "created": 1791396179,
+          "detected": 1791396179.7216175,
+          "scan_id": "0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+          "scan_type": "on-demand",
+          "resource_type": "file",
+          "type": "SMW-INJ-20210-php.bkdr.wshll-1",
+          "hash": "4d1f3f8c...",
+          "size": "2048",
+          "malicious": true,
+          "status": "found",
+          "cleaned_at": null,
+          "extra_data": {},
+          "db_name": null,
+          "app_name": null,
+          "db_host": null,
+          "db_port": null,
+          "snippet": null,
+          "table_fields": []
+        },
+        {
+          "id": 2,
+          "username": "user1",
+          "file": "/home/user1/public_html",
+          "created": 1791396179,
+          "detected": 1791396179,
+          "scan_id": "0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+          "scan_type": "on-demand",
+          "resource_type": "db",
+          "type": "SMW-INJ-20450-js.inj.redir-0",
+          "hash": null,
+          "size": null,
+          "malicious": true,
+          "status": "found",
+          "cleaned_at": null,
+          "extra_data": {},
+          "db_name": "user1_wp",
+          "app_name": "wp_core",
+          "db_host": "localhost",
+          "db_port": "3306",
+          "snippet": null,
+          "table_fields": []
+        }
+    ]
+    ```
+
+    </div>
+
+::: tip Note
+Key your copy of the <span class="notranslate">Malicious List</span> by path (`file`, plus `app_name` and `db_name` for database hits), not by hit `id`. A rescan that finds a file again replaces its hit with a new one with a new `id` and reports it through the malware-detected event; the old `id` is not reported as removed.
+:::
+
+* A large removal is reported in several events of up to 1000 hits each.
+* The temporary file is deleted after the hook script finishes, so read it inside the hook.
+* A failing or missing hook script does not stop or undo the removal. The result is recorded to the [log file](/features/#log-file) <span class="notranslate">_/var/log/imunify360/hook.log_</span>.
+* Hits inside the cleanup storage (backup copies of cleaned files) are removed without the event.
+
 #### license
 
 * subtype ( expiring | expired | renewed )
@@ -13771,6 +13863,92 @@ All results can be saved in a temporary file before handler invocation and then 
 }
 ```
 </div>
+
+::: tip Note
+The malware-hit-removed event is available starting from imunify-core 8.14.3 and imunify-antivirus 8.9.4. Both packages must be of these versions or later.
+:::
+
+* **malware-hit-removed** - the event is generated when a malware hit (a record about a malicious file or database) is removed from the agent's <span class="notranslate">Malicious List</span>. Together with the malware-detected event, it allows an external system to keep its own copy of the <span class="notranslate">Malicious List</span> up to date.
+  * subtype ( removed-from-list | not-detected | not-exist | ignored | restored-from-backup | expired )
+    * removed-from-list - hits were removed from the list with the <span class="notranslate">`imunify-antivirus malware malicious remove-from-list`</span> command (or the same action in the UI or API)
+    * not-detected - a rescan of the same file or database no longer detects malware. Only the paths that the rescan did not find again are reported
+    * not-exist - the file (or, for a database hit, the application directory) no longer exists
+    * ignored - hits were removed because their files were moved to the <span class="notranslate">Ignore List</span> (<span class="notranslate">`imunify-antivirus malware malicious move-to-ignore`</span>)
+    * restored-from-backup - hits were removed because their files were restored from a backup
+    * expired - hits were removed by retention: cleaned hits after the cleanup storage keep period (<span class="notranslate">`MALWARE_CLEANUP.keep_original_files_days`</span>), and all hits of scans older than 30 days. The `status` of a hit shows whether an expired hit was still found (`found`) or already cleaned
+  * params[] (the same for all subtypes)
+    * total_hits / int / number of removed hits in the temporary file
+    * tmp_filename / string / path to a temporary file with a list of the removed hits. The list is in the same format as for the malware-detected event. For database hits, `resource_type` is `db`, `file` is the application directory, and `app_name` and `db_name` identify the database
+
+<div class="notranslate">
+
+```
+{
+    "total_hits": 2,
+    "tmp_filename": "/var/imunify360/tmp/malware_hit_removed_from_list_liwk6svv.json"
+}
+```
+
+```
+[
+    {
+      "id": 1,
+      "username": "user1",
+      "file": "/home/user1/public_html/wp-content/uploads/shell.php",
+      "created": 1791396179,
+      "detected": 1791396179.7216175,
+      "scan_id": "0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+      "scan_type": "on-demand",
+      "resource_type": "file",
+      "type": "SMW-INJ-20210-php.bkdr.wshll-1",
+      "hash": "4d1f3f8c...",
+      "size": "2048",
+      "malicious": true,
+      "status": "found",
+      "cleaned_at": null,
+      "extra_data": {},
+      "db_name": null,
+      "app_name": null,
+      "db_host": null,
+      "db_port": null,
+      "snippet": null,
+      "table_fields": []
+    },
+    {
+      "id": 2,
+      "username": "user1",
+      "file": "/home/user1/public_html",
+      "created": 1791396179,
+      "detected": 1791396179,
+      "scan_id": "0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+      "scan_type": "on-demand",
+      "resource_type": "db",
+      "type": "SMW-INJ-20450-js.inj.redir-0",
+      "hash": null,
+      "size": null,
+      "malicious": true,
+      "status": "found",
+      "cleaned_at": null,
+      "extra_data": {},
+      "db_name": "user1_wp",
+      "app_name": "wp_core",
+      "db_host": "localhost",
+      "db_port": "3306",
+      "snippet": null,
+      "table_fields": []
+    }
+]
+```
+</div>
+
+::: tip Note
+Key your copy of the <span class="notranslate">Malicious List</span> by path (`file`, plus `app_name` and `db_name` for database hits), not by hit `id`. A rescan that finds a file again replaces its hit with a new one with a new `id` and reports it through the malware-detected event; the old `id` is not reported as removed.
+:::
+
+* A large removal is reported in several events of up to 1000 hits each.
+* The temporary file is deleted after the hook script finishes, so read it inside the hook.
+* A failing or missing hook script does not stop or undo the removal. The result is recorded to the log file <span class="notranslate">_/var/log/imunify360/hook.log_</span> (see below).
+* Hits inside the cleanup storage (backup copies of cleaned files) are removed without the event.
 
 ### Hooks CLI
 
