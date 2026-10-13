@@ -10394,6 +10394,86 @@ imunify360-agent wordpress-plugin list-sites --limit 100 --offset 100
 
 </div>
 
+### List sites where the plugin was removed
+
+Use <span class="notranslate">`list-removed-sites`</span> to list the WordPress sites where the site owner deleted the <span class="notranslate">Imunify Security</span> plugin. The server does not install the plugin on these sites again. To bring it back, use <span class="notranslate">[`restore-site`](#restore-the-plugin-on-a-site)</span>.
+
+Only root can run this command. It needs <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later.
+
+| | |
+|-|-|
+|<span class="notranslate">`--user`</span>|show only the sites of this hosting account.|
+|<span class="notranslate">`--limit`</span>|maximum number of sites to return. Default is <span class="notranslate">`50`</span>.|
+|<span class="notranslate">`--offset`</span>|number of sites to skip. Default is <span class="notranslate">`0`</span>.|
+
+For each site, the command shows its <span class="notranslate">`DOCROOT`</span>, <span class="notranslate">`DOMAIN`</span>, <span class="notranslate">`UID`</span>, and <span class="notranslate">`MANUALLY_DELETED_AT`</span> (when the removal was recorded, as a Unix timestamp). The most recently removed sites come first.
+
+**Examples**
+
+1. List all sites where the plugin was removed:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-removed-sites
+```
+
+</div>
+
+2. List the removed sites of one hosting account, as JSON:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-removed-sites --user alice --json
+```
+
+</div>
+
+### Restore the plugin on a site
+
+Use <span class="notranslate">`restore-site`</span> to undo the removal record of a site, so that the server installs the <span class="notranslate">Imunify Security</span> plugin on it again. Find the document root with <span class="notranslate">[`list-removed-sites`](#list-sites-where-the-plugin-was-removed)</span>.
+
+Only root can run this command. It needs <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later.
+
+| | |
+|-|-|
+|<span class="notranslate">`--docroot`</span>|required. The document root of the WordPress site, as shown by <span class="notranslate">`list-removed-sites`</span>.|
+|<span class="notranslate">`--install`</span>|install the plugin on this site right away. Without it, the plugin is installed on the next regular installation run.|
+
+The command prints the restored site, followed by one of these messages:
+
+* <span class="notranslate">_Restored; plugin installation scheduled for this site._</span> — with <span class="notranslate">`--install`</span>.
+* <span class="notranslate">_Restored; the plugin will be installed on the next install-and-update run._</span> — without <span class="notranslate">`--install`</span>.
+
+The command fails with a warning when:
+
+* the document root is not a known WordPress site (<span class="notranslate">_Site '…' not found_</span>);
+* the plugin was not removed from that site (<span class="notranslate">_Site '…' is not marked as manually removed_</span>);
+* you use <span class="notranslate">`--install`</span> while the plugin is turned off server-wide (<span class="notranslate">_WordPress Security Plugin is disabled. Enable it before installing on a restored site._</span>).
+
+**Examples**
+
+1. Restore a site and install the plugin right away:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin restore-site --docroot /home/alice/public_html --install
+```
+
+</div>
+
+2. Restore a site and let the next regular run install the plugin:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin restore-site --docroot /home/alice/public_html
+```
+
+</div>
+
 ### List WAF incidents
 
 Use <span class="notranslate">`list-incidents`</span> to list the requests the WordPress WAF acted on. The same incidents are shown to site owners in the WordPress admin area — see <span class="notranslate">[Managing WAF incidents](/wordpress_plugin/#managing-waf-incidents)</span>.
@@ -10471,7 +10551,9 @@ imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection_preset": "stric
 
 </div>
 
-A site owner can override the server default from the WordPress dashboard, and a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both.
+A site owner can override the server default from the WordPress dashboard, and a <span class="notranslate">`define()`</span> in <span class="notranslate">`wp-config.php`</span> overrides both. On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, the preset is always <span class="notranslate">`monitor`</span>, whatever is set here.
+
+On <span class="notranslate">Imunify360</span>, IP addresses on the <span class="notranslate">[Whitelist](#whitelist)</span> are never rate-limited or blocked by AI Bot Management. See <span class="notranslate">[Exempting IP addresses with the whitelist](/wordpress_plugin/hosting_providers/#exempting-ip-addresses-with-the-whitelist)</span>.
 
 
 ## Config File Description
@@ -20949,10 +21031,44 @@ The feature needs a recent version of the plugin and of the Imunify software on 
 
 The feature runs as a *must-use* plugin, so it evaluates each request before the rest of WordPress (and other plugins) load. For every request it:
 
-1. **Classifies** the visitor into one category — a verified search engine, a verified AI crawler, an unknown automated client, an unverified bot, a malicious bot, or a human. Clients that claim to be a known crawler (for example, Googlebot) are confirmed by *forward-confirmed reverse DNS*, so a spoofed user-agent does not earn a crawler's higher limit.
+1. **Classifies** the visitor into one category — a verified search engine, a verified AI crawler, a verified SEO crawler, an unknown automated client, an unverified bot, a malicious bot, or a human. Clients that claim to be a known crawler (for example, Googlebot) are confirmed by *forward-confirmed reverse DNS*, so a spoofed user-agent does not earn a crawler's higher limit.
 2. **Applies the category's limit.** Each non-human category has a requests-per-minute allowance set by the active preset. Requests over the limit are refused with <span class="notranslate">HTTP 429 (Too Many Requests)</span> and a <span class="notranslate">`Retry-After`</span> hint; malicious bots are blocked outright with <span class="notranslate">HTTP 403 (Forbidden)</span>. Clients that keep exceeding their limit can be escalated to a temporary block.
 
 Human visitors are never rate-limited. The check is *fail-open*: if anything goes wrong (for example, the backing storage is unavailable), the request is allowed through, so the feature can never take a site down.
+
+### Traffic that is never limited
+
+AI Bot Management never limits or blocks these requests:
+
+* **Human visitors.**
+* **IP addresses on the server's whitelist.** On <span class="notranslate">Imunify360</span>, your hosting provider can add an IP address or subnet to the server whitelist. Requests from it are never limited or blocked, even when they hit the honeypot. They are shown in the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> report as <span class="notranslate">_Whitelisted IPs_</span>.
+* **Requests your site sends to itself.** WordPress often calls its own address, for example to run scheduled tasks. A request counts as coming from the site itself when all of these are true:
+  * it comes from the same server (<span class="notranslate">`127.0.0.1`</span>, <span class="notranslate">`::1`</span>, or the server's own IP address);
+  * it did not pass through a CDN or proxy;
+  * its user-agent is empty or starts with <span class="notranslate">`WordPress/`</span>.
+* **Requests to the REST APIs of known partner plugins.** These plugins call your site's REST API often, and limiting them would break their features. Today the list is:
+  * <span class="notranslate">WooCommerce</span> — <span class="notranslate">`/wp-json/wc/…`</span>
+  * <span class="notranslate">Atarim</span> — <span class="notranslate">`/wp-json/atarim/…`</span>
+  * <span class="notranslate">Elementor</span> — <span class="notranslate">`/wp-json/elementor/…`</span>, including the endpoint that AI assistants use to edit pages
+
+  The list is updated automatically together with the bot data, so it can change without a plugin update. The WordPress core REST API (<span class="notranslate">`/wp-json/wp/…`</span>) is never on this list.
+
+Requests from your own server and requests to partner REST APIs are not counted in the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> report.
+
+### Sites behind a CDN or proxy
+
+When your site is behind a CDN, every request reaches the server from one of the CDN's IP addresses. To tell visitors apart, AI Bot Management reads the real visitor IP address from the header the CDN adds:
+
+| CDN | Header |
+|---|---|
+| <span class="notranslate">Cloudflare</span> | <span class="notranslate">`CF-Connecting-IP`</span> or <span class="notranslate">`True-Client-IP`</span> |
+| <span class="notranslate">Akamai</span> | <span class="notranslate">`True-Client-IP`</span> |
+| <span class="notranslate">Fastly</span> | <span class="notranslate">`Fastly-Client-IP`</span> |
+| <span class="notranslate">Sucuri</span> | <span class="notranslate">`X-Sucuri-ClientIP`</span> |
+| <span class="notranslate">Imperva (Incapsula)</span> | <span class="notranslate">`Incap-Client-IP`</span> |
+| <span class="notranslate">Amazon CloudFront</span> | <span class="notranslate">`CloudFront-Viewer-Address`</span> |
+
+The header is used only when the request really comes from that CDN's published IP ranges, so a visitor cannot fake their address by sending the header themselves. For requests from a known CDN without its own header (for example, <span class="notranslate">QUIC.cloud</span>), the standard <span class="notranslate">`X-Real-IP`</span> and <span class="notranslate">`X-Forwarded-For`</span> headers are used. In all other cases, the IP address of the connection is used.
 
 ### Bot categories
 
@@ -20960,10 +21076,12 @@ Human visitors are never rate-limited. The check is *fail-open*: if anything goe
 |---|---|
 | <span class="notranslate">_Verified search engines_</span> | Crawlers confirmed by reverse DNS to belong to a search engine (Google, Bing, and similar). Given a high allowance so indexing is never disrupted. |
 | <span class="notranslate">_Verified AI crawlers_</span> | Confirmed crawlers from AI/LLM providers (training or retrieval). |
+| <span class="notranslate">_Verified SEO crawlers_</span> | Crawlers of SEO tools (for example, <span class="notranslate">AhrefsBot</span>), confirmed by the tool's published IP addresses or by reverse DNS. An SEO crawler that cannot be confirmed is treated as an unverified bot. |
 | <span class="notranslate">_Unknown automated_</span> | Automated clients that do not match a known, verified crawler. |
 | <span class="notranslate">_Unverified bots_</span> | Clients claiming to be a known bot but failing reverse-DNS verification. |
 | <span class="notranslate">_Malicious bots_</span> | Known-bad clients, and clients caught by the honeypot. Blocked in every preset except <span class="notranslate">_Monitor only_</span>. |
 | <span class="notranslate">_Humans_</span> | Regular visitors. Never rate-limited. |
+| <span class="notranslate">_Whitelisted IPs_</span> | IP addresses on the server's whitelist (<span class="notranslate">Imunify360</span> only). Never rate-limited or blocked. See <span class="notranslate">[Traffic that is never limited](#traffic-that-is-never-limited)</span>. |
 
 ### Protection presets
 
@@ -20973,6 +21091,7 @@ The active **preset** decides the per-minute limits. <span class="notranslate">_
 |---|---|---|---|
 | Verified search engines | 300 | 300 | Not enforced |
 | Verified AI crawlers | 10 | 3 | Not enforced |
+| Verified SEO crawlers | 60 | 20 | Not enforced |
 | Unknown automated | 5 | 2 | Not enforced |
 | Unverified bots | 2 | 1 | Not enforced |
 | Malicious bots | Blocked | Blocked | Not enforced |
@@ -20980,6 +21099,10 @@ The active **preset** decides the per-minute limits. <span class="notranslate">_
 * <span class="notranslate">_Balanced_</span> — sensible limits for a typical site. Recommended for most sites.
 * <span class="notranslate">_Strict_</span> — tighter limits for sites under heavy bot pressure.
 * <span class="notranslate">_Monitor only_</span> — classifies traffic but does not block or limit anything. Useful for trying the feature out before enforcing it.
+
+::: tip ImunifyAV and ImunifyAV+
+On servers with <span class="notranslate">ImunifyAV</span> or <span class="notranslate">ImunifyAV+</span>, AI Bot Management always uses <span class="notranslate">_Monitor only_</span>. It classifies and reports traffic, but does not limit or block anything. The preset cannot be changed in the widget or in <span class="notranslate">`wp-config.php`</span>, and the widget shows an upgrade link instead. Blocking and rate limiting need <span class="notranslate">Imunify360</span>.
+:::
 
 ### In the WordPress dashboard widget
 
@@ -21004,6 +21127,38 @@ Only WordPress administrators (users who can <span class="notranslate">_manage o
 ::: tip Note
 If your site cannot reach itself over HTTP, the pane shows a <span class="notranslate">_"Your site can't reach itself"_</span> warning — scheduled tasks, including automatic bot-data updates, may not run. Fix the loopback connectivity (for example, a local DNS or firewall issue) and click <span class="notranslate">_Re-check_</span>.
 :::
+
+### Bot Traffic report
+
+The <span class="notranslate">_Bot Traffic_</span> page shows the automated traffic on your site in the last 24 hours: how it was classified, how much there was, and what AI Bot Management did with it. To open it, go to <span class="notranslate">_Imunify Security_ → _Bot Traffic_</span> in the WordPress admin menu, or click <span class="notranslate">_View full bot traffic report_</span> in the dashboard widget.
+
+Only WordPress administrators can see the page. It is shown only when your hosting provider has turned on AI Bot Management. It needs plugin version <span class="notranslate">`4.1.0`</span> or later.
+
+![](/images/wordpress-plugin/bot-traffic-page.png)
+*The Bot Traffic page.*
+
+At the top of the page you see:
+
+* <span class="notranslate">_Preset_</span> — the active preset. The info icon shows its rate limits.
+* <span class="notranslate">_Reporting window_</span> — the time range of the report (the last 24 hours) and the total number of requests in it.
+* <span class="notranslate">_Statistics collection_</span> — whether the plugin is collecting statistics right now.
+* Totals for <span class="notranslate">_Human visitors_</span>, <span class="notranslate">_Bot requests_</span>, <span class="notranslate">_Allowed_</span>, <span class="notranslate">_Rate-limited (429)_</span>, and <span class="notranslate">_Blocked (403)_</span>.
+
+Below that, the report has these sections:
+
+| Section | What it shows |
+|---|---|
+| <span class="notranslate">_Bot requests over time_</span> | An hourly chart of bot requests for the last 24 hours, split into allowed, rate-limited, and blocked requests. Human visitors are not included. |
+| <span class="notranslate">_What happened_</span> | A short summary in plain words. For example, which bot sent the most requests, its peak rate, and what was done with it. |
+| <span class="notranslate">_By classification_</span> | The share of all traffic in each [bot category](#bot-categories). Expand a category to see its bots, and expand a bot to see its top IP addresses. |
+| <span class="notranslate">_Top bots_</span> | The named bots that sent the most requests, with their <span class="notranslate">_Category_</span>, <span class="notranslate">_Peak / min_</span>, <span class="notranslate">_Requests_</span>, and the <span class="notranslate">_Action_</span> taken. Expand a bot to see its top IP addresses. |
+
+![](/images/wordpress-plugin/bot-traffic-classification.png)
+*The <span class="notranslate">_By classification_</span> section with a category and a bot expanded.*
+
+For each bot and IP address, the <span class="notranslate">_Action_</span> column shows <span class="notranslate">_Allowed_</span>, <span class="notranslate">_Rate-limited_</span>, or <span class="notranslate">_Blocked_</span>. Up to 10 IP addresses are listed for each bot.
+
+At the bottom of the page, you can click <span class="notranslate">_Stop collecting bot-traffic statistics_</span> to stop collecting statistics for your site. Protection keeps working, but the report is no longer updated. Click <span class="notranslate">_Resume collecting bot-traffic statistics_</span> to start again.
 
 ### Turning it on or off
 
@@ -21047,7 +21202,7 @@ Yes, you can deactivate or delete it like any other WordPress plugin.
 
 Deleting it also removes the data it stored for your site. A job on the server does this clean-up once a day, so it can take up to 24 hours. The same job records that you removed the plugin, so the server does not install it again by itself.
 
-If you want the plugin back later, ask your hosting provider — they can restore it for your site.
+If you want the plugin back later, ask your hosting provider. They can restore it for your site with one command.
 
 Deactivating or deleting the plugin turns off the protection it provides inside WordPress — the <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span> and <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> stop working for your site. Malware scanning on the server continues, but you no longer see the results in your WordPress dashboard.
 
@@ -21109,6 +21264,7 @@ Open the <span class="notranslate">_Bot Protection_</span> row in the <span clas
 
 * **Switch to a softer preset.** Click <span class="notranslate">_change_</span>, pick a preset, and click <span class="notranslate">_Save_</span>. <span class="notranslate">_Monitor only_</span> still classifies traffic but does not block or limit anything, which is the quickest way to confirm that Bot Protection is the cause.
 * **Turn protection off for this site.** The row has a switch that disables Bot Protection for your site only. You can turn it back on at any time.
+* **Ask your hosting provider to whitelist the tool.** If the tool uses fixed IP addresses, your provider can add them to the server whitelist (<span class="notranslate">Imunify360</span> only). Requests from those addresses are then never limited, and the rest of your site stays protected. See <span class="notranslate">[Traffic that is never limited](#traffic-that-is-never-limited)</span>.
 
 See <span class="notranslate">[Turning it on or off](#turning-it-on-or-off)</span> for the <span class="notranslate">`wp-config.php`</span> settings that override the widget, and <span class="notranslate">[Protection presets](#protection-presets)</span> for what each preset allows.
 
@@ -21184,8 +21340,12 @@ Individual features need newer versions of both the plugin and the Imunify agent
 | Base plugin (dashboard widget, plugin page) | — | <span class="notranslate">`8.4.1`</span> | <span class="notranslate">`8.6.0`</span> |
 | <span class="notranslate">[Web Application Firewall](#web-application-firewall)</span> | <span class="notranslate">`wp-3.0.1-2`</span> | <span class="notranslate">`8.12.5-3`</span> | <span class="notranslate">`av-8.7.1-2`</span> |
 | <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> | <span class="notranslate">`wp-4.0.2-2`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
+| <span class="notranslate">[Bot Traffic](/wordpress_plugin/#bot-traffic-report)</span> report page | <span class="notranslate">`wp-4.1.0-1`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
+| <span class="notranslate">[Whitelisted IPs skip AI Bot Management](#exempting-ip-addresses-with-the-whitelist)</span> | <span class="notranslate">`wp-4.1.1-1`</span> | <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> | Not available |
+| <span class="notranslate">[Partner REST APIs skip AI Bot Management](/wordpress_plugin/#traffic-that-is-never-limited)</span> | <span class="notranslate">`wp-4.1.3-1`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
+| <span class="notranslate">[Restoring a removed plugin](#when-a-site-owner-removes-the-plugin)</span> | — | <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> | <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> |
 
-The plugin is updated by the Imunify agent, so keeping the agent current is enough.
+The plugin is updated by the Imunify agent, so keeping the agent current is enough. <span class="notranslate">`imunify-core`</span> is a shared package that both <span class="notranslate">Imunify360</span> and <span class="notranslate">ImunifyAV</span> install, and it is updated on its own schedule.
 
 ::: warning
 WordPress multisite networks are only partly supported and have not been fully tested. Some features may not behave as documented on multisite.
@@ -21250,7 +21410,33 @@ Both commands accept filters and paging — see the <span class="notranslate">[c
 
 A site owner can delete the plugin from their WordPress site like any other plugin. A daily job then records the site as removed by the user, cleans up the data kept for it, and stops managing it. The server does **not** install the plugin on that site again, and turning <span class="notranslate">`security_plugin_enabled`</span> off and on again does not bring it back.
 
-To put the plugin back on such a site, contact Imunify support for the steps. A command for this is planned for a future release.
+To put the plugin back on such a site, first list the sites where the owner removed it:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin list-removed-sites
+```
+
+</div>
+
+Then restore the site by its document root, as shown in the list. Add <span class="notranslate">`--install`</span> to install the plugin on that site right away:
+
+<div class="notranslate">
+
+```
+imunify360-agent wordpress-plugin restore-site --docroot /home/user/public_html --install
+```
+
+</div>
+
+Without <span class="notranslate">`--install`</span>, the site becomes eligible again and the plugin is installed on the next regular installation run.
+
+Both commands need root and <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later. On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, use <span class="notranslate">`imunify-antivirus`</span> instead of <span class="notranslate">`imunify360-agent`</span>. See the <span class="notranslate">[command-line reference](/command_line_interface/#list-sites-where-the-plugin-was-removed)</span> for all options.
+
+::: tip Note
+Talk to the site owner before you restore the plugin. They removed it on purpose.
+:::
 
 ## Web Application Firewall
 
@@ -21313,7 +21499,7 @@ For all options, and for enabling or disabling individual WAF rules server-side,
 
 ## AI Bot Management
 
-AI Bot Management classifies incoming traffic (verified search engines, verified AI crawlers, unknown automated clients, unverified bots, malicious bots, and humans) before WordPress finishes loading, and applies a per-minute request limit to each non-human category. Human visitors are never rate-limited, and the check is fail-open.
+AI Bot Management classifies incoming traffic (verified search engines, verified AI crawlers, verified SEO crawlers, unknown automated clients, unverified bots, malicious bots, and humans) before WordPress finishes loading, and applies a per-minute request limit to each non-human category. Human visitors are never rate-limited, and the check is fail-open.
 
 For the categories, the preset limits, and what site owners see, see <span class="notranslate">[AI Bot Management](/wordpress_plugin/#ai-bot-management)</span>.
 
@@ -21342,6 +21528,8 @@ imunify360-agent config update '{"WORDPRESS":{"ai_bot_protection_preset": "stric
 
 While the feature is off server-wide, the <span class="notranslate">_Bot Protection_</span> row does not appear in the WordPress dashboard widget.
 
+On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, AI Bot Management always runs in <span class="notranslate">`monitor`</span> mode: it classifies and reports traffic, but does not limit or block it. The <span class="notranslate">`ai_bot_protection_preset`</span> setting, the site owner's choice in the widget, and <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> have no effect there. This applies from plugin <span class="notranslate">`wp-4.1.0-1`</span>.
+
 ### Per-site control
 
 AI Bot Management is a server-wide setting. Unlike the WAF, it cannot be enabled or disabled for a single hosting account. Once it is on for the server, control belongs to the site:
@@ -21351,17 +21539,55 @@ AI Bot Management is a server-wide setting. Unlike the WAF, it cannot be enabled
 
 See <span class="notranslate">[Turning it on or off](/wordpress_plugin/#turning-it-on-or-off)</span>.
 
+### Exempting IP addresses with the whitelist
+
+On <span class="notranslate">Imunify360</span>, IP addresses on the server's whitelist are never rate-limited or blocked by AI Bot Management. This includes requests that hit the honeypot. Use it for a service that a site owner needs, for example an uptime monitor or a backup service:
+
+<div class="notranslate">
+
+```
+imunify360-agent ip-list local add --purpose white 203.0.113.10 --comment "Uptime monitor"
+```
+
+</div>
+
+How it works:
+
+* Only entries that someone added on purpose count — from the command line, the admin interface, or a group sync. IP addresses whitelisted automatically, for example after a successful panel login or CAPTCHA, are not used.
+* Single IP addresses and subnets work, for both IPv4 and IPv6. Country whitelists are not used.
+* Entries with an expiration time stop counting when they expire.
+* The agent checks the whitelist every minute and copies changes to the WordPress sites.
+* Whitelisted traffic is still counted in the <span class="notranslate">[Bot Traffic](/wordpress_plugin/#bot-traffic-report)</span> report, under <span class="notranslate">_Whitelisted IPs_</span>.
+
+This needs plugin <span class="notranslate">`wp-4.1.1-1`</span> and <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later, and AI Bot Management must be on. It is not available on <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, which have no IP whitelist. See also the <span class="notranslate">[Whitelist](/command_line_interface/#whitelist)</span> command reference.
+
+### Traffic that is never limited
+
+Besides whitelisted IP addresses, AI Bot Management never limits:
+
+* human visitors;
+* requests that the site sends to itself from the same server, such as WordPress scheduled tasks;
+* requests to the REST APIs of known partner plugins, such as WooCommerce.
+
+See <span class="notranslate">[Traffic that is never limited](/wordpress_plugin/#traffic-that-is-never-limited)</span> in the Site Owner Guide for details.
+
+### Sites behind a CDN or proxy
+
+When a site is behind a CDN, AI Bot Management uses the real visitor IP address from the CDN's header. It trusts the header only when the request comes from that CDN's published IP ranges. See <span class="notranslate">[Sites behind a CDN or proxy](/wordpress_plugin/#sites-behind-a-cdn-or-proxy)</span> for the list of supported CDNs.
+
 ## What site owners can change
 
 | Setting | Controlled by you | Site owner can override |
 |---|---|---|
-| Plugin installed (<span class="notranslate">`security_plugin_enabled`</span>) | Server-wide | A site owner can delete the plugin from their site manually. It does not come back — see <span class="notranslate">[When a site owner removes the plugin](#when-a-site-owner-removes-the-plugin)</span>. |
+| Plugin installed (<span class="notranslate">`security_plugin_enabled`</span>) | Server-wide | A site owner can delete the plugin from their site manually. It does not come back by itself, but you can restore it — see <span class="notranslate">[When a site owner removes the plugin](#when-a-site-owner-removes-the-plugin)</span>. |
 | Web Application Firewall | Server-wide and per hosting account | The hosting account owner can turn it off for their own account, unless you have locked it server-wide. The setting then shows *This value is set by server administrator*. |
 | AI Bot Management | Server-wide only | Yes — the WordPress administrator turns it on or off for their own site from the widget. Setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides both. |
-| AI Bot Management preset | You set the server default | Yes — from the widget, or by setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file. |
+| AI Bot Management preset | You set the server default | Yes — from the widget, or by setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file. On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, the preset is always <span class="notranslate">_Monitor only_</span>. |
 | Individual WAF rules | You can disable rules server-side | A site owner can disable a rule for their own site from the <span class="notranslate">Imunify Security</span> page in WordPress. |
 
 Site owners can solve most common problems themselves. The Site Owner Guide covers them in <span class="notranslate">[Something is not working. What can I do?](/wordpress_plugin/#something-is-not-working-what-can-i-do)</span> — blocked traffic, a WAF false positive, and Bot Protection refusing a tool they use. You can link to it from your own help pages.
+
+If Bot Protection refuses a tool that a site owner needs, and a softer preset does not help, you can add the tool's IP addresses to the whitelist. See <span class="notranslate">[Exempting IP addresses with the whitelist](#exempting-ip-addresses-with-the-whitelist)</span>.
 
 ## Reference
 
