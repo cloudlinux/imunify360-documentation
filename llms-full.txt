@@ -18730,7 +18730,27 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>Forminator Forms | 1.13.3+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Fluent Forms | 3.5.0+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>YITH WooCommerce Wishlist | 3.1.0+ | COVERAGE, COVERAGE+CLEAN | all |
-| WordPress Plugin:  <br>Enable Media Replace | 3.2.7+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Enable Media Replace | 3.2.7+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>Breadcrumb NavXT | 5.4+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WooCommerce Stripe Payment Gateway | 3.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Click to Chat – HoliThemes | 1.7.2 with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Widgets for Google Reviews | 10.9+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WPvivid – Backup, Migration & Staging | 0.9+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Polylang | 1.8+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Pagelayer | 0.9+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>CookieAdmin | 1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>SiteSEO | 1.1+ with PHP7.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Translate WordPress with GTranslate | 2.8.8+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>All-In-One Security (AIOS) – Security and Firewall | 4.3.7.1+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>GoSMTP – SMTP for WordPress | 1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Regenerate Thumbnails | 2.3+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Redux Framework | 4.3+ with PHP7.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Image Optimization | 1.0+ with PHP7.4 | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Breeze | 1.0.8+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>SpeedyCache | 1.0.1+ with PHP7+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Complianz – GDPR/CCPA Cookie Consent | 6.5.6+ with PHP7.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Code Snippets | 2.10+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Loco Translate | 2.1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
 | PrestaShop Plugin:  <br>Faceted Search | 3.0.1+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) | 2.9.37+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
