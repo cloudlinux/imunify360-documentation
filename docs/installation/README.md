@@ -31,6 +31,7 @@
 * <span class="notranslate">DirectAdmin</span>
 * <span class="notranslate">CyberPanel</span> (only CloudLinux OS 7 and 8). See [3rd party integration guide from CyberPanel](https://community.cyberpanel.net/docs?category=49&tags=cloudlinux&topic=172)
 * <span class="notranslate">Webuzo</span> ([Imunify360 installation guide](https://webuzo.com/docs/installing-webuzo/install-imunify360/))
+* <span class="notranslate">AdminBolt</span> ([Documentation](https://docs.adminbolt.com/user-guide/integrations/imunify360))
 * For other Generic hosting panels or no-panel configurations, the [dedicated Stand-Alone installation documentation](/control_panel_integration/#settings-related-to-stand-alone-version/) should be used
 
 **Required browsers**
