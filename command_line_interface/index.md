@@ -2421,7 +2421,8 @@ Option can be:
 |<span class="notranslate">`--id`</span>|ID number of the rule provided by the firewall plugin.|
 |<span class="notranslate">`--plugin`</span>|Firewall plugin name. Can be one of the following:<ul><li><span class="notranslate">`modsec`</span> for ModSecurity</li><li><span class="notranslate">`ossec`</span> for OSSEC</li><li><span class="notranslate">`lfd`</span> Login Failure Daemon (can be used in CSF integration mode)</li></ul>|
 |<span class="notranslate">`--name`</span>|Name of the added rule or details of the rule from <span class="notranslate">ModSecurity</span> or OSSEC.|
-|<span class="notranslate">`--domains`</span>|List of domains to disable a rule for. Can only be used with `modsec` type.|
+|<span class="notranslate">`--domains`</span>|List of domains to disable a rule for. Can only be used with `modsec` type. For a rule that is already disabled, its domain list is replaced with the given domains; use `--merge` to add them instead.|
+|<span class="notranslate">`--merge`</span>|Add the domains from `--domains` to the rule's domain list instead of replacing it. A rule disabled for all domains stays disabled for all domains.|
 
 **Examples**
 1. The following command adds a rule with id 42 and name <span class="notranslate">‘Rule name’</span> for the <span class="notranslate">ModSecurity</span> rules to the disabled rules list:
@@ -2489,6 +2490,17 @@ Option can be:
 
    ```
    imunify360-agent rules update-app-specific-rules
+   OK
+   ```
+
+</div>
+
+5. The following command adds `example.org` to the domains the <span class="notranslate">ModSecurity</span> rule with id 42 is disabled for, keeping the domains it is already disabled for:
+
+<div class="notranslate">
+
+   ```
+   imunify360-agent rules disable --id 42 --plugin modsec --name 'Rule name' --domains example.org --merge
    OK
    ```
 
