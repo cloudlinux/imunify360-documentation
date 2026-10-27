@@ -165,7 +165,45 @@ A list of plugins fully supported by Patchman for patching and/or version detect
 | WordPress Plugin:  <br>SpeedyCache | 1.0.1+ with PHP7+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Complianz – GDPR/CCPA Cookie Consent | 6.5.6+ with PHP7.2+ | COVERAGE, COVERAGE+CLEAN | all |
 | WordPress Plugin:  <br>Code Snippets | 2.10+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
-| WordPress Plugin:  <br>Loco Translate | 2.1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Loco Translate | 2.1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all | 
+| WordPress Plugin:  <br>404 to 301 | 1.0.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Access Governance for WordPress (aka AAM) | 3.0+ with PHP8.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Amelia Booking | 1.2.1+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Beaver Builder Page Builder | 1.3.6+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>CTX Feed - Product Feed Manager for WooCommerce | 1.5.10+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Custom Twitter Feeds | 1.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Duplicate Page and Post | 1.0.1+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Email Subscribers & Newsletters | 3.1+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Events Manager | 1.0+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Everest Forms | 1.0+ with PHP7.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>ExactMetrics | 7.1.0+ with PHP7.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Exclusive Addons for Elementor | 1.0.1+ with PHP5.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Firelight Lightbox | 1.3.1+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Form Maker by 10Web | 1.5+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Formidable Forms | 1.07.11+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>FV Flowplayer Video Player | 0.9.17+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>GiveWP - Donation Plugin | 1.9.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>HappyAddons for Elementor | 0.0.1+ with PHP8.1+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Hustle | 3.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>LatePoint | 5.1.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Make Connector | 1.5+ with PHP7.2+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Otter Blocks | 1.0.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Payment Gateway for Redsys & WooCommerce Lite | 1.0.0+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>PDF Invoices & Packing Slips for WooCommerce | 1.0.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Photo Gallery by 10Web | 1.0.1+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Premium Addons for Elementor | 1.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>ReFlex Gallery » WordPress Photo Gallery | 1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Royal Addons for Elementor | 1.0.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>RTMKit | 1.0.0+ with PHP8.3+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Shortcodes Ultimate - Content Elements | 1.0.0+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Slideshow Gallery LITE | 1.0+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Speed Optimizer | 7.6.4+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Tutor LMS - eLearning and online course solution | 1.0.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Ultimate Member | 1.0.0+ with PHP7.0+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Unlimited Elements for Elementor | 1.5.44+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>Visualizer - Tables & Charts Manager | 1.0.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WooCommerce PayPal Payments | 1.0.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
+| WordPress Plugin:  <br>WP Statistics | 1.0+ with PHP7.4+ | COVERAGE, COVERAGE+CLEAN | all |
 | PrestaShop Plugin:  <br>Faceted Search | 3.0.1+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Akeeba Backup |     | COVERAGE, COVERAGE+CLEAN | all |
 | Joomla! Plugin:  <br>Joomla Content Editor (JCE) | 2.9.37+ with PHP5.6+ | COVERAGE, COVERAGE+CLEAN | all |
