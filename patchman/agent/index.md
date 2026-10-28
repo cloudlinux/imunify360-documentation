@@ -57,7 +57,7 @@ In addition to the above, the changelog for each software update is also availab
 Use the RPM package management utility with the following command:
 
 ```
-rpm -q --changelog imunify-patchman
+rpm -q --changelog patchman-client
 ```
 
 ### Debian / Ubuntu

@@ -19088,15 +19088,17 @@ Please be advised that these IP-addresses might be subject to change in the futu
 
 #### Operating system
 
-Patchman runs on CentOS, Red Hat Enterprise Linux, Debian and Ubuntu Linux servers. Both 32-bit and 64-bit systems are supported.
+Patchman runs on CentOS, CloudLinux, AlmaLinux, Rocky Linux, Red Hat Enterprise Linux, Debian and Ubuntu Linux servers. 64-bit systems are supported on all listed versions; 32-bit systems are supported on Debian 7, 8 and 9 and CentOS 6 only.
 
-The following minimum operating system versions are supported:
+The following operating system versions are supported:
 
-| **OS** | **Minimal supported version**                     |
+| **OS** | **Supported versions**                     |
 | --- |---------------------------------------------------|
-| CentOS/RHEL | 6 (up to 8)                                       |
-| Debian | 8, Jessie (up to 13)                    |
-| Ubuntu | 14.10, Utopic Unicorn (up to 21.10, Impish Indri) |
+| CentOS/CloudLinux/AlmaLinux/Rocky Linux/RHEL | 6 to 9                                       |
+| Debian | 7, Wheezy to 13, Trixie                    |
+| Ubuntu | 14.04, Trusty Tahr to 26.04, Resolute Raccoon |
+
+Ubuntu 12.04, CentOS 5 and FreeBSD are not supported.
 
 #### Control panel
 
@@ -20326,7 +20328,7 @@ In addition to the above, the changelog for each software update is also availab
 Use the RPM package management utility with the following command:
 
 ```
-rpm -q --changelog imunify-patchman
+rpm -q --changelog patchman-client
 ```
 
 ### Debian / Ubuntu
