@@ -222,10 +222,12 @@ You can specify which PAM service Imunify360 should use with the <span class="no
 <div class="notranslate">
 
 ```
-[pam]
+[PAM]
 service_name = system-auth
 ```
 </div>
+
+The section name is case-sensitive. Imunify360 ignores a `[pam]` section and uses `system-auth`.
 
 You can get a token which can be used for authentication using the [<span class="notranslate">`login`</span> command](/command_line_interface/#login). The administrators have full access to Imunify360 UI and its settings.
 
@@ -235,8 +237,7 @@ By default, root is considered to be the only admin user.
 
 To configure which directories the realtime malware scanner should watch and which to ignore, edit the <span class="notranslate">`integration.conf`</span> file:
 
-* configure <span class="notranslate">`[malware].basedir`</span> – a root directory to watch (recursively)
-* configure <span class="notranslate">`[malware].pattern_to_watch`</span> – only directories that match this ([Python](https://docs.python.org/3/howto/regex.html#regex-howto)) regex in the basedir are actually going to be watched
+* configure <span class="notranslate">`[malware].basedir`</span> – one or more root directories to watch (recursively), separated by spaces. Do not use commas. Imunify360 reads `/home,/var/www` as one directory that does not exist.
 
 **Example:**
 
@@ -244,8 +245,7 @@ To configure which directories the realtime malware scanner should watch and whi
 
 ```
 [malware]
-basedir = /home
-pattern_to_watch = ^/home/.+?/(public_html|public_ftp|private_html)(/.*)?$
+basedir = /home /var/www
 ```
 </div>
 
@@ -347,12 +347,13 @@ It should point to an executable file that accepts as an input a list of domain-
 <div class="notranslate">
 
 ```
-{"user": "username", "domain": "example.com", "content": "modsec config text"}
-{"user": "another", "domain": "another.example.com", "content": "..."}
+{"domain": "example.com", "content": "modsec config text"}
+{"domain": "another.example.com", "content": "..."}
 ```
 </div>
  
 Each line contains config for a single domain e.g., it may contain rule tags excluded for the domain.
+On Apache and LiteSpeed, `content` is already wrapped in `<IfModule security2_module>` and `<IfModule security3_module>` blocks, so you can include it in the domain's virtual host as it is. On Nginx, `content` is a bare `SecRuleRemoveById` directive. Write it to a file and load that file in the domain's `server` block with `modsecurity_rules_file`. An empty `content` means that the domain has no disabled rules.
 The script should also restart the web server to apply the configuration. This should be done so that the script could implement the check that web server comes up after config change, and reset configuration if it doesn't.
 
 If configuration change failed, the script should return 1, and in the standard error stream (stderr) it should return the reason for failure. On success, the script should return 0.
