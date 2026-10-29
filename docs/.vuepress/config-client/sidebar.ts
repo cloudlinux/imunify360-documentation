@@ -35,7 +35,8 @@ export default {
             {
                 collapsable: false,
                 children: [
-                    "/control_panel_integration/"
+                    "/control_panel_integration/",
+                    "/control_panel_integration/cp_integrator_skill"
                 ]
             },
         ],

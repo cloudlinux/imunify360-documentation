@@ -6,6 +6,10 @@
 
 Imunify360 can be installed directly on the server, independent of any panel, regardless of the administrative interface. It is also called stand-alone, non-panel, generic panel integration.
 
+:::tip Note
+To have an AI agent build the integration for your panel, see [Integrate your panel with the cp-integrator skill](./cp_integrator_skill.md).
+:::
+
 ### Limitations
 
 * No support for managing disabled rules yet. See also: [Disabled rules](/dashboard/#disabled-rules)
