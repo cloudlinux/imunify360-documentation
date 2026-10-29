@@ -122,6 +122,9 @@ By default, `root` is considered to be the only "admin" user.
 
 #### How to define administrators for ImunifyAV
 
+:::tip Note
+This list applies only to the stand-alone (generic panel or no-panel) integration described on this page. On cPanel, Plesk and DirectAdmin, ImunifyAV takes its administrators from the control panel, and the `auth.admin` file and the `admins` integration script have no effect.
+:::
 
 The administrators have full access to ImunifyAV UI and its settings.
 
