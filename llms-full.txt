@@ -18382,6 +18382,7 @@ Patchman helps reduce support requests related to malware infections and outdate
 
 **Agent (patchman-client)**
 
+   * [Installing the Patchman agent](/patchman/agent/#installing-the-patchman-agent)
    * [Where can I find the software changelog?](/patchman/agent/#where-can-i-find-the-software-changelog)
    * [Tuning the Patchman agent](/patchman/agent/#tuning-the-patchman-agent)
    * [Multi-threaded scanning, what is it and how do I configure it?](/patchman/agent/#multi-threaded-scanning-what-is-it-and-how-do-i-configure-it)
@@ -18420,7 +18421,7 @@ Patchman helps reduce support requests related to malware infections and outdate
 * * *
 
 **Imunify integration**
-   * [Installing imunify-antivirus with Patchman support](/patchman/agent/#installin-imunify-antivirus-with-patchman-support)
+   * [Installing imunify-antivirus with Patchman support](/patchman/agent/#installing-imunify-antivirus-with-patchman-support)
 
 ### Getting started
 
@@ -20273,11 +20274,33 @@ By modifying a policy, some settings will apply immediately and others will only
 
 [[TOC]]
 
-## Installation (Recommended)
+## Installing the Patchman agent
 
-The `imunify-patchman` agent is delivered as part of Imunify. Follow the installation instructions below to enable Patchman support.
+The Patchman agent (the `patchman-client` package) runs on the servers you add to the Patchman Portal. It is installed from the Patchman package repository using your system package manager. See [What are the minimal requirements for running Patchman?](/patchman/frequently_asked_questions/#what-are-the-minimal-requirements-for-running-patchman) for the supported operating systems and control panels.
+
+1. Log in to the server as root and run the installation script:
+    ```
+    wget https://download.patchman.co/install-patchman.sh && /bin/bash -e install-patchman.sh && rm -f install-patchman.sh
+    ```
+    The script adds the Patchman repository to your package manager, installs the `patchman-client` package and starts the Patchman daemon.
+
+2. When asked, enter the license key shown on the [server add page](https://portal.patchman.co/servers/add/) under `During installation, enter the following license key:`.
+
+3. When asked, choose whether to also install [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it) (the `patchman-client-realtime` package). This feature requires a plan that supports real-time scanning.
+
+4. Approve the server in the Patchman Portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/).
+
+The installation script accepts the following options, for example to run it without prompts:
+
+* `-a <IP>` or `--ip-address=<IP>` — the outbound IPv4 address of the server. Required when the server is behind a NAT, as the address can't be detected automatically.
+* `-c` — continue without a supported control panel (cPanel, DirectAdmin or Plesk), for a [custom integration](/patchman/platform_integrations/#using-patchman-with-a-non-standard-control-panel).
+* `--realtime=yes` or `--realtime=no` — install real-time scanning, or not, without asking.
+
+Manual installation instructions are available on the [server add page](https://portal.patchman.co/servers/add/) in the Portal.
 
 ### Installing imunify-antivirus with Patchman support
+
+Alternatively, Patchman support can be enabled through the Imunify agent:
 
 1. Find a license key on the [server add page](https://portal.patchman.co/servers/add/). It is displayed under the `During installation, enter the following license key:` section.
 
@@ -20323,7 +20346,7 @@ You can find the central Patchman software changelog at the following URL:
 
 In addition to the above, the changelog for each software update is also available through your system package manager.
 
-### CentOS / CloudLinux
+### CentOS / CloudLinux / AlmaLinux / Rocky Linux / RHEL
 
 Use the RPM package management utility with the following command:
 
@@ -20447,15 +20470,7 @@ Upon release of the multithreading feature, the 'Absolute' setting will be used 
 
 * * *
 
-* * *
-
-## Legacy Reference: patchman-client (Older Agent)
-
-:::warning
-**Deprecated Documentation** — This section covers the older `patchman-client` agent delivered from the standalone Patchman repository. It is kept for reference only. For new installations, use the `imunify-patchman` sections above. Customers on older versions of patchman-client can continue using it, but should plan to migrate to `imunify-patchman` (version 1.0.9+) for the latest features and updates.
-:::
-
-### How automatic agent updates work (patchman-client)
+## How do automatic agent updates work?
 
 :::tip 
 If you have installed the package for [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it), automatic updates will also apply to that package. If you don't have it installed yet, you need to manually install it first - Patchman can't automatically perform this installation for you, for security reasons. 
@@ -20463,9 +20478,9 @@ If you have installed the package for [real-time scanning](/patchman/frequently_
 
 The Patchman agent is capable of performing unattended automated updates. This saves you time and effort whenever we release a new version, and ensures that all your servers are always running the latest version with both the newest features and the latest bugfixes.
 
-#### Configuring automatic updates
+### Configuring automatic updates
 
-##### Disabling automatic updates
+#### Disabling automatic updates
 
 Automatic updates are switched on by default, and are available for agents with version 1.7.0-1 and higher.
 
@@ -20473,7 +20488,7 @@ If you do not wish to benefit from automatic updates, you can opt out through an
 
 ![](/images/auto-update.png)
 
-##### Repository name modifications
+#### Repository name modifications
 
 By default we assume the repository is named "patchman", as will be the case if you use our installation script to install the repository on your system. If you decided to rename the repository definition, you can configure the alternative repository name by adding the following data to the file /etc/patchman/patchman.ini (create it if it does not yet exist):
 
@@ -20490,7 +20505,7 @@ service patchman reload
 
 Our update process will use the new repository name where appropriate.
 
-#### Under the hood: steps in automatic updating
+### Under the hood: steps in automatic updating
 
 As a system administrator you may want to know how the updates are performed. In particular, you may be interested to know what checks we perform to ensure successful updates, what rollback procedures are involved if an update fails, and how the validity of each update is verified. This section lists all the steps the agent takes including some background information regarding the how and why for each step.
 
@@ -20500,23 +20515,23 @@ When building the updating procedure, our goal was to simulate the steps and che
 In the steps below, wherever actions are performed for the patchman-client package, they are repeated for the patchman-client-realtime package if (and only if) you have that installed. 
 :::
 
-##### CentOS/CloudLinux
+#### CentOS/CloudLinux/AlmaLinux/Rocky Linux/RHEL
 
 1. Clean the cached metadata for the patchman repository to ensure issuing an install command will result in new metadata being downloaded from our repository
-    1. On CentOS 6 and 7:
+    1. On version 6 and 7:
         ```
         yum clean all --disablerepo="*" --enablerepo="patchman"
         ```
-    2. On CentOS 8:
+    2. On version 8 and later:
         ```
         dnf clean all --disablerepo="*" --enablerepo="patchman"
         ```
 2. Download the most recent version of the patchman-client package into the cache directory (and parse the associated filename). If no new version is available, stop the update procedure.
-    1. On CentOS 6 and 7:
+    1. On version 6 and 7:
         ```
         yum install -y --downloadonly --downloaddir=<patchman tmp dir> patchman-client
         ```
-    2. On CentOS 8
+    2. On version 8 and later:
         ```
         dnf install -y --downloadonly --downloaddir=<patchman tmp dir> --verbose patchman-client
         ```
@@ -20528,7 +20543,7 @@ In the steps below, wherever actions are performed for the patchman-client packa
 5. Parse the output from the rpm command to check whether the update succeeded.
 6. If the update is successful, the agent will restart itself after completion of the update procedure, ensuring the server is running the newly installed version afterwards.
 
-##### Debian/Ubuntu
+#### Debian/Ubuntu
 
 1. Read the filename that contains our repository definition and the path to the cache directory. This means parsing Dir, Dir::Etc, Dir::Etc::sourceparts, Dir::Cache and Dir::Cache::archives from:
     ```
@@ -20536,7 +20551,7 @@ In the steps below, wherever actions are performed for the patchman-client packa
     ```
 2. Update the cached metadata for only the patchman repository. This is done by telling apt to perform the update while thinking our repository is the only repository definition.
     ```
-    apt-get update -o Dir::Etc::sourcelist="/etc/apt/sources.list.d/patchman.repo" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+    apt-get update -o Dir::Etc::sourcelist="/etc/apt/sources.list.d/patchman.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
     ```
 3. Check whether a new update for patchman-client is available by parsing the output from:
     ```
@@ -20558,7 +20573,9 @@ In the steps below, wherever actions are performed for the patchman-client packa
 In step 3, we used `apt-cache madison patchman-client` until version 1.14.0-1. 
 :::
 
-### Updating the patchman-client agent (Legacy)
+* * *
+
+## Updating the Patchman agent
 
 :::tip 
 We strongly suggest using the auto-update feature, as described above. Relying on auto-update decreases maintenance and ensures you will always automatically use the most up-to-date version of the Patchman software. 
@@ -20568,7 +20585,7 @@ The Patchman agent, running on the servers you add to the Portal, is updated reg
 
 We recommend adding the updating of the Patchman agent to your regular update schedule. However, if you need to manually update the agent, you can use the following commands:
 
-If you are using CentOS, you can use:
+If you are using CentOS, CloudLinux, AlmaLinux, Rocky Linux or RHEL, you can use:
 
 ```
 yum update patchman-client
@@ -20599,11 +20616,13 @@ If the restart fails, there is probably a long-running task that prevents the ag
 
 Although we strive to maximize compatibility, we may occassionally drop support for outdated agent versions. Your agent will then not be able to connect to the Portal, meaning that new detections will not be reported and existing detections can't be resolved.
 
-### Uninstalling patchman-client (Legacy)
+* * *
+
+## Uninstalling the Patchman agent
 
 Patchman is installed on your system using the standard package manager. This means that you can easily uninstall the software using this package manager.
 
-#### CentOS / CloudLinux
+### CentOS / CloudLinux / AlmaLinux / Rocky Linux / RHEL
 
 Use the yum package management utility with the following command:
 
@@ -20617,7 +20636,7 @@ or
 dnf remove patchman-client
 ```
 
-#### Debian / Ubuntu
+### Debian / Ubuntu
 
 Use the apt package management utility with the following command:
 
@@ -20625,7 +20644,7 @@ Use the apt package management utility with the following command:
 apt-get remove patchman-client
 ```
 
-#### Cancelling the server license
+### Cancelling the server license
 
 Make sure to cancel the server license in the Patchman Portal. We strongly suggest you do this **_after_** the removal of the software from your system, because if the software is still running it may automatically request a new license on your account (according to the standard installation procedure).
 
