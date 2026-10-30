@@ -111,11 +111,11 @@ Once the UI is opened, the user sees a sign-in form. The credentials are checked
 You can specify which PAM service ImunifyAV should use with the `service_name` option:
 
 ```json
-[pam]
+[PAM]
 service_name = system-auth
 ```
 
-If it is not specified, the “`system-auth`” service is used.
+If it is not specified, the “`system-auth`” service is used. The section name is case-sensitive. ImunifyAV ignores a `[pam]` section.
 
 By default, `root` is considered to be the only "admin" user.
 
@@ -233,7 +233,7 @@ ui_path_owner = panel_user:web_server_group
 Allows executing `chown` to that owner for files after installation. The parameter is optional, if it is absent, `chown` doesn't execute.
 
 ```json
-[pam]
+[PAM]
 service_name = system-auth
 ```
 
