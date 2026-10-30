@@ -79,6 +79,7 @@ Patchman helps reduce support requests related to malware infections and outdate
 
 **Agent (patchman-client)**
 
+   * [Installing the Patchman agent](/patchman/agent/#installing-the-patchman-agent)
    * [Where can I find the software changelog?](/patchman/agent/#where-can-i-find-the-software-changelog)
    * [Tuning the Patchman agent](/patchman/agent/#tuning-the-patchman-agent)
    * [Multi-threaded scanning, what is it and how do I configure it?](/patchman/agent/#multi-threaded-scanning-what-is-it-and-how-do-i-configure-it)
@@ -117,4 +118,4 @@ Patchman helps reduce support requests related to malware infections and outdate
 * * *
 
 **Imunify integration**
-   * [Installing imunify-antivirus with Patchman support](/patchman/agent/#installin-imunify-antivirus-with-patchman-support)
+   * [Installing imunify-antivirus with Patchman support](/patchman/agent/#installing-imunify-antivirus-with-patchman-support)
