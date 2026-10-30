@@ -599,6 +599,10 @@ After the successful installation, **you can reach the Imunify360 UI at the URL 
 
 ### 4.1 Define list of administrators for Imunify360
 
+:::tip Note
+This list applies only to the stand-alone (generic panel or no-panel) integration described on this page. On cPanel, Plesk and DirectAdmin, Imunify360 takes its administrators from the control panel, and the <span class="notranslate">`auth.admin`</span> file and the <span class="notranslate">`admins`</span> integration script have no effect.
+:::
+
 The administrators have full access to Imunify360 UI and its settings. To grant non-root users full access add more administrators by listing them in the them in the <span class="notranslate">`/etc/sysconfig/imunify360/auth.admin`</span> file or specify the [integration scripts](https://cloudlinux.zendesk.com/hc/en-us/articles/4840433434524-How-to-filter-the-number-of-users-by-using-integration-scripts?_gl=1*1dtmkmt*_up*MQ..*_ga*ODUwMjA5NDYyLjE2OTkyMTAwOTI.*_ga_1RCQ134PYC*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..*_ga_V4QHJSZM47*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..*_ga_8LBSSX7VQX*MTY5OTIxMDA4OS4xLjAuMTY5OTIxMDA4OS4wLjAuMA..) admin scetion. 
 
 Admin users will be merged from three sources: 
@@ -14874,6 +14878,9 @@ By default, `root` is considered to be the only "admin" user.
 
 #### How to define administrators for ImunifyAV
 
+:::tip Note
+This list applies only to the stand-alone (generic panel or no-panel) integration described on this page. On cPanel, Plesk and DirectAdmin, ImunifyAV takes its administrators from the control panel, and the `auth.admin` file and the `admins` integration script have no effect.
+:::
 
 The administrators have full access to ImunifyAV UI and its settings.
 
