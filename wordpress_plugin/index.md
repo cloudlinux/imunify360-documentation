@@ -204,19 +204,20 @@ Human visitors are never rate-limited. The check is *fail-open*: if anything goe
 AI Bot Management never limits or blocks these requests:
 
 * **Human visitors.**
-* **IP addresses on the server's whitelist.** On <span class="notranslate">Imunify360</span>, your hosting provider can add an IP address or subnet to the server whitelist. Requests from it are never limited or blocked, even when they hit the honeypot. They are shown in the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> report as <span class="notranslate">_Whitelisted IPs_</span>.
+* **IP addresses on the server's whitelist.** On <span class="notranslate">Imunify360</span>, your hosting provider can add an IP address or subnet to the server whitelist. Requests from it are never limited or blocked, even when they hit the honeypot. They are shown in the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> report as <span class="notranslate">_Allowlisted_</span>.
 * **Requests your site sends to itself.** WordPress often calls its own address, for example to run scheduled tasks. A request counts as coming from the site itself when all of these are true:
   * it comes from the same server (<span class="notranslate">`127.0.0.1`</span>, <span class="notranslate">`::1`</span>, or the server's own IP address);
   * it did not pass through a CDN or proxy;
   * its user-agent is empty or starts with <span class="notranslate">`WordPress/`</span>.
-* **Requests to the REST APIs of known partner plugins.** These plugins call your site's REST API often, and limiting them would break their features. Today the list is:
+* **Requests to the REST APIs of known partner plugins.** These plugins call your site's REST API often, and limiting them would break their features. The list covers:
   * <span class="notranslate">WooCommerce</span> — <span class="notranslate">`/wp-json/wc/…`</span>
   * <span class="notranslate">Atarim</span> — <span class="notranslate">`/wp-json/atarim/…`</span>
-  * <span class="notranslate">Elementor</span> — <span class="notranslate">`/wp-json/elementor/…`</span>, including the endpoint that AI assistants use to edit pages
+  * <span class="notranslate">Elementor</span> — the endpoint that AI assistants use to edit pages
 
-  The list is updated automatically together with the bot data, so it can change without a plugin update. The WordPress core REST API (<span class="notranslate">`/wp-json/wp/…`</span>) is never on this list.
+  An entry can cover a whole plugin REST API, or only one route inside it, such as <span class="notranslate">`elementor/mcp/`</span>. The list is updated automatically together with the bot data, so it can change without a plugin update. The WordPress core REST API (<span class="notranslate">`/wp-json/wp/…`</span>) is never on this list.
+* **Requests that match an [allowlist](#allowlist) rule.** This includes the rules you add yourself, and rules for WordPress internals (such as scheduled tasks), WooCommerce cart and checkout, and common uptime monitors.
 
-Requests from your own server and requests to partner REST APIs are not counted in the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> report.
+All of these requests are counted in the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> report as <span class="notranslate">_Allowlisted_</span>, apart from human visitors and bots.
 
 ### Sites behind a CDN or proxy
 
@@ -244,7 +245,7 @@ The header is used only when the request really comes from that CDN's published 
 | <span class="notranslate">_Unverified bots_</span> | Clients claiming to be a known bot but failing reverse-DNS verification. |
 | <span class="notranslate">_Malicious bots_</span> | Known-bad clients, and clients caught by the honeypot. Blocked in every preset except <span class="notranslate">_Monitor only_</span>. |
 | <span class="notranslate">_Humans_</span> | Regular visitors. Never rate-limited. |
-| <span class="notranslate">_Whitelisted IPs_</span> | IP addresses on the server's whitelist (<span class="notranslate">Imunify360</span> only). Never rate-limited or blocked. See <span class="notranslate">[Traffic that is never limited](#traffic-that-is-never-limited)</span>. |
+| <span class="notranslate">_Allowlisted_</span> | Requests that matched an [allowlist](#allowlist) rule, including IP addresses on the server's whitelist. They skip bot checks, so they are not counted as humans or bots. Never rate-limited or blocked. See <span class="notranslate">[Traffic that is never limited](#traffic-that-is-never-limited)</span>. |
 
 ### Protection presets
 
@@ -305,16 +306,17 @@ At the top of the page you see:
 * <span class="notranslate">_Preset_</span> — the active preset. The info icon shows its rate limits.
 * <span class="notranslate">_Reporting window_</span> — the time range of the report (the last 24 hours) and the total number of requests in it.
 * <span class="notranslate">_Statistics collection_</span> — whether the plugin is collecting statistics right now.
-* Totals for <span class="notranslate">_Human visitors_</span>, <span class="notranslate">_Bot requests_</span>, <span class="notranslate">_Allowed_</span>, <span class="notranslate">_Rate-limited (429)_</span>, and <span class="notranslate">_Blocked (403)_</span>.
+* <span class="notranslate">_Allowlist_</span> — how many allowlist rules are in effect, and how many you added. Click it to open the [allowlist](#allowlist) settings.
+* Three figures that add up to all requests: <span class="notranslate">_Human visitors_</span>, <span class="notranslate">_Allowlisted_</span>, and <span class="notranslate">_Bot requests_</span>. The <span class="notranslate">_Bot requests_</span> figure also shows how many bot requests were <span class="notranslate">_Allowed_</span>, <span class="notranslate">_Rate-limited (429)_</span>, and <span class="notranslate">_Blocked (403)_</span>.
 
 Below that, the report has these sections:
 
 | Section | What it shows |
 |---|---|
-| <span class="notranslate">_Bot requests over time_</span> | An hourly chart of bot requests for the last 24 hours, split into allowed, rate-limited, and blocked requests. Human visitors are not included. |
+| <span class="notranslate">_Bot requests over time_</span> | An hourly chart of bot requests for the last 24 hours, split into allowed, rate-limited, and blocked requests. Human visitors and allowlisted requests are not included. |
 | <span class="notranslate">_What happened_</span> | A short summary in plain words. For example, which bot sent the most requests, its peak rate, and what was done with it. |
-| <span class="notranslate">_By classification_</span> | The share of all traffic in each [bot category](#bot-categories). Expand a category to see its bots, and expand a bot to see its top IP addresses. |
-| <span class="notranslate">_Top bots_</span> | The named bots that sent the most requests, with their <span class="notranslate">_Category_</span>, <span class="notranslate">_Peak / min_</span>, <span class="notranslate">_Requests_</span>, and the <span class="notranslate">_Action_</span> taken. Expand a bot to see its top IP addresses. |
+| <span class="notranslate">_By classification_</span> | The share of all traffic in each [bot category](#bot-categories). Expand a category to see its bots, and expand a bot to see its top IP addresses. Expand <span class="notranslate">_Allowlisted_</span> to see which kind of rule the requests matched: <span class="notranslate">_IP address_</span>, <span class="notranslate">_User agent_</span>, <span class="notranslate">_REST API route_</span>, <span class="notranslate">_Path_</span>, <span class="notranslate">_WordPress internals_</span>, <span class="notranslate">_WooCommerce_</span>, or <span class="notranslate">_This server_</span>. |
+| <span class="notranslate">_Top bots_</span> | The named bots that sent the most requests, with their <span class="notranslate">_Category_</span>, <span class="notranslate">_Peak / min_</span>, <span class="notranslate">_Requests_</span>, and the <span class="notranslate">_Action_</span> taken. Expand a bot to see its top IP addresses. Allowlisted requests are not listed here. |
 
 ![](/images/wordpress-plugin/bot-traffic-classification.png)
 *The <span class="notranslate">_By classification_</span> section with a category and a bot expanded.*
@@ -322,6 +324,97 @@ Below that, the report has these sections:
 For each bot and IP address, the <span class="notranslate">_Action_</span> column shows <span class="notranslate">_Allowed_</span>, <span class="notranslate">_Rate-limited_</span>, or <span class="notranslate">_Blocked_</span>. Up to 10 IP addresses are listed for each bot.
 
 At the bottom of the page, you can click <span class="notranslate">_Stop collecting bot-traffic statistics_</span> to stop collecting statistics for your site. Protection keeps working, but the report is no longer updated. Click <span class="notranslate">_Resume collecting bot-traffic statistics_</span> to start again.
+
+### Allowlist
+
+The allowlist lets you choose traffic that AI Bot Management always lets through. A request that matches an allowlist rule skips bot checks and rate limits. Use it for a service your site needs, such as an uptime monitor, a payment webhook, or a tool that calls your REST API.
+
+Only WordPress administrators can change the allowlist. It needs plugin version <span class="notranslate">`4.1.4`</span> or later. On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, the <span class="notranslate">_Set by your hosting provider in Imunify360_</span> group is empty, because these products have no IP whitelist.
+
+To open it, click the <span class="notranslate">_Allowlist_</span> card at the top of the <span class="notranslate">[Bot Traffic](#bot-traffic-report)</span> page, or <span class="notranslate">_Manage allowlist_</span> under the <span class="notranslate">_Allowlisted_</span> row in <span class="notranslate">_By classification_</span>. The card shows how many rules are in effect and how many of them you added.
+
+![](/images/wordpress-plugin/bot-allowlist-card.png)
+*The <span class="notranslate">_Allowlist_</span> card on the Bot Traffic page.*
+
+![](/images/wordpress-plugin/bot-allowlist-breakdown.png)
+*The <span class="notranslate">_Allowlisted_</span> row expanded: which kind of rule the requests matched, and the <span class="notranslate">_Manage allowlist_</span> link.*
+
+#### The four lists
+
+The allowlist has one tab for each kind of rule:
+
+| List | What you enter | Example |
+|---|---|---|
+| <span class="notranslate">_IP addresses_</span> | One IPv4 or IPv6 address, or a CIDR range. | <span class="notranslate">`203.0.113.24`</span>, <span class="notranslate">`198.51.100.0/24`</span> |
+| <span class="notranslate">_REST API routes_</span> | A REST API route prefix. You can paste a full <span class="notranslate">`/wp-json/…`</span> URL. | <span class="notranslate">`myplugin/v1/`</span> |
+| <span class="notranslate">_Paths_</span> | A path on your site that starts with <span class="notranslate">`/`</span>. You can paste a full URL. | <span class="notranslate">`/feed`</span> |
+| <span class="notranslate">_User agents_</span> | Text that the user agent contains, at least 4 characters, in any letter case. | <span class="notranslate">`MyMonitor`</span> |
+
+Each entry can have an optional note of up to 60 characters, for example "Office" or "Payment webhook". The note helps you and your hosting provider's support team see why the entry exists.
+
+![](/images/wordpress-plugin/bot-allowlist-ip-tab.png)
+*The <span class="notranslate">_IP addresses_</span> tab: your entries first, then the rules set by your hosting provider.*
+
+To add an entry, fill in the fields and click <span class="notranslate">_Add_</span>. To remove one, click <span class="notranslate">_Remove_</span>. Changes are not applied until you click <span class="notranslate">_Save changes_</span>, which saves all four lists at once. If any entry is not valid, nothing is saved, and the entries to fix are marked in red. After saving, the new rules apply from the next request.
+
+#### Rules you cannot change
+
+Below your own entries, each tab lists the rules that are already in effect. You can see them, but you cannot change or remove them. They are grouped by who manages them:
+
+* <span class="notranslate">_Set by your hosting provider in Imunify360_</span> — IP addresses on the server's whitelist (<span class="notranslate">Imunify360</span> only). The list can be long, so you can search it. Ask your hosting provider to change these.
+* <span class="notranslate">_Maintained by Imunify Security_</span> — rules that keep your site working: the REST APIs of partner plugins, WordPress internals (scheduled tasks, Site Health checks, and the REST API root), WooCommerce cart, checkout, and store requests, and common uptime monitors. They are updated automatically.
+
+Your entries are always added to these rules. They never replace or hide them. Requests that your server sends to itself are also always allowed.
+
+#### How REST API routes and paths match
+
+REST API routes and paths match in the same way:
+
+* **From the start.** An entry is compared with the start of the route or path. Text elsewhere in the address never matches.
+* **Whole segments.** An entry covers itself and everything below it. <span class="notranslate">`/feed`</span> covers <span class="notranslate">`/feed/rss2`</span>, but not <span class="notranslate">`/feedback`</span>.
+* **Wildcard.** <span class="notranslate">`*`</span> stands for exactly one whole segment.
+* **Ignored:** letter case, a trailing slash, and the query string.
+
+| Entry | Allows | Does not allow |
+|---|---|---|
+| <span class="notranslate">`myplugin/v1/`</span> (REST API route) | <span class="notranslate">`/wp-json/myplugin/v1/hook`</span>, <span class="notranslate">`/?rest_route=/myplugin/v1/hook`</span> | <span class="notranslate">`/wp-json/myplugin/v2/hook`</span> |
+| <span class="notranslate">`myplugin/*/webhook/`</span> (REST API route) | <span class="notranslate">`/wp-json/myplugin/v1/webhook`</span>, <span class="notranslate">`/wp-json/myplugin/v2/webhook/stripe`</span> | <span class="notranslate">`/wp-json/myplugin/webhook`</span> |
+| <span class="notranslate">`/feed`</span> (path) | <span class="notranslate">`/feed`</span>, <span class="notranslate">`/feed/rss2`</span> | <span class="notranslate">`/feedback`</span>, <span class="notranslate">`/blog/feed`</span> |
+| <span class="notranslate">`/*/feed`</span> (path) | <span class="notranslate">`/en/feed`</span>, <span class="notranslate">`/de/feed/atom`</span> | <span class="notranslate">`/feed`</span>, <span class="notranslate">`/en/blog/feed`</span> |
+
+A REST API route entry matches the route in every form WordPress accepts: <span class="notranslate">`/wp-json/…`</span>, <span class="notranslate">`/index.php/wp-json/…`</span>, and <span class="notranslate">`?rest_route=…`</span>. For REST API calls, use the <span class="notranslate">_REST API routes_</span> list, not <span class="notranslate">_Paths_</span>.
+
+If WordPress is installed in a subfolder, paths are relative to that folder.
+
+Because the query string is ignored, you cannot allow a single <span class="notranslate">`admin-ajax.php`</span> action or a callback that is identified by a query parameter. Allow the IP address or user agent of the service instead.
+
+#### Limits and warnings
+
+Each list has a limit: 250 IP addresses, and 50 entries each for REST API routes, paths, and user agents.
+
+Some entries are refused, because they would turn off protection for the whole site. For example: <span class="notranslate">`/`</span> on its own, paths made only of <span class="notranslate">`*`</span>, the ranges <span class="notranslate">`0.0.0.0/0`</span> and <span class="notranslate">`::/0`</span>, and user agents that every browser sends, such as <span class="notranslate">`Mozilla`</span>. To turn AI Bot Management off for your site, use the switch in the dashboard widget instead. See <span class="notranslate">[Turning it on or off](#turning-it-on-or-off)</span>.
+
+Other entries are allowed, but show a warning first. Click <span class="notranslate">_Add anyway_</span> if you are sure:
+
+* **User agents.** Any bot can send the same user agent text and skip all checks. Use an IP address instead when the service publishes one.
+* **Core WordPress REST API routes** (<span class="notranslate">`wp/…`</span>).
+* **Sensitive paths**, such as <span class="notranslate">`wp-login.php`</span>, <span class="notranslate">`xmlrpc.php`</span>, <span class="notranslate">`wp-admin`</span>, and <span class="notranslate">`admin-ajax.php`</span>. Allowing <span class="notranslate">`admin-ajax.php`</span> allows every AJAX action of every plugin.
+
+![](/images/wordpress-plugin/bot-allowlist-warning.png)
+*A warning for a sensitive path, with <span class="notranslate">_Add anyway_</span>. Below your entries, the rules maintained by Imunify Security.*
+
+#### Check a request
+
+At the bottom of the allowlist settings, <span class="notranslate">_Check a request_</span> shows whether a request would be allowlisted. Enter a <span class="notranslate">_URL_</span>, an <span class="notranslate">_IP address_</span>, and a <span class="notranslate">_User agent_</span>, then click <span class="notranslate">_Check_</span>. The result shows the rule that matched and who manages it, or <span class="notranslate">_Not allowlisted_</span>.
+
+The check uses the same rules as real requests, and includes changes that you have not saved yet, so you can test an entry before you save it. It does not send a request to your site.
+
+![](/images/wordpress-plugin/bot-allowlist-check-request.png)
+*<span class="notranslate">_Check a request_</span> showing the rule that matched — here, a path entry that is not saved yet.*
+
+#### Multisite
+
+On a WordPress multisite network, there is one allowlist for the whole network. Only a network administrator can change it, and the entries apply to every site in the network.
 
 ### Turning it on or off
 
@@ -390,6 +483,7 @@ Multisite is only partly supported today, and it has not been fully tested. Some
 It depends on the setting:
 
 * In the **WordPress dashboard**, the <span class="notranslate">Imunify Security</span> widget shows the security status, and lets WordPress administrators change <span class="notranslate">[AI Bot Management](#ai-bot-management)</span> for the site.
+* On the **<span class="notranslate">Bot Traffic</span> page**, WordPress administrators manage the <span class="notranslate">[allowlist](#allowlist)</span> — traffic that AI Bot Management always lets through.
 * On the **<span class="notranslate">Imunify Security</span> page** in the WordPress admin menu, you review WAF incidents and disable individual rules for your site. See <span class="notranslate">[Managing WAF incidents](#managing-waf-incidents)</span>.
 * Some settings are controlled on the server and cannot be changed from WordPress. If a control is missing or locked, see <span class="notranslate">[Why do I not see the Web Application Firewall or Bot Protection in the widget?](#why-do-i-not-see-the-web-application-firewall-or-bot-protection-in-the-widget)</span>.
 
@@ -402,7 +496,7 @@ To keep protection current, it downloads updated data, such as the list of known
 Imunify also collects security information from your site to improve protection:
 
 * **WAF incidents** — the exploit attempts the <span class="notranslate">[Web Application Firewall](#web-application-firewall-virtual-patching)</span> acted on. A record includes the rule that matched, the IP address the request came from, and partial details of the request.
-* **Traffic classification summary** — once a day, how much traffic fell into each bot category, together with the 50 most active IP addresses per category. This data is used only to make the classification more accurate and to identify sources that abuse sites.
+* **Traffic classification summary** — once a day, how much traffic fell into each bot category, together with the 50 most active IP addresses per category. Allowlisted requests are included: how many matched each kind of allowlist rule, with up to 50 IP addresses for each kind. This data is used only to make the classification more accurate and to identify sources that abuse sites.
 
 If your hosting provider has enabled error reporting, technical error reports may also be sent to Imunify.
 
@@ -423,11 +517,12 @@ If the traffic is still blocked, wait a few minutes and clear any page or object
 
 Real visitors are never rate-limited, but a tool that calls your site — an uptime monitor, a backup or SEO service, or a plugin that fetches pages — is an automated client, so it can be refused with <span class="notranslate">HTTP 429</span>.
 
-Open the <span class="notranslate">_Bot Protection_</span> row in the <span class="notranslate">Imunify Security</span> dashboard widget and choose one of these:
+Choose one of these:
 
-* **Switch to a softer preset.** Click <span class="notranslate">_change_</span>, pick a preset, and click <span class="notranslate">_Save_</span>. <span class="notranslate">_Monitor only_</span> still classifies traffic but does not block or limit anything, which is the quickest way to confirm that Bot Protection is the cause.
-* **Turn protection off for this site.** The row has a switch that disables Bot Protection for your site only. You can turn it back on at any time.
-* **Ask your hosting provider to whitelist the tool.** If the tool uses fixed IP addresses, your provider can add them to the server whitelist (<span class="notranslate">Imunify360</span> only). Requests from those addresses are then never limited, and the rest of your site stays protected. See <span class="notranslate">[Traffic that is never limited](#traffic-that-is-never-limited)</span>.
+* **Add the tool to the allowlist.** On the <span class="notranslate">Bot Traffic</span> page, add the tool's IP address, the REST API route or path it calls, or its user agent. Requests that match are then never limited, and the rest of your site stays protected. Use <span class="notranslate">_Check a request_</span> to confirm that the rule matches. See <span class="notranslate">[Allowlist](#allowlist)</span>.
+* **Switch to a softer preset.** In the <span class="notranslate">_Bot Protection_</span> row of the dashboard widget, click <span class="notranslate">_change_</span>, pick a preset, and click <span class="notranslate">_Save_</span>. <span class="notranslate">_Monitor only_</span> still classifies traffic but does not block or limit anything, which is the quickest way to confirm that Bot Protection is the cause.
+* **Turn protection off for this site.** The <span class="notranslate">_Bot Protection_</span> row has a switch that disables Bot Protection for your site only. You can turn it back on at any time.
+* **Ask your hosting provider to whitelist the tool.** If the tool uses fixed IP addresses, your provider can add them to the server whitelist (<span class="notranslate">Imunify360</span> only). See <span class="notranslate">[Traffic that is never limited](#traffic-that-is-never-limited)</span>.
 
 See <span class="notranslate">[Turning it on or off](#turning-it-on-or-off)</span> for the <span class="notranslate">`wp-config.php`</span> settings that override the widget, and <span class="notranslate">[Protection presets](#protection-presets)</span> for what each preset allows.
 
@@ -452,7 +547,7 @@ Most of what site owners run into can be fixed from the WordPress dashboard, wit
 
 * A visitor got an error page — see <span class="notranslate">[A visitor to my site got an error page](#a-visitor-to-my-site-got-an-error-page-what-happened)</span>.
 * A WAF rule blocks legitimate traffic — you can disable that single rule for your site. See <span class="notranslate">[A WAF rule blocks legitimate traffic](#a-waf-rule-blocks-legitimate-traffic-how-do-i-stop-it)</span>.
-* Bot Protection blocks a tool you use — you can switch to a softer preset, or turn it off for your site. See <span class="notranslate">[Bot Protection blocks something I need](#bot-protection-blocks-something-i-need-how-do-i-stop-it)</span>.
+* Bot Protection blocks a tool you use — you can add it to the allowlist, switch to a softer preset, or turn it off for your site. See <span class="notranslate">[Bot Protection blocks something I need](#bot-protection-blocks-something-i-need-how-do-i-stop-it)</span>.
 * A feature is missing from the widget — see <span class="notranslate">[Why do I not see the Web Application Firewall or Bot Protection in the widget?](#why-do-i-not-see-the-web-application-firewall-or-bot-protection-in-the-widget)</span>.
 
 A few things are set on the server, and only your hosting provider can change them: enabling a feature for your hosting account, restoring the plugin after you delete it, and anything about malware found outside your WordPress files.
