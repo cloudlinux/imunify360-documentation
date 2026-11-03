@@ -50,6 +50,7 @@ Individual features need newer versions of both the plugin and the Imunify agent
 | <span class="notranslate">[Bot Traffic](/wordpress_plugin/#bot-traffic-report)</span> report page | <span class="notranslate">`wp-4.1.0-1`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
 | <span class="notranslate">[Whitelisted IPs skip AI Bot Management](#exempting-ip-addresses-with-the-whitelist)</span> | <span class="notranslate">`wp-4.1.1-1`</span> | <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> | Not available |
 | <span class="notranslate">[Partner REST APIs skip AI Bot Management](/wordpress_plugin/#traffic-that-is-never-limited)</span> | <span class="notranslate">`wp-4.1.3-1`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
+| <span class="notranslate">[Site-owner allowlist](/wordpress_plugin/#allowlist)</span> | <span class="notranslate">`wp-4.1.4-2`</span> | <span class="notranslate">`8.13.6-6`</span> | <span class="notranslate">`av-8.8.3-6`</span> |
 | <span class="notranslate">[Restoring a removed plugin](#when-a-site-owner-removes-the-plugin)</span> | — | <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> | <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> |
 
 The plugin is updated by the Imunify agent, so keeping the agent current is enough. <span class="notranslate">`imunify-core`</span> is a shared package that both <span class="notranslate">Imunify360</span> and <span class="notranslate">ImunifyAV</span> install, and it is updated on its own schedule.
@@ -264,7 +265,8 @@ How it works:
 * Single IP addresses and subnets work, for both IPv4 and IPv6. Country whitelists are not used.
 * Entries with an expiration time stop counting when they expire.
 * The agent checks the whitelist every minute and copies changes to the WordPress sites.
-* Whitelisted traffic is still counted in the <span class="notranslate">[Bot Traffic](/wordpress_plugin/#bot-traffic-report)</span> report, under <span class="notranslate">_Whitelisted IPs_</span>.
+* Whitelisted traffic is still counted in the <span class="notranslate">[Bot Traffic](/wordpress_plugin/#bot-traffic-report)</span> report, under <span class="notranslate">_Allowlisted_</span>.
+* Site owners see these entries in their <span class="notranslate">[allowlist](/wordpress_plugin/#allowlist)</span> under <span class="notranslate">_Set by your hosting provider in Imunify360_</span>. They cannot change or remove them.
 
 This needs plugin <span class="notranslate">`wp-4.1.1-1`</span> and <span class="notranslate">`imunify-core`</span> <span class="notranslate">`8.14.1`</span> or later, and AI Bot Management must be on. It is not available on <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, which have no IP whitelist. See also the <span class="notranslate">[Whitelist](/command_line_interface/#whitelist)</span> command reference.
 
@@ -274,9 +276,12 @@ Besides whitelisted IP addresses, AI Bot Management never limits:
 
 * human visitors;
 * requests that the site sends to itself from the same server, such as WordPress scheduled tasks;
-* requests to the REST APIs of known partner plugins, such as WooCommerce.
+* requests to the REST APIs of known partner plugins, such as WooCommerce. An entry can cover a whole plugin REST API, or only one route inside it;
+* requests that match a rule in the site's <span class="notranslate">[allowlist](/wordpress_plugin/#allowlist)</span>, including the rules the site owner adds.
 
 See <span class="notranslate">[Traffic that is never limited](/wordpress_plugin/#traffic-that-is-never-limited)</span> in the Site Owner Guide for details.
+
+Site owners manage their own allowlist on the <span class="notranslate">Bot Traffic</span> page in WordPress. They can add IP addresses, REST API routes, paths, and user agents. Their entries apply only to their own site (or to the whole network on multisite). They are never written to the server whitelist, and they never remove an entry from it. There is no server setting to turn the site-owner allowlist off.
 
 ### Sites behind a CDN or proxy
 
@@ -291,10 +296,11 @@ When a site is behind a CDN, AI Bot Management uses the real visitor IP address 
 | AI Bot Management | Server-wide only | Yes — the WordPress administrator turns it on or off for their own site from the widget. Setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION`</span> in the <span class="notranslate">`wp-config.php`</span> file overrides both. |
 | AI Bot Management preset | You set the server default | Yes — from the widget, or by setting <span class="notranslate">`IMUNIFY_AI_BOT_PROTECTION_PRESET`</span> in the <span class="notranslate">`wp-config.php`</span> file. On <span class="notranslate">ImunifyAV</span> and <span class="notranslate">ImunifyAV+</span>, the preset is always <span class="notranslate">_Monitor only_</span>. |
 | Individual WAF rules | You can disable rules server-side | A site owner can disable a rule for their own site from the <span class="notranslate">Imunify Security</span> page in WordPress. |
+| AI Bot Management allowlist | You set the server whitelist | Yes — the WordPress administrator adds their own IP addresses, REST API routes, paths, and user agents on the <span class="notranslate">Bot Traffic</span> page. These entries apply only to their site and are added to your whitelist. On multisite, only a network administrator can change them. |
 
 Site owners can solve most common problems themselves. The Site Owner Guide covers them in <span class="notranslate">[Something is not working. What can I do?](/wordpress_plugin/#something-is-not-working-what-can-i-do)</span> — blocked traffic, a WAF false positive, and Bot Protection refusing a tool they use. You can link to it from your own help pages.
 
-If Bot Protection refuses a tool that a site owner needs, and a softer preset does not help, you can add the tool's IP addresses to the whitelist. See <span class="notranslate">[Exempting IP addresses with the whitelist](#exempting-ip-addresses-with-the-whitelist)</span>.
+If Bot Protection refuses a tool that a site owner needs, the site owner can add it to their own <span class="notranslate">[allowlist](/wordpress_plugin/#allowlist)</span>. You can also add the tool's IP addresses to the server whitelist, so that it is allowed on every site. See <span class="notranslate">[Exempting IP addresses with the whitelist](#exempting-ip-addresses-with-the-whitelist)</span>.
 
 ## Reference
 
