@@ -619,16 +619,16 @@ For now, Malware Database Scanner (MDS) supports WordPress, Joomla, and Magento 
 <div class="notranslate">
 
 ```
-imunify360-agent malware on-demand start --path /home/<username>/public_html/
+imunify360-agent malware on-demand queue put /home/<username>/public_html/
 ```
 </div>
 
 To scan the databases only, add <span class="notranslate">`--scan-db --no-scan-file`</span>. Database credentials are resolved automatically from the applications detected under the path, so there is no need to look them up. Scheduled background scans cover databases in the same way. See [Malware Scanner CLI](/command_line_interface/#malware) for the other options.
 
-Database detections show up in <span class="notranslate">Imunify360 → Malware Scanner → Malicious</span> with the <span class="notranslate">**Type**</span> column set to <span class="notranslate">Malware Database Scanner</span>, and are cleaned up and reverted from there — or with <span class="notranslate">`imunify360-agent malware user cleanup`</span> — like any other detection. Cleanup creates a backup, so changes can be rolled back and websites are not left broken.
+Database detections show up in <span class="notranslate">Imunify360 → Malware Scanner → Malicious</span> with the <span class="notranslate">**Type**</span> column set to <span class="notranslate">Malware Database Scanner</span>, and are cleaned up and reverted from there, or from the command line with <span class="notranslate">`imunify360-agent malware user cleanup`</span> and <span class="notranslate">`imunify360-agent malware user restore-original`</span>, like any other detection. Cleanup creates a backup, so changes can be rolled back and websites are not left broken.
 
 :::danger Warning
-Do not run <span class="notranslate">`/opt/ai-bolit/imunify_dbscan.php`</span> by hand. A scan started that way bypasses the agent: its findings go into a standalone report file that nothing reads back, so they never appear in the UI, in <span class="notranslate">`imunify360-agent malware malicious list`</span>, or in the scan history. A cleanup started that way is worse — the rows it moves to quarantine are not linked to any application, so they cannot be restored from the UI afterwards.
+Do not run <span class="notranslate">`/opt/ai-bolit/imunify_dbscan.php`</span> by hand. A scan started that way bypasses the agent: its findings go into a standalone report file that nothing reads back, so they never appear in the UI, in <span class="notranslate">`imunify360-agent malware malicious list`</span>, or in the scan history. A cleanup started that way is worse — the rows it moves to quarantine are saved with an empty application path, and restore looks backups up by application path, so they cannot be restored afterwards, neither from the UI nor from the command line. If this has already happened, contact support.
 :::
 
 ## Detect Admin Tools
