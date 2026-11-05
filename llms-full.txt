@@ -2717,93 +2717,22 @@ For now, Malware Database Scanner (MDS) supports WordPress, Joomla, and Magento 
 
 ### How to use Malware Database Scanner (MDS)
 
-To provide safe work with database MDS supports several methods:
+<span class="notranslate">MDS</span> is driven by the <span class="notranslate">Imunify360</span> agent — there is nothing separate to launch. On a server with <span class="notranslate">`MALWARE_DATABASE_SCAN.enable`</span> turned on, every on-demand scan covers both the files and the databases of the applications found under the given path:
 
-* <span class="notranslate">`--scan`</span> - only scan the database, no changes will be applied
-* <span class="notranslate">`--clean`</span> - scan database and clean-up malicious
-* <span class="notranslate">`--restore`</span> - restore data affected by clean-up from the backup CSV file
+<div class="notranslate">
 
-:::tip Note
-“Clean” operation includes “scan”, so you don’t need to run a scan before the cleanup. Whereas the “scan” can be used for non-disruptive checks of the database. Cleanup mode creates a backup file that can be used to rollback all changes back. It makes MDS safe to use and prevents websites from breaking and data loss.
+```
+imunify360-agent malware on-demand queue put /home/<username>/public_html/
+```
+</div>
+
+To scan the databases only, add <span class="notranslate">`--scan-db --no-scan-file`</span>. Database credentials are resolved automatically from the applications detected under the path, so there is no need to look them up. Scheduled background scans cover databases in the same way. See [Malware Scanner CLI](/command_line_interface/#malware) for the other options.
+
+Database detections show up in <span class="notranslate">Imunify360 → Malware Scanner → Malicious</span> with the <span class="notranslate">**Type**</span> column set to <span class="notranslate">Malware Database Scanner</span>, and are cleaned up and reverted from there, or from the command line with <span class="notranslate">`imunify360-agent malware user cleanup`</span> and <span class="notranslate">`imunify360-agent malware user restore-original`</span>, like any other detection. Cleanup creates a backup, so changes can be rolled back and websites are not left broken.
+
+:::danger Warning
+Do not run <span class="notranslate">`/opt/ai-bolit/imunify_dbscan.php`</span> by hand. A scan started that way bypasses the agent: its findings go into a standalone report file that nothing reads back, so they never appear in the UI, in <span class="notranslate">`imunify360-agent malware malicious list`</span>, or in the scan history. A cleanup started that way is worse — the rows it moves to quarantine are saved with an empty application path, and restore looks backups up by application path, so they cannot be restored afterwards, neither from the UI nor from the command line. If this has already happened, contact support.
 :::
-
-The easiest way to use MDS is to run it with  <span class="notranslate">`--search-configs`</span> argument: MDS will try to find the config files and print out database credentials that should be later specified for scanning. 
-
-<span class="notranslate">`--creds-from-xargs`</span> argument can be used to run MDS without a need to manually enter credentials. It allows automating the process of credentials discovery and the scan process.
-
-#### Usage
-
-<div class="notranslate">
-
-```
-/opt/ai-bolit/wrapper /opt/ai-bolit/imunify_dbscan.php [OPTIONS] [PATH]
-```
-</div>
-
-**Options**
-
-| | |
-|-|-|
-|<span class="notranslate">`--host=<host>`</span>|Database host|
-|<span class="notranslate">`--port=<port>`</span>|Database port|
-|<span class="notranslate">`--login=<username>`</span>|Database username|
-|<span class="notranslate">`--password=<password>`</span>|Database password|
-|<span class="notranslate">`--password-from-stdin`</span>|Get database password from stdin|
-|<span class="notranslate">`--database=<db_name>`</span>|Database name|
-|<span class="notranslate">`--prefix=<prefix>`</span>|Prefix for table|
-|<span class="notranslate">`--scan`</span>|Do scan|
-|<span class="notranslate">`--clean`</span>|Do clean|
-|<span class="notranslate">`--search-configs`</span>|Find the config files and print out database credentials|
-|<span class="notranslate">`--creds-from-xargs`</span>|Discover credentials and do scan|
-|<span class="notranslate">`--report-file=<filepath>`</span>|Filepath where to put the report|
-|<span class="notranslate">`--signature-db=<filepath>`</span>|Filepath with signatures|
-|<span class="notranslate">`--progress=<filepath>`</span>|Filepath with progress|
-|<span class="notranslate">`--shared-mem-progress=<shmem_id>`</span>|ID of shared memory segment|
-|<span class="notranslate">`--create-shared-mem`</span>|MDS create own shared memory segment|
-|<span class="notranslate">`--status=<filepath>`</span>|Filepath with status for control task|
-|<span class="notranslate">`--avdb=<filepath>`</span>|Filepath with ai-bolit signatures database|
-|<span class="notranslate">`--procudb=<filepath>`</span>|Filepath with procu signatures database|
-|<span class="notranslate">`--state-file=<filepath>`</span>|Filepath with info about state (content: <span class="notranslate">`new`/`working`/`done`/`canceled`</span>). You can change it on <span class="notranslate">`canceled`</span>.|
-|<span class="notranslate">`--restore=<filepath>`</span>|Filepath to restore CSV file|
-|<span class="notranslate">`-h, --help`</span>|Display this help and exit|
-|<span class="notranslate">`-v, --version`</span>|Show version|
-
-#### Example of usage
-
-#### Scan database
-
-<div class="notranslate">
-
-```
-# /opt/ai-bolit/wrapper /opt/ai-bolit/imunify_dbscan.php --port=3306 --login=user --password-from-stdin --database=$DATABASE --avdb=/var/imunify360/files/sigs/v1/aibolit/mds-ai-bolit-hoster.db --report-file=`pwd`/report.json --scan
-```
-</div>
-
-Scan results will be stored in the <span class="notranslate">`report.json`</span>.
-
-#### Scan & Clean-up database
-
-<div class="notranslate">
-
-```
-#  /opt/ai-bolit/wrapper /opt/ai-bolit/imunify_dbscan.php --port=3306 --login=user --password-from-stdin --database=$DATABASE --avdb=/var/imunify360/files/sigs/v1/aibolit/mds-ai-bolit-hoster.db --procudb=/var/imunify360/files/sigs/v1/aibolit/mds-procu2.db --report-file=`pwd`/report.json --clean
-```
-</div>
-
-Cleanup results will be stored in the <span class="notranslate">`results.json`</span>. Also, backup of the affected data will be created with a filename similar to the <span class="notranslate">`mds_backup_1597223818.csv`</span>.
-
-
-#### Undo changes (restore)
-
-<div class="notranslate">
-
-```
-# /opt/ai-bolit/wrapper /opt/ai-bolit/imunify_dbscan.php --port=3306 --login=user --password-from-stdin --database=$DATABASE --report-file=$REPORT --restore=`pwd`/mds_backup_1597223818.csv
-```
-</div>
-
-
-
 
 ## Detect Admin Tools
 
