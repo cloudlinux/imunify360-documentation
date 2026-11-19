@@ -490,7 +490,7 @@ Please be advised that these IP-addresses might be subject to change in the futu
 
 #### Operating system
 
-Patchman runs on CentOS, CloudLinux, AlmaLinux, Rocky Linux, Red Hat Enterprise Linux, Debian and Ubuntu Linux servers. 64-bit systems are supported on all listed versions; 32-bit systems are supported on Debian 7, 8 and 9 and CentOS 6 only.
+Patchman runs on CentOS, CloudLinux, AlmaLinux, Rocky Linux, Red Hat Enterprise Linux, Debian and Ubuntu Linux servers, and on FreeBSD servers. 64-bit systems are supported on all listed versions; 32-bit systems are supported on Debian 7, 8 and 9 and CentOS 6 only.
 
 The following operating system versions are supported:
 
@@ -499,8 +499,11 @@ The following operating system versions are supported:
 | CentOS/CloudLinux/AlmaLinux/Rocky Linux/RHEL | 6 to 9                                       |
 | Debian | 7, Wheezy to 13, Trixie                    |
 | Ubuntu | 14.04, Trusty Tahr to 26.04, Resolute Raccoon |
+| FreeBSD | 14 and 15 (amd64 only)                    |
 
-Ubuntu 12.04, CentOS 5 and FreeBSD are not supported.
+Ubuntu 12.04, CentOS 5, FreeBSD 13 and older, and FreeBSD on other architectures than amd64 are not supported.
+
+On FreeBSD, real-time scanning is not available, and there is no supported control panel, so Patchman uses a [custom integration](/patchman/platform_integrations/#using-patchman-with-a-non-standard-control-panel) to find the websites to scan.
 
 #### Control panel
 
@@ -1293,6 +1296,8 @@ Install? [y/N]
 Real-time scanning will automatically start within 5 minutes of this installation.
 
 ### What is required for real-time scanning?
+
+Real-time scanning is not available on FreeBSD.
 
 This feature requires the Linux Audit Framework to be enabled, which is part of the Linux kernel by default on all our supported distributions. It might be disabled if you use a custom kernel; in that case, refer to your compilation parameters.
 
