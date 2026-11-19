@@ -10,11 +10,15 @@ The Patchman agent (the `patchman-client` package) runs on the servers you add t
     ```
     wget https://download.patchman.co/install-patchman.sh && /bin/bash -e install-patchman.sh && rm -f install-patchman.sh
     ```
+    On FreeBSD, which has neither `wget` nor `bash` by default, run:
+    ```
+    fetch https://download.patchman.co/install-patchman.sh && sh install-patchman.sh && rm -f install-patchman.sh
+    ```
     The script adds the Patchman repository to your package manager, installs the `patchman-client` package and starts the Patchman daemon.
 
 2. When asked, enter the license key shown on the [server add page](https://portal.patchman.co/servers/add/) under `During installation, enter the following license key:`.
 
-3. When asked, choose whether to also install [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it) (the `patchman-client-realtime` package). This feature requires a plan that supports real-time scanning.
+3. When asked, choose whether to also install [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it) (the `patchman-client-realtime` package). This feature requires a plan that supports real-time scanning, and is not available on FreeBSD.
 
 4. Approve the server in the Patchman Portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/).
 
