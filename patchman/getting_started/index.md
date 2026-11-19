@@ -66,7 +66,13 @@ On the command line of the server you would like to install Patchman on, execut
 wget https://download.patchman.co/install-patchman.sh && /bin/bash -e install-patchman.sh && rm -f install-patchman.sh
 ```
 
-This downloads the install script for the Patchman agent, installs the agent, and then starts the Patchman daemon. The install script uses your operating systems' package manager (apt or yum) to install the agent, and performs a few checks to make sure your server is suitable for installing Patchman.
+On FreeBSD, which has neither `wget` nor `bash` by default, execute this command instead:
+
+```
+fetch https://download.patchman.co/install-patchman.sh && sh install-patchman.sh && rm -f install-patchman.sh
+```
+
+This downloads the install script for the Patchman agent, installs the agent, and then starts the Patchman daemon. The install script uses your operating systems' package manager (apt, yum or, on FreeBSD, pkg) to install the agent, and performs a few checks to make sure your server is suitable for installing Patchman.
 
 During the installation, the script will ask you for the license key you found in step one. After entering the key, the server will request and set up a license for your server and start connecting to the Portal.
 

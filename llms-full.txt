@@ -18434,7 +18434,13 @@ On the command line of the server you would like to install Patchman on, execut
 wget https://download.patchman.co/install-patchman.sh && /bin/bash -e install-patchman.sh && rm -f install-patchman.sh
 ```
 
-This downloads the install script for the Patchman agent, installs the agent, and then starts the Patchman daemon. The install script uses your operating systems' package manager (apt or yum) to install the agent, and performs a few checks to make sure your server is suitable for installing Patchman.
+On FreeBSD, which has neither `wget` nor `bash` by default, execute this command instead:
+
+```
+fetch https://download.patchman.co/install-patchman.sh && sh install-patchman.sh && rm -f install-patchman.sh
+```
+
+This downloads the install script for the Patchman agent, installs the agent, and then starts the Patchman daemon. The install script uses your operating systems' package manager (apt, yum or, on FreeBSD, pkg) to install the agent, and performs a few checks to make sure your server is suitable for installing Patchman.
 
 During the installation, the script will ask you for the license key you found in step one. After entering the key, the server will request and set up a license for your server and start connecting to the Portal.
 
@@ -19030,7 +19036,7 @@ Please be advised that these IP-addresses might be subject to change in the futu
 
 #### Operating system
 
-Patchman runs on CentOS, CloudLinux, AlmaLinux, Rocky Linux, Red Hat Enterprise Linux, Debian and Ubuntu Linux servers. 64-bit systems are supported on all listed versions; 32-bit systems are supported on Debian 7, 8 and 9 and CentOS 6 only.
+Patchman runs on CentOS, CloudLinux, AlmaLinux, Rocky Linux, Red Hat Enterprise Linux, Debian and Ubuntu Linux servers, and on FreeBSD servers. 64-bit systems are supported on all listed versions; 32-bit systems are supported on Debian 7, 8 and 9 and CentOS 6 only.
 
 The following operating system versions are supported:
 
@@ -19039,8 +19045,11 @@ The following operating system versions are supported:
 | CentOS/CloudLinux/AlmaLinux/Rocky Linux/RHEL | 6 to 9                                       |
 | Debian | 7, Wheezy to 13, Trixie                    |
 | Ubuntu | 14.04, Trusty Tahr to 26.04, Resolute Raccoon |
+| FreeBSD | 14 and 15 (amd64 only)                    |
 
-Ubuntu 12.04, CentOS 5 and FreeBSD are not supported.
+Ubuntu 12.04, CentOS 5, FreeBSD 13 and older, and FreeBSD on other architectures than amd64 are not supported.
+
+On FreeBSD, real-time scanning is not available, and there is no supported control panel, so Patchman uses a [custom integration](/patchman/platform_integrations/#using-patchman-with-a-non-standard-control-panel) to find the websites to scan.
 
 #### Control panel
 
@@ -19834,6 +19843,8 @@ Real-time scanning will automatically start within 5 minutes of this installatio
 
 ### What is required for real-time scanning?
 
+Real-time scanning is not available on FreeBSD.
+
 This feature requires the Linux Audit Framework to be enabled, which is part of the Linux kernel by default on all our supported distributions. It might be disabled if you use a custom kernel; in that case, refer to your compilation parameters.
 
 Most configurations (including defaults) for the Linux Audit Framework are safe to use with Patchman real-time scanning. However, if you have customized it, we strongly recommend you check the following 2 settings:
@@ -20223,11 +20234,15 @@ The Patchman agent (the `patchman-client` package) runs on the servers you add t
     ```
     wget https://download.patchman.co/install-patchman.sh && /bin/bash -e install-patchman.sh && rm -f install-patchman.sh
     ```
+    On FreeBSD, which has neither `wget` nor `bash` by default, run:
+    ```
+    fetch https://download.patchman.co/install-patchman.sh && sh install-patchman.sh && rm -f install-patchman.sh
+    ```
     The script adds the Patchman repository to your package manager, installs the `patchman-client` package and starts the Patchman daemon.
 
 2. When asked, enter the license key shown on the [server add page](https://portal.patchman.co/servers/add/) under `During installation, enter the following license key:`.
 
-3. When asked, choose whether to also install [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it) (the `patchman-client-realtime` package). This feature requires a plan that supports real-time scanning.
+3. When asked, choose whether to also install [real-time scanning](/patchman/frequently_asked_questions/#real-time-scanning-what-is-it-and-how-do-i-configure-it) (the `patchman-client-realtime` package). This feature requires a plan that supports real-time scanning, and is not available on FreeBSD.
 
 4. Approve the server in the Patchman Portal on the [page with pending servers](https://portal.patchman.co/servers/add/multiple/).
 
