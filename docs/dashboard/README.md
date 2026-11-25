@@ -886,7 +886,7 @@ The table has the following columns:
 	* The fourth section `wshll/mlw.wp/etc` explains the category and class of malware identified. Here, `wshll` stands for web shell (`mlw` stands for malware).
 	* The fifth section is `0`, which provides the version number of the signature.
 * <span class="notranslate">**Status**</span> — displays the file status:
-  * <span class="notranslate">**Infected**</span> — threat was detected after scanning. If a file was not cleaned after cleanup, the info icon is displayed. Hover mouse over info icon to display the reason;
+  * <span class="notranslate">**Infected**</span> — threat was detected after scanning. If a file was not cleaned after cleanup, the info icon is displayed. Hover mouse over info icon to display the reason. See also [A malicious file was not cleaned because a system account owns it](#a-malicious-file-was-not-cleaned-because-a-system-account-owns-it);
   * <span class="notranslate">**Cleaned**</span> —  infected file is cleaned up.
   * <span class="notranslate">**Content removed**</span> — a file content was removed after cleanup.
   * <span class="notranslate">**Cleanup in progress**</span> — infected file cleanup is in progress now.
@@ -996,6 +996,160 @@ The table has the following columns:
   * <span class="notranslate">**Failed to delete from ignore**</span> — there was a problem during removal from the <span class="notranslate">Ignore List</span>. Hover mouse over the info icon to read more.
   
 The table can be sorted by <span class="notranslate">Date, Path to File, Cause</span>, and <span class="notranslate">Owner</span>.
+
+### A malicious file was not cleaned because a system account owns it
+
+Imunify360 does not clean some infected files automatically because of the account that owns them. Such a file stays in the <span class="notranslate">Malicious</span> list with the status <span class="notranslate">**Infected**</span>, and you need to clean it by hand. This section explains how to recognize these files, why Imunify360 leaves them to you, and how to clean them safely.
+
+**How to recognize it**
+
+In <span class="notranslate">Imunify360 → History</span>, the file has the event <span class="notranslate">**Unable to clean up**</span> or <span class="notranslate">**Failed to store original**</span>. The event can come back after later scans, when Imunify360 finds the file again and tries to clean it again. In current versions, the event for the first two cases below can show <span class="notranslate">_Reason: The cleanup process failed before reporting this file._</span> The messages in <span class="notranslate">_/var/log/imunify360/console.log_</span> give the real cause:
+
+| Message in <span class="notranslate">_console.log_</span> | Why the file was not cleaned |
+|---|---|
+| <span class="notranslate">`Refusing to clean files owned by system account 0, manual cleanup required`</span><br>and the error <span class="notranslate">`Cleanup skipped. File is owned by a system account, manual cleanup required`</span> | A system account owns the file (here root, UID 0). Imunify360 did not try to clean it. |
+| <span class="notranslate">`Can't clean files for non panel user uid=48, since license is limited`</span><br>and the error <span class="notranslate">`Cleanup failed. Automatic cleanup of files not owned by a panel user requires an unlimited license`</span> (older versions: <span class="notranslate">`Cleanup failed. License restriction`</span>) | An account that is not a user of your hosting panel owns the file (here apache, UID 48; also www-data, nobody and similar accounts), and your license is not a license with unlimited users. This happens even when the license is valid and has free user slots. |
+| <span class="notranslate">`Failed to store file before cleanup`</span> with <span class="notranslate">`Permission denied`</span>, and in History the reason <span class="notranslate">_Cleanup was blocked by file or directory permissions._</span> | Before it cleans a file, Imunify360 makes a backup copy with the rights of the file owner. The owner could not open the file there, so there is no backup, and Imunify360 did not clean the file. On Plesk this can happen to files owned by apache or nobody inside a domain folder (<span class="notranslate">_/var/www/vhosts/&lt;domain&gt;/_</span>). |
+
+To see the History events of one file from the command line, run:
+
+<div class="notranslate">
+
+```
+imunify360-agent malware history list --search <file name> --json
+```
+
+</div>
+
+To check the license type, run:
+
+<div class="notranslate">
+
+```
+imunify360-agent rstatus -v --json | grep -E '"(user_limit|user_count|license_type)"'
+```
+
+</div>
+
+<span class="notranslate">`"user_limit": 2147483647`</span> means a license with unlimited users.
+
+In all these cases, clean the file by hand as described below. On a license with unlimited users, Imunify360 can clean the files of the second case automatically.
+
+**Why Imunify360 does not clean these files**
+
+To clean a file, Imunify360 works with the rights of the file owner. For root or another system account these are system rights. A website user can change the folders of the website, for example add a symbolic link or a hard link to a system file. If Imunify360 cleaned files there with system rights, it could change an important system file by mistake. So Imunify360 leaves files of system accounts to you.
+
+A system account is an account with a UID below <span class="notranslate">`UID_MIN`</span> in <span class="notranslate">_/etc/login.defs_</span> (1000 on most servers). The web server accounts www-data (UID 33), apache (UID 48) and nobody (UID 99) do not count as system accounts here. The rule also does not apply to crontab files in <span class="notranslate">_/var/spool/cron_</span> (<span class="notranslate">_/var/spool/cron/crontabs_</span> on Ubuntu and Debian).
+
+**Root-owned website files that Imunify360 cleans automatically**
+
+Starting with the packages <span class="notranslate">imunify-antivirus 8.12.0</span>, <span class="notranslate">imunify-core 8.15.3</span> and <span class="notranslate">rustbolit 34.0.1</span> (November 2026), Imunify360 cleans a file owned by root when all of these are true:
+
+* The file is inside a user's home folder (<span class="notranslate">_/home*/&lt;user&gt;/_</span>) or inside a Plesk domain folder (<span class="notranslate">_/var/www/vhosts/&lt;domain&gt;/_</span>), and this home or domain folder belongs to a user account, not to root or another system account.
+* The file is a <span class="notranslate">`.php`</span>, <span class="notranslate">`.php3`</span>–<span class="notranslate">`.php8`</span>, <span class="notranslate">`.phtml`</span>, <span class="notranslate">`.inc`</span>, <span class="notranslate">`.js`</span>, <span class="notranslate">`.html`</span>, <span class="notranslate">`.htm`</span>, <span class="notranslate">`.cgi`</span>, <span class="notranslate">`.pl`</span>, <span class="notranslate">`.sh`</span> or <span class="notranslate">`.py`</span> file, or a <span class="notranslate">`.htaccess`</span> or <span class="notranslate">`.user.ini`</span> file.
+* There is no symbolic link in the path, the file has only one hard link, and it is on the same disk (mount) as the user's folder.
+* The website can read the file: everyone can read it, or its group can read it and this group is a group of the user or a web server group (<span class="notranslate">apache</span>, <span class="notranslate">nobody</span>, <span class="notranslate">www-data</span> or <span class="notranslate">nginx</span>).
+* Imunify360 finds the malware in the content of the file when it cleans it.
+* Imunify360 has found the same infected file, owned by system accounts, in fewer than 10 places on the server.
+* Imunify360 could make a backup copy of the file first.
+* The license is a license with unlimited users.
+
+If one of these is not true, Imunify360 does not clean the file, and History shows <span class="notranslate">**Unable to clean up**</span> for it. Then clean it by hand.
+
+When Imunify360 cleans such a file, it keeps the owner and the permissions of the file. Files of other system accounts, for example daemon or mail, are never cleaned automatically. To see the installed versions on CentOS, AlmaLinux or CloudLinux, run:
+
+<div class="notranslate">
+
+```
+rpm -q imunify-antivirus imunify-core rustbolit
+```
+
+</div>
+
+**How to clean the file by hand**
+
+Run these steps as root.
+
+1. Check who owns the file:
+
+    <div class="notranslate">
+
+    ```
+    stat -c '%U(%u) %G(%g) %a %n' /path/to/file
+    grep -E '^UID_MIN' /etc/login.defs
+    ```
+
+    </div>
+
+    The first command shows the owner with its UID, the group with its GID, the permissions and the path. A UID below <span class="notranslate">`UID_MIN`</span> is a system account.
+
+2. Make a backup copy that keeps the owner and the permissions:
+
+    <div class="notranslate">
+
+    ```
+    mkdir -p /root/imunify-manual-cleanup
+    cp -a --parents /path/to/file /root/imunify-manual-cleanup/
+    ```
+
+    </div>
+
+3. If a system account owns the file and it is not part of a website, check whether a system package installed it.
+
+    On CentOS, AlmaLinux and CloudLinux:
+
+    <div class="notranslate">
+
+    ```
+    rpm -qf /path/to/file
+    ```
+
+    </div>
+
+    On Ubuntu and Debian:
+
+    <div class="notranslate">
+
+    ```
+    dpkg -S /path/to/file
+    ```
+
+    </div>
+
+    If a package owns the file, check whether the file was changed: <span class="notranslate">`rpm -V <package>`</span> on CentOS, AlmaLinux and CloudLinux, <span class="notranslate">`dpkg --verify <package>`</span> on Ubuntu and Debian. Look only for the line with your file. A <span class="notranslate">`5`</span> in the third position means that the content is not the same as in the package, for example:
+
+    <div class="notranslate">
+
+    ```
+    S.5....T.    /usr/share/testpage/index.html
+    ```
+
+    </div>
+
+    To get the original file back, reinstall the package: <span class="notranslate">`dnf reinstall <package>`</span> on AlmaLinux and CloudLinux 8 or later, <span class="notranslate">`apt-get install --reinstall <package>`</span> on Ubuntu and Debian. Then check the file again with <span class="notranslate">`rpm -V <package>`</span> or <span class="notranslate">`dpkg --verify <package>`</span>: the line with your file must be gone.
+
+    **Important:** malware in a file of a system package can mean that an attacker got root access to the server. Then cleaning this one file is not enough: check the whole server.
+
+    If a package owns the file and you reinstalled the package, go to step 5. If no package owns the file, find out what the file is for before you change it.
+
+4. Clean the file:
+    * If the whole file is malicious and has no other purpose (for example, a web shell), delete it: <span class="notranslate">`rm /path/to/file`</span>
+    * If it is a real file with malicious code added to it, open it in a text editor and remove only the malicious code, or put back a clean copy of the file from your own backup.
+
+5. Scan the folder again, and check that the file is not in the <span class="notranslate">Malicious</span> list any more. When the scan is finished (see <span class="notranslate">Malware Scanner → Scan</span>), the second command prints nothing for a cleaned or deleted file.
+
+    <div class="notranslate">
+
+    ```
+    imunify360-agent malware on-demand start --path /path/to/folder
+    imunify360-agent malware malicious list --search <file name>
+    ```
+
+    </div>
+
+:::danger Do not change the owner or the permissions
+Do not change the owner or the permissions of the file (for example with <span class="notranslate">`chown`</span> or <span class="notranslate">`chmod`</span>) to make Imunify360 clean it. A system file that belongs to a website user can be changed by that user, and a website can stop working when its files get a different owner. Never change the owner or the permissions of many files at once.
+:::
 
 <div class="notranslate">
 
